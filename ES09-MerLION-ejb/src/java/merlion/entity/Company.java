@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion_new_enetity;
+package merlion.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,9 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import merlion_ejb.entity.Account;
-import merlion_ejb.entity.Favorite;
-import merlion_ejb.entity.Notification;
 
 /**
  *
@@ -31,6 +28,14 @@ public class Company implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String companyName;
+    private String companyAddress;
+    private String tel;
+    private String email;
+    private String website;
+    private String companyHistory;
+    private String service;
+    private String vision;
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<ServiceOrder> serviceorder = new ArrayList<>();
@@ -52,7 +57,12 @@ public class Company implements Serializable {
     private List<Payment> payment = new ArrayList<>();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<Contract> contract = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    private List<Salesquotation> salesquotation = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    private List<PurchaseOrder> purchaseorder = new ArrayList<>();
 
+   
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
     private Warehouse warehouse;
     
@@ -61,6 +71,22 @@ public class Company implements Serializable {
     
     
     
+     public List<PurchaseOrder> getPurchaseorder() {
+        return purchaseorder;
+    }
+
+    public void setPurchaseorder(List<PurchaseOrder> purchaseorder) {
+        this.purchaseorder = purchaseorder;
+    }
+
+    public List<Salesquotation> getSalesquotation() {
+        return salesquotation;
+    }
+
+    public void setSalesquotation(List<Salesquotation> salesquotation) {
+        this.salesquotation = salesquotation;
+    }
+
     public List<Contract> getContract() {
         return contract;
     }
@@ -156,6 +182,11 @@ public class Company implements Serializable {
     public void setServiceorder(List<ServiceOrder> serviceorder) {
         this.serviceorder = serviceorder;
     }
+    
+    
+    
+    
+    
 
     public Long getId() {
         return id;
@@ -165,6 +196,70 @@ public class Company implements Serializable {
         this.id = id;
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCompanyAddress() {
+        return companyAddress;
+    }
+
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getCompanyHistory() {
+        return companyHistory;
+    }
+
+    public void setCompanyHistory(String companyHistory) {
+        this.companyHistory = companyHistory;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
+    public String getVision() {
+        return vision;
+    }
+
+    public void setVision(String vision) {
+        this.vision = vision;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

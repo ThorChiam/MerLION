@@ -8,7 +8,7 @@ package merlion.ejb;
 
 import javax.ejb.Local;
 import java.util.List;
-import merlion_ejb.entity.Customer;
+import merlion.entity.Customer;
 
 
 /**

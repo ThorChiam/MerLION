@@ -11,7 +11,7 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import merlion_ejb.entity.Product;
+import merlion.entity.Product;
 
 
 /**

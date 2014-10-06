@@ -17,13 +17,13 @@ import java.util.Iterator;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import merlion_ejb.entity.Customer;
-import merlion_ejb.entity.LineItem;
-import merlion_ejb.entity.OrderRecord;
-import merlion_ejb.entity.Product;
-import merlion_ejb.entity.PurchaseOrder;
-import merlion_ejb.entity.Salesquotation;
-import merlion_ejb.entity.Vendor;
+import merlion.entity.Customer;
+import merlion.entity.LineItem;
+import merlion.entity.OrderRecord;
+import merlion.entity.Product;
+import merlion.entity.PurchaseOrder;
+import merlion.entity.Salesquotation;
+import merlion.entity.Vendor;
 
 
 

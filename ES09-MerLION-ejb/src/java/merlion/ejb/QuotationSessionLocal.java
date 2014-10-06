@@ -8,10 +8,10 @@ package merlion.ejb;
 
 import javax.ejb.Local;
 import java.util.List;
-import merlion_ejb.entity.OrderRecord;
-import merlion_ejb.entity.Product;
-import merlion_ejb.entity.PurchaseOrder;
-import merlion_ejb.entity.Salesquotation;
+import merlion.entity.OrderRecord;
+import merlion.entity.Product;
+import merlion.entity.PurchaseOrder;
+import merlion.entity.Salesquotation;
 
 
 /**

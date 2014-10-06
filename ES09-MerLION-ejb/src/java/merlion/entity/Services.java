@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion_new_enetity;
+package merlion.entity;
 
 import java.io.Serializable;
 import javax.persistence.CascadeType;
@@ -24,6 +24,16 @@ public class Services implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String serviceType;
+    private String carrierType;
+    private String route;
+    private String availableScheduleFrom;
+    private String availableScheduleTo;
+    private long price;
+    private long maxVol;
+    private long availableVol;
+
+    
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
     private Company company;
 
@@ -33,6 +43,70 @@ public class Services implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public String getCarrierType() {
+        return carrierType;
+    }
+
+    public void setCarrierType(String carrierType) {
+        this.carrierType = carrierType;
+    }
+
+    public String getRoute() {
+        return route;
+    }
+
+    public void setRoute(String route) {
+        this.route = route;
+    }
+
+    public String getAvailableScheduleFrom() {
+        return availableScheduleFrom;
+    }
+
+    public void setAvailableScheduleFrom(String availableScheduleFrom) {
+        this.availableScheduleFrom = availableScheduleFrom;
+    }
+
+    public String getAvailableScheduleTo() {
+        return availableScheduleTo;
+    }
+
+    public void setAvailableScheduleTo(String availableScheduleTo) {
+        this.availableScheduleTo = availableScheduleTo;
+    }
+
+    public long getPrice() {
+        return price;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
+    public long getMaxVol() {
+        return maxVol;
+    }
+
+    public void setMaxVol(long maxVol) {
+        this.maxVol = maxVol;
+    }
+
+    public long getAvailableVol() {
+        return availableVol;
+    }
+
+    public void setAvailableVol(long availableVol) {
+        this.availableVol = availableVol;
     }
     
     public Company getCompany() {
