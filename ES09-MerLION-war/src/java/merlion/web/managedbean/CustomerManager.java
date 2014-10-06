@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package managedbean;
+package merlion.web.managedbean;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;

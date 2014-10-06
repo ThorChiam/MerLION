@@ -1,5 +1,5 @@
 
-package managedbean;
+package merlion.web.managedbean;
 
 import merlion_ejb.entity.PurchaseOrder;
 import java.sql.Timestamp;
