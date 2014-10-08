@@ -4,11 +4,8 @@
  * and open the template in the editor.
  */
 
-package merlion.entity;
+package merlion_ejb.entity;
 
-import merlion.entity.PurchaseOrder;
-import merlion.entity.Salesquotation;
-import merlion.entity.LineItem;
 import java.io.Serializable;
 //import java.util.ArrayList;
 import java.util.Collection;

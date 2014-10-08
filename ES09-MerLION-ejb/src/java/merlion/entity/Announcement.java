@@ -1,4 +1,4 @@
-package merlion.entity;
+package merlion_ejb.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+import merlion_new_enetity.Admin;
 
 /**
  *

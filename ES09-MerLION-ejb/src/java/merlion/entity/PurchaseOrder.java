@@ -1,5 +1,5 @@
 
-package merlion.entity;
+package merlion_ejb.entity;
 
 import java.io.Serializable;
 import javax.persistence.CascadeType;
@@ -38,9 +38,6 @@ public class PurchaseOrder implements Serializable {
     //Added by QT
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
     private Account Account;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
-    private Company company;
-
 
     
     public PurchaseOrder() {
@@ -57,15 +54,6 @@ public class PurchaseOrder implements Serializable {
     }
     
     //Added by QT
-    
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-    
     public Account getAccount() {
         return Account;
     }

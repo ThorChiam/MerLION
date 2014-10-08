@@ -1,5 +1,5 @@
 
-package merlion.entity;
+package merlion_ejb.entity;
 
 import java.io.Serializable;
 //import java.util.Collection;
@@ -40,9 +40,6 @@ public class Salesquotation implements Serializable {
     
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Customer customer;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Company company;
-
 
     public Salesquotation() {
         setId(System.nanoTime());
@@ -56,15 +53,9 @@ public class Salesquotation implements Serializable {
 
     public void setAccount(Account Account) {
         this.Account = Account;
-    }  
-    
-    public Company getCompany() {
-        return company;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
+
 
     public Long getId() {
         return id;

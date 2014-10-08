@@ -1,4 +1,4 @@
-package merlion.entity;
+package merlion_ejb.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,7 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
+import merlion_new_enetity.Admin;
+import merlion_new_enetity.Company;
+import merlion_new_enetity.Post;
 
 @Entity
 @Table(name = "Account")
@@ -39,16 +41,19 @@ public class Account implements Serializable {
     private List<Item> items = new ArrayList<>();
 
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<Payment> payment = new ArrayList<>();
+    private List<PaymentTransactionLog> paymenttransactionlogs = new ArrayList<>();
 
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<Favorite> favorites = new ArrayList<>();
     
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<Services> services = new ArrayList<>(); 
+    private List<ServiceCatalog> servicecatalogs = new ArrayList<>(); 
     
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<Post> post = new ArrayList<>();
+
+    @OneToOne
+    private CompanyProfile companyprofile;
     
     @OneToOne
     private Company company;
@@ -123,12 +128,20 @@ public class Account implements Serializable {
         this.purchaseorders = purchaseorders;
     }
     
-    public List<Services> getServices() {
-        return services;
+    public CompanyProfile getCompanyprofile() {
+        return companyprofile;
     }
 
-    public void setServices(List<Services> services) {
-        this.services = services;
+    public void setCompanyprofile(CompanyProfile companyprofile) {
+        this.companyprofile = companyprofile;
+    }
+    
+    public List<ServiceCatalog> getServicecatalogs() {
+        return servicecatalogs;
+    }
+
+    public void setServicecatalogs(List<ServiceCatalog> servicecatalogs) {
+        this.servicecatalogs = servicecatalogs;
     }
     
     public List<Salesquotation> getSalesquotations() {
@@ -147,12 +160,12 @@ public class Account implements Serializable {
         this.items = items;
     }
 
-    public List<Payment> getPayment() {
-        return payment;
+    public List<PaymentTransactionLog> getPaymentTransactionLogEntitys() {
+        return paymenttransactionlogs;
     }
 
-    public void setPayment(List<Payment> payment) {
-        this.payment = payment;
+    public void setPaymentTransactionLogEntitys(List<PaymentTransactionLog> paymenttransactionlogs) {
+        this.paymenttransactionlogs = paymenttransactionlogs;
     }
 
     public List<Favorite> getFavorites() {

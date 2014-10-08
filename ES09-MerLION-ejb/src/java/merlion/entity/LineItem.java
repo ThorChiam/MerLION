@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package merlion.entity;
+package merlion_ejb.entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;

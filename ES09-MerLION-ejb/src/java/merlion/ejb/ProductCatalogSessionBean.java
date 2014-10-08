@@ -25,7 +25,7 @@ public class ProductCatalogSessionBean implements ProductCatalogSessionBeanLocal
  
   @Override
    public List<Product> getAllProduct(String email){
-       Query q=em.createQuery("SELECT p FROM Product WHERE p.email=:email");
+       Query q=em.createQuery("SELECT p FROM Product p WHERE p.email=:email");
         q.setParameter("email", email);
       return q.getResultList();
    }
@@ -34,7 +34,7 @@ public class ProductCatalogSessionBean implements ProductCatalogSessionBeanLocal
        
    
    @Override
-   public List<Product>  getProduct(String emailm,Long id){
+   public List<Product>  getProduct(String email,Long id){
        Query q=em.createQuery("SELECT p FROM Product p WHERE p.id=:id");
        q.setParameter("id",id);
        

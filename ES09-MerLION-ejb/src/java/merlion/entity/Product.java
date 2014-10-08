@@ -1,4 +1,4 @@
-package merlion.entity;
+package merlion_ejb.entity;
 
 import java.io.Serializable;
 

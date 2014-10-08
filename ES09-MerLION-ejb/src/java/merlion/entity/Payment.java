@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity;
+package merlion_new_enetity;
 
 import java.io.Serializable;
 import javax.persistence.CascadeType;
@@ -25,13 +25,6 @@ public class Payment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private long transactionId;
-    private String currency;
-    private long amount;
-    private long transactionDate;
-    private String paymentStatus;
-    private String notes;
-    
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
     private Company company;
     @OneToOne
@@ -43,54 +36,6 @@ public class Payment implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }   
-    
-    public long getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(long transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public long getAmount() {
-        return amount;
-    }
-
-    public void setAmount(long amount) {
-        this.amount = amount;
-    }
-
-    public long getTransactionDate() {
-        return transactionDate;
-    }
-
-    public void setTransactionDate(long transactionDate) {
-        this.transactionDate = transactionDate;
-    }
-
-    public String getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
     
     public Invoice getInvoice() {

@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity;
+package merlion_ejb.entity;
 
-import merlion.entity.Template;
-import merlion.entity.Account;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
