@@ -14,7 +14,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import merlion.entity.Account;
-import merlion.entity.Admin;
+import merlion.entity.ActionRecord;
+import merlion.entity.MerlionAdmin;
 
 /**
  *
@@ -27,22 +28,17 @@ public class AdministratorSessionBean implements AdministratorSessionBeanLocal {
     EntityManager em;
 
     @Override
-    public Admin getAdmin(String email) {
-        Query q = em.createQuery("SELECT a FROM Admin a WHERE a.Admin.email=:email");
+    public MerlionAdmin getMerlionAdmin(String email) {
+        Query q = em.createQuery("SELECT a FROM MerlionAdmin a WHERE a.Account.email=:email");
         q.setParameter("email", email);
-        Admin admin = null;
-        try {
-            admin = (Admin) q.getSingleResult();
-        } catch (NoResultException ex) {
-            ex.printStackTrace();
-        }
+        MerlionAdmin admin = (MerlionAdmin) q.getSingleResult();
         return admin;
     }
 
     @Override
     public String validate(String email, String password) {
         //To change body of generated methods, choose Tools | Templates.
-        Admin admin = getAdmin(email);
+        MerlionAdmin admin = getMerlionAdmin(email);
         if (admin == null) {
             return null;
         } else {
@@ -59,7 +55,7 @@ public class AdministratorSessionBean implements AdministratorSessionBeanLocal {
     }
 
     @Override
-    public String createAdmin(String email, String password, String accessright, String status, String security_question, String security_answer) {
+    public String createMerlionAdmin(String email, String password, String accessright, String status, String security_question, String security_answer) {
         Account f = new Account();
         f.setEmail(email);
         f.setAccessRight(accessright);
@@ -67,9 +63,9 @@ public class AdministratorSessionBean implements AdministratorSessionBeanLocal {
         f.setSecurity_question(security_question);
         f.setSecurity_answer(security_answer);
         f.setStatus(status);
-        Admin a = new Admin();
+        MerlionAdmin a = new MerlionAdmin();
         a.setAccount(f);
-        f.setAdmin(a);
+        f.setMerlionAdmin(a);
 
         em.persist(f);
         em.flush();
@@ -78,21 +74,21 @@ public class AdministratorSessionBean implements AdministratorSessionBeanLocal {
 
     @Override
     public void resetpassword(String email, String newpassword) {
-        Query query = em.createQuery("UPDATE Admin c SET c.Account.password=?1 WHERE c.email=?2");
+        Query query = em.createQuery("UPDATE MerlionAdmin c SET c.Account.password=?1 WHERE c.email=?2");
         query.setParameter(1, doMD5Hashing(newpassword));
         query.setParameter(2, email);
         query.executeUpdate();
     }
 
     @Override
-    public List<Admin> getAdmins() {
-        Query query = em.createQuery("SELECT v FROM Admin v");
+    public List<MerlionAdmin> getMerlionAdmins() {
+        Query query = em.createQuery("SELECT v FROM MerlionAdmin v");
         return query.getResultList();
     }
 
     @Override
-    public void deleteAdmin(String email) {
-        Query query = em.createQuery("Delete From Admin e where e.Account.email=:email");
+    public void deleteMerlionAdmin(String email) {
+        Query query = em.createQuery("Delete From MerlionAdmin e where e.Account.email=:email");
         query.setParameter("email", email);
         query.executeUpdate();
         query = em.createQuery("Delete From Account a where a.email=:email");
@@ -101,8 +97,20 @@ public class AdministratorSessionBean implements AdministratorSessionBeanLocal {
     }
 
     @Override
+    public void storeAction(String email, long accessTime, String accessed) {
+        Query q = em.createQuery("SELECT a FROM MerlionAdmin a WHERE a.Account.email=:email");
+        q.setParameter("email", email);
+        MerlionAdmin a = (MerlionAdmin) q.getSingleResult();
+        ActionRecord ac = new ActionRecord();
+        ac.setMerlionAdmin(a);
+        ac.setAccessed(accessed);
+        ac.setAccessTime(accessTime);
+        em.persist(ac);
+    }
+
+    @Override
     public void remove() {
-        System.out.println("AdminManage:remove()");
+        System.out.println("MerlionAdminManage:remove()");
     }
 
     private String doMD5Hashing(String stringToHash) {

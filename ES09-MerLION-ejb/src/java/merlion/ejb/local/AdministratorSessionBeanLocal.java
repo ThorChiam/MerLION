@@ -7,7 +7,7 @@ package merlion.ejb.local;
 
 import java.util.List;
 import javax.ejb.Local;
-import merlion.entity.Admin;
+import merlion.entity.MerlionAdmin;
 
 /**
  *
@@ -15,17 +15,20 @@ import merlion.entity.Admin;
  */
 @Local
 public interface AdministratorSessionBeanLocal {
-    public Admin getAdmin(String email);
+
+    public MerlionAdmin getMerlionAdmin(String email);
 
     public String validate(String email, String password);
 
-    public String createAdmin(String email, String password, String accessright, String status, String security_question, String security_answer);
+    public String createMerlionAdmin(String email, String password, String accessright, String status, String security_question, String security_answer);
 
     public void resetpassword(String email, String newpassword);
 
-    public List<Admin> getAdmins();
+    public List<MerlionAdmin> getMerlionAdmins();
 
-    public void deleteAdmin(String email);
+    public void deleteMerlionAdmin(String email);
 
     public void remove();
+
+    public void storeAction(String email, long accessTime, String accessed);
 }

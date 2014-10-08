@@ -12,7 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import merlion.entity.Account;
-import merlion.entity.Admin;
+import merlion.entity.MerlionAdmin;
 import merlion.entity.Announcement;
 import merlion.entity.Notification;
 
@@ -28,11 +28,11 @@ public class InternalCommunicationSessionBean implements InternalCommunicationSe
 
     @Override
     public void createannou(Long id, Long announ_Id, String content) {
-        Query q = em.createQuery("SELECT a FROM Admin a WHERE a.id=:id");
+        Query q = em.createQuery("SELECT a FROM MerlionAdmin a WHERE a.id=:id");
         q.setParameter("id", id);
-        Admin admin = (Admin) q.getSingleResult();
+        MerlionAdmin admin = (MerlionAdmin) q.getSingleResult();
         Announcement announ = new Announcement();
-        announ.setAdmin(admin);
+        announ.setMerlionAdmin(admin);
         announ.add(announ_Id, content);
         em.persist(announ);
     }

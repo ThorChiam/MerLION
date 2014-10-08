@@ -34,13 +34,13 @@ public class AggregateDemand implements Serializable {
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="AggregateDemand")
     private List<Order> orders = new ArrayList<>();
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Admin admin;
+    private MerlionAdmin admin;
 
-    public Admin getAdmin() {
+    public MerlionAdmin getMerlionAdmin() {
         return admin;
     }
 
-    public void setAdmin(Admin admin) {
+    public void setMerlionAdmin(MerlionAdmin admin) {
         this.admin = admin;
     }
 

@@ -25,7 +25,7 @@ public class Announcement implements Serializable {
     @ManyToMany(cascade={CascadeType.ALL},mappedBy="announcements")
     private Set<Account> accounts=new HashSet<>();
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Admin admin;
+    private MerlionAdmin admin;
 
     public Announcement() {
     }
@@ -36,11 +36,11 @@ public class Announcement implements Serializable {
     }   
 
     
-    public Admin getAdmin() {
+    public MerlionAdmin getMerlionAdmin() {
         return admin;
     }
 
-    public void setAdmin(Admin admin) {
+    public void setMerlionAdmin(MerlionAdmin admin) {
         this.admin = admin;
     }
 

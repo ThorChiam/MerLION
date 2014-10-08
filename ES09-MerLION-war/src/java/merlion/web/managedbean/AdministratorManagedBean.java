@@ -7,10 +7,11 @@ package merlion.web.managedbean;
 
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import merlion.ejb.local.AdministratorSessionBeanLocal;
-import merlion.entity.Admin;
+import merlion.entity.MerlionAdmin;
 
 /**
  *
@@ -30,25 +31,27 @@ public class AdministratorManagedBean implements Serializable {
     private String status;
     private String security_question;
     private String security_answer;
+    private final int restrictedTimeLate=22;
+    private final int restrictedTimeEarly=6;
 
     public AdministratorManagedBean() {
     }
 
-    public List<Admin> getAdmins() {
-        return adsbl.getAdmins();
+    public List<MerlionAdmin> getMerlionAdmins() {
+        return adsbl.getMerlionAdmins();
     }
 
-    public Admin getAdmin(String email) {
-        return adsbl.getAdmin(email);
+    public MerlionAdmin getMerlionAdmin(String email) {
+        return adsbl.getMerlionAdmin(email);
     }
 
-    public void deleteAdmin() {
-        adsbl.deleteAdmin(email);
+    public void deleteMerlionAdmin() {
+        adsbl.deleteMerlionAdmin(email);
     }
 
-    public String createAdmin() {
+    public String createMerlionAdmin() {
 
-        return adsbl.createAdmin(email, password,accessright, status, security_question, security_answer);
+        return adsbl.createMerlionAdmin(email, password,accessright, status, security_question, security_answer);
     }
 
     public void resetPassword() {
@@ -101,6 +104,14 @@ public class AdministratorManagedBean implements Serializable {
 
     public void setSecurity_answer(String security_answer) {
         this.security_answer = security_answer;
+    }
+    
+    public void storeActionRecord(String email,String accessed){
+        int currentHour = Calendar.HOUR_OF_DAY;
+        if(!(currentHour<restrictedTimeLate&&currentHour>restrictedTimeEarly)){
+            long accessTime = Calendar.getInstance().getTimeInMillis();
+           adsbl.storeAction(email, accessTime, accessed);
+        }
     }
     
 }

@@ -26,6 +26,9 @@ public class Chat implements Serializable {
     private Long id;
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
     private Company company;
+    private String anotherChatter;
+    private String chatContent;
+    private long chatTime;
 
     public Long getId() {
         return id;
@@ -41,6 +44,30 @@ public class Chat implements Serializable {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public String getAnotherChatter() {
+        return anotherChatter;
+    }
+
+    public void setAnotherChatter(String anotherChatter) {
+        this.anotherChatter = anotherChatter;
+    }
+
+    public String getChatContent() {
+        return chatContent;
+    }
+
+    public void setChatContent(String chatContent) {
+        this.chatContent = chatContent;
+    }
+
+    public long getChatTime() {
+        return chatTime;
+    }
+
+    public void setChatTime(long chatTime) {
+        this.chatTime = chatTime;
     }
 
 

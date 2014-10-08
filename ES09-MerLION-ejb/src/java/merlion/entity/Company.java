@@ -48,6 +48,8 @@ public class Company implements Serializable {
     private List<Payment> payment = new ArrayList<>();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<Contract> contract = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    private List<Chat> chats = new ArrayList<>();
 
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
     private Warehouse warehouse;
@@ -159,6 +161,14 @@ public class Company implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Chat> getChats() {
+        return chats;
+    }
+
+    public void setChats(List<Chat> chats) {
+        this.chats = chats;
     }
 
     @Override

@@ -24,14 +24,16 @@ public class ActionRecord implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String accessed;
+    private long accessTime;
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Admin admin;
+    private MerlionAdmin admin;
 
-    public Admin getAdmin() {
+    public MerlionAdmin getMerlionAdmin() {
         return admin;
     }
 
-    public void setAdmin(Admin admin) {
+    public void setMerlionAdmin(MerlionAdmin admin) {
         this.admin = admin;
     }
 
@@ -42,6 +44,22 @@ public class ActionRecord implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getAccessed() {
+        return accessed;
+    }
+
+    public void setAccessed(String accessed) {
+        this.accessed = accessed;
+    }
+
+    public long getAccessTime() {
+        return accessTime;
+    }
+
+    public void setAccessTime(long accessTime) {
+        this.accessTime = accessTime;
     }
 
     @Override

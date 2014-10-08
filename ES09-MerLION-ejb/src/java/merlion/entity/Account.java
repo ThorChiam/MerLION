@@ -56,7 +56,7 @@ public class Account implements Serializable {
     private Company company;
     
     @OneToOne
-    private Admin admin;
+    private MerlionAdmin admin;
 
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<PurchaseOrder> purchaseorders = new ArrayList<>();
@@ -93,11 +93,11 @@ public class Account implements Serializable {
 
     //Added by QT 
     
-    public Admin getAdmin() {
+    public MerlionAdmin getMerlionAdmin() {
         return admin;
     }
 
-    public void setAdmin(Admin admin) {
+    public void setMerlionAdmin(MerlionAdmin admin) {
         this.admin = admin;
     }
 

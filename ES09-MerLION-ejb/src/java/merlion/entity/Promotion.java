@@ -25,13 +25,13 @@ public class Promotion implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Admin admin;
+    private MerlionAdmin admin;
     
-    public Admin getAdmin() {
+    public MerlionAdmin getMerlionAdmin() {
         return admin;
     }
 
-    public void setAdmin(Admin admin) {
+    public void setMerlionAdmin(MerlionAdmin admin) {
         this.admin = admin;
     }
 
