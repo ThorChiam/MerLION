@@ -3,29 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package merlion.ejb;
 
-import javax.ejb.Stateless;
 import java.util.List;
-import javax.persistence.Query;
+import merlion.ejb.local.ProductCatalogSessionBeanLocal;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import merlion.entity.Product;
-
 
 /**
  *
- * @author Tomato
+ * @author ThorChiam
  */
 @Stateless
-public class ProductSession implements ProductSessionLocal {
+public class ProductCatalogSessionBean implements ProductCatalogSessionBeanLocal {
+    
   @PersistenceContext
   private EntityManager em;
  
   @Override
-   public List<Product> getAllProduct(){
-       Query q=em.createQuery("SELECT p FROM Product p");
+   public List<Product> getAllProduct(String email){
+       Query q=em.createQuery("SELECT p FROM Product WHERE p.email=:email");
+        q.setParameter("email", email);
       return q.getResultList();
    }
    
@@ -33,7 +34,7 @@ public class ProductSession implements ProductSessionLocal {
        
    
    @Override
-   public List<Product>  getProduct(Long id){
+   public List<Product>  getProduct(String emailm,Long id){
        Query q=em.createQuery("SELECT p FROM Product p WHERE p.id=:id");
        q.setParameter("id",id);
        
@@ -46,7 +47,7 @@ public class ProductSession implements ProductSessionLocal {
    
    @Override
    public Long addProduct(String name, double price, int quantity,String remark){
-     Product p=new Product();
+     Product p=new Product(email);
      p.create(name,price,quantity,remark);
      em.persist(p);
      em.flush();
@@ -89,5 +90,3 @@ public class ProductSession implements ProductSessionLocal {
    }
   
 }
-
-
