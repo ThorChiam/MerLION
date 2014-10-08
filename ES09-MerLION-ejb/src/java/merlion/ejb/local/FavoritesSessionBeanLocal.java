@@ -5,7 +5,9 @@
  */
 package merlion.ejb.local;
 
+import java.util.List;
 import javax.ejb.Local;
+import merlion.entity.Favorite;
 
 /**
  *
@@ -13,5 +15,14 @@ import javax.ejb.Local;
  */
 @Local
 public interface FavoritesSessionBeanLocal {
-    
+
+    public List<Favorite> getFavoriteList(String email);
+
+    public Favorite getFavorite(String email, Long companyId);
+
+    public void addFavorite(String email, Long companyId, String remark);
+
+    public void deleteFavorite(String email, Long companyId);
+
+    public String updateFavorite(String email, Long companyId, String remark);
 }

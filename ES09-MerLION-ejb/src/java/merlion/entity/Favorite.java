@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion_ejb.entity;
+package merlion.entity;
 
 import java.io.Serializable;
 import javax.persistence.CascadeType;
@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import merlion_new_enetity.Company;
 
 /**
  *
@@ -26,8 +25,6 @@ public class Favorite implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long favorite_id;
-    private String userName;
-    private String favorites;
     private String remarks;
 
     //Added by QT
@@ -58,22 +55,6 @@ public class Favorite implements Serializable {
 
     public void setFavorite_id(Long favorite_id) {
         this.favorite_id = favorite_id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getFavorites() {
-        return favorites;
-    }
-
-    public void setFavorites(String favorites) {
-        this.favorites = favorites;
     }
 
     public String getRemarks() {

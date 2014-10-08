@@ -5,8 +5,13 @@
  */
 package merlion.ejb;
 
+import java.util.List;
 import merlion.ejb.local.PaymentTransactionLogSessionBeanLocal;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import merlion.entity.Payment;
 
 /**
  *
@@ -15,6 +20,18 @@ import javax.ejb.Stateless;
 @Stateless
 public class PaymentTransactionLogSessionBean implements PaymentTransactionLogSessionBeanLocal {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @PersistenceContext
+    private EntityManager em;
+    
+    private Payment payment;
+    private List<Payment> payments;
+
+    @Override
+    public List getPaymentTransactionLog(String email) {
+
+        Query q = em.createQuery("SELECT e FROM Payment e WHERE e.company.Account.email=:email");
+        q.setParameter("email", email);
+        return q.getResultList();
+
+    }
 }

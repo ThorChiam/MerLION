@@ -5,6 +5,7 @@
  */
 package merlion.ejb.local;
 
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +14,15 @@ import javax.ejb.Local;
  */
 @Local
 public interface CompanyProfileSessionBeanLocal {
-    
+
+    public Long addCompanyProfile(String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision);
+
+    public List getAllCompanyProfile(String email);
+
+    //admin can delete company profile
+    public String deleteCompanyProfile(String email, Long companyId);
+    //update company profile
+
+    public void updateCompanyProfile(Long companyId, String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision);
+
 }

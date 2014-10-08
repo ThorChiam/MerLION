@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion_ejb.entity;
+package merlion.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -16,7 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import merlion_new_enetity.Contract;
+import merlion.entity.Contract;
 
 @Entity
 public class Template implements Serializable {

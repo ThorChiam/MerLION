@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion_new_enetity;
+package merlion.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,10 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import merlion_ejb.entity.Account;
-import merlion_ejb.entity.Favorite;
-import merlion_ejb.entity.Notification;
-
 /**
  *
  * @author sunny

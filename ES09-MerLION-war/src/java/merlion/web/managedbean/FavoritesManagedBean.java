@@ -7,7 +7,10 @@ package merlion.web.managedbean;
 
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
+import merlion.ejb.local.FavoritesSessionBeanLocal;
+import merlion.entity.Favorite;
 
 /**
  *
@@ -20,7 +23,28 @@ public class FavoritesManagedBean implements Serializable {
     /**
      * Creates a new instance of FavoritesManagedBean
      */
+    private FavoritesSessionBeanLocal fsbl;
+    private Long companyId;
+    private String remark;
     public FavoritesManagedBean() {
     }
-    
+    public List<Favorite> getFavoriteList(String email){
+        return fsbl.getFavoriteList(email);
+    }
+
+    public Favorite getFavorite(String email, Long companyId){
+        return fsbl.getFavorite(email, companyId);
+    }
+
+    public void addFavorite(String email){
+        fsbl.addFavorite(email, companyId, remark);
+    }
+
+    public void deleteFavorite(String email){
+        fsbl.deleteFavorite(email, companyId);
+    }
+
+    public String updateFavorite(String email){
+        return fsbl.updateFavorite(email, companyId, remark);
+    }
 }

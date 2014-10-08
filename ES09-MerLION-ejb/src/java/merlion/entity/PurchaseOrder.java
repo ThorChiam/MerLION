@@ -1,5 +1,5 @@
 
-package merlion_ejb.entity;
+package merlion.entity;
 
 import java.io.Serializable;
 import javax.persistence.CascadeType;
