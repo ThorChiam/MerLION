@@ -9,9 +9,17 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>Push Servlet</servlet-name>
+        <servlet-class>org.primefaces.push.PushServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Push Servlet</servlet-name>
+        <url-pattern>/primepush/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -21,4 +29,7 @@
     <welcome-file-list>
         <welcome-file>CommonInfrastructure/chat.xhtml</welcome-file>
     </welcome-file-list>
+    <jsp-config>
+    </jsp-config>
+    <absolute-ordering/>
 </web-app>
