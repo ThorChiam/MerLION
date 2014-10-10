@@ -29,9 +29,9 @@ public class MerlionAdmin implements Serializable {
     private Long id;
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="admin")
     private List<AggregateDemand> aggregatedemand = new ArrayList<>();
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "admin")
     private List<ActionRecord> actionrecord = new ArrayList<>();
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "admin")
     private List<Announcement> announcement = new ArrayList<>();
     @OneToOne(mappedBy="admin")
     private Account Account;

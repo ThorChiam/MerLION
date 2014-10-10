@@ -59,7 +59,6 @@
 </h:form>
  
 <p:socket onMessage="handleMessage" channel="/{room}" autoConnect="false" widgetVar='subscriber' />
-</html> 
 <script type="text/javascript">
     function handleMessage(message) {
         var chatContent = $(PrimeFaces.escapeClientId('form:public')),
@@ -75,5 +74,6 @@
         }
     }
 </script>
+</html> 
 
 

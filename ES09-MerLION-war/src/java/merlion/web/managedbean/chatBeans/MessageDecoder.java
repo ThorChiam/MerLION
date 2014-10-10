@@ -7,7 +7,6 @@ package merlion.web.managedbean.chatBeans;
 
 import org.primefaces.push.Decoder;
 
-
 /**
  *
  * @author ThorChiam

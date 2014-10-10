@@ -28,8 +28,8 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Order")
-    private List<AggregateDemand> aggregatedemand = new ArrayList<>();
+//    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "orders")
+//    private List<AggregateDemand> aggregatedemand = new ArrayList<>();
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
     private Company company;
 
@@ -41,13 +41,13 @@ public class Order implements Serializable {
         this.company = company;
     }
 
-    public List<AggregateDemand> getAggregatedemand() {
-        return aggregatedemand;
-    }
-
-    public void setAggregatedemand(List<AggregateDemand> aggregatedemand) {
-        this.aggregatedemand = aggregatedemand;
-    }
+//    public List<AggregateDemand> getAggregatedemand() {
+//        return aggregatedemand;
+//    }
+//
+//    public void setAggregatedemand(List<AggregateDemand> aggregatedemand) {
+//        this.aggregatedemand = aggregatedemand;
+//    }
   
     public Long getId() {
         return id;

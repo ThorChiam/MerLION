@@ -31,8 +31,8 @@ public class AggregateDemand implements Serializable {
     
     @OneToOne
     private Auction auction;
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="AggregateDemand")
-    private List<Order> orders = new ArrayList<>();
+//    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="aggregatedemand")
+//    private List<Order> orders = new ArrayList<>();
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
     private MerlionAdmin admin;
 
@@ -44,13 +44,13 @@ public class AggregateDemand implements Serializable {
         this.admin = admin;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
+//    public List<Order> getOrders() {
+//        return orders;
+//    }
+//
+//    public void setOrders(List<Order> orders) {
+//        this.orders = orders;
+//    }
 
     public Auction getAuction() {
         return auction;

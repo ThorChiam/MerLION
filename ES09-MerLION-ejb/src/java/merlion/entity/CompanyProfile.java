@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
  *
  * @author USER
  */
-@Entity(name = "CompanyProfile")
+@Entity
 public class CompanyProfile implements Serializable {
 
     private static final long serialVersionUID = 1L;

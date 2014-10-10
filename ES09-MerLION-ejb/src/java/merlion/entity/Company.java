@@ -54,9 +54,9 @@ public class Company implements Serializable {
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
     private Warehouse warehouse;
     
-    @OneToOne(mappedBy="companyprofile")
+    @OneToOne(mappedBy="company")
     private Account Account;
-    
+
     
     
     public List<Contract> getContract() {
