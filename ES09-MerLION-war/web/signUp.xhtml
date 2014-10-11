@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+
+        <title>MerLION Logistics</title>
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <link href="/CompanySystem-war/css/bootstrap.min.css" rel="stylesheet" />
+    </h:head>
+    <!-- Add 50px padding top to the body for the navbar -->
+    <h:body style="padding-top: 40px; padding-bottom: 20px;">
+
+        <b:navBar brand="My MerLION" brandHref="main.xhtml" inverse="false" fixed="top">
+            <b:navbarLinks>
+                <b:navLink value="Sign Up" href="#"></b:navLink>
+                <b:navLink value="About us" href="aboutUs.xhtml"></b:navLink>
+                <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>
+                <b:dropMenu value="Services">
+                    <b:navLink value="Action" href="#"></b:navLink>
+                    <b:navLink value="Another action" href="#"></b:navLink>
+                    <b:navLink value="Something else here" href="#"></b:navLink>
+                    <b:navLink></b:navLink>
+                    <b:navLink header="Nav header"></b:navLink>
+                    <b:navLink value="Separated link" href="#"></b:navLink>
+                    <b:navLink value="One more separated link" href="#"></b:navLink>
+                </b:dropMenu>
+            </b:navbarLinks>
+
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
+                    <b:inputText placeholder="Email" fieldSize="sm"/>
+                    <!--input type="text" class="form-control" placeholder="Search"/-->
+                </div>
+                <div class="form-group">
+                    <b:inputText placeholder="Password" fieldSize="sm"/>
+                </div> 
+                #{' '}
+                <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+            </h:form>
+        </b:navBar>
+        <br/>
+
+
+        <b:container>
+            <b:row>
+                <b:column col-md="12">
+                    <font color="#585858">
+                        <h4 color="grey">Create your account</h4>
+                        <br/>
+                        <div class="container">
+
+                            <h:form id="signupform" role="form">
+                                <!--change panel to growl-->
+                                <p:growl id="panel" rendered="#{facesContext.externalContext.sessionMap['accountCreated']==null}">
+                                    <h:panelGrid>
+                                        <div class="form-group">
+                                            <h:outputLabel for="email" value="Email : "/>
+                                            <h:inputText id="email" value="#{AccountManagerBean.email}" required="true"
+                                                         requiredMessage="Please enter Email" class="form-control" />
+                                            <h:message for="email" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="password" value="Password : " />
+                                            <h:inputSecret id="password" value="#{AccountManagerBean.password}" required="true"
+                                                           requiredMessage="Please enter password" class="form-control"/>
+                                            <h:message for="password" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="comp_name" value="Company name : " />
+                                            <h:inputText id="comp_name" value="#{AccountManagerBean.comp_name}" required="true"
+                                                         requiredMessage="Company name is required" class="form-control"/>
+                                            <h:message for="comp_name" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="comp_address" value="Company address : " />
+                                            <h:inputText id="comp_address" value="#{AccountManagerBean.comp_address}" required="true"
+                                                         requiredMessage="Please enter your company address" class="form-control"/>
+                                            <h:message for="comp_address" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="contact" value="Contact No : " />
+                                            <h:inputText id="contact" value="#{AccountManagerBean.comp_contact_no}" required="true"
+                                                         requiredMessage="Please enter your contact number" class="form-control"/>
+                                            <h:message for="contact" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="security_question" value="security question : " />
+                                            <h:inputText id="security_question" value="#{AccountManagerBean.security_question}" required="true"
+                                                         requiredMessage="Please enter your security question" class="form-control"/>
+                                            <h:message for="security_question" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="security_answer" value="security answer : " />
+                                            <h:inputText id="security_answer" value="#{AccountManagerBean.security_answer}" required="true"
+                                                         requiredMessage="Please enter your security answer" class="form-control"/>
+                                            <h:message for="security_answer" style="color: red;" />
+                                        </div>
+                                    </h:panelGrid>
+                                    <br/>
+                                    <p:captcha id="captcha" label="Captcha" />
+                                    <p:message for="captcha" />
+                                    <p:commandButton id="btn" value="sign up" update="panel" actionListener="#{AccountManagerBean.signup}" ajax="false" />
+                                </p:growl>
+
+                                <p:panel id="panel2" header="" rendered="#{facesContext.externalContext.sessionMap['accountCreated']!=null}">
+                                    <a href="createCompanyProfile.xhtml" >Create Company Profile</a>
+                               
+                                </p:panel>
+                            </h:form>
+                        </div>
+                    </font>
+                </b:column>
+            </b:row>
+        </b:container>
+
+        <br/>
+        <br/>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+
+                </div>
+
+            </div>
+        </foot>
+        <script
+            src="/CompanySystem-war/js/bootstrap.min.js"
+        type="text/javascript"></script> <script
+            src="/CompanySystem-war/js/docs.min.js"
+        type="text/javascript"></script>
+        <!--  IE10 viewport hack for Surface/desktop Windows 8 bug --> <script
+            src="/CompanySystem-war/js/jquery.min.js"
+        type="text/javascript"></script>
+
+    </h:body>
+</html>
