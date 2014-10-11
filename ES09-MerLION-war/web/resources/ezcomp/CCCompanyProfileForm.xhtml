@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite">
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="formName" required="true"/>
+    </cc:interface>
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <f:view>
+            <h:form id="addCompanyProfileForm">
+                <h2><h:outputLabel value="#{cc.attrs.formName}" /></h2>
+                <h:outputText style="font-weight: bold" value="Company Name: " />
+                <h:inputText required="true" requiredMessage="Field is required." id="companyName" value="#{companyManagerBean.companyName}">
+                </h:inputText>
+                <h:message styleClass="errorMsg" for="companyName" />
+                <br/>
+                <h:outputText style="font-weight: bold" value="Company Address: " />
+                <h:inputText required="true" requiredMessage="Field is required." id="companyAddress" value="#{companyManagerBean.companyAddress}">
+                    <f:validateLength minimum="19" maximum="19" />
+                </h:inputText>
+                <h:message styleClass="errorMsg" for="companyAddress" />
+                <br/>
+                <h:outputText style="font-weight: bold" value="Tel: " />
+                <h:inputText required="true" requiredMessage="Field is required." id="tel" value="#{companyManagerBean.tel}">
+                    <f:validateLength minimum="19" maximum="19" />
+                </h:inputText>
+                <h:message styleClass="errorMsg" for="tel" />
+                <br/>
+                <h:outputText style="font-weight: bold" value="Email: " />
+                <h:inputText required="true" requiredMessage="Field is required." id="email" value="#{companyManagerBean.email}">
+                    <f:validateLength minimum="19" maximum="19" />
+                </h:inputText>
+                <h:message styleClass="errorMsg" for="email" />
+                <br/>
+                <h:outputText style="font-weight: bold" value="Website: " />
+                <h:inputText required="true" requiredMessage="Field is required." id="website" value="#{companyManagerBean.website}">
+                    <f:validateLength minimum="19" maximum="19" />
+                </h:inputText>
+                <h:message styleClass="errorMsg" for="website" />
+                <br/>
+                <h:outputText style="font-weight: bold" value="Company History " />
+                <h:inputText required="true" requiredMessage="Field is required." id="companyHistory" value="#{companyManagerBean.companyHistory}">
+                    <f:validateLength minimum="19" maximum="19" />
+                </h:inputText>
+                <h:message styleClass="errorMsg" for="companyHistory" />
+                <br/>
+                <h:outputText style="font-weight: bold" value="Service: " />
+                <h:inputText required="true" requiredMessage="Field is required." id="service" value="#{companyManagerBean.service}">
+                    <f:validateLength minimum="19" maximum="19" />
+                </h:inputText>
+                <h:message styleClass="errorMsg" for="service" />
+                <br/>
+                <h:outputText style="font-weight: bold" value="Vision: " />
+                <h:inputText required="true" requiredMessage="Field is required." id="vision" value="#{companyManagerBean.vision}">
+                    <f:validateLength minimum="19" maximum="19" />
+                </h:inputText>
+                <h:message styleClass="errorMsg" for="vision" />
+                <br/><br/>
+                
+                <h:commandButton action="saveCompanyProfile.xhtml" value="Save New Event" actionListener="#{companyManagerBean.saveCompanyProfile}" />
+            </h:form>
+        </f:view>
+    </cc:implementation>
+</html>
