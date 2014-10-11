@@ -1,0 +1,360 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+
+        <title>MerLION Logistics</title>
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>       
+        <link href="/CompanySystem-war/css/bootstrap.min.css" rel="stylesheet" />
+        <script
+            src="/CompanySystem-war/js/ie-emulation-modes-warning.js"
+        type="text/javascript"></script>
+        <link href="/CompanySystem-war/css/carousel.css" rel="stylesheet" />
+    </h:head>
+    <!-- Add 50px padding top to the body for the navbar -->
+    <h:body style="padding-top: 40px; padding-bottom: 20px;">
+
+        <b:navBar brand="MerLION Logistics" brandHref="main.xhtml" inverse="false" fixed="top">
+            <b:navbarLinks>
+                <b:navLink value="Sign Up" href="#"></b:navLink>
+                <b:navLink value="About us" href="aboutUs.xhtml"></b:navLink>
+                <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>
+                <b:dropMenu value="Services">
+                    <b:navLink value="Action" href="#"></b:navLink>
+                    <b:navLink value="Another action" href="#"></b:navLink>
+                    <b:navLink value="Something else here" href="#"></b:navLink>
+                    <b:navLink></b:navLink>
+                    <b:navLink header="Nav header"></b:navLink>
+                    <b:navLink value="Separated link" href="#"></b:navLink>
+                    <b:navLink value="One more separated link" href="#"></b:navLink>
+                </b:dropMenu>
+            </b:navbarLinks>
+
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
+                    <b:inputText placeholder="Email" fieldSize="sm"/>
+                    <!--input type="text" class="form-control" placeholder="Search"/-->
+                </div>
+                <div class="form-group">
+                    <b:inputText placeholder="Password" fieldSize="sm"/>
+                </div> 
+                #{' '}
+                <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+            </h:form>
+        </b:navBar>
+
+        <b:container>
+        <div id="myCarousel" class="carousel slide"  data-ride="carousel" data-interval="2000">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img
+                        src="image/logistics1.jpg;"
+                        alt="First slide" />
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>
+                                Be A Member. Enjoy More Benefits
+                            </h1>
+                            <p>
+                                Be a member of MerLION, enjoy more privileges and benefits for
+                                your business
+                            </p>
+                            <p>
+                                <a class="btn btn-lg btn-primary" href="#">Sign up today</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img
+                        src="image/logistics2.jpg;"
+                        alt="Second slide" />
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>
+                                Know More About Merlion Logistic
+                            </h1>
+                            <p>
+                                Know more details about Merlion Logistic
+                            </p>
+                            <p>
+                                <a class="btn btn-lg btn-primary" href="#">Learn more</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img
+                        src="image/logistics3.jpg;"
+                        alt="Third slide" />
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>
+                                Find Potential Business Partners
+                            </h1>
+                            <p>
+                                Grab business opportunities by looking up potential business partners
+                            </p>
+                            <p>
+                                <a class="btn btn-lg btn-primary" href="#">View Company Profile List</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div>
+            </b:container>
+        <hr>
+        </hr>
+        <b:container>
+            <b:row>
+
+                <b:column col-md="4">
+                    <h4><b>Track Your Cargo</b></h4>
+                    <h:form>
+                        <p:growl id="msg" showDetail="true" />
+                        <h:panelGrid columns="1" cellpadding="2">
+                            <p:outputLabel for="date" value="Track No.: " />
+                            <p:inputTextarea id="date"/>
+
+                        </h:panelGrid>
+                        <p:commandButton value="Submit" update="msg" actionListener="#{CalendarView.click}" icon="ui-icon-check" />
+                        <p:dialog widgetVar="dlg" modal="true" resizable="false" header="Values" showEffect="fade">
+                            <p:panelGrid id="display" columns="1" columnClasses="label,value">
+                                <h:outputText value="Track No.: " />
+                                <h:outputText id="dateValue"/>
+
+
+                            </p:panelGrid>
+                        </p:dialog>
+                    </h:form>
+
+                </b:column>
+                <b:column col-md="8">
+                    <h4>Latest News</h4>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, 
+                        ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><b:button outcome="" value="View details »"/></p>
+                </b:column>
+
+
+            </b:row>
+        </b:container>
+        <hr>
+        </hr>
+
+        <b:container>
+            <b:row>
+                <b:column col-md="4">
+                    <h4><b>Need a Delivery?</b></h4>
+
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true" />
+                        <h:panelGrid columns="2" cellpadding="5">
+
+                            <p:outputLabel for="departure" value="Departure: " />
+                            <p:inputText id="departure" value="#{CalendarView.text1}" />
+
+                            <p:outputLabel for="destination" value="Destination:" />
+                            <p:inputText id="destination" value="#{CalendarView.text2}" />
+
+
+                            <p:outputLabel for="button" value="From:" />
+                            <p:calendar id="button" value="#{CalendarView.date3}" showOn="button" />
+                            <p:outputLabel for="button2" value="To" />
+                            <p:calendar id="button2" value="#{CalendarView.date4}" showOn="button" />
+
+
+
+                        </h:panelGrid>
+                        <p:commandButton value="Submit" update="msgs" actionListener="#{CalendarView.click}" icon="ui-icon-check" />
+                        <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+                            <p:panelGrid id="display" columns="2" columnClasses="label,value">
+
+                                <h:outputText value="From:" />
+                                <h:outputText value="#{CalendarView.date3}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="To:" />
+                                <h:outputText value="#{CalendarView.date4}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
+                            </p:panelGrid>
+                        </p:dialog>
+                    </h:form>
+                </b:column>
+
+                <b:column col-md="8">
+                    <h4>Transportation Service Provider List</h4>
+                    <p> Recommendation Function: This area is designed to list service providers who paid for advertizing fee </p>
+                    <p><b:button outcome="" value="View details »"/></p>
+                </b:column>
+
+
+
+
+            </b:row>
+        </b:container>
+        <hr>
+        </hr>
+       
+        <b:container>
+            <b:row>
+                <b:column col-md="4">
+                    <h4><b>Need a Warehouse?</b></h4>
+                    <h:form id="form1">
+                        <p:growl id="msg" showDetail="true" />
+                        <h:panelGrid columns="2" cellpadding="5">
+
+
+                            <p:outputLabel for="location" value="Location:" />
+                            <p:inputText id="location" value="#{CalendarView.text2}" />
+
+
+                            <p:outputLabel for="button" value="From:" />
+                            <p:calendar id="button" value="#{CalendarView.date3}" showOn="button" />
+                            <p:outputLabel for="button2" value="To" />
+                            <p:calendar id="button2" value="#{CalendarView.date4}" showOn="button" />
+
+
+
+                        </h:panelGrid>
+                        <p:commandButton value="Submit" update="msg" actionListener="#{CalendarView.click}" icon="ui-icon-check" />
+                        <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+                            <p:panelGrid id="view" columns="2" columnClasses="label,value">
+
+                                <h:outputText value="From:" />
+                                <h:outputText value="#{CalendarView.date3}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="To:" />
+                                <h:outputText value="#{CalendarView.date4}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
+                            </p:panelGrid>
+                        </p:dialog>
+                    </h:form>
+
+
+
+                </b:column>
+
+                <b:column col-md="8">
+                    <h4>Warehouse </h4>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, 
+                        ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><b:button outcome="" value="View details Â»"/></p>
+
+
+
+                </b:column>
+            </b:row>
+
+
+        </b:container>
+        <hr>
+        </hr>
+
+        <b:container>
+
+            <h:form>
+
+                <p:growl id="msgs" showDetail="true" />
+
+                <h4 style="margin-top:0"><b>Services</b></h4>
+                <p:tabView>
+                    <p:tab title="OES">
+                        <h:panelGrid columns="2" cellpadding="7">
+                            <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
+                            <h:outputText
+                                value="The story begins as Don Vito Corleone..." />
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="MRP">
+                        <h:panelGrid columns="2" cellpadding="7">
+                            <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                            <h:outputText value="Francis Ford Coppola's legendary..." />
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="WMS">
+                        <h:panelGrid columns="2" cellpadding="7">
+                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                            <h:outputText value="After a break of more than 15 years..." />
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                    <p:tab title="CRMS">
+                        <h:panelGrid columns="2" cellpadding="7">
+                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                            <h:outputText value="After a break of more than 15 years..." />
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="GRNS">
+                        <h:panelGrid columns="2" cellpadding="7">
+                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                            <h:outputText value="After a break of more than 15 years..." />
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="TMS">
+                        <h:panelGrid columns="2" cellpadding="7">
+                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                            <h:outputText value="After a break of more than 15 years..." />
+                        </h:panelGrid>
+                    </p:tab>
+                </p:tabView>
+            </h:form>
+
+        </b:container>
+
+
+        <b:container>
+            <img src="image/footer.png" alt="" />
+
+        </b:container>
+        <hr/>
+        <hr/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p><b>2014 MerLION Logistics.</b></p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+                </div>
+
+            </div>
+        </foot>
+        <script
+            src="/CompanySystem-war/js/bootstrap.min.js"
+        type="text/javascript"></script> <script
+            src="/CompanySystem-war/js/docs.min.js"
+        type="text/javascript"></script>
+        <!--  IE10 viewport hack for Surface/desktop Windows 8 bug --> <script
+            src="/CompanySystem-war/js/ie10-viewport-bug-workaround.js"
+        type="text/javascript"></script>
+
+    </h:body>
+</html>
