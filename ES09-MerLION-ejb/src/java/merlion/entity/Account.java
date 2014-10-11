@@ -31,8 +31,6 @@ public class Account implements Serializable {
     private String security_answer;
 
     //Added by QT
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<Salesquotation> salesquotations = new ArrayList<>();
     
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<Item> items = new ArrayList<>();
@@ -58,8 +56,6 @@ public class Account implements Serializable {
     @OneToOne
     private MerlionAdmin admin;
 
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<PurchaseOrder> purchaseorders = new ArrayList<>();
     @ManyToMany(cascade={CascadeType.PERSIST})
     @JoinTable(name="ACCOUNT_ANNOUNCEMENT")
     private Set<Announcement> announcements=new HashSet<>();
@@ -67,10 +63,6 @@ public class Account implements Serializable {
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<Notification> notificationss = new ArrayList<>();
     
-    
-    public Account() {
-    }
-
     
     public void create(String email, String password, String comp_name, String comp_address, String comp_contact_no, 
                        String accessright, String status,String security_question,String security_answer){
@@ -116,15 +108,7 @@ public class Account implements Serializable {
     public void setCompany(Company company) {
         this.company = company;
     }
-    
-    public List<PurchaseOrder> getPurchaseorders() {
-        return purchaseorders;
-    }
-
-    public void setPurchaseorders(List<PurchaseOrder> purchaseorders) {
-        this.purchaseorders = purchaseorders;
-    }
-    
+   
     public CompanyProfile getCompanyprofile() {
         return companyprofile;
     }
@@ -139,14 +123,6 @@ public class Account implements Serializable {
 
     public void setServicecatalogs(List<ServiceCatalog> servicecatalogs) {
         this.servicecatalogs = servicecatalogs;
-    }
-    
-    public List<Salesquotation> getSalesquotations() {
-        return salesquotations;
-    }
-
-    public void setSalesquotations(List<Salesquotation> salesquotations) {
-        this.salesquotations = salesquotations;
     }
 
     public List<Item> getItems() {

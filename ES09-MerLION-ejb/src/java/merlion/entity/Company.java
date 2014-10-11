@@ -7,6 +7,7 @@ package merlion.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import merlion.entity.OES.OES_Product;
 /**
  *
  * @author sunny
@@ -56,9 +58,23 @@ public class Company implements Serializable {
     
     @OneToOne(mappedBy="company")
     private Account Account;
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    private Collection<OES_Product> products=new ArrayList<>();
 
     
+    public Company(){
+        setId(System.nanoTime());
+    }
     
+    public Collection<OES_Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Collection<OES_Product> products) {
+        this.products = products;
+    }
+
     public List<Contract> getContract() {
         return contract;
     }
