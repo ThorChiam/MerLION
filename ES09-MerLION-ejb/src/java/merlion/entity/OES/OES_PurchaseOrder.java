@@ -33,17 +33,26 @@ public class OES_PurchaseOrder implements Serializable {
     private Account buyer;
     private double taxrate;
     private List<Integer> quantity = new ArrayList();
+    private String createdate;
     
     @OneToOne
     OES_SalesOrder salesorder;
     
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="oes_purchaseorder")
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="purchaseorder")
     private Collection<OES_Product> product = new ArrayList<>();
     
     public OES_PurchaseOrder(){
         setId(System.nanoTime());
     }
+    
+    public String getCreatedate() {
+        return createdate;
+    }
 
+    public void setCreatedate(String createdate) {
+        this.createdate = createdate;
+    }
+    
     public Long getId() {
         return id;
     }

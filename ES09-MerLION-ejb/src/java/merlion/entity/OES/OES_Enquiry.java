@@ -32,18 +32,26 @@ public class OES_Enquiry implements Serializable {
     private Long id;
     private Account seller;
     private Account buyer;
+    private String createdate;
     
     @OneToOne 
     private OES_Quotation quotation;
     
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="oes_equiry")
-    private Collection<OES_Product> product = new ArrayList<>();
-
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="enquiry")
+    private Collection<OES_Product> product = new ArrayList<>(); 
     
     private List<Integer> quantity = new ArrayList();
 
     public OES_Enquiry(){
         setId(System.nanoTime());
+    }
+     
+    public String getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(String createdate) {
+        this.createdate = createdate;
     }
     
     public Account getSeller() {
