@@ -14,6 +14,7 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
         <link href="/ES09-MerLION-war/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/ES09-MerLION-war/css/search.css" rel="stylesheet"/>
     </h:head>
     <!-- Add 50px padding top to the body for the navbar -->
     <h:body style="padding-top: 40px; padding-bottom: 20px;">
@@ -49,9 +50,14 @@
         <br/>
 
 
+
         <b:container>
             <b:row>
-                <b:column col-md="12">
+
+                <div style="border-left:thin darkgrey solid; position:absolute; left:600px; height:700px;"/> 
+                <b:column col-md="1"></b:column>
+                <b:column col-md="5">
+
                     <font color="#585858">
                         <h4 color="grey">Create your account</h4>
                         <br/>
@@ -112,15 +118,19 @@
 
                                 <p:panel id="panel2" header="" rendered="#{facesContext.externalContext.sessionMap['accountCreated']!=null}">
                                     <a href="createCompanyProfile.xhtml" >Create Company Profile</a>
-                               
+
                                 </p:panel>
                             </h:form>
                         </div>
                     </font>
+
                 </b:column>
+                <br/>
+                <b:column col-md="6"><img src="image/signUp.png" width="400" height="280"/></b:column>
             </b:row>
         </b:container>
 
+        <br/>
         <br/>
         <br/>
         <br/>
