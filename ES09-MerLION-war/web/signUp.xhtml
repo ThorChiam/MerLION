@@ -63,43 +63,43 @@
                                     <h:panelGrid>
                                         <div class="form-group">
                                             <h:outputLabel for="email" value="Email : "/>
-                                            <h:inputText id="email" value="#{AccountManagerBean.email}" required="true"
+                                            <h:inputText id="email" value="#{AccountManagedBean.email}" required="true"
                                                          requiredMessage="Please enter Email" class="form-control" />
                                             <h:message for="email" style="color: red;" />
                                         </div>
                                         <div class="form-group">
                                             <h:outputLabel for="password" value="Password : " />
-                                            <h:inputSecret id="password" value="#{AccountManagerBean.password}" required="true"
+                                            <h:inputSecret id="password" value="#{AccountManagedBean.password}" required="true"
                                                            requiredMessage="Please enter password" class="form-control"/>
                                             <h:message for="password" style="color: red;" />
                                         </div>
                                         <div class="form-group">
                                             <h:outputLabel for="comp_name" value="Company name : " />
-                                            <h:inputText id="comp_name" value="#{AccountManagerBean.comp_name}" required="true"
+                                            <h:inputText id="comp_name" value="#{AccountManagedBean.comp_name}" required="true"
                                                          requiredMessage="Company name is required" class="form-control"/>
                                             <h:message for="comp_name" style="color: red;" />
                                         </div>
                                         <div class="form-group">
                                             <h:outputLabel for="comp_address" value="Company address : " />
-                                            <h:inputText id="comp_address" value="#{AccountManagerBean.comp_address}" required="true"
+                                            <h:inputText id="comp_address" value="#{AccountManagedBean.comp_address}" required="true"
                                                          requiredMessage="Please enter your company address" class="form-control"/>
                                             <h:message for="comp_address" style="color: red;" />
                                         </div>
                                         <div class="form-group">
                                             <h:outputLabel for="contact" value="Contact No : " />
-                                            <h:inputText id="contact" value="#{AccountManagerBean.comp_contact_no}" required="true"
+                                            <h:inputText id="contact" value="#{AccountManagedBean.comp_contact_no}" required="true"
                                                          requiredMessage="Please enter your contact number" class="form-control"/>
                                             <h:message for="contact" style="color: red;" />
                                         </div>
                                         <div class="form-group">
                                             <h:outputLabel for="security_question" value="security question : " />
-                                            <h:inputText id="security_question" value="#{AccountManagerBean.security_question}" required="true"
+                                            <h:inputText id="security_question" value="#{AccountManagedBean.security_question}" required="true"
                                                          requiredMessage="Please enter your security question" class="form-control"/>
                                             <h:message for="security_question" style="color: red;" />
                                         </div>
                                         <div class="form-group">
                                             <h:outputLabel for="security_answer" value="security answer : " />
-                                            <h:inputText id="security_answer" value="#{AccountManagerBean.security_answer}" required="true"
+                                            <h:inputText id="security_answer" value="#{AccountManagedBean.security_answer}" required="true"
                                                          requiredMessage="Please enter your security answer" class="form-control"/>
                                             <h:message for="security_answer" style="color: red;" />
                                         </div>
@@ -107,7 +107,7 @@
                                     <br/>
                                     <p:captcha id="captcha" label="Captcha" />
                                     <p:message for="captcha" />
-                                    <p:commandButton id="btn" value="sign up" update="panel" actionListener="#{AccountManagerBean.signup}" ajax="false" />
+                                    <p:commandButton id="btn" value="sign up" update="panel" actionListener="#{AccountManagedBean.signup}" ajax="false" />
                                 </p:growl>
 
                                 <p:panel id="panel2" header="" rendered="#{facesContext.externalContext.sessionMap['accountCreated']!=null}">
