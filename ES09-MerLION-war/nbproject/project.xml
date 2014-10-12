@@ -8,11 +8,13 @@
             <web-module-libraries>
                 <library dirs="100">
                     <file>${reference.ES09-MerLION-ejb.dist}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${libs.primefaces.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.atmosphere-runtime-2.0.0.rc5.jar}</file>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.BootsFaces-0.3.7-dist.jar}</file>
@@ -24,6 +26,17 @@
                 </library>
                 <library dirs="200">
                     <file>${file.reference.excite-bike.jar}</file>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.BootsFaces-0.3.7-dist.jar-1}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.MFontAwesome.jar-1}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.excite-bike.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">

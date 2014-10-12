@@ -59,7 +59,7 @@ public class Company implements Serializable {
     @OneToOne(mappedBy="company")
     private Account Account;
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "company")
     private Collection<OES_Product> products=new ArrayList<>();
 
     

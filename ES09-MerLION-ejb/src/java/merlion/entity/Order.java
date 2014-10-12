@@ -6,8 +6,6 @@
 package merlion.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -28,8 +25,7 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-//    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "orders")
-//    private List<AggregateDemand> aggregatedemand = new ArrayList<>();
+
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
     private Company company;
 
@@ -41,14 +37,6 @@ public class Order implements Serializable {
         this.company = company;
     }
 
-//    public List<AggregateDemand> getAggregatedemand() {
-//        return aggregatedemand;
-//    }
-//
-//    public void setAggregatedemand(List<AggregateDemand> aggregatedemand) {
-//        this.aggregatedemand = aggregatedemand;
-//    }
-  
     public Long getId() {
         return id;
     }

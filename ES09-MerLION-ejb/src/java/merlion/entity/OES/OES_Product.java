@@ -37,14 +37,6 @@ public class OES_Product implements Serializable {
         setId(System.nanoTime());
     }
     
-    public void createproduct(String name, double price, int quantity, String description){
-        this.setName(name);
-        this.setPrice(price);
-        this.setQuantity(quantity);
-        this.setDescription(description);     
-    }
-
-    
     public OES_PurchaseOrder getPurchaseorder() {
         return purchaseorder;
     }
