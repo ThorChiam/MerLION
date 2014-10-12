@@ -25,12 +25,20 @@ public class Chat implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Company company;
     private String anotherChatter;
     private String chatContent;
     private long chatTime;
+    
+    @ManyToOne
+    private Account chat_sender;
 
+    @ManyToOne
+    private Account chat_receiver;
+
+    public Chat(){
+       setId(System.nanoTime());
+    }
+    
     public Long getId() {
         return id;
     }
@@ -38,15 +46,24 @@ public class Chat implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     
-    public Company getCompany() {
-        return company;
+    public Account getChat_sender() {
+        return chat_sender;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setChat_sender(Account chat_sender) {
+        this.chat_sender = chat_sender;
     }
 
+    public Account getChat_receiver() {
+        return chat_receiver;
+    }
+
+    public void setChat_receiver(Account chat_receiver) {
+        this.chat_receiver = chat_receiver;
+    }
+    
     public String getAnotherChatter() {
         return anotherChatter;
     }

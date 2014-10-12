@@ -6,9 +6,7 @@
 package merlion.entity.WMS;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,20 +17,21 @@ import javax.persistence.ManyToOne;
  * @author sunny
  */
 @Entity
-public class Storagebin implements Serializable {
+public class WMSEmployee implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Inventory inventory;
+    
+    @ManyToOne
+    private WMSWarehouse WMSWarehouse;
 
-    public Inventory getInventory() {
-        return inventory;
+    public WMSWarehouse getWarehouse() {
+        return WMSWarehouse;
     }
 
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
+    public void setWarehouse(WMSWarehouse warehouse) {
+        this.WMSWarehouse = warehouse;
     }
 
     public Long getId() {
@@ -53,10 +52,10 @@ public class Storagebin implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Storagebin)) {
+        if (!(object instanceof WMSEmployee)) {
             return false;
         }
-        Storagebin other = (Storagebin) object;
+        WMSEmployee other = (WMSEmployee) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -65,7 +64,7 @@ public class Storagebin implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_new_enetity.Storagebin[ id=" + id + " ]";
+        return "merlion_new_enetity.Employee[ id=" + id + " ]";
     }
     
 }

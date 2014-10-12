@@ -10,7 +10,6 @@ import java.util.List;
 import merlion.ejb.local.AdministratorSessionBeanLocal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import merlion.entity.CommonInfrastructure.Account;

@@ -4,36 +4,29 @@
  * and open the template in the editor.
  */
 package merlion.entity.WMS;
-
+//warehouse order management
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import merlion.entity.CommonInfrastructure.Account;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class Facility implements Serializable {
+public class WMSOrder implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Warehouse warehouse;
+    
 
-    public Warehouse getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
-    }
+    @ManyToOne
+    private Account Account;
 
     public Long getId() {
         return id;
@@ -41,6 +34,14 @@ public class Facility implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Account getAccount() {
+        return Account;
+    }
+
+    public void setAccount(Account Account) {
+        this.Account = Account;
     }
 
     @Override
@@ -53,10 +54,10 @@ public class Facility implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Facility)) {
+        if (!(object instanceof WMSOrder)) {
             return false;
         }
-        Facility other = (Facility) object;
+        WMSOrder other = (WMSOrder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -65,7 +66,7 @@ public class Facility implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_new_enetity.Facility[ id=" + id + " ]";
+        return "merlion_ejb.entity.New_Order[ id=" + id + " ]";
     }
     
 }

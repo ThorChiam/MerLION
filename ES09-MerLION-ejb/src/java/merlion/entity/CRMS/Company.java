@@ -6,10 +6,9 @@
 package merlion.entity.CRMS;
 
 import merlion.entity.CommonInfrastructure.Notification;
-import merlion.entity.WMS.HumanResource;
 import merlion.entity.TMS.TMSFacility;
-import merlion.entity.TMS.DispatchOrder;
-import merlion.entity.WMS.Warehouse;
+import merlion.entity.TMS.TMSDispatchOrder;
+import merlion.entity.WMS.WMSWarehouse;
 import merlion.entity.GRNS.Auction;
 import merlion.entity.CommonInfrastructure.Account;
 import merlion.entity.CommonInfrastructure.Chat;
@@ -25,8 +24,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import merlion.entity.OES.OES_Product;
+import merlion.entity.TMS.TMSHumanResource;
 /**
  *
  * @author sunny
@@ -37,19 +36,24 @@ public class Company implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String companyName;
+    private String companyAddress;
+    private String tel;
+    private String email;
+    private String website;
+    private String companyHistory;
+    private String service;
+    private String vision;
+    
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<ServiceOrder> serviceorder = new ArrayList<>();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<TMSFacility> tmsfacility = new ArrayList<>();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
-    private List<HumanResource> humanresource = new ArrayList<>();
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
-    private List<DispatchOrder> dispatchorder = new ArrayList<>();
+    private List<TMSDispatchOrder> dispatchorder = new ArrayList<>();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<Auction> auction = new ArrayList<>();
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
-    private List<Feedback> feedback = new ArrayList<>();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<Favorite> favorite = new ArrayList<>();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
@@ -61,24 +65,171 @@ public class Company implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<Chat> chats = new ArrayList<>();
 
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Warehouse warehouse;
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    private List<WMSWarehouse> warehouse = new ArrayList();
     
-    @OneToOne(mappedBy="company")
-    private Account Account;
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    private List<Account> Account=new ArrayList<>();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "company")
     private Collection<OES_Product> products=new ArrayList<>();
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "feedback_sender")
+    private List<Feedback> feedback_sender = new ArrayList<>();
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "feedback_receiver")
+    private List<Feedback> feedback_receiver = new ArrayList<>();
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    private List<ServiceCatalog> servicecatalog = new ArrayList<>();
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "service_requester")
+    private List<ServiceOrder> service_requester = new ArrayList<>();
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "service_receiver")
+    private List<ServiceCatalog> service_receiver = new ArrayList<>();
+   
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    private List<TMSFacility> TMSFacility = new ArrayList<>();
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    private List<TMSHumanResource> TMSHumanResource = new ArrayList<>();
 
     
-    public Company(){
-        setId(System.nanoTime());
+  
+    
+    public List<TMSFacility> getTMSFacility() {
+        return TMSFacility;
+    }
+
+    public void setTMSFacility(List<TMSFacility> TMSFacility) {
+        this.TMSFacility = TMSFacility;
+    }
+
+    public List<TMSHumanResource> getTMSHumanResource() {
+        return TMSHumanResource;
+    }
+
+    public void setTMSHumanResource(List<TMSHumanResource> TMSHumanResource) {
+        this.TMSHumanResource = TMSHumanResource;
+    }
+    
+    public List<ServiceCatalog> getServicecatalog() {
+        return servicecatalog;
+    }
+
+    public void setServicecatalog(List<ServiceCatalog> servicecatalog) {
+        this.servicecatalog = servicecatalog;
+    }
+
+    public List<ServiceOrder> getService_requester() {
+        return service_requester;
+    }
+
+    public void setService_requester(List<ServiceOrder> service_requester) {
+        this.service_requester = service_requester;
+    }
+
+    public List<ServiceCatalog> getService_receiver() {
+        return service_receiver;
+    }
+
+    public void setService_receiver(List<ServiceCatalog> service_receiver) {
+        this.service_receiver = service_receiver;
+    }
+    
+    public List<Feedback> getFeedback_sender() {
+        return feedback_sender;
+    }
+
+    public void setFeedback_sender(List<Feedback> feedback_sender) {
+        this.feedback_sender = feedback_sender;
+    }
+
+    public List<Feedback> getFeedback_receiver() {
+        return feedback_receiver;
+    }
+
+    public void setFeedback_receiver(List<Feedback> feedback_receiver) {
+        this.feedback_receiver = feedback_receiver;
+    }
+    
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCompanyAddress() {
+        return companyAddress;
+    }
+
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getCompanyHistory() {
+        return companyHistory;
+    }
+
+    public void setCompanyHistory(String companyHistory) {
+        this.companyHistory = companyHistory;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
+    public String getVision() {
+        return vision;
+    }
+
+    public void setVision(String vision) {
+        this.vision = vision;
     }
     
     public Collection<OES_Product> getProducts() {
         return products;
     }
 
+    public List<Account> getAccount() {
+        return Account;
+    }
+
+    public void setAccount(List<Account> Account) {
+        this.Account = Account;
+    }
+    
     public void setProducts(Collection<OES_Product> products) {
         this.products = products;
     }
@@ -115,30 +266,6 @@ public class Company implements Serializable {
         this.favorite = favorite;
     }
 
-    public Account getAccount() {
-        return Account;
-    }
-
-    public void setAccount(Account Account) {
-        this.Account = Account;
-    }
-    
-    public List<Feedback> getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback(List<Feedback> feedback) {
-        this.feedback = feedback;
-    }
-
-    public Warehouse getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
-    }
-
     public List<Auction> getAuction() {
         return auction;
     }
@@ -147,20 +274,12 @@ public class Company implements Serializable {
         this.auction = auction;
     }
 
-    public List<DispatchOrder> getDispatchorder() {
+    public List<TMSDispatchOrder> getDispatchorder() {
         return dispatchorder;
     }
 
-    public void setDispatchorder(List<DispatchOrder> dispatchorder) {
+    public void setDispatchorder(List<TMSDispatchOrder> dispatchorder) {
         this.dispatchorder = dispatchorder;
-    }
-
-    public List<HumanResource> getHumanresource() {
-        return humanresource;
-    }
-
-    public void setHumanresource(List<HumanResource> humanresource) {
-        this.humanresource = humanresource;
     }
 
     public List<TMSFacility> getTmsfacility() {
@@ -179,6 +298,17 @@ public class Company implements Serializable {
         this.serviceorder = serviceorder;
     }
 
+    
+    
+    
+    
+    
+    
+      
+    public Company(){
+        setId(System.nanoTime());
+    }
+    
     public Long getId() {
         return id;
     }

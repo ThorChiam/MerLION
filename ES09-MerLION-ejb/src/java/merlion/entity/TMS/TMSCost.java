@@ -3,30 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity.CRMS;
+package merlion.entity.TMS;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class Services implements Serializable {
+public class TMSCost implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Company company;
+    
+    @OneToOne(mappedBy="TMSCost")
+    TMSDispatchOrder TMSDispatchOrder;
 
+
+    public TMSCost(){
+        setId(System.nanoTime());
+    }
+    
     public Long getId() {
         return id;
     }
@@ -34,16 +38,15 @@ public class Services implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public TMSDispatchOrder getTMSDispatchOrder() {
+        return TMSDispatchOrder;
+    }
+
+    public void setTMSDispatchOrder(TMSDispatchOrder TMSDispatchOrder) {
+        this.TMSDispatchOrder = TMSDispatchOrder;
+    }
     
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -54,10 +57,10 @@ public class Services implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Services)) {
+        if (!(object instanceof TMSCost)) {
             return false;
         }
-        Services other = (Services) object;
+        TMSCost other = (TMSCost) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -66,7 +69,7 @@ public class Services implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_new_enetity.Services[ id=" + id + " ]";
+        return "merlion.entity.TMS.TMSCost[ id=" + id + " ]";
     }
     
 }

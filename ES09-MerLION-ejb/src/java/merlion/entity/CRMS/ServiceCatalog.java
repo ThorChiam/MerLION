@@ -35,23 +35,24 @@ public class ServiceCatalog implements Serializable {
     private long maxVol;
     private long availableVol;
     
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
-    private Account Account;
-    
+    @ManyToOne
+    private Company Company;
+
     public ServiceCatalog(){
       
         setServiceId(System.nanoTime());
     
     }
+   
+
+    public Company getCompany() {
+        return Company;
+    }
+
+    public void setCompany(Company Company) {
+        this.Company = Company;
+    }
     
-    public Account getAccount() {
-        return Account;
-    }
-
-    public void setAccount(Account Account) {
-        this.Account = Account;
-    }
-
     public Long serviceId() {
         return serviceId;
     }

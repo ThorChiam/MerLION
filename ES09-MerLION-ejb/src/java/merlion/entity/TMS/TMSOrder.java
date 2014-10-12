@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity.WMS;
+package merlion.entity.TMS;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,30 +15,49 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import merlion.entity.CRMS.Company;
+import javax.persistence.OneToMany;
+import merlion.entity.CRMS.Post;
+import merlion.entity.CommonInfrastructure.Account;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class HumanResource implements Serializable {
+public class TMSOrder implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Company company;
+    @ManyToOne
+    Account Account;
+    
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="TMSOrder")
+    private List<TMSDispatchOrder> dispactch = new ArrayList<>();
 
-    public Company getCompany() {
-        return company;
+    
+    public List<TMSDispatchOrder> getDispactch() {
+        return dispactch;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setDispactch(List<TMSDispatchOrder> dispactch) {
+        this.dispactch = dispactch;
     }
 
+    public Account getAccount() {
+        return Account;
+    }
+
+    public void setAccount(Account Account) {
+        this.Account = Account;
+    }
+    
+    
+    public TMSOrder(){
+        setId(System.nanoTime());
+    }
+     
     public Long getId() {
         return id;
     }
@@ -55,10 +76,10 @@ public class HumanResource implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof HumanResource)) {
+        if (!(object instanceof TMSOrder)) {
             return false;
         }
-        HumanResource other = (HumanResource) object;
+        TMSOrder other = (TMSOrder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -67,7 +88,7 @@ public class HumanResource implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_new_enetity.HumanResouce[ id=" + id + " ]";
+        return "merlion.entity.TMS.TMSOrder[ id=" + id + " ]";
     }
     
 }

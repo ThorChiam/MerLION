@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package merlion.entity.WMS;
-//warehouse order management
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,31 +15,41 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import merlion.entity.CRMS.Company;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class Order implements Serializable {
+public class WMSInventory implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @ManyToOne
+    private WMS_Shipment_Order shipmentorder;
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Inventory")
+    private List<WMSStorageArea> storagebin = new ArrayList<>();
 
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Company company;
-
-    public Company getCompany() {
-        return company;
+    public List<WMSStorageArea> getStoragebin() {
+        return storagebin;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setStoragebin(List<WMSStorageArea> storagebin) {
+        this.storagebin = storagebin;
     }
 
+    public WMS_Shipment_Order getShipmentorder() {
+        return shipmentorder;
+    }
+
+    public void setShipmentorder(WMS_Shipment_Order shipmentorder) {
+        this.shipmentorder = shipmentorder;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -56,10 +68,10 @@ public class Order implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Order)) {
+        if (!(object instanceof WMSInventory)) {
             return false;
         }
-        Order other = (Order) object;
+        WMSInventory other = (WMSInventory) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -68,7 +80,7 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_ejb.entity.New_Order[ id=" + id + " ]";
+        return "merlion_new_enetity.Inventory[ id=" + id + " ]";
     }
     
 }
