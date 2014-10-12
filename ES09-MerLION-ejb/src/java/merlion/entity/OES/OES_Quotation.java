@@ -6,6 +6,8 @@
 package merlion.entity.OES;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,8 +24,10 @@ public class OES_Quotation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private List<String> deliver_date=new ArrayList();
+    private String createdate;
 
-    @OneToOne(mappedBy="oes_quotation")
+    @OneToOne(mappedBy="quotation")
     private OES_Enquiry enquiry;
 
     
@@ -31,6 +35,22 @@ public class OES_Quotation implements Serializable {
         setId(System.nanoTime());
     }
    
+     public String getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(String createdate) {
+        this.createdate = createdate;
+    }
+    
+    public List<String> getDeliver_date() {
+        return deliver_date;
+    }
+
+    public void setDeliver_date(List<String> deliver_date) {
+        this.deliver_date = deliver_date;
+    }
+    
     public OES_Enquiry getEnquiry() {
         return enquiry;
     }

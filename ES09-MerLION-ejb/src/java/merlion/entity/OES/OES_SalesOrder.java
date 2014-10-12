@@ -22,7 +22,8 @@ public class OES_SalesOrder implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+    private String createdate;
+
     @OneToOne(mappedBy="salesorder")
     OES_PurchaseOrder purchaseorder;
     
@@ -31,6 +32,14 @@ public class OES_SalesOrder implements Serializable {
 
     public OES_SalesOrder(){
         setId(System.nanoTime());
+    }
+    
+     public String getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(String createdate) {
+        this.createdate = createdate;
     }
     
     public OES_Payment getPayment() {

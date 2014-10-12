@@ -25,17 +25,11 @@ public class OES_Invoice implements Serializable {
     private String Release_date;
     private String notes;
     
-    @OneToOne(mappedBy="oes_invoice") 
+    @OneToOne(mappedBy="invoice") 
     OES_Payment payment;
-    
+
     public OES_Invoice(){
         setId(System.nanoTime());
-    }
-    
-    public void creaetInvoice(String release_date, String notes, OES_Payment payment){
-        this.Release_date=release_date;
-        this.notes=notes;
-        this.payment=payment;
     }
     
     public Long getId() {
@@ -44,6 +38,14 @@ public class OES_Invoice implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public OES_Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(OES_Payment payment) {
+        this.payment = payment;
     }
 
     public String getRelease_date() {

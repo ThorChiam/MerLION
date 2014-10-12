@@ -29,21 +29,13 @@ public class OES_Payment implements Serializable {
     @OneToOne
     OES_Invoice invoice;
     
-    @OneToOne(mappedBy="oes_payment")
+    @OneToOne(mappedBy="payment")
     OES_SalesOrder salesorder;
 
     
     public OES_Payment(){
         setId(System.nanoTime());
-    }
-    
-    public void createPayment(String PaymentDate,String PaymentType, String status, OES_SalesOrder salesorder){
-        this.PaymentDate=PaymentDate;
-        this.PaymentType=PaymentType;
-        this.status=status;
-        this.salesorder=salesorder;
-    }
-    
+    }   
     
     public String getStatus() {
         return status;
