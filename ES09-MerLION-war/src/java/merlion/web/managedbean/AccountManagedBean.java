@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
+import merlion.ejb.AccountSessionBean;
 import merlion.ejb.local.AccountSessionBeanLocal;
 import merlion.entity.CommonInfrastructure.Account;
 
@@ -50,12 +51,15 @@ public class AccountManagedBean implements Serializable {
     private List<Account> accountList;
 
     public AccountManagedBean() {
+        asbl = new AccountSessionBean();
     }
 
     public void signup() {
+        System.out.println("asbl:"+(asbl==null)+";email:"+(email==null)+";pw:"+(password==null));
         email = asbl.createaccount(email, password, comp_name, comp_address, comp_contact_no, accessright, status, security_question, security_answer);
         statusMessage = "sign up successful!";
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("accountCreated", "true");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("email", email);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 statusMessage + " (Welcome " + comp_name + ")", ""));
     }
@@ -78,10 +82,10 @@ public class AccountManagedBean implements Serializable {
                 statusMessage, ""));
     }
 
-    @PostConstruct
-    public void fetchallAccounts() {
-        accountList = asbl.getAccounts();
-    }
+//    @PostConstruct
+//    public void fetchallAccounts() {
+//        accountList = asbl.getAccounts();
+//    }
 
     public Account getAccount() {
         return account;

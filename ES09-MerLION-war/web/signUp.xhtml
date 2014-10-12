@@ -14,6 +14,7 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
         <link href="/ES09-MerLION-war/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/ES09-MerLION-war/css/search.css" rel="stylesheet"/>
     </h:head>
     <!-- Add 50px padding top to the body for the navbar -->
     <h:body style="padding-top: 40px; padding-bottom: 20px;">
@@ -49,9 +50,14 @@
         <br/>
 
 
+
         <b:container>
             <b:row>
-                <b:column col-md="12">
+
+                <div style="border-left:thin darkgrey solid; position:absolute; left:600px; height:700px;"/> 
+                <b:column col-md="1"></b:column>
+                <b:column col-md="5">
+
                     <font color="#585858">
                         <h4 color="grey">Create your account</h4>
                         <br/>
@@ -63,43 +69,43 @@
                                     <h:panelGrid>
                                         <div class="form-group">
                                             <h:outputLabel for="email" value="Email : "/>
-                                            <h:inputText id="email" value="#{AccountManagedBean.email}" required="true"
+                                            <h:inputText id="email" value="#{accountManagedBean.email}" required="true"
                                                          requiredMessage="Please enter Email" class="form-control" />
                                             <h:message for="email" style="color: red;" />
                                         </div>
                                         <div class="form-group">
                                             <h:outputLabel for="password" value="Password : " />
-                                            <h:inputSecret id="password" value="#{AccountManagedBean.password}" required="true"
+                                            <h:inputSecret id="password" value="#{accountManagedBean.password}" required="true"
                                                            requiredMessage="Please enter password" class="form-control"/>
                                             <h:message for="password" style="color: red;" />
                                         </div>
                                         <div class="form-group">
                                             <h:outputLabel for="comp_name" value="Company name : " />
-                                            <h:inputText id="comp_name" value="#{AccountManagedBean.comp_name}" required="true"
+                                            <h:inputText id="comp_name" value="#{accountManagedBean.comp_name}" required="true"
                                                          requiredMessage="Company name is required" class="form-control"/>
                                             <h:message for="comp_name" style="color: red;" />
                                         </div>
                                         <div class="form-group">
                                             <h:outputLabel for="comp_address" value="Company address : " />
-                                            <h:inputText id="comp_address" value="#{AccountManagedBean.comp_address}" required="true"
+                                            <h:inputText id="comp_address" value="#{accountManagedBean.comp_address}" required="true"
                                                          requiredMessage="Please enter your company address" class="form-control"/>
                                             <h:message for="comp_address" style="color: red;" />
                                         </div>
                                         <div class="form-group">
                                             <h:outputLabel for="contact" value="Contact No : " />
-                                            <h:inputText id="contact" value="#{AccountManagedBean.comp_contact_no}" required="true"
+                                            <h:inputText id="contact" value="#{accountManagedBean.comp_contact_no}" required="true"
                                                          requiredMessage="Please enter your contact number" class="form-control"/>
                                             <h:message for="contact" style="color: red;" />
                                         </div>
                                         <div class="form-group">
                                             <h:outputLabel for="security_question" value="security question : " />
-                                            <h:inputText id="security_question" value="#{AccountManagedBean.security_question}" required="true"
+                                            <h:inputText id="security_question" value="#{accountManagedBean.security_question}" required="true"
                                                          requiredMessage="Please enter your security question" class="form-control"/>
                                             <h:message for="security_question" style="color: red;" />
                                         </div>
                                         <div class="form-group">
                                             <h:outputLabel for="security_answer" value="security answer : " />
-                                            <h:inputText id="security_answer" value="#{AccountManagedBean.security_answer}" required="true"
+                                            <h:inputText id="security_answer" value="#{accountManagedBean.security_answer}" required="true"
                                                          requiredMessage="Please enter your security answer" class="form-control"/>
                                             <h:message for="security_answer" style="color: red;" />
                                         </div>
@@ -107,20 +113,24 @@
                                     <br/>
                                     <p:captcha id="captcha" label="Captcha" />
                                     <p:message for="captcha" />
-                                    <p:commandButton id="btn" value="sign up" update="panel" actionListener="#{AccountManagedBean.signup}" ajax="false" />
+                                    <p:commandButton id="btn" value="sign up" update="panel" actionListener="#{accountManagedBean.signup}" ajax="false" />
                                 </p:growl>
 
                                 <p:panel id="panel2" header="" rendered="#{facesContext.externalContext.sessionMap['accountCreated']!=null}">
                                     <a href="createCompanyProfile.xhtml" >Create Company Profile</a>
-                               
+
                                 </p:panel>
                             </h:form>
                         </div>
                     </font>
+
                 </b:column>
+                <br/>
+                <b:column col-md="6"><img src="image/signUp.png" width="400" height="280"/></b:column>
             </b:row>
         </b:container>
 
+        <br/>
         <br/>
         <br/>
         <br/>
