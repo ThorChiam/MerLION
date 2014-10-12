@@ -38,11 +38,11 @@
         </h:panelGroup>
  
         <h:panelGroup rendered="#{not chatView.loggedIn}" >
-            Username: <p:inputText value="#{chatView.username}" disabled="true" />
+            Username: <p:inputText value="#{chatView.username}" disabled="false" />
  
             <p:spacer width="5" />
             <p:commandButton value="Login" actionListener="#{chatView.login}" update="container"
-                             icon="ui-icon-person" disabled="true" />
+                             icon="ui-icon-person" disabled="false" />
         </h:panelGroup>
  
     </p:fieldset>
@@ -58,7 +58,7 @@
     </p:dialog>
 </h:form>
  
-<p:socket onMessage="handleMessage" channel="/{room}" autoConnect="false" widgetVar='subscriber' />
+<p:socket onMessage="handleMessage" channel="/{room}/" autoConnect="false" widgetVar='subscriber' />
 <script type="text/javascript">
     function handleMessage(message) {
         var chatContent = $(PrimeFaces.escapeClientId('form:public')),
