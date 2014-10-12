@@ -9,7 +9,7 @@ package merlion.ejb.local;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.Local;
-import merlion.entity.Account;
+import merlion.entity.CommonInfrastructure.Account;
 import merlion.entity.OES.OES_Enquiry;
 import merlion.entity.OES.OES_Invoice;
 import merlion.entity.OES.OES_Payment;

@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
-import merlion.entity.Company;
+import merlion.entity.CRMS.Company;
 
 
 @Entity

@@ -10,8 +10,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import merlion.ejb.local.InternalCommunicationSessionBeanLocal;
-import merlion.entity.Announcement;
-import merlion.entity.Notification;
+import merlion.entity.CommonInfrastructure.Announcement;
+import merlion.entity.CommonInfrastructure.Notification;
 
 /**
  *

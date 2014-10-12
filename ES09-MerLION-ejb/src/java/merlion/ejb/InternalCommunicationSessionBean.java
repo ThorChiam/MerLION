@@ -11,10 +11,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import merlion.entity.Account;
-import merlion.entity.MerlionAdmin;
-import merlion.entity.Announcement;
-import merlion.entity.Notification;
+import merlion.entity.CommonInfrastructure.Account;
+import merlion.entity.CommonInfrastructure.MerlionAdmin;
+import merlion.entity.CommonInfrastructure.Announcement;
+import merlion.entity.CommonInfrastructure.Notification;
 
 /**
  *

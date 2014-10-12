@@ -7,7 +7,7 @@ package merlion.ejb.local;
 
 import java.util.List;
 import javax.ejb.Local;
-import merlion.entity.Account;
+import merlion.entity.CommonInfrastructure.Account;
 
 /**
  *

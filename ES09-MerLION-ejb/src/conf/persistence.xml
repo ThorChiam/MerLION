@@ -2,52 +2,52 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="ES09-MerLION-ejbPU" transaction-type="JTA">
     <jta-data-source>jdbc/merlionDB</jta-data-source>
-    <class>merlion.entity.Account</class>
-    <class>merlion.entity.ActionRecord</class>
-    <class>merlion.entity.AggregateDemand</class>
-    <class>merlion.entity.Announcement</class>
-    <class>merlion.entity.Auction</class>
-    <class>merlion.entity.BOM</class>
-    <class>merlion.entity.Chat</class>
-    <class>merlion.entity.Company</class>
-    <class>merlion.entity.CompanyProfile</class>
-    <class>merlion.entity.Contract</class>
     <class>merlion.entity.Customer</class>
-    <class>merlion.entity.Demand</class>
-    <class>merlion.entity.DispatchOrder</class>
-    <class>merlion.entity.Employee</class>
-    <class>merlion.entity.Facility</class>
-    <class>merlion.entity.Favorite</class>
-    <class>merlion.entity.Feedback</class>
-    <class>merlion.entity.HumanResource</class>
-    <class>merlion.entity.Inventory</class>
-    <class>merlion.entity.Invoice</class>
-    <class>merlion.entity.Item</class>
     <class>merlion.entity.LineItem</class>
-    <class>merlion.entity.LogisticTools</class>
-    <class>merlion.entity.MPS</class>
-    <class>merlion.entity.MRPOrders</class>
-    <class>merlion.entity.MerlionAdmin</class>
-    <class>merlion.entity.Notification</class>
-    <class>merlion.entity.Order</class>
     <class>merlion.entity.OrderRecord</class>
-    <class>merlion.entity.Payment</class>
-    <class>merlion.entity.PaymentTransactionLog</class>
-    <class>merlion.entity.Post</class>
     <class>merlion.entity.Product</class>
-    <class>merlion.entity.Promotion</class>
     <class>merlion.entity.PurchaseOrder</class>
     <class>merlion.entity.Request</class>
     <class>merlion.entity.Salesquotation</class>
-    <class>merlion.entity.ServiceCatalog</class>
-    <class>merlion.entity.ServiceOrder</class>
-    <class>merlion.entity.Services</class>
-    <class>merlion.entity.Storagebin</class>
-    <class>merlion.entity.TMSFacility</class>
-    <class>merlion.entity.Template</class>
     <class>merlion.entity.Vendor</class>
-    <class>merlion.entity.WMS_Shipment_Order</class>
-    <class>merlion.entity.Warehouse</class>
+    <class>merlion.entity.CommonInfrastructure.Account</class>
+    <class>merlion.entity.CommonInfrastructure.MerlionAdmin</class>
+    <class>merlion.entity.CommonInfrastructure.LogisticTools</class>
+    <class>merlion.entity.CommonInfrastructure.Chat</class>
+    <class>merlion.entity.CommonInfrastructure.Announcement</class>
+    <class>merlion.entity.CommonInfrastructure.ActionRecord</class>
+    <class>merlion.entity.CRMS.Post</class>
+    <class>merlion.entity.CRMS.Feedback</class>
+    <class>merlion.entity.CRMS.Services</class>
+    <class>merlion.entity.CRMS.Contract</class>
+    <class>merlion.entity.CRMS.Promotion</class>
+    <class>merlion.entity.CRMS.Favorite</class>
+    <class>merlion.entity.CRMS.PaymentTransactionLog</class>
+    <class>merlion.entity.CRMS.ServiceCatalog</class>
+    <class>merlion.entity.MRP.MRPOrders</class>
+    <class>merlion.entity.MRP.BOM</class>
+    <class>merlion.entity.MRP.MPS</class>
+    <class>merlion.entity.MRP.Demand</class>
+    <class>merlion.entity.MRP.Template</class>
+    <class>merlion.entity.MRP.Item</class>
+    <class>merlion.entity.CRMS.Payment</class>
+    <class>merlion.entity.CRMS.Invoice</class>
+    <class>merlion.entity.GRNS.AggregateDemand</class>
+    <class>merlion.entity.GRNS.Auction</class>
+    <class>merlion.entity.WMS.Inventory</class>
+    <class>merlion.entity.WMS.Storagebin</class>
+    <class>merlion.entity.WMS.WMS_Shipment_Order</class>
+    <class>merlion.entity.WMS.Warehouse</class>
+    <class>merlion.entity.TMS.DispatchOrder</class>
+    <class>merlion.entity.TMS.TMSFacility</class>
+    <class>merlion.entity.CRMS.Company</class>
+    <class>merlion.entity.CRMS.CompanyProfile</class>
+    <class>merlion.entity.WMS.Facility</class>
+    <class>merlion.entity.CRMS.ServiceOrder</class>
+    <class>merlion.entity.CommonInfrastructure.Notification</class>
+    <class>merlion.entity.WMS.Order</class>
+    <class>merlion.entity.WMS.Employee</class>
+    <class>merlion.entity.WMS.HumanResource</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

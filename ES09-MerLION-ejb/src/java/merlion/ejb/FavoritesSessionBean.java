@@ -11,9 +11,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import merlion.entity.Account;
-import merlion.entity.Company;
-import merlion.entity.Favorite;
+import merlion.entity.CommonInfrastructure.Account;
+import merlion.entity.CRMS.Company;
+import merlion.entity.CRMS.Favorite;
 
 /**
  *

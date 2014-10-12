@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import merlion.ejb.local.AdministratorSessionBeanLocal;
-import merlion.entity.MerlionAdmin;
+import merlion.entity.CommonInfrastructure.MerlionAdmin;
 
 /**
  *

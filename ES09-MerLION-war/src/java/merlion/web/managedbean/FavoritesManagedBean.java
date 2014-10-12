@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import merlion.ejb.local.FavoritesSessionBeanLocal;
-import merlion.entity.Favorite;
+import merlion.entity.CRMS.Favorite;
 
 /**
  *

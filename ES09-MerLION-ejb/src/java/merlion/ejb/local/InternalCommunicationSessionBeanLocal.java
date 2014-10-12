@@ -7,8 +7,8 @@ package merlion.ejb.local;
 
 import java.util.List;
 import javax.ejb.Local;
-import merlion.entity.Announcement;
-import merlion.entity.Notification;
+import merlion.entity.CommonInfrastructure.Announcement;
+import merlion.entity.CommonInfrastructure.Notification;
 
 /**
  *

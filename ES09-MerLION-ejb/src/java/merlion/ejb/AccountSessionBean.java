@@ -13,7 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import merlion.entity.Account;
+import merlion.entity.CommonInfrastructure.Account;
 
 /**
  *
