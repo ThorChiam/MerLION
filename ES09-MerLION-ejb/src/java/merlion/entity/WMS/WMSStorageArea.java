@@ -8,14 +8,11 @@ package merlion.entity.WMS;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -31,8 +28,8 @@ public class WMSStorageArea implements Serializable {
     @ManyToOne
     private WMSWarehouse WMSWarehouse;
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSStorageArea")
-    private List<WMSInventory> inventory = new ArrayList<>();
+    @ManyToOne
+    private WMSInventory Inventory;
 
     public Long getId() {
         return id;
@@ -50,12 +47,12 @@ public class WMSStorageArea implements Serializable {
         this.WMSWarehouse = WMSWarehouse;
     }
 
-    public List<WMSInventory> getInventory() {
-        return inventory;
+    public WMSInventory getInventory() {
+        return Inventory;
     }
 
-    public void setInventory(List<WMSInventory> inventory) {
-        this.inventory = inventory;
+    public void setInventory(WMSInventory inventory) {
+        this.Inventory = Inventory;
     }
 
 
