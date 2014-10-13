@@ -43,7 +43,7 @@ public class AdministratorSessionBean implements AdministratorSessionBeanLocal {
         } else {
             if (admin.getAccount().getPassword().equals(doMD5Hashing(password))) {
                 if (admin.getAccount().getStatus().equals("activated")) {
-                    return admin.getAccount().getComp_name();
+                    return admin.getAccount().getCompany().getCompanyName();
                 } else {
                     return "frozen";
                 }

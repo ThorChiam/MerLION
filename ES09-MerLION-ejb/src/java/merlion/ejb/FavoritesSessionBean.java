@@ -68,6 +68,6 @@ public class FavoritesSessionBean implements FavoritesSessionBeanLocal {
         fav = (Favorite)q.getSingleResult();
         fav.setRemarks(remark);
         em.merge(fav);
-        return fav.getCompany().getAccount().getComp_name();
+        return fav.getCompany().getCompanyName();
     }
 }

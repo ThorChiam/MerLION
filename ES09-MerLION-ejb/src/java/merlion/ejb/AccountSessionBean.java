@@ -7,45 +7,35 @@ package merlion.ejb;
 
 import java.security.MessageDigest;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.Resource;
 import merlion.ejb.local.AccountSessionBeanLocal;
 import javax.ejb.Stateless;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
-import javax.transaction.UserTransaction;
-import merlion.entity.Account;
+import merlion.entity.CommonInfrastructure.Account;
 
 /**
  *
  * @author ThorChiam
  */
 @Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class AccountSessionBean implements AccountSessionBeanLocal {
 
-    private InitialContext ic;
-	@Resource
-	private UserTransaction utx;
+//    private InitialContext ic;
+//	@Resource
+//	private UserTransaction utx;
     @PersistenceContext
     private EntityManager em;
     
-    private String PERSISTENCE_UNIT_NAME="ES09-MerLION-ejbPU";
-    private EntityManagerFactory entityFactory=Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+//    private String PERSISTENCE_UNIT_NAME="ES09-MerLION-ejbPU";
+//    private EntityManagerFactory entityFactory=Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     
 public AccountSessionBean(){
-		em = entityFactory.createEntityManager();
+//		em = entityFactory.createEntityManager();
 }
     /**
      *
@@ -74,7 +64,7 @@ public AccountSessionBean(){
         } else {
             if (systemUser.getPassword().equals(doMD5Hashing(password))) {
                 if (systemUser.getStatus().equals("activated")) {
-                    return systemUser.getComp_name();
+                    return systemUser.getCompany().getCompanyName();
                 } else {
                     return "frozen";
                 }
@@ -85,49 +75,45 @@ public AccountSessionBean(){
     }
 
     @Override
-    public String createaccount(String email, String password, String comp_name, String comp_address, String comp_contact_no,
-            String accessright, String status, String security_question, String security_answer) {
+    public String createaccount(String email, String password,String accessright, String status, String security_question, String security_answer) {
         Account f = new Account();
         f.setEmail(email);
         f.setAccessRight(accessright);
-        f.setComp_address(comp_address);
-        f.setComp_contact_no(comp_contact_no);
         f.setPassword(doMD5Hashing(password));
         f.setSecurity_question(security_question);
         f.setSecurity_answer(security_answer);
         f.setStatus(status);
-        f.setComp_name(comp_name);
         System.out.println(f.getEmail()+";"+f.getPassword());
-        try {
-            ic = new InitialContext();
-            utx = (UserTransaction) ic.lookup("java:comp/UserTransaction");
-            try {
-                utx.begin();
-            } catch (NotSupportedException ex) {
-                Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SystemException ex) {
-                Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (NamingException ex) {
-            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            ic = new InitialContext();
+//            utx = (UserTransaction) ic.lookup("java:comp/UserTransaction");
+//            try {
+//                utx.begin();
+//            } catch (NotSupportedException ex) {
+//                Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (SystemException ex) {
+//                Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        } catch (NamingException ex) {
+//            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 			
         em.persist(f);
-        try {
-            utx.commit();
-        } catch (RollbackException ex) {
-            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (HeuristicMixedException ex) {
-            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (HeuristicRollbackException ex) {
-            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalStateException ex) {
-            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SystemException ex) {
-            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            utx.commit();
+//        } catch (RollbackException ex) {
+//            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (HeuristicMixedException ex) {
+//            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (HeuristicRollbackException ex) {
+//            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (SecurityException ex) {
+//            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (IllegalStateException ex) {
+//            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (SystemException ex) {
+//            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 //        em.flush();
         return f.getEmail();
     }

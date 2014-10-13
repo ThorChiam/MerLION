@@ -325,6 +325,16 @@ public class Company implements Serializable {
         this.chats = chats;
     }
 
+    public void create(String companyName, String companyAddress, String tel, String email,String website,String companyHistory,String service,String vision){
+        this.setCompanyName(companyName);
+        this.setCompanyAddress(companyAddress);
+        this.setTel(tel);
+        this.setEmail(email);
+        this.setWebsite(website);
+        this.setCompanyHistory(companyHistory);
+        this.setService(service);
+        this.setVision(vision);
+    }
     @Override
     public int hashCode() {
         int hash = 0;

@@ -20,8 +20,7 @@ public interface AccountSessionBeanLocal {
 
     public String validate(String email, String password);
 
-    public String createaccount(String email, String password, String comp_name, String comp_address, String comp_contact_no,
-            String accessright, String status, String security_question, String security_answer);
+    public String createaccount(String email, String password,String accessright, String status, String security_question, String security_answer);
 
     public void updateaccount(String email, String comp_name, String comp_address, String comp_contact_no, String status);
 

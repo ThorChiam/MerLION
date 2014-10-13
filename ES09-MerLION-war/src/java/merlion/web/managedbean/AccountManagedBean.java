@@ -8,7 +8,6 @@ package merlion.web.managedbean;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -51,12 +50,12 @@ public class AccountManagedBean implements Serializable {
     private List<Account> accountList;
 
     public AccountManagedBean() {
-        asbl = new AccountSessionBean();
+//        asbl = new AccountSessionBean();
     }
 
     public void signup() {
         System.out.println("asbl:"+(asbl==null)+";email:"+(email==null)+";pw:"+(password==null));
-        email = asbl.createaccount(email, password, comp_name, comp_address, comp_contact_no, accessright, status, security_question, security_answer);
+        email = asbl.createaccount(email, password, accessright, status, security_question, security_answer);
         statusMessage = "sign up successful!";
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("accountCreated", "true");
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("email", email);
@@ -73,7 +72,7 @@ public class AccountManagedBean implements Serializable {
             statusMessage = "No account found";
         } else {
             for (Account a : accountList) {
-                asbl.updateaccount(a.getEmail(), a.getComp_name(), a.getComp_address(), a.getComp_contact_no(), a.getStatus());
+                asbl.updateaccount(a.getEmail(), a.getCompany().getCompanyName(), a.getCompany().getCompanyAddress(), a.getCompany().getTel(), a.getStatus());
             }
             statusMessage = "All changes are saved.";
 

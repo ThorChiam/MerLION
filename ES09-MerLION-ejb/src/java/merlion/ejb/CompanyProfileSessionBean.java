@@ -11,8 +11,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import merlion.entity.CRMS.Company;
 import merlion.entity.CommonInfrastructure.Account;
-import merlion.entity.CRMS.CompanyProfile;
 
 /**
  *
@@ -24,15 +24,17 @@ public class CompanyProfileSessionBean implements CompanyProfileSessionBeanLocal
     @PersistenceContext
     private EntityManager em;
 
-    private CompanyProfile companyProfile;
+    private Company companyProfile;
 
     @Override
     public Long addCompanyProfile(String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision) {
         Query q = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");
         q.setParameter("email", email);
         Account a = (Account) q.getSingleResult();
-        companyProfile = new CompanyProfile();
-        companyProfile.setAccount(a);
+        List<Account> as = null;
+        as.add(a);
+        companyProfile = new Company();
+        companyProfile.setAccount(as);
         companyProfile.create(companyName, companyAddress, tel, email, website, companyHistory, service, vision);
         em.persist(companyProfile);
         em.flush();
