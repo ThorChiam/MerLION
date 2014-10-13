@@ -10,14 +10,13 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import merlion.entity.MRP.Template;
+import merlion.entity.CommonInfrastructure.Account;
 import merlion.entity.MRP.Template;
 
 /**
@@ -30,11 +29,15 @@ public class Contract implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Company company;
     @ManyToMany(cascade={CascadeType.PERSIST})
     @JoinTable(name="CONTRACT_TEMPLATE")
     private Set<Template> template=new HashSet<>();
+    
+    @ManyToOne
+    private Account requester;
+    
+    @ManyToOne
+    private Account provider;
 
     public Long getId() {
         return id;
@@ -44,6 +47,22 @@ public class Contract implements Serializable {
         this.id = id;
     }
     
+    public Account getRequester() {
+        return requester;
+    }
+
+    public void setRequester(Account requester) {
+        this.requester = requester;
+    }
+
+    public Account getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Account provider) {
+        this.provider = provider;
+    }
+    
     public Set<Template> getTemplate() {
         return template;
     }
@@ -51,15 +70,6 @@ public class Contract implements Serializable {
     public void setTemplate(Set<Template> template) {
         this.template = template;
     }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
 
     @Override
     public int hashCode() {

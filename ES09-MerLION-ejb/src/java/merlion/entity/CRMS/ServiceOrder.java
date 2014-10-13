@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -25,23 +26,48 @@ public class ServiceOrder implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Company company;
+    @ManyToOne
+    private Company service_requester;
+    
+    @ManyToOne
+    private Company service_receiver;
 
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
+    @OneToOne
+    Payment Payment;
+    
+    
+    
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    
+    public Company getService_requester() {
+        return service_requester;
+    }
+
+    public void setService_requester(Company service_requester) {
+        this.service_requester = service_requester;
+    }
+
+    public Company getService_receiver() {
+        return service_receiver;
+    }
+
+    public void setService_receiver(Company service_receiver) {
+        this.service_receiver = service_receiver;
+    }
+
+    public Payment getPayment() {
+        return Payment;
+    }
+
+    public void setPayment(Payment Payment) {
+        this.Payment = Payment;
     }
 
     @Override

@@ -6,35 +6,43 @@
 package merlion.entity.TMS;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import merlion.entity.CRMS.Company;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class DispatchOrder implements Serializable {
+public class TMSDispatchOrder implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Company company;
+    
+    @ManyToOne
+    TMSOrder TMSOrder;
+    
+    @OneToOne
+    TMSCost TMSCost;
+    
+    @OneToMany(cascade={CascadeType.PERSIST})
+    public List<TMSFacility> TMSFacility=new ArrayList<>(); 
+    
+    @OneToMany(cascade={CascadeType.PERSIST})
+    public List<TMSHumanResource> TMSHumanResource=new ArrayList<>();
+    
+    
 
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
+   
 
     public Long getId() {
         return id;
@@ -44,6 +52,38 @@ public class DispatchOrder implements Serializable {
         this.id = id;
     }
 
+    public TMSOrder getTMSOrder() {
+        return TMSOrder;
+    }
+
+    public void setTMSOrder(TMSOrder TMSOrder) {
+        this.TMSOrder = TMSOrder;
+    }
+
+    public TMSCost getTMSCost() {
+        return TMSCost;
+    }
+
+    public void setTMSCost(TMSCost TMSCost) {
+        this.TMSCost = TMSCost;
+    }
+
+    public List<TMSFacility> getTMSFacility() {
+        return TMSFacility;
+    }
+
+    public void setTMSFacility(List<TMSFacility> TMSFacility) {
+        this.TMSFacility = TMSFacility;
+    }
+
+    public List<TMSHumanResource> getTMSHumanResource() {
+        return TMSHumanResource;
+    }
+
+    public void setTMSHumanResource(List<TMSHumanResource> TMSHumanResource) {
+        this.TMSHumanResource = TMSHumanResource;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -54,10 +94,10 @@ public class DispatchOrder implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DispatchOrder)) {
+        if (!(object instanceof TMSDispatchOrder)) {
             return false;
         }
-        DispatchOrder other = (DispatchOrder) object;
+        TMSDispatchOrder other = (TMSDispatchOrder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

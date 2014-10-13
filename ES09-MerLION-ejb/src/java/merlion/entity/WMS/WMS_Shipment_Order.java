@@ -6,13 +6,16 @@
 package merlion.entity.WMS;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import merlion.entity.CommonInfrastructure.Account;
 
 /**
  *
@@ -24,15 +27,27 @@ public class WMS_Shipment_Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Warehouse warehouse;
+    
+    @OneToMany(cascade={CascadeType.PERSIST})
+    private List<WMSInventory> inventory=new ArrayList();
+    
+    @ManyToOne
+    private Account Account;
 
-    public Warehouse getWarehouse() {
-        return warehouse;
+    public Account getAccount() {
+        return Account;
     }
 
-    public void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
+    public void setAccount(Account Account) {
+        this.Account = Account;
+    }
+    
+    public List<WMSInventory> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(List<WMSInventory> inventory) {
+        this.inventory = inventory;
     }
 
     public Long getId() {

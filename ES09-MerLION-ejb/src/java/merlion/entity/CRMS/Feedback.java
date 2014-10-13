@@ -24,16 +24,11 @@ public class Feedback implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Company company;
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
+    @ManyToOne
+    private Company feedback_reciever;
+    
+    @ManyToOne
+    private Company feedback_sender;
 
     public Long getId() {
         return id;
@@ -41,6 +36,22 @@ public class Feedback implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public Company getReciever() {
+        return feedback_reciever;
+    }
+
+    public void setReciever(Company reciever) {
+        this.feedback_reciever = reciever;
+    }
+
+    public Company getSender() {
+        return feedback_sender;
+    }
+
+    public void setSender(Company sender) {
+        this.feedback_sender = sender;
     }
 
     @Override

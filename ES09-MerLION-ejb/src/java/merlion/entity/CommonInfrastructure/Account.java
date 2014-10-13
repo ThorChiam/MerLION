@@ -11,16 +11,19 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import merlion.entity.CRMS.Company;
-import merlion.entity.CRMS.CompanyProfile;
+import merlion.entity.CRMS.Contract;
 import merlion.entity.CRMS.Favorite;
+import merlion.entity.CRMS.Payment;
 import merlion.entity.MRP.Item;
-import merlion.entity.CRMS.PaymentTransactionLog;
 import merlion.entity.CRMS.Post;
 import merlion.entity.CRMS.ServiceCatalog;
+import merlion.entity.WMS.WMSOrder;
+import merlion.entity.WMS.WMS_Shipment_Order;
 
 @Entity
 @Table(name = "Account")
@@ -29,9 +32,6 @@ public class Account implements Serializable {
     @Id
     private String email; 
     private String password;
-    private String comp_name;
-    private String comp_contact_no;
-    private String comp_address;
     private String accessright;
     private String status;
     private String security_question;
@@ -43,9 +43,6 @@ public class Account implements Serializable {
     private List<Item> items = new ArrayList<>();
 
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<PaymentTransactionLog> paymenttransactionlogs = new ArrayList<>();
-
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<Favorite> favorites = new ArrayList<>();
     
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
@@ -53,12 +50,9 @@ public class Account implements Serializable {
     
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<Post> post = new ArrayList<>();
-
-    @OneToOne
-    private CompanyProfile companyprofile;
     
-    @OneToOne
-    private Company company;
+    @ManyToOne
+    private Company Company;
     
     @OneToOne
     private MerlionAdmin admin;
@@ -70,28 +64,63 @@ public class Account implements Serializable {
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<Notification> notificationss = new ArrayList<>();
     
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="requester")
+    private List<Contract> Contract_requester = new ArrayList<>();
     
-    public void create(String email, String password, String comp_name, String comp_address, String comp_contact_no, 
-                       String accessright, String status,String security_question,String security_answer){
-        this.email=email;
-        this.password=password;
-        this.comp_name=comp_name;
-        this.comp_address=comp_address;
-        this.comp_contact_no=comp_contact_no;
-        this.accessright=accessright;
-        this.status=status;
-        this.security_question=security_question;
-        this.security_answer=security_answer;
-    }
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="provider")
+    private List<Contract> Contract_provider = new ArrayList<>();
+
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="payer")
+    private List<Payment> Payment_payer = new ArrayList<>();
+ 
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="receiver")
+    private List<Payment> Payment_receiver = new ArrayList<>();
     
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
+    private List<WMS_Shipment_Order> shipmentorder = new ArrayList<>();
     
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
+    private List<WMSOrder> wmsorder = new ArrayList<>();
+  
     
     
     
   
 
-    //Added by QT 
+    //Added by QT  
     
+    public List<Contract> getContract_requester() {
+        return Contract_requester;
+    }
+
+    public void setContract_requester(List<Contract> Contract_requester) {
+        this.Contract_requester = Contract_requester;
+    }
+
+    public List<Contract> getContract_provider() {
+        return Contract_provider;
+    }
+
+    public void setContract_provider(List<Contract> Contract_provider) {
+        this.Contract_provider = Contract_provider;
+    }
+
+    public List<Payment> getPayment_payer() {
+        return Payment_payer;
+    }
+
+    public void setPayment_payer(List<Payment> Payment_payer) {
+        this.Payment_payer = Payment_payer;
+    }
+
+    public List<Payment> getPayment_receiver() {
+        return Payment_receiver;
+    }
+
+    public void setPayment_receiver(List<Payment> Payment_receiver) {
+        this.Payment_receiver = Payment_receiver;
+    }
+   
     public MerlionAdmin getMerlionAdmin() {
         return admin;
     }
@@ -109,21 +138,13 @@ public class Account implements Serializable {
     }
     
     public Company getCompany() {
-        return company;
+        return Company;
     }
 
     public void setCompany(Company company) {
-        this.company = company;
+        this.Company = company;
     }
    
-    public CompanyProfile getCompanyprofile() {
-        return companyprofile;
-    }
-
-    public void setCompanyprofile(CompanyProfile companyprofile) {
-        this.companyprofile = companyprofile;
-    }
-    
     public List<ServiceCatalog> getServicecatalogs() {
         return servicecatalogs;
     }
@@ -140,14 +161,6 @@ public class Account implements Serializable {
         this.items = items;
     }
 
-    public List<PaymentTransactionLog> getPaymentTransactionLogEntitys() {
-        return paymenttransactionlogs;
-    }
-
-    public void setPaymentTransactionLogEntitys(List<PaymentTransactionLog> paymenttransactionlogs) {
-        this.paymenttransactionlogs = paymenttransactionlogs;
-    }
-
     public List<Favorite> getFavorites() {
         return favorites;
     }
@@ -161,8 +174,16 @@ public class Account implements Serializable {
 
 
 
-
-
+    public void create(String email, String password, String comp_name, String comp_address, String comp_contact_no, 
+                       String accessright, String status,String security_question,String security_answer){
+        this.email=email;
+        this.password=password;
+        this.accessright=accessright;
+        this.status=status;
+        this.security_question=security_question;
+        this.security_answer=security_answer;
+    }  
+    
     public Set<Announcement> getAnnouncements() {
         return announcements;
     }
@@ -211,29 +232,6 @@ public class Account implements Serializable {
         this.status = status;
     }
 
-    public String getComp_name() {
-        return comp_name;
-    }
-
-    public void setComp_name(String comp_name) {
-        this.comp_name = comp_name;
-    }
-
-    public String getComp_contact_no() {
-        return comp_contact_no;
-    }
-
-    public void setComp_contact_no(String comp_contact_no) {
-        this.comp_contact_no = comp_contact_no;
-    }
-
-    public String getComp_address() {
-        return comp_address;
-    }
-
-    public void setComp_address(String comp_address) {
-        this.comp_address = comp_address;
-    }
     public String getSecurity_question() {
         return security_question;
     }

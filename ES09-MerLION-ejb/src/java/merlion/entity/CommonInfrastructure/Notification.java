@@ -26,8 +26,7 @@ public class Notification implements Serializable {
     private String content;
     private String target;   
     private Long release_time;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
-    private Account Account;
+
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
     private Company company;
 
@@ -50,15 +49,7 @@ public class Notification implements Serializable {
     public void setCompany(Company company) {
         this.company = company;
     }
-    
-    public Account getAccount() {
-        return Account;
-    }
-
-    public void setAccount(Account Account) {
-        this.Account = Account;
-    }
- 
+   
      public Long getNotiId() {
         return notiId;
     }

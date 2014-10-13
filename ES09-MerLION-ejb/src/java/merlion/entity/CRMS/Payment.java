@@ -6,14 +6,13 @@
 package merlion.entity.CRMS;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import merlion.entity.CommonInfrastructure.Account;
 
 /**
  *
@@ -25,19 +24,98 @@ public class Payment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Company company;
+    private String currency;
+    private long amount;
+    private long transactionDate;
+    private String paymentStatus;
+    private String notes;
+   
     @OneToOne
     private Invoice invoice;
+    
+    @ManyToOne
+    private Account payer;
+    
+    @ManyToOne
+    private Account receiver;
+    
+    @OneToOne(mappedBy="Payment")
+    private ServiceOrder serviceorder;
 
+    
+    
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }  
+    
+    public ServiceOrder getServiceorder() {
+        return serviceorder;
+    }
+
+    public void setServiceorder(ServiceOrder serviceorder) {
+        this.serviceorder = serviceorder;
     }
     
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(long amount) {
+        this.amount = amount;
+    }
+
+    public long getTransactionDate() {
+        return transactionDate;
+    }
+
+    public void setTransactionDate(long transactionDate) {
+        this.transactionDate = transactionDate;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+    
+    public Account getPayer() {
+        return payer;
+    }
+
+    public void setPayer(Account payer) {
+        this.payer = payer;
+    }
+
+    public Account getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Account receiver) {
+        this.receiver = receiver;
+    }
+
     public Invoice getInvoice() {
         return invoice;
     }
@@ -45,15 +123,7 @@ public class Payment implements Serializable {
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
     }
-    
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
+ 
 
     @Override
     public int hashCode() {

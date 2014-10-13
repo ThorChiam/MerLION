@@ -3,44 +3,46 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity.WMS;
+package merlion.entity.TMS;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import merlion.entity.CRMS.Company;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class Employee implements Serializable {
+public class TMSHumanResource implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Warehouse warehouse;
+    @ManyToOne
+    private Company Company;
 
-    public Warehouse getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
-    }
-
+    public TMSHumanResource(){
+        setId(System.nanoTime());
+    }  
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Company getCompany() {
+        return Company;
+    }
+
+    public void setCompany(Company Company) {
+        this.Company = Company;
     }
 
     @Override
@@ -53,10 +55,10 @@ public class Employee implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Employee)) {
+        if (!(object instanceof TMSHumanResource)) {
             return false;
         }
-        Employee other = (Employee) object;
+        TMSHumanResource other = (TMSHumanResource) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -65,7 +67,7 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_new_enetity.Employee[ id=" + id + " ]";
+        return "merlion.entity.TMS.TMSHumanResouce[ id=" + id + " ]";
     }
     
 }

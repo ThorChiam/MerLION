@@ -22,31 +22,17 @@ import javax.persistence.OneToMany;
  * @author sunny
  */
 @Entity
-public class Inventory implements Serializable {
+public class WMSStorageArea implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Warehouse warehouse;
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Inventory")
-    private List<Storagebin> storagebin = new ArrayList<>();
-
-    public List<Storagebin> getStoragebin() {
-        return storagebin;
-    }
-
-    public void setStoragebin(List<Storagebin> storagebin) {
-        this.storagebin = storagebin;
-    }
-
-    public Warehouse getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
-    }
+    
+    @ManyToOne
+    private WMSWarehouse WMSWarehouse;
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSStorageArea")
+    private List<WMSInventory> inventory = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -55,6 +41,23 @@ public class Inventory implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public WMSWarehouse getWMSWarehouse() {
+        return WMSWarehouse;
+    }
+
+    public void setWMSWarehouse(WMSWarehouse WMSWarehouse) {
+        this.WMSWarehouse = WMSWarehouse;
+    }
+
+    public List<WMSInventory> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(List<WMSInventory> inventory) {
+        this.inventory = inventory;
+    }
+
 
     @Override
     public int hashCode() {
@@ -66,10 +69,10 @@ public class Inventory implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Inventory)) {
+        if (!(object instanceof WMSStorageArea)) {
             return false;
         }
-        Inventory other = (Inventory) object;
+        WMSStorageArea other = (WMSStorageArea) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -78,7 +81,7 @@ public class Inventory implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_new_enetity.Inventory[ id=" + id + " ]";
+        return "merlion_new_enetity.Storagebin[ id=" + id + " ]";
     }
     
 }
