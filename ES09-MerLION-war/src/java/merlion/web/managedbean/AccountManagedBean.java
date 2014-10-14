@@ -14,7 +14,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
-import merlion.ejb.AccountSessionBean;
 import merlion.ejb.local.AccountSessionBeanLocal;
 import merlion.entity.CommonInfrastructure.Account;
 
