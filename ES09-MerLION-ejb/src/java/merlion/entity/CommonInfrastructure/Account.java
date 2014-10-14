@@ -46,9 +46,6 @@ public class Account implements Serializable {
     private List<Favorite> favorites = new ArrayList<>();
     
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<ServiceCatalog> servicecatalogs = new ArrayList<>(); 
-    
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<Post> post = new ArrayList<>();
     
     @ManyToOne
@@ -60,9 +57,6 @@ public class Account implements Serializable {
     @ManyToMany(cascade={CascadeType.PERSIST})
     @JoinTable(name="ACCOUNT_ANNOUNCEMENT")
     private Set<Announcement> announcements=new HashSet<>();
-    
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<Notification> notificationss = new ArrayList<>();
     
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="requester")
     private List<Contract> Contract_requester = new ArrayList<>();
@@ -144,15 +138,7 @@ public class Account implements Serializable {
     public void setCompany(Company company) {
         this.Company = company;
     }
-   
-    public List<ServiceCatalog> getServicecatalogs() {
-        return servicecatalogs;
-    }
-
-    public void setServicecatalogs(List<ServiceCatalog> servicecatalogs) {
-        this.servicecatalogs = servicecatalogs;
-    }
-
+  
     public List<Item> getItems() {
         return items;
     }
@@ -190,14 +176,6 @@ public class Account implements Serializable {
     
     public void setAnnouncements(Set<Announcement> announcements) {
         this.announcements = announcements;
-    }
-    
-    public List<Notification> getNotificationss() {
-        return notificationss;
-    }
-
-    public void setNotificationss(List<Notification> notificationss) {
-        this.notificationss = notificationss;
     }
   
     public String getPassword() {

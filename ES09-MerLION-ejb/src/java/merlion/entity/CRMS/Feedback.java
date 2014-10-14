@@ -6,9 +6,7 @@
 package merlion.entity.CRMS;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +23,7 @@ public class Feedback implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
-    private Company feedback_reciever;
+    private Company feedback_receiver;
     
     @ManyToOne
     private Company feedback_sender;
@@ -39,11 +37,11 @@ public class Feedback implements Serializable {
     }
     
     public Company getReciever() {
-        return feedback_reciever;
+        return feedback_receiver;
     }
 
     public void setReciever(Company reciever) {
-        this.feedback_reciever = reciever;
+        this.feedback_receiver = reciever;
     }
 
     public Company getSender() {
