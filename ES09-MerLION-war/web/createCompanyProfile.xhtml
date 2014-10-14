@@ -62,7 +62,7 @@
 
                             <h:form id="signupform" role="form">
                                 <!--change panel to growl-->
-                                <p:growl id="panel" rendered="#{facesContext.externalContext.sessionMap['accountCreated']==null}">
+                                <p:growl id="panel">
                                     <h:panelGrid>
                                         <div class="form-group">
                                             <h:outputLabel for="companyName" value="Company Name : "/>
@@ -71,9 +71,9 @@
                                             <h:message for="companyName" style="color: red;" />
                                         </div>
                                         <div class="form-group">
-                                            <h:outputLabel for="companyAddress" value="Company Address : " />
-                                            <h:inputSecret id="companyAddress" value="#{companyProfileManagedBean.companyAddress}" required="true"
-                                                           requiredMessage="Please enter Company Address" class="form-control"/>
+                                            <h:outputLabel for="companyAddress" value="Company Address : "/>
+                                            <h:inputText id="companyAddress" value="#{companyProfileManagedBean.companyAddress}" required="true"
+                                                         requiredMessage="Please enter Company Address" class="form-control" />
                                             <h:message for="companyAddress" style="color: red;" />
                                         </div>
                                         <div class="form-group">
@@ -115,7 +115,7 @@
                                     </h:panelGrid>
                                     <br/>
 
-                                    <p:commandButton id="btn" value="Create Company Profile" update="panel" actionListener="#{companyProfileManagedBean.addCompanyProfile}" ajax="false" />
+                                    <p:commandButton id="btn" value="Create Company Profile" update="panel" actionListener="#{companyProfileManagedBean.addCompanyProfile(FacesContext.externalContext.sessionMap['email'])}" ajax="false" />
                                 </p:growl>
                             </h:form>
                         </div>
