@@ -1,12 +1,158 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
     <h:head>
-        <title>Facelet Title</title>
+
+        <title>MerLION Logistics</title>
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <link href="/CompanySystem-war/css/bootstrap.min.css" rel="stylesheet" />
     </h:head>
-    <h:body>
-        Hello from Facelets
+    <!-- Add 50px padding top to the body for the navbar -->
+    <h:body style="padding-top: 40px; padding-bottom: 20px;">
+
+        <b:navBar brand="My MerLION" brandHref="main.xhtml" inverse="false" fixed="top">
+            <b:navbarLinks>
+                <b:navLink value="Sign Up" href="signUp.xhtml"></b:navLink>
+                <b:navLink value="About us" href="aboutUs.xhtml"></b:navLink>
+                <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>
+                <b:dropMenu value="Services">
+                    <b:navLink value="Action" href="#"></b:navLink>
+                    <b:navLink value="Another action" href="#"></b:navLink>
+                    <b:navLink value="Something else here" href="#"></b:navLink>
+                    <b:navLink></b:navLink>
+                    <b:navLink header="Nav header"></b:navLink>
+                    <b:navLink value="Separated link" href="#"></b:navLink>
+                    <b:navLink value="One more separated link" href="#"></b:navLink>
+                </b:dropMenu>
+            </b:navbarLinks>
+
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
+                    <b:inputText placeholder="Email" fieldSize="sm"/>
+                    <!--input type="text" class="form-control" placeholder="Search"/-->
+                </div>
+                <div class="form-group">
+                    <b:inputText placeholder="Password" fieldSize="sm"/>
+                </div> 
+                #{' '}
+                <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+            </h:form>
+        </b:navBar>
+        <br/>
+
+
+        <b:container>
+            <b:row>
+
+                <div style="border-left:thin darkgrey solid; position:absolute; left:600px; height:700px;"/> 
+                <b:column col-md="1"></b:column>
+                <b:column col-md="5">
+                    <font color="#585858">
+                        <h4 color="grey">Create your company profile</h4>
+                        <br/>
+                        <div class="container">
+
+                            <h:form id="signupform" role="form">
+                                <!--change panel to growl-->
+                                <p:growl id="panel" rendered="#{facesContext.externalContext.sessionMap['accountCreated']==null}">
+                                    <h:panelGrid>
+                                        <div class="form-group">
+                                            <h:outputLabel for="companyName" value="Company Name : "/>
+                                            <h:inputText id="companyName" value="#{companyProfileManagedBean.companyName}" required="true"
+                                                         requiredMessage="Please enter Company Name" class="form-control" />
+                                            <h:message for="companyName" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="companyAddress" value="Company Address : " />
+                                            <h:inputSecret id="companyAddress" value="#{companyProfileManagedBean.companyAddress}" required="true"
+                                                           requiredMessage="Please enter Company Address" class="form-control"/>
+                                            <h:message for="companyAddress" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="tel" value="Tel : " />
+                                            <h:inputText id="tel" value="#{companyProfileManagedBean.tel}" required="true"
+                                                         requiredMessage="Please enter Tel" class="form-control"/>
+                                            <h:message for="tel" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="email" value="Email : " />
+                                            <h:inputText id="email" value="#{companyProfileManagedBean.email}" required="true"
+                                                         requiredMessage="Please enter Email" class="form-control"/>
+                                            <h:message for="email" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="website" value="Website : " />
+                                            <h:inputText id="website" value="#{companyProfileManagedBean.website}" required="true"
+                                                         requiredMessage="Please enter Website, if you do not have, please enter none" class="form-control"/>
+                                            <h:message for="website" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="companyHistory" value="Company History : " />
+                                            <h:inputText id="companyHistory" value="#{companyProfileManagedBean.companyHistory}" required="true"
+                                                         requiredMessage="Please enter Company History" class="form-control"/>
+                                            <h:message for="companyHistory" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="service" value="Service : " />
+                                            <h:inputText id="service" value="#{companyProfileManagedBean.service}" required="true"
+                                                         requiredMessage="Please enter Service you provide" class="form-control"/>
+                                            <h:message for="service" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="vision" value="Vision : " />
+                                            <h:inputText id="vision" value="#{companyProfileManagedBean.vision}" required="true"
+                                                         requiredMessage="Please enter vision of your company" class="form-control"/>
+                                            <h:message for="vision" style="color: red;" />
+                                        </div>
+                                    </h:panelGrid>
+                                    <br/>
+
+                                    <p:commandButton id="btn" value="Create Company Profile" update="panel" actionListener="#{companyProfileManagedBean.addCompanyProfile}" ajax="false" />
+                                </p:growl>
+                            </h:form>
+                        </div>
+                    </font>
+                </b:column>
+                <br/>
+                <b:column col-md="6"><img src="image/signUp.png" width="400" height="280"/></b:column>
+            </b:row>
+        </b:container>
+
+        <br/>
+        <br/>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+
+                </div>
+
+            </div>
+        </foot>
+        <script
+            src="/CompanySystem-war/js/bootstrap.min.js"
+        type="text/javascript"></script> <script
+            src="/CompanySystem-war/js/docs.min.js"
+        type="text/javascript"></script>
+        <!--  IE10 viewport hack for Surface/desktop Windows 8 bug --> <script
+            src="/CompanySystem-war/js/jquery.min.js"
+        type="text/javascript"></script>
+
     </h:body>
 </html>
-
