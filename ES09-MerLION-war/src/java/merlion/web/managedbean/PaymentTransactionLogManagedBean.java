@@ -8,6 +8,7 @@ package merlion.web.managedbean;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import merlion.ejb.local.PaymentTransactionLogSessionBeanLocal;
 
@@ -22,6 +23,7 @@ public class PaymentTransactionLogManagedBean implements Serializable {
     /**
      * Creates a new instance of PaymentTrasactionLogManagedBean
      */
+    @EJB
     private PaymentTransactionLogSessionBeanLocal ptlsbl;
     public PaymentTransactionLogManagedBean() {
     }

@@ -8,6 +8,7 @@ package merlion.web.managedbean;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -28,6 +29,7 @@ public class AccountManagedBean implements Serializable {
     /**
      * Creates a new instance of AccountManagedBean
      */
+    @EJB
     private AccountSessionBeanLocal asbl;
     private String email;
     private String password;

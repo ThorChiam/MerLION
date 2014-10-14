@@ -9,6 +9,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import merlion.ejb.local.AdministratorSessionBeanLocal;
 import merlion.entity.CommonInfrastructure.MerlionAdmin;
@@ -24,6 +25,7 @@ public class AdministratorManagedBean implements Serializable {
     /**
      * Creates a new instance of AdministratorManagedBean
      */
+    @EJB
     private AdministratorSessionBeanLocal adsbl;
     private String email;
     private String password;

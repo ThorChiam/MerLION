@@ -8,6 +8,7 @@ package merlion.web.managedbean;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import merlion.ejb.local.FavoritesSessionBeanLocal;
 import merlion.entity.CRMS.Favorite;
@@ -23,6 +24,7 @@ public class FavoritesManagedBean implements Serializable {
     /**
      * Creates a new instance of FavoritesManagedBean
      */
+    @EJB
     private FavoritesSessionBeanLocal fsbl;
     private Long companyId;
     private String remark;

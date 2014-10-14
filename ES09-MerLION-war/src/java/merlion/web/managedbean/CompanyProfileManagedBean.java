@@ -8,6 +8,7 @@ package merlion.web.managedbean;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import merlion.ejb.local.CompanyProfileSessionBeanLocal;
 
@@ -22,6 +23,7 @@ public class CompanyProfileManagedBean implements Serializable {
     /**
      * Creates a new instance of CompanyProfileManagedBean
      */
+    @EJB
     private CompanyProfileSessionBeanLocal cpsbl;
     private String companyName;
     private String companyAddress;

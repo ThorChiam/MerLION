@@ -8,6 +8,7 @@ package merlion.web.managedbean;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import merlion.ejb.local.InternalCommunicationSessionBeanLocal;
 import merlion.entity.CommonInfrastructure.Announcement;
@@ -24,6 +25,7 @@ public class InternalCommunicationManagedBean implements Serializable {
     /**
      * Creates a new instance of InternalCommunicationManagedBean
      */
+    @EJB
     private InternalCommunicationSessionBeanLocal icsbl;
     private Long noti_Id;
     private String n_title;
