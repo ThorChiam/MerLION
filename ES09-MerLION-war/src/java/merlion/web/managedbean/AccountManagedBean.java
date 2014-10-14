@@ -95,7 +95,7 @@ public class AccountManagedBean implements Serializable {
         this.account = account;
     }
 
-    public void getQuestion(String email) {
+    public void getQuestion() {
         security_question = asbl.getAccount(email).getSecurity_question();
     }
 
