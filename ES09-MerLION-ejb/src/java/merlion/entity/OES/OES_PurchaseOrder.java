@@ -7,15 +7,15 @@ package merlion.entity.OES;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import merlion.entity.CommonInfrastructure.Account;
 
@@ -38,11 +38,19 @@ public class OES_PurchaseOrder implements Serializable {
     @OneToOne
     OES_SalesOrder salesorder;
     
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="purchaseorder")
-    private Collection<OES_Product> product = new ArrayList<>();
-    
+    @ManyToMany(cascade={CascadeType.ALL},mappedBy="purchaseorder")
+    private Set<OES_Product> product=new HashSet<>();
+
     public OES_PurchaseOrder(){
         setId(System.nanoTime());
+    }
+    
+    public Set<OES_Product> getProduct() {
+        return product;
+    }
+
+    public void setProduct(Set<OES_Product> product) {
+        this.product = product;
     }
     
     public String getCreatedate() {
@@ -60,15 +68,7 @@ public class OES_PurchaseOrder implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public Collection<OES_Product> getProduct() {
-        return product;
-    }
-
-    public void setProduct(Collection<OES_Product> product) {
-        this.product = product;
-    }
-
+  
     public double getTaxrate() {
         return taxrate;
     }
