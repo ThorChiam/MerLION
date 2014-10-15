@@ -29,13 +29,13 @@ public class AccountSessionBean implements AccountSessionBeanLocal {
 //	private UserTransaction utx;
     @PersistenceContext
     private EntityManager em;
-    
+
 //    private String PERSISTENCE_UNIT_NAME="ES09-MerLION-ejbPU";
 //    private EntityManagerFactory entityFactory=Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-    
-public AccountSessionBean(){
+    public AccountSessionBean() {
 //		em = entityFactory.createEntityManager();
-}
+    }
+
     /**
      *
      * @param email String: the email of the user
@@ -74,7 +74,7 @@ public AccountSessionBean(){
     }
 
     @Override
-    public String createaccount(String email, String password,String accessright, String status, String security_question, String security_answer) {
+    public String createaccount(String email, String password, String accessright, String status, String security_question, String security_answer) {
         Account f = new Account();
         f.setEmail(email);
         f.setAccessRight(accessright);
@@ -82,7 +82,7 @@ public AccountSessionBean(){
         f.setSecurity_question(security_question);
         f.setSecurity_answer(security_answer);
         f.setStatus(status);
-        System.out.println(f.getEmail()+";"+f.getPassword());
+        System.out.println(f.getEmail() + ";" + f.getPassword());
 //        try {
 //            ic = new InitialContext();
 //            utx = (UserTransaction) ic.lookup("java:comp/UserTransaction");
@@ -96,7 +96,7 @@ public AccountSessionBean(){
 //        } catch (NamingException ex) {
 //            Logger.getLogger(AccountSessionBean.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-			
+
         em.persist(f);
 //        try {
 //            utx.commit();

@@ -30,9 +30,8 @@ public class CompanyProfileSessionBean implements CompanyProfileSessionBeanLocal
     public Long addCompanyProfile(String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision) {
         Query q = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");
         q.setParameter("email", email);
-        Account a = (Account) q.getSingleResult();
-        List<Account> as = null;
-        as.add(a);
+        System.out.println("********"+email);
+        List<Account> as = (List<Account>) q.getResultList();
         companyProfile = new Company();
         companyProfile.setAccount(as);
         companyProfile.create(companyName, companyAddress, tel, email, website, companyHistory, service, vision);

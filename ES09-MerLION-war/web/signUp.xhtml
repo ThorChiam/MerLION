@@ -116,10 +116,10 @@
                                     <p:commandButton id="btn" value="sign up" update="panel" actionListener="#{accountManagedBean.signup}" ajax="false" />
                                 </p:growl>
 
-                                <p:panel id="panel2" header="" rendered="#{facesContext.externalContext.sessionMap['accountCreated']!=null}">
+                                <p:growl id="panel2" rendered="#{facesContext.externalContext.sessionMap['accountCreated']!=null}">
                                     <a href="createCompanyProfile.xhtml" >Create Company Profile</a>
 
-                                </p:panel>
+                                </p:growl>
                             </h:form>
                         </div>
                     </font>
@@ -158,6 +158,5 @@
         <!--  IE10 viewport hack for Surface/desktop Windows 8 bug --> <script
             src="/ES09-MerLION-war/js/jquery.min.js"
         type="text/javascript"></script>
-
     </h:body>
 </html>

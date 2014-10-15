@@ -12,6 +12,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import merlion.ejb.local.CompanyProfileSessionBeanLocal;
 
+
 /**
  *
  * @author ThorChiam
@@ -36,8 +37,8 @@ public class CompanyProfileManagedBean implements Serializable {
 
     public CompanyProfileManagedBean() {
     }
-    public Long addCompanyProfile(){
-        return cpsbl.addCompanyProfile(companyName, companyAddress, tel, email, website, companyHistory, service, vision);
+    public Long addCompanyProfile(String aemail){
+        return cpsbl.addCompanyProfile(companyName, companyAddress, tel, aemail, website, companyHistory, service, vision);
     }
     public List getAllCompanyProfile(String email){
         return cpsbl.getAllCompanyProfile(email);
@@ -52,4 +53,77 @@ public class CompanyProfileManagedBean implements Serializable {
     public void updateCompanyProfile(String email,Long companyId){
         cpsbl.updateCompanyProfile(companyId, companyName, companyAddress, tel, email, website, companyHistory, service, vision);
     }
+
+    public CompanyProfileSessionBeanLocal getCpsbl() {
+        return cpsbl;
+    }
+
+    public void setCpsbl(CompanyProfileSessionBeanLocal cpsbl) {
+        this.cpsbl = cpsbl;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCompanyAddress() {
+        return companyAddress;
+    }
+
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getCompanyHistory() {
+        return companyHistory;
+    }
+
+    public void setCompanyHistory(String companyHistory) {
+        this.companyHistory = companyHistory;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
+    public String getVision() {
+        return vision;
+    }
+
+    public void setVision(String vision) {
+        this.vision = vision;
+    }
+    
 }
