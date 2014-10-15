@@ -27,7 +27,7 @@ public class CompanyProfileSessionBean implements CompanyProfileSessionBeanLocal
     private Company companyProfile;
 
     @Override
-    public Long addCompanyProfile(String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision) {
+    public void addCompanyProfile(String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision) {
         Query q = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");
         q.setParameter("email", email);
         System.out.println("********"+email);
@@ -38,7 +38,7 @@ public class CompanyProfileSessionBean implements CompanyProfileSessionBeanLocal
         em.persist(companyProfile);
         em.flush();
 
-        return companyProfile.getId();
+        //return companyProfile.getId();
     }
 
     @Override
