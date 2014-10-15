@@ -10,17 +10,11 @@
    
 
     <h:head>
-        <title>Welcome to Order Entry System</title>
+        <title>Welcome to My MerLION</title>
         
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
-        
-        <link href="/MFront-war/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="css/custom.css" rel="stylesheet"/>
-        <script src="/MFront-war/js/ie-emulation-modes-warning.js"
-        type="text/javascript"></script>
-        
-        <link href="/MFront-war/css/carousel.css" rel="stylesheet" />
+ 
     </h:head>
 
      <h:body>
@@ -60,18 +54,13 @@
              
               <p:breadCrumb>
                     <p:menuitem value="Home" url="/main.xhtml" />
-                    <p:menuitem value="Dashboard" url="" />
-                    <p:menuitem value="Product" url="productMain.xhtml" />
-                    <p:menuitem value="Quotation" url="#" />
-                    <p:menuitem value="Sales Order" url="#" />
-                    <p:menuitem value="Customer" url="#" />
-                    <p:menuitem value="Supplier" url="#" />
-                    <p:menuitem value="Payment" url="#" />
-
-
+                    <p:menuitem value="Account Setting" url="accountSetting.xhtml" />
+                    <p:menuitem value="Message/Notification" url="msg.xhtml" />
+                    <p:menuitem value="Buying Requests" url="#" />
+                    <p:menuitem value="Transaction/Logistics" url="#" />         
             </p:breadCrumb>
             <b:well>
-                <h2>Order Entry System</h2>   
+                <h2>My MerLION</h2>   
             </b:well>
         </b:container>
        
@@ -100,12 +89,8 @@
 
                         </b:listLinks>
                      </p:panel>
-                    </h:form>
-                  
-                </b:column>
-                 
-
-
+                    </h:form>                 
+                </b:column>                 
                 <b:column col-xs="6" col-sm="6" col-md="10">
                     <h:form>
                         <p:panel header="NEW Product">

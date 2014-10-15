@@ -38,7 +38,8 @@
             </b:navbarLinks>
 
             <h:form styleClass="navbar-form navbar-right">
-               <b:commandButton action="signIn.xhtml" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+               <b:commandButton action="signIn.xhtml" value="Sign in" look="success" iconAlign="right"/>
+               <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
             </h:form> 
         </b:navBar>
 

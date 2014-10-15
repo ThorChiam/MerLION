@@ -43,8 +43,8 @@ public class CompanyProfileSessionBean implements CompanyProfileSessionBeanLocal
 
     @Override
     public List getAllCompanyProfile(String email) {
-        Query q = em.createQuery("SELECT e FROM CompanyProfile e WHERE e.Account.email");
-        q.setParameter("email", email);
+        Query q = em.createQuery("SELECT e FROM CompanyProfile e WHERE e.Account.email=?1");
+        q.setParameter(1, email);
         return q.getResultList();
     }
 
