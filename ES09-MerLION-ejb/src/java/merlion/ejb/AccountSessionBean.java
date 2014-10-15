@@ -22,7 +22,6 @@ import merlion.entity.CommonInfrastructure.Account;
  * @author ThorChiam
  */
 @Stateless
-@TransactionManagement(TransactionManagementType.CONTAINER)
 public class AccountSessionBean implements AccountSessionBeanLocal {
 
 //    private InitialContext ic;
