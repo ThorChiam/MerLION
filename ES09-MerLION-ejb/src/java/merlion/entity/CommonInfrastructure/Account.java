@@ -21,7 +21,6 @@ import merlion.entity.CRMS.Favorite;
 import merlion.entity.CRMS.Payment;
 import merlion.entity.MRP.Item;
 import merlion.entity.CRMS.Post;
-import merlion.entity.CRMS.ServiceCatalog;
 import merlion.entity.WMS.WMSOrder;
 import merlion.entity.WMS.WMS_Shipment_Order;
 

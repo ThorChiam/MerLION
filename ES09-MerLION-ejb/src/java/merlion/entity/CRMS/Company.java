@@ -10,7 +10,6 @@ import merlion.entity.TMS.TMSFacility;
 import merlion.entity.WMS.WMSWarehouse;
 import merlion.entity.GRNS.Auction;
 import merlion.entity.CommonInfrastructure.Account;
-import merlion.entity.CommonInfrastructure.Chat;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -261,14 +260,6 @@ public class Company implements Serializable {
         this.tmsfacility = tmsfacility;
     }
 
-
-    
-    
-    
-    
-    
-    
-      
     public Company(){
         setId(System.nanoTime());
     }
