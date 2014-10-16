@@ -34,8 +34,10 @@ public class CompanyProfileSessionBean implements CompanyProfileSessionBeanLocal
         List<Account> as = (List<Account>) q.getResultList();
         companyProfile = new Company();
         companyProfile.setAccount(as);
+        as.get(0).setCompany(companyProfile);
         companyProfile.create(companyName, companyAddress, tel, email, website, companyHistory, service, vision);
         em.persist(companyProfile);
+        em.persist(as.get(0));
         em.flush();
 
         //return companyProfile.getId();
