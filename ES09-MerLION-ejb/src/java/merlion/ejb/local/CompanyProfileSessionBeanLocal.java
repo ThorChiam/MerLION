@@ -15,7 +15,7 @@ import javax.ejb.Local;
 @Local
 public interface CompanyProfileSessionBeanLocal {
 
-    public Long addCompanyProfile(String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision);
+    public void addCompanyProfile(String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision);
 
     public List getAllCompanyProfile(String email);
 

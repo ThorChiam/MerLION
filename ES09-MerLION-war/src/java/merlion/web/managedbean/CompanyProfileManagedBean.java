@@ -9,9 +9,10 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import merlion.ejb.local.CompanyProfileSessionBeanLocal;
-
 
 /**
  *
@@ -34,23 +35,30 @@ public class CompanyProfileManagedBean implements Serializable {
     private String companyHistory;
     private String service;
     private String vision;
+    private String statusMessage;
 
     public CompanyProfileManagedBean() {
     }
-    public Long addCompanyProfile(String aemail){
-        return cpsbl.addCompanyProfile(companyName, companyAddress, tel, aemail, website, companyHistory, service, vision);
+
+    public String addCompanyProfile(String aemail) {
+        statusMessage = "create company profile successfully";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Status: " + statusMessage, ""));
+        cpsbl.addCompanyProfile(companyName, companyAddress, tel, aemail, website, companyHistory, service, vision);
+        return "main";
     }
-    public List getAllCompanyProfile(String email){
+
+    public List getAllCompanyProfile(String email) {
         return cpsbl.getAllCompanyProfile(email);
     }
 
     //admin can delete company profile
-    public String deleteCompanyProfile(String email, Long companyId){
+    public String deleteCompanyProfile(String email, Long companyId) {
         return cpsbl.deleteCompanyProfile(email, companyId);
     }
     //update company profile
 
-    public void updateCompanyProfile(String email,Long companyId){
+    public void updateCompanyProfile(String email, Long companyId) {
         cpsbl.updateCompanyProfile(companyId, companyName, companyAddress, tel, email, website, companyHistory, service, vision);
     }
 
@@ -125,5 +133,5 @@ public class CompanyProfileManagedBean implements Serializable {
     public void setVision(String vision) {
         this.vision = vision;
     }
-    
+
 }
