@@ -24,6 +24,9 @@ public class ServiceOrder implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    
+    //不是account么？
     @ManyToOne
     private Company service_requester;
     

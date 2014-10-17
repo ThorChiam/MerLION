@@ -7,15 +7,15 @@ package merlion.entity.OES;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import merlion.entity.CommonInfrastructure.Account;
 
@@ -37,15 +37,23 @@ public class OES_Enquiry implements Serializable {
     @OneToOne 
     private OES_Quotation quotation;
     
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="enquiry")
-    private Collection<OES_Product> product = new ArrayList<>(); 
-    
+    @ManyToMany(cascade={CascadeType.ALL},mappedBy="enquiry")
+    private Set<OES_Product> product=new HashSet<>(); 
+
     private List<Integer> quantity = new ArrayList();
 
     public OES_Enquiry(){
         setId(System.nanoTime());
     }
      
+    public Set<OES_Product> getProduct() {
+        return product;
+    }
+
+    public void setProduct(Set<OES_Product> product) {
+        this.product = product;
+    }
+    
     public String getCreatedate() {
         return createdate;
     }
@@ -68,14 +76,6 @@ public class OES_Enquiry implements Serializable {
 
     public void setBuyer(Account buyer) {
         this.buyer = buyer;
-    }
-    
-    public Collection<OES_Product> getProduct() {
-        return product;
-    }
-
-    public void setProduct(Collection<OES_Product> product) {
-        this.product = product;
     }
     
     public OES_Quotation getQuotation() {

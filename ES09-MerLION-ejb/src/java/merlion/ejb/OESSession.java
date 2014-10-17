@@ -7,6 +7,7 @@ package merlion.ejb;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -89,7 +90,7 @@ public class OESSession implements OESSessionLocal{
     
     //************************Enquiry***************************
     @Override
-    public void createEnquiry(Account seller, Account buyer, Collection<OES_Product> products,  List<Integer> quantity, String createdate) {
+    public void createEnquiry(Account seller, Account buyer, Set<OES_Product> products,  List<Integer> quantity, String createdate) {
         OES_Enquiry tmp= new OES_Enquiry();
         tmp.setBuyer(buyer);
         tmp.setSeller(seller);
@@ -171,7 +172,7 @@ public class OESSession implements OESSessionLocal{
     
     //*********************PurchaseOrder*********************
     @Override
-    public void createPurchaseOrder(Account buyer, Account seller, double taxrate, List<Integer> quantity, Collection<OES_Product> product, String createdate) {
+    public void createPurchaseOrder(Account buyer, Account seller, double taxrate, List<Integer> quantity, Set<OES_Product> product, String createdate) {
         OES_PurchaseOrder tmp= new OES_PurchaseOrder();
         tmp.setBuyer(buyer);
         tmp.setSeller(seller);
@@ -296,7 +297,7 @@ public class OESSession implements OESSessionLocal{
 
     @Override
     public OES_Invoice getInvoice(long invoice_id) {
-        Query q = em.createQuery("SELECT f FROM OES_Invioce f WHERE f.id=:id");
+        Query q = em.createQuery("SELECT f FROM OES_Invoice f WHERE f.id=:id");
         q.setParameter("id", invoice_id);
         return (OES_Invoice)q.getSingleResult();
     }

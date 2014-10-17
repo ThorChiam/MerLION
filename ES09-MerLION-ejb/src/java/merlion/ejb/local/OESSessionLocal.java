@@ -8,6 +8,7 @@ package merlion.ejb.local;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.Local;
 import merlion.entity.CommonInfrastructure.Account;
 import merlion.entity.OES.OES_Enquiry;
@@ -34,7 +35,7 @@ public interface OESSessionLocal {
    
     
     //********************Buyer-Enquiry**************************
-    public void createEnquiry(Account seller, Account buyer, Collection<OES_Product> products, List<Integer> quantity, String createdate);
+    public void createEnquiry(Account seller, Account buyer, Set<OES_Product> products, List<Integer> quantity, String createdate);
     public OES_Enquiry getEnquiry(long enquiry_id);
     public List<OES_Enquiry> getAllEnquiry(String email);//两边都能拿？？？？？
     public void deleteEnquiry(long enquiry_id);
@@ -51,7 +52,7 @@ public interface OESSessionLocal {
     
     
     //********************Buyer-Purchase Order*******************
-    public void createPurchaseOrder(Account buyer, Account seller, double taxrate, List<Integer> quantity, Collection<OES_Product> product, String createdate);
+    public void createPurchaseOrder(Account buyer, Account seller, double taxrate, List<Integer> quantity, Set<OES_Product> product, String createdate);
     public OES_PurchaseOrder getPurchaseOrder(long purchase_id);
     public List<OES_PurchaseOrder> getAllPurchaseOrder(String email);//两边都能拿？？？？
     public void deletePurchaseOrder(long purchase_id);//只能buyer删
@@ -62,7 +63,7 @@ public interface OESSessionLocal {
     public void createSalesOrder(OES_PurchaseOrder purchaseorder, String createdate);
     public OES_SalesOrder getSalesOrder(long sales_id);
     public List<OES_SalesOrder> getAllSalesOrder(String email);
-    public void deleteSalesOrder(long purchase_id);//只能seller删，不传给buyer
+    public void deleteSalesOrder(long sales_id);//只能seller删，不传给buyer
     
     
     

@@ -90,7 +90,7 @@
                             <p:messages autoUpdate="true"/>
 
                             <h:panelGrid id="grid" columns="4" cellpadding="5">
-                              <!--  <p:dataTable value="#" var="p" > -->
+                                <p:dataTable value="#{companyProfileManagedBean.getAllCompanyProfile(facesContext.externalContext.sessionMap['email'])}" var="p" >
                                     <p:column headerText ="Company Name">                           
                                         <h:outputText value="#{p[3]}" />
                                     </p:column> 
@@ -115,7 +115,7 @@
                                     <p:column headerText ="Vision">                           
                                         <h:outputText value="#" />
                                     </p:column>
-                      <!--          </p:dataTable>     -->                         
+                                </p:dataTable>                             
                             </h:panelGrid>
                         </p:panel>
                     </h:form>

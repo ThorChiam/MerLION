@@ -59,39 +59,22 @@
                 <p:menuitem value="Transaction/Logistics" url="#" />         
             </p:breadCrumb>
             <b:well>
-                <h2>My MerLION</h2>   
+                <h2>Upload My Photo</h2>   
             </b:well>
         </b:container>
 
 
         <b:container>
-            <b:row styleClass="show-grid">
-                <b:column col-xs="6" col-sm="6" col-md="12">
-                    <h:form>
-                        <p:panel>
-                            <h4>Personal Informtaion</h4>
-                            <span><a href="viewCompanyProfile.xhtml">My Profile</a></span>
-                            &nbsp;
-                            <span><a href="">Edit Profile</a></span> 
-                            
-                            
-                            <span><a href="accountSettingPhotoUpload.xhtml">Upload My Photo</a></span>  
-                            <hr/>
-                            <h4>Account Security</h4>
-                            <span><a href="">Reset Password</a></span>
-                            <hr/>
-                            <h4>Feedback Management</h4>
-                            <span><a href="accountSettingfeedback.xhtml">Write Feedback</a></span>
-                        </p:panel>
-                    </h:form>
 
-                </b:column>
+            <h:form>
+                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="true"
+                              update="messages" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 
-            </b:row>
+                <p:growl id="messages" showDetail="true" />
+            </h:form>
 
         </b:container>
-        
-         <foot>
+        <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 
                 <div class="navbar-text pull-left">
@@ -113,9 +96,6 @@
 
     </h:body>
 </html>
-
-
-
 
 
 
