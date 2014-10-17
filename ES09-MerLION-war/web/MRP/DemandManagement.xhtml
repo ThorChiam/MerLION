@@ -1,156 +1,264 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:p="http://primefaces.org/ui"
-                template="/template/DefaultTemplate.xhtml">
-
-    <ui:define name="left">
-       You are at demand management
-    </ui:define>
-
-    <ui:define name="content">
-
-        <h2><h:outputLabel value="Demand management" /></h2>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:g="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
 
-        <h:form id="demand">
-            <h:outputText style="font-weight: bold" value="item Id " />
-            <h:inputText required="true" requiredMessage="Field is required." id="itemId" value="#{MPSManagerBean.itemId}">           
-            </h:inputText>
-            <p:commandButton value="show demand" action="#{MPSManagerBean.showDemand}" update="past">
-            </p:commandButton>
-            <h3><h:outputLabel value="past 6 months demand:"/></h3>
-            
-            <h:panelGroup id="past" layout="block">
-                <p:dataTable value="#{MPSManagerBean.past}" var="d">
 
-                    <p:column headerText ="month 1">                           
-                        <h:outputText value="#{d[0]}" />
-                    </p:column>
+    <h:head>
+        <title>Welcome to My MerLION</title>
 
-                    <p:column headerText ="month 2">
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
 
-                        <h:outputText value="#{d[1]}"  />
+    </h:head>
 
-                    </p:column>
-
-                    <p:column headerText ="month 1">
-
-                        <f:facet name="header">month 3</f:facet>
-
-                        <h:outputText value="#{d[2]}"   />
-
-                    </p:column>
-                    <p:column headerText ="month 4">
+    <h:body>
 
 
-                        <h:outputText value="#{d[3]}"   />
+        <b:navBar brand="MerLION Logistics" brandHref="#">
 
-                    </p:column>
-                    <p:column headerText ="month 5">
+            <b:navbarLinks>
+                <b:navLink value="SignUp" href="#"></b:navLink>
+                <b:navLink value="About us" href="#"></b:navLink>
+                <b:navLink value="My MerLION" href="#"></b:navLink>
+                <b:dropMenu value="Services">
+                    <b:navLink value="OES" href="/OES/main.xhtml"></b:navLink>
+                    <b:navLink value="Another action" href="#"></b:navLink>
+                    <b:navLink value="Something else here" href="#"></b:navLink>
+                    <b:navLink></b:navLink>
+                    <b:navLink header="Nav header"></b:navLink>
+                    <b:navLink value="Separated link" href="#"></b:navLink>
+                    <b:navLink value="One more separated link" href="#"></b:navLink>
+                </b:dropMenu>
+            </b:navbarLinks>
 
-                        <h:outputText value="#{d[4]}"   />
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
 
-                    </p:column> 
-                    <p:column headerText ="month 6">
+                    <b:commandButton action="a" value="Logout" look="success" icon="ui-icon-extlink" iconAlign="right"/>
+                </div>
+            </h:form>
+        </b:navBar>
 
-                        <h:outputText value="#{d[5]}"  />
 
-                    </p:column>     
+        <b:container>
 
-                </p:dataTable>
-            </h:panelGroup>
-            
-        <p:outputLabel for="console" value="Select Demand Type:" />
-        <p:selectOneMenu id="console" value="#{MPSManagerBean.demandType}">
-            <f:selectItem itemLabel="seasonal" itemValue="seasonal" />
-            <f:selectItem itemLabel="non-seasonal" itemValue="non-seasonal" />
-        </p:selectOneMenu>
-        
-            <p:commandButton value="predict demand" action="#{MPSManagerBean.PredictDemand}"  update="prediction">
-                 </p:commandButton>
-            <h:panelGroup id="prediction" layout="block">
-                <p:dataTable value="#{MPSManagerBean.prediction}" var="p" >
 
-                    <p:column headerText ="month 1">                           
-                        <h:outputText value="#{p[0]}" />
-                    </p:column>
+        </b:container>
+        <b:container>
 
-                    <p:column headerText ="month 2">
+            <p:breadCrumb>
+                <p:menuitem value="Home" url="index" />
+                <p:menuitem value="Home" url="index" />
+                <p:menuitem value="Add BOM" url="addBOM" />
+                <p:menuitem value="Add New Plans" url="addNewPlan" />
+                <p:menuitem value="Demand Management" url="DemandManagement" />
+                <p:menuitem value="Order Management" url="orderManagement" />         
+            </p:breadCrumb>
+            <b:well>
+                <h3>MRP System - Demand Management</h3>   
+            </b:well>
+        </b:container>
 
-                        <h:outputText value="#{p[1]}"  />
 
-                    </p:column>
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="6" col-sm="6" col-md="3">
 
-                    <p:column headerText ="month 1">
 
-                        <f:facet name="header">month 3</f:facet>
+                    <h:form>
+                        <p:panel header="MRP">
 
-                        <h:outputText value="#{p[2]}"   />
+                            <b:listLinks>
 
-                    </p:column>
-                    <p:column headerText ="month 4">
+                                <b:navLink href="addBOM.xhtml.xhtml" value="Add BOM"/>                          
+                                <b:navLink href="addNewPlan.xhtml" value="Add New Plan"/>
+                                <b:navLink href="DemandManagement.xhtml" value="Demand Management"/>
+                                <b:navLink href="orderManagement.xhtml" value="Order Management"/>
 
-                        <h:outputText value="#{p[3]}"   />
+                            </b:listLinks>
+                        </p:panel>
+                    </h:form>                 
+                </b:column>                   
+                <b:column col-xs="6" col-sm="6" col-md="9">
+                    <h:form id="demand">
+                        <h:outputText style="font-weight: bold" value="item Id " />
+                        <h:inputText required="true" requiredMessage="Field is required." id="itemId" value="#{MPSManagerBean.itemId}">           
+                        </h:inputText>
+                        <p:commandButton value="show demand" action="#{MPSManagerBean.showDemand}" update="past">
+                        </p:commandButton>
 
-                    </p:column>
-                    <p:column headerText ="month 5">
+                        <p:panel id="panel" header="Past 6 Months Demand">
+                            <h:panelGroup id="past" layout="block">
+                                <p:dataTable value="#{MPSManagerBean.past}" var="d">
 
-                        <h:outputText value="#{p[4]}"   />
+                                    <p:column headerText ="month 1">                           
+                                        <h:outputText value="#{d[0]}" />
+                                    </p:column>
 
-                    </p:column> 
-                    <p:column headerText ="month 6">
+                                    <p:column headerText ="month 2">
 
-                        <h:outputText value="#{p[5]}"  />
+                                        <h:outputText value="#{d[1]}"  />
 
-                    </p:column> 
-                </p:dataTable>
-            </h:panelGroup>
-        
-            
-            <h3><h:outputLabel value="monthly master production schedule:"/></h3>
-            <p:dataTable value="#{MPSManagerBean}" var="t" id="MPS">
+                                    </p:column>
 
-                <p:column headerText ="month 1">                           
-                        <h:inputText value="#{t.first}" />
-                    </p:column>
+                                    <p:column headerText ="month 1">
 
-                    <p:column headerText ="month 2">
+                                        <f:facet name="header">month 3</f:facet>
 
-                        <h:inputText value="#{t.second}"  />
+                                        <h:outputText value="#{d[2]}"   />
 
-                    </p:column>
+                                    </p:column>
+                                    <p:column headerText ="month 4">
 
-                    <p:column headerText ="month 3">
 
-                        <f:facet name="header">month 3</f:facet>
+                                        <h:outputText value="#{d[3]}"   />
 
-                        <h:inputText value="#{t.third}"   />
+                                    </p:column>
+                                    <p:column headerText ="month 5">
 
-                    </p:column>
-                    <p:column headerText ="month 4">
+                                        <h:outputText value="#{d[4]}"   />
 
-                        <h:inputText value="#{t.fourth}"   />
+                                    </p:column> 
+                                    <p:column headerText ="month 6">
 
-                    </p:column>
-                    <p:column headerText ="month 5">
+                                        <h:outputText value="#{d[5]}"  />
 
-                        <h:inputText value="#{t.fifth}"   />
+                                    </p:column>     
 
-                    </p:column> 
-                    <p:column headerText ="month 6">
+                                </p:dataTable>
+                            </h:panelGroup>
+                        </p:panel>
+                        <br/>
+                        <p:panel id="panel1" header="Demand Prediction">
+                            <p:outputLabel for="console" value="Select Demand Type:" />
+                            <p:selectOneMenu id="console" value="#{MPSManagerBean.demandType}">
+                                <f:selectItem itemLabel="seasonal" itemValue="seasonal" />
+                                <f:selectItem itemLabel="non-seasonal" itemValue="non-seasonal" />
+                            </p:selectOneMenu>
 
-                        <h:inputText value="#{t.sixth}"  />
+                            <p:commandButton value="predict demand" action="#{MPSManagerBean.PredictDemand}"  update="prediction">
+                            </p:commandButton>
+                            <h:panelGroup id="prediction" layout="block">
+                                <p:dataTable value="#{MPSManagerBean.prediction}" var="p" >
 
-                    </p:column>     
+                                    <p:column headerText ="month 1">                           
+                                        <h:outputText value="#{p[0]}" />
+                                    </p:column>
 
-            </p:dataTable>
+                                    <p:column headerText ="month 2">
 
-            <h:commandButton action="saveNewMPS.xhtml" value="Save master production schedule" actionListener="#{MPSManagerBean.addNewMPS}" />
-        </h:form>
-    </ui:define>
+                                        <h:outputText value="#{p[1]}"  />
 
-</ui:composition>
+                                    </p:column>
+
+                                    <p:column headerText ="month 1">
+
+                                        <f:facet name="header">month 3</f:facet>
+
+                                        <h:outputText value="#{p[2]}"   />
+
+                                    </p:column>
+                                    <p:column headerText ="month 4">
+
+                                        <h:outputText value="#{p[3]}"   />
+
+                                    </p:column>
+                                    <p:column headerText ="month 5">
+
+                                        <h:outputText value="#{p[4]}"   />
+
+                                    </p:column> 
+                                    <p:column headerText ="month 6">
+
+                                        <h:outputText value="#{p[5]}"  />
+
+                                    </p:column> 
+                                </p:dataTable>
+                            </h:panelGroup>
+
+                        </p:panel>
+                        <br/>
+                        <p:panel id="panel2" header="Monthly Master Production Schedule">
+                            <p:dataTable value="#{MPSManagerBean}" var="t" id="MPS">
+
+                                <p:column headerText ="month 1">                           
+                                    <h:inputText value="#{t.first}" />
+                                </p:column>
+
+                                <p:column headerText ="month 2">
+
+                                    <h:inputText value="#{t.second}"  />
+
+                                </p:column>
+
+                                <p:column headerText ="month 3">
+
+                                    <f:facet name="header">month 3</f:facet>
+
+                                    <h:inputText value="#{t.third}"   />
+
+                                </p:column>
+                                <p:column headerText ="month 4">
+
+                                    <h:inputText value="#{t.fourth}"   />
+
+                                </p:column>
+                                <p:column headerText ="month 5">
+
+                                    <h:inputText value="#{t.fifth}"   />
+
+                                </p:column> 
+                                <p:column headerText ="month 6">
+
+                                    <h:inputText value="#{t.sixth}"  />
+
+                                </p:column>     
+
+                            </p:dataTable>
+                            <br/>
+                            <p:commandButton action="saveNewMPS.xhtml" value="Save master production schedule" actionListener="#{MPSManagerBean.addNewMPS}" />
+                        </p:panel>
+                    </h:form>
+                </b:column>
+
+            </b:row>
+
+        </b:container>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+
+    </h:body>
+</html>
+
+
+
+
+
+

@@ -1,185 +1,299 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:p="http://primefaces.org/ui"
-                template="/template/DefaultTemplate.xhtml">
-    <ui:define name="left">
-        You are now at addNewPlan.xhtml
-    </ui:define>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:g="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name ="content">
-        <h:form id="addNewTemplateForm">
-            <h2><h:outputLabel value="planning table" /></h2>
-             <h:outputText style="font-weight: bold" value="item Id " />
-                <h:inputText required="true" requiredMessage="item Id Field is required." id="startDateTime" value="#{TemplateManagerBean.itemId}">
-  
-                </h:inputText>
-            <p:dataTable value="#{TemplateManagerBean.tempList}" var="t">
 
-                <p:column>
 
-                    <f:facet name="header">weekly</f:facet>
+    <h:head>
+        <title>Welcome to My MerLION</title>
 
-                    <h:outputText value="#{t.name}" />
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
 
-                </p:column>
+    </h:head>
 
-                <p:column>
+    <h:body>
 
-                    <f:facet name="header">week 1</f:facet>
 
-                    <h:inputText value="#{t.first}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
-                    </h:inputText>
+        <b:navBar brand="MerLION Logistics" brandHref="#">
 
-                    <h:outputText value="#{t.first}" rendered="#{not t.editable}" />
+            <b:navbarLinks>
+                <b:navLink value="SignUp" href="#"></b:navLink>
+                <b:navLink value="About us" href="#"></b:navLink>
+                <b:navLink value="My MerLION" href="#"></b:navLink>
+                <b:dropMenu value="Services">
+                    <b:navLink value="OES" href="/OES/main.xhtml"></b:navLink>
+                    <b:navLink value="Another action" href="#"></b:navLink>
+                    <b:navLink value="Something else here" href="#"></b:navLink>
+                    <b:navLink></b:navLink>
+                    <b:navLink header="Nav header"></b:navLink>
+                    <b:navLink value="Separated link" href="#"></b:navLink>
+                    <b:navLink value="One more separated link" href="#"></b:navLink>
+                </b:dropMenu>
+            </b:navbarLinks>
 
-                </p:column>
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
 
-                <p:column>
-
-                    <f:facet name="header">week 2</f:facet>
-
-                    <h:inputText value="#{t.second}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
-                    </h:inputText>
-
-                    <h:outputText value="#{t.second}" rendered="#{not t.editable}" />
-
-                </p:column>
-
-                <p:column>
-
-                    <f:facet name="header">week 3</f:facet>
-
-                   <h:inputText value="#{t.third}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
-                    </h:inputText>
-
-                    <h:outputText value="#{t.third}" rendered="#{not t.editable}" />
-
-                </p:column>
-                <p:column>
-
-                    <f:facet name="header">week 4</f:facet>
-
-                    <h:inputText value="#{t.fourth}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
-                    </h:inputText>
-
-                    <h:outputText value="#{t.fourth}" rendered="#{not t.editable}" />
-
-                </p:column>
-               <p:column>
-
-                    <f:facet name="header">week 5</f:facet>
-
-                    <h:inputText value="#{t.fifth}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
-                    </h:inputText>
-
-                    <h:outputText value="#{t.fifth}" rendered="#{not t.editable}" />
-
-                </p:column>
-                <p:column>
-
-                    <f:facet name="header">week 6</f:facet>
-
-                    <h:inputText value="#{t.sixth}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
-                    </h:inputText>
-                        
-
-                    <h:outputText value="#{t.sixth}" rendered="#{not t.editable}" />
-
-                </p:column>
-                <p:column>
-
-                    <f:facet name="header">week 7</f:facet>
-
-                    <h:inputText value="#{t.seventh}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
-                    </h:inputText>
-
-                    <h:outputText value="#{t.seventh}" rendered="#{not t.editable}" />
-                </p:column>
-                               
-                <p:column>
-
-                    <f:facet name="header">Action</f:facet>
-
-                    <h:commandLink value="Edit" action="#{TemplateManagerBean.editAction(t)}" 
-                                   rendered="#{not t.editable}" />
-                </p:column>
-
-            </p:dataTable>
-     
-            <p:commandButton action="saveNewTemplate.xhtml" value="Save New Plan" actionListener="#{TemplateManagerBean.saveNewTemplate}" />
+                    <b:commandButton action="a" value="Logout" look="success" icon="ui-icon-extlink" iconAlign="right"/>
+                </div>
             </h:form>
-        
-        <h:form id="displayTemplateForm">
-            <h2>display a plan</h2>
-            <h:outputText style="font-weight: bold" value="item Id: "  />
-            <h:inputText required="true" requiredMessage="Field is required." id="itemId1" value="#{TemplateManagerBean.itemId}">           
-            </h:inputText>
-            <p:commandButton value="show item plan" action="#{TemplateManagerBean.getItemTemplate}" update="plan" ajax="true">
-            </p:commandButton>
-            
-            <h:panelGroup id="plan" layout="block">
-            <p:dataTable   value="#{TemplateManagerBean.templates}" var="j">
-                     <f:facet name="header">
-                       display the item plan
-                 </f:facet>
-                <p:column>
+        </b:navBar>
 
-                    <f:facet name="header">weekly</f:facet>
-                    <h:outputText value="#{j.name}" />
 
-                </p:column>
+        <b:container>
 
-                <p:column>
 
-                    <f:facet name="header">week 1</f:facet>
-                
-                    <h:outputText value="#{j.firstweek}"  />
-                </p:column>
-                <p:column>
-                    <f:facet name="header">week 2</f:facet>
-                          <h:outputText value="#{j.secondweek}" />
-                </p:column>
+        </b:container>
+        <b:container>
 
-                <p:column>
+            <p:breadCrumb>
+                <p:menuitem value="Home" url="index" />
+                <p:menuitem value="Home" url="index" />
+                <p:menuitem value="Add BOM" url="addBOM" />
+                <p:menuitem value="Add New Plans" url="addNewPlan" />
+                <p:menuitem value="Demand Management" url="demandManagement" />
+                <p:menuitem value="Order Management" url="orderManagement" />         
+            </p:breadCrumb>
+            <b:well>
+                <h3>MRP System - Add New Plan</h3>   
+            </b:well>
+        </b:container>
 
-                    <f:facet name="header">week 3</f:facet>
-                   
-                    <h:outputText value="#{j.thirdweek}"  />
 
-                </p:column>
-                <p:column>
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="6" col-sm="6" col-md="3">
 
-                    <f:facet name="header">week 4</f:facet>
-                   
-                    <h:outputText value="#{j.fourthweek}"  />
 
-                </p:column>
-               <p:column>
+                    <h:form>
+                        <p:panel header="MRP">
 
-                    <f:facet name="header">week 5</f:facet>
-                 
-                    <h:outputText value="#{j.fifthweek}" />
+                            <b:listLinks>
 
-                </p:column>
-                <p:column>
-                    <f:facet name="header">week 6</f:facet>
-                    
-                    <h:outputText value="#{j.sixthweek}"  />
+                                <b:navLink href="addBOM.xhtml.xhtml" value="Add BOM"/>                          
+                                <b:navLink href="addNewPlan.xhtml" value="Add New Plan"/>
+                                <b:navLink href="demandManagement.xhtml" value="Demand Management"/>
+                                <b:navLink href="orderManagement.xhtml" value="Order Management"/>
 
-                </p:column>
-                <p:column>
-                    <f:facet name="header">week 7</f:facet>
-                    
-                    <h:outputText value="#{j.seventhweek}"  />
+                            </b:listLinks>
+                        </p:panel>
+                    </h:form>                 
+                </b:column>                   
+                <b:column col-xs="6" col-sm="6" col-md="9">
+                    <h:form id="addNewTemplateForm">
+                        <p:panel id="panel" header="Planning Table">
+                            <h:outputText style="font-weight: bold" value="item Id " />
+                            <h:inputText required="true" requiredMessage="item Id Field is required." id="startDateTime" value="#{TemplateManagerBean.itemId}">
+                            </h:inputText>
 
-                </p:column>
-                                             
-            </p:dataTable>
-                </h:panelGroup>
-        </h:form>
-    </ui:define>
-</ui:composition>
+                            <p:dataTable value="#{TemplateManagerBean.tempList}" var="t">
+
+                                <p:column>
+
+                                    <f:facet name="header">weekly</f:facet>
+
+                                    <h:outputText value="#{t.name}" />
+
+                                </p:column>
+
+                                <p:column>
+
+                                    <f:facet name="header">week 1</f:facet>
+
+                                    <h:inputText value="#{t.first}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+                                    <h:outputText value="#{t.first}" rendered="#{not t.editable}" />
+
+                                </p:column>
+
+                                <p:column>
+
+                                    <f:facet name="header">week 2</f:facet>
+
+                                    <h:inputText value="#{t.second}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+                                    <h:outputText value="#{t.second}" rendered="#{not t.editable}" />
+
+                                </p:column>
+
+                                <p:column>
+
+                                    <f:facet name="header">week 3</f:facet>
+
+                                    <h:inputText value="#{t.third}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+                                    <h:outputText value="#{t.third}" rendered="#{not t.editable}" />
+
+                                </p:column>
+                                <p:column>
+
+                                    <f:facet name="header">week 4</f:facet>
+
+                                    <h:inputText value="#{t.fourth}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+                                    <h:outputText value="#{t.fourth}" rendered="#{not t.editable}" />
+
+                                </p:column>
+                                <p:column>
+
+                                    <f:facet name="header">week 5</f:facet>
+
+                                    <h:inputText value="#{t.fifth}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+                                    <h:outputText value="#{t.fifth}" rendered="#{not t.editable}" />
+
+                                </p:column>
+                                <p:column>
+
+                                    <f:facet name="header">week 6</f:facet>
+
+                                    <h:inputText value="#{t.sixth}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+
+                                    <h:outputText value="#{t.sixth}" rendered="#{not t.editable}" />
+
+                                </p:column>
+                                <p:column>
+
+                                    <f:facet name="header">week 7</f:facet>
+
+                                    <h:inputText value="#{t.seventh}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+                                    <h:outputText value="#{t.seventh}" rendered="#{not t.editable}" />
+                                </p:column>
+
+                                <p:column>
+
+                                    <f:facet name="header">Action</f:facet>
+
+                                    <h:commandLink value="Edit" action="#{TemplateManagerBean.editAction(t)}" 
+                                                   rendered="#{not t.editable}" />
+                                </p:column>
+
+                            </p:dataTable>
+                            <br/>
+                            <p:commandButton action="saveNewTemplate.xhtml" value="Save New Plan" actionListener="#{TemplateManagerBean.saveNewTemplate}" />
+
+                        </p:panel>
+                    </h:form>
+
+                    <h:form id="displayTemplateForm">
+                        <p:panel id="panel" header="Display Plan">
+                            <h:outputText style="font-weight: bold" value="item Id: "  />
+                            <h:inputText required="true" requiredMessage="Field is required." id="itemId1" value="#{TemplateManagerBean.itemId}">           
+                            </h:inputText>
+                            <p:commandButton value="show item plan" action="#{TemplateManagerBean.getItemTemplate}" update="plan" ajax="true">
+                            </p:commandButton>
+
+                            <h:panelGroup id="plan" layout="block">
+                                <p:dataTable   value="#{TemplateManagerBean.templates}" var="j">
+                                    <f:facet name="header">
+                                        display the item plan
+                                    </f:facet>
+                                    <br/>
+                                    <p:column>
+
+                                        <f:facet name="header">weekly</f:facet>
+                                        <h:outputText value="#{j.name}" />
+
+                                    </p:column>
+
+                                    <p:column>
+
+                                        <f:facet name="header">week 1</f:facet>
+
+                                        <h:outputText value="#{j.firstweek}"  />
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">week 2</f:facet>
+                                        <h:outputText value="#{j.secondweek}" />
+                                    </p:column>
+
+                                    <p:column>
+
+                                        <f:facet name="header">week 3</f:facet>
+
+                                        <h:outputText value="#{j.thirdweek}"  />
+
+                                    </p:column>
+                                    <p:column>
+
+                                        <f:facet name="header">week 4</f:facet>
+
+                                        <h:outputText value="#{j.fourthweek}"  />
+
+                                    </p:column>
+                                    <p:column>
+
+                                        <f:facet name="header">week 5</f:facet>
+
+                                        <h:outputText value="#{j.fifthweek}" />
+
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">week 6</f:facet>
+
+                                        <h:outputText value="#{j.sixthweek}"  />
+
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">week 7</f:facet>
+
+                                        <h:outputText value="#{j.seventhweek}"  />
+
+                                    </p:column>
+
+                                </p:dataTable>
+                            </h:panelGroup>
+                        </p:panel>
+                    </h:form>
+                </b:column>
+
+            </b:row>
+
+        </b:container>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+
+    </h:body>
+</html>
+
+
+
+
+
+
