@@ -6,21 +6,22 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-
+    
+  
 
     <h:head>
-        <title>Welcome to My MerLION</title>
-
+        <title>Welcome to MRP System</title>
+        
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
-
+ 
     </h:head>
 
-    <h:body>
-
-
-        <b:navBar brand="MerLION Logistics" brandHref="#">
-
+     <h:body>
+        
+        
+         <b:navBar brand="MerLION Logistics" brandHref="#">
+      
             <b:navbarLinks>
                 <b:navLink value="SignUp" href="#"></b:navLink>
                 <b:navLink value="About us" href="#"></b:navLink>
@@ -39,59 +40,59 @@
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
 
-                    <b:commandButton action="a" value="Logout" look="success" icon="ui-icon-extlink" iconAlign="right"/>
+                <b:commandButton action="a" value="Logout" look="success" icon="ui-icon-extlink" iconAlign="right"/>
                 </div>
             </h:form>
         </b:navBar>
-
-
-        <b:container>
-
-
-        </b:container>
-        <b:container>
-
-            <p:breadCrumb>
-                <p:menuitem value="Home" url="/main.xhtml" />
-                <p:menuitem value="Account Setting" url="accountSetting.xhtml" />
-                <p:menuitem value="Message/Notification" url="msg.xhtml" />
-                <p:menuitem value="Buying Requests" url="#" />
-                <p:menuitem value="Transaction/Logistics" url="#" />         
+        
+         
+         <b:container>
+             
+             
+         </b:container>
+         <b:container>
+             
+              <p:breadCrumb>
+                    <p:menuitem value="Home" url="index" />
+                    <p:menuitem value="Home" url="index" />
+                    <p:menuitem value="Add BOM" url="addBOM" />
+                    <p:menuitem value="Add New Plans" url="addNewPlan" />
+                    <p:menuitem value="Demand Management" url="DemandManagement" />
+                    <p:menuitem value="Order Management" url="orderManagement" />         
             </p:breadCrumb>
             <b:well>
-                <h2>My MerLION</h2>   
+                <h3>MRP System</h3>   
             </b:well>
         </b:container>
-
+       
 
         <b:container>
             <b:row styleClass="show-grid">
-                <b:column col-xs="6" col-sm="6" col-md="12">
-                    <h:form>
-                        <p:panel>
-                            <h4>Personal Informtaion</h4>
-                            <span><a href="viewCompanyProfile.xhtml">My Profile</a></span>
-                            &nbsp;
-                            <span><a href="">Edit Profile</a></span> 
-                            
-                            
-                            <span><a href="accountSettingPhotoUpload.xhtml">Upload My Photo</a></span>  
-                            <hr/>
-                            <h4>Account Security</h4>
-                            <span><a href="">Reset Password</a></span>
-                            <hr/>
-                            <h4>Feedback Management</h4>
-                            <span><a href="accountSettingfeedback.xhtml">Write Feedback</a></span>
-                        </p:panel>
-                    </h:form>
+                <b:column col-xs="6" col-sm="6" col-md="3">
 
+                   
+                    <h:form>
+                        <p:panel header="MRP">
+                  
+                        <b:listLinks>
+
+                            <b:navLink href="addBOM.xhtml.xhtml" value="Add BOM"/>                          
+                            <b:navLink href="addNewPlan.xhtml" value="Add New Plan"/>
+                            <b:navLink href="DemandManagement.xhtml" value="Demand Management"/>
+                            <b:navLink href="orderManagement.xhtml" value="Order Management"/>
+                            
+                        </b:listLinks>
+                     </p:panel>
+                    </h:form>                 
+                </b:column>                 
+                <b:column col-xs="6" col-sm="6" col-md="9">
+                    <h3>Welcome to MRP System</h3>
                 </b:column>
 
             </b:row>
 
         </b:container>
-        
-         <foot>
+          <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 
                 <div class="navbar-text pull-left">
@@ -113,9 +114,6 @@
 
     </h:body>
 </html>
-
-
-
 
 
 

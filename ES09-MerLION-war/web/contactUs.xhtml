@@ -30,73 +30,65 @@
                     <b:navLink value="One more separated link" href="#"></b:navLink>
                 </b:dropMenu>
             </b:navbarLinks>
-
             <h:form styleClass="navbar-form navbar-right">
-                <div class="form-group">
-                    <b:inputText placeholder="Email" fieldSize="sm"/>
-                    <!--input type="text" class="form-control" placeholder="Search"/-->
-                </div>
-                <div class="form-group">
-                    <b:inputText placeholder="Password" fieldSize="sm"/>
-                </div> 
-                #{' '}
-                <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
-            </h:form>
+                <b:commandButton action="signIn.xhtml" value="Sign in" look="success" iconAlign="right"/>
+                <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
+            </h:form> 
         </b:navBar>
         <center><h3><font color="grey">Our Office</font></h3></center>
         <center><h4><font color="grey">Contact information for the principal offices of Merlion Logistics can be found below:</font></h4></center>
         <br/>
         <center><img src="image/contact.png"></img></center>
-    <br/>
-       <center>
-           <b:container>
-            
+        <br/>
+        <center>
+            <b:container>
+
                 <b:row>
-                
-                <b:column col-md="4">
-                
+
+                    <b:column col-md="4">
+
                         <h4>China Office</h4>
                         <p>Address:Beijing</p>
                         <p>Tel:+86 89898888</p>                      
-                   
-
-                </b:column>
-                <b:column col-md="4">
-                  
-                    <h4>US Office</h4>
-                    <p>Address: 2228 Feathers Hooves Drive Bethpage, NY 11714</p>
-                    <p>Tel: 631-675-1898</p>
-                </b:column>
 
 
-                <b:column col-md="4">
-                    <h4>Canada Office</h4>
-                    <p>Address: 4336 47th Avenue</p>
-                    <p>Tel: 867-996-0665</p>
-                </b:column>
-                               
-            </b:row>
-            <b:row>
-                <b:column col-md="4">
-                    <h4>France Office</h4>
-                    <p>Address: 69, boulevard Albin Durand 73000 CHAMBERY</p>
-                    <p>Tel: 04.91.27.20.66</p>
-                </b:column>
-                <b:column col-md="4">
-                    <h4>Australia Office</h4>
-                    <p>Address: 31 McDowall Street ILKLEY QLD 4554</p>
-                    <p>Tel: (07)5302 8255</p>
-                </b:column>
-                <b:column col-md="4">
-                    <h4>Germany Office</h4>
-                    <p>Address: Brandenburgische Str. 48 71287 Weissach</p>
-                    <p>Tel: 07044 83 58 96</p>
-                </b:column>
-            </b:row>
-            <hr/>
+                    </b:column>
+                    <b:column col-md="4">
 
-        </b:container>
-           </center>
+                        <h4>US Office</h4>
+                        <p>Address: 2228 Feathers Hooves Drive Bethpage, NY 11714</p>
+                        <p>Tel: 631-675-1898</p>
+                    </b:column>
+
+
+                    <b:column col-md="4">
+                        <h4>Canada Office</h4>
+                        <p>Address: 4336 47th Avenue</p>
+                        <p>Tel: 867-996-0665</p>
+                    </b:column>
+
+                </b:row>
+                <b:row>
+                    <b:column col-md="4">
+                        <h4>France Office</h4>
+                        <p>Address: 69, boulevard Albin Durand 73000 CHAMBERY</p>
+                        <p>Tel: 04.91.27.20.66</p>
+                    </b:column>
+                    <b:column col-md="4">
+                        <h4>Australia Office</h4>
+                        <p>Address: 31 McDowall Street ILKLEY QLD 4554</p>
+                        <p>Tel: (07)5302 8255</p>
+                    </b:column>
+                    <b:column col-md="4">
+                        <h4>Germany Office</h4>
+                        <p>Address: Brandenburgische Str. 48 71287 Weissach</p>
+                        <p>Tel: 07044 83 58 96</p>
+                    </b:column>
+                </b:row>
+                <hr/>
+
+            </b:container>
+        </center>
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 

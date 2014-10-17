@@ -30,29 +30,21 @@
                     <b:navLink value="One more separated link" href="#"></b:navLink>
                 </b:dropMenu>
             </b:navbarLinks>
-
             <h:form styleClass="navbar-form navbar-right">
-                <div class="form-group">
-                    <b:inputText placeholder="Email" fieldSize="sm"/>
-                    <!--input type="text" class="form-control" placeholder="Search"/-->
-                </div>
-                <div class="form-group">
-                    <b:inputText placeholder="Password" fieldSize="sm"/>
-                </div> 
-                #{' '}
-                <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
-            </h:form>
+                <b:commandButton action="signIn.xhtml" value="Sign in" look="success" iconAlign="right"/>
+                <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
+            </h:form> 
         </b:navBar>
         <br/>
         <center>
-        <b:container>
-            <b:row>
-                <h4 color="grey">About Us</h4>
-                <b:column>
-                    <img src="image/about3.jpg" height="400" length="200"></img>
-                </b:column>
-            </b:row>
-        </b:container>
+            <b:container>
+                <b:row>
+                    <h4 color="grey">About Us</h4>
+                    <b:column>
+                        <img src="image/about3.jpg" height="400" length="200"></img>
+                    </b:column>
+                </b:row>
+            </b:container>
         </center>
         <br/>
         <center>
@@ -66,7 +58,7 @@
                         <p>To further up the ante, Merlion Logistics 15 will adopt the model of a fifth-party logistics provider (5PL) to maximize value creation for 16 its shareholders and partners.</p>
                         <p>As part of its business preparation, Merlion Logistics has recently awarded a S$20 million 21 contract to Kent Ridge Technology (KRT) for the development of a custom 5PL management 22 system aptly named as MerLION (Merlion Logistics Integrated Online Network) Platform. 23 The proposed MerLION Platform is expected to handle all logistics, supply chain and 24 transport operations of Merlion Logistics as well as its partners and customers.</p>
                     </b:column>
-                  
+
                 </b:row>
 
             </b:container>
