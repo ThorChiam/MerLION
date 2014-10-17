@@ -63,7 +63,7 @@ public interface OESSessionLocal {
     public void createSalesOrder(OES_PurchaseOrder purchaseorder, String createdate);
     public OES_SalesOrder getSalesOrder(long sales_id);
     public List<OES_SalesOrder> getAllSalesOrder(String email);
-    public void deleteSalesOrder(long purchase_id);//只能seller删，不传给buyer
+    public void deleteSalesOrder(long sales_id);//只能seller删，不传给buyer
     
     
     
