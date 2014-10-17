@@ -9,8 +9,6 @@ import java.security.MessageDigest;
 import java.util.List;
 import merlion.ejb.local.AccountSessionBeanLocal;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -24,23 +22,12 @@ import merlion.entity.CommonInfrastructure.Account;
 @Stateless
 public class AccountSessionBean implements AccountSessionBeanLocal {
 
-//    private InitialContext ic;
-//	@Resource
-//	private UserTransaction utx;
     @PersistenceContext
     private EntityManager em;
 
-//    private String PERSISTENCE_UNIT_NAME="ES09-MerLION-ejbPU";
-//    private EntityManagerFactory entityFactory=Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     public AccountSessionBean() {
-//		em = entityFactory.createEntityManager();
     }
-
-    /**
-     *
-     * @param email String: the email of the user
-     * @return - Account: the account entity of this user
-     */
+    
     @Override
     public Account getAccount(String email) {
         Query q = em.createQuery("SELECT s FROM Account s WHERE s.email=:email");
@@ -56,7 +43,6 @@ public class AccountSessionBean implements AccountSessionBeanLocal {
 
     @Override
     public String validate(String email, String password) {
-        //To change body of generated methods, choose Tools | Templates.
         Account systemUser = getAccount(email);
         
         System.out.println("*****test accountSession: email"+systemUser.getEmail());

@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import merlion.ejb.local.OESSessionLocal;
 import merlion.entity.CommonInfrastructure.Account;
 import merlion.entity.OES.OES_Enquiry;
@@ -30,203 +32,215 @@ import merlion.entity.OES.OES_SalesOrder;
  */
 @ManagedBean(name = "oESManagedBean")
 @SessionScoped
-public class OESManagedBean implements Serializable{
+public class OESManagedBean implements Serializable {
 
     @EJB
     private OESSessionLocal osbl;
-    
+
     //Product
     String email;
-    String name; 
+    String name;
     String description;
     double price;
     int quantity;
     long product_id;
-    
+
     //Enquiry
     Account seller;
     Account buyer;
     Set<OES_Product> products;
-    List<Integer> quantitys=new ArrayList();
+    List<Integer> quantitys = new ArrayList();
     long enquiry_id;
-    
+
     //Quotation
     OES_Enquiry enquiry;
     List<String> delivery_date;
     long quotation_id;
-    
+
     //PurchaseOrder
     double taxrate;
     long purchase_id;
-    
+
     //SalesOrder
     OES_PurchaseOrder purchaseorder;
     long sales_id;
-  
+
     //Payment
     OES_SalesOrder salesorder;
     String paymentdate;
     String paymenttype;
     String status;
-    long payment_id;  
-    
+    long payment_id;
+
     //Invoice
     OES_Payment payment;
     long invoice_id;
     String notes;
-    
-    
-    
-    public OESManagedBean(){
+
+    private String statusMessage;
+
+    public OESManagedBean() {
     }
-    
+
     //********************Product********************************
-    public void createProduct(){
-        osbl.createProduct(email,name,price,quantity,description);
+    public void createProduct() {
+        osbl.createProduct(email, name, price, quantity, description); 
+        statusMessage = "The new product is successfully added.";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Status: " + statusMessage, ""));
     }
-    
-    public void updateProduct(){
-        osbl.updateProduct(product_id,name,price,quantity,description);
+
+    public void updateProduct() {
+        osbl.updateProduct(product_id, name, price, quantity, description);
     }
-    
-    public OES_Product getProduct(){
+
+    public OES_Product getProduct() {
         return osbl.getProduct(product_id);
     }
-    
-    public List<OES_Product> getAllProduct(){
+
+    public List<OES_Product> getAllProduct() {
         return osbl.getAllProduct(email);
     }
-    
-    public void deleteProduct(){
+
+    public void deleteProduct() {
         osbl.deleteProduct(product_id);
     }
-    
-    
-    
-    
+
     //********************Buyer-Enquiry**************************
-    public void createEnquiry(){
-        Date date= new java.util.Date();
+    public void createEnquiry() {
+        Date date = new java.util.Date();
         Timestamp tmp = new Timestamp(date.getTime());
-        String createdate=tmp.toString();
-        osbl.createEnquiry(seller,buyer,products,quantitys,createdate);
+        String createdate = tmp.toString();
+        osbl.createEnquiry(seller, buyer, products, quantitys, createdate);
+        statusMessage = "A new enquiry is successfully created.";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Status: " + statusMessage, ""));
     }
-    
-    public OES_Enquiry getEnquiry(){
+
+    public OES_Enquiry getEnquiry() {
         return osbl.getEnquiry(enquiry_id);
     }
-    
-    public List<OES_Enquiry> getAllEnquiry(){
+
+    public List<OES_Enquiry> getAllEnquiry() {
         return osbl.getAllEnquiry(email);
     }
-    
-    public void deleteEnquiry(){
+
+    public void deleteEnquiry() {
         osbl.deleteEnquiry(enquiry_id);
     }
-    
-    
-    
+
     //********************Seller-Quotation***********************
-    public List<String> ATPcheck(OES_Enquiry enquiry){
+    public List<String> ATPcheck(OES_Enquiry enquiry) {
         return osbl.ATPcheck(enquiry);
     }
-    
-    public void createQuotation(){
-        Date date= new java.util.Date();
+
+    public void createQuotation() {
+        statusMessage = "A new quotation is successfully created.";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Status: " + statusMessage, ""));
+        Date date = new java.util.Date();
         Timestamp tmp = new Timestamp(date.getTime());
-        String createdate=tmp.toString();
+        String createdate = tmp.toString();
         osbl.createQuotation(enquiry, delivery_date, createdate);
     }
-    
-    public OES_Quotation getQuotation(){
+
+    public OES_Quotation getQuotation() {
         return osbl.getQuotation(quotation_id);
     }
-     
-    public List<OES_Quotation> getAllQuotation(String email){//两边都能拿？？？？
+
+    public List<OES_Quotation> getAllQuotation(String email) {//两边都能拿？？？？
         return osbl.getAllQuotation(email);
     }
-    
-    public void deleteQuotation(){//只能buyer删?
+
+    public void deleteQuotation() {//只能buyer删?
         osbl.deleteQuotation(product_id);
     }
-    
-    
+
     //********************Buyer-Purchase Order*******************
-    public void createPurchaseOrder(){
-        Date date= new java.util.Date();
+    public void createPurchaseOrder() {
+        statusMessage = "A new purchase order is successfully created.";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Status: " + statusMessage, ""));
+        Date date = new java.util.Date();
         Timestamp tmp = new Timestamp(date.getTime());
-        String createdate=tmp.toString();
-        osbl.createPurchaseOrder(buyer,seller,taxrate,quantitys,products,createdate);
+        String createdate = tmp.toString();
+        osbl.createPurchaseOrder(buyer, seller, taxrate, quantitys, products, createdate);
     }
-    public OES_PurchaseOrder getPurchaseOrder(){
+
+    public OES_PurchaseOrder getPurchaseOrder() {
         return osbl.getPurchaseOrder(purchase_id);
     }
-    
-    public List<OES_PurchaseOrder> getAllPurchaseOrder(){//两边都能拿？？？？
+
+    public List<OES_PurchaseOrder> getAllPurchaseOrder() {//两边都能拿？？？？
         return osbl.getAllPurchaseOrder(email);
     }
-    public void deletePurchaseOrder(){//只能buyer删?
+
+    public void deletePurchaseOrder() {//只能buyer删?
         osbl.deletePurchaseOrder(purchase_id);
     }
-    
-    
+
     //********************Seller-Sales Order*********************
-    public void createSalesOrder(){
-        Date date= new java.util.Date();
+    public void createSalesOrder() {
+        statusMessage = "A new sales order is successfully created.";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Status: " + statusMessage, ""));
+        Date date = new java.util.Date();
         Timestamp tmp = new Timestamp(date.getTime());
-        String createdate=tmp.toString();
+        String createdate = tmp.toString();
         osbl.createSalesOrder(purchaseorder, createdate);
     }
-    
-    public OES_SalesOrder getSalesOrder(){
+
+    public OES_SalesOrder getSalesOrder() {
         return osbl.getSalesOrder(sales_id);
     }
-    
-    public List<OES_SalesOrder> getAllSalesOrder(){
+
+    public List<OES_SalesOrder> getAllSalesOrder() {
         return osbl.getAllSalesOrder(email);
     }
-    
-    public void deleteSalesOrder(){//只能seller删，不传给buyer
+
+    public void deleteSalesOrder() {//只能seller删，不传给buyer
         osbl.deleteSalesOrder(sales_id);
     }
-    
-    
+
     //********************Buyer-Payment**************************
-    public void createPayment(){
+    public void createPayment() {
+        statusMessage = "Please finish your payment soon. Thanks!";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Status: " + statusMessage, ""));
         osbl.createPayment(paymentdate, paymenttype, status, salesorder);
     }
-    
-    public void updatePaymentStatus(){
+
+    public void updatePaymentStatus() {
         osbl.updatePaymentStatus(payment_id, status);
     }
-    
-    public OES_Payment getPayment(){
+
+    public OES_Payment getPayment() {
         return osbl.getPayment(payment_id);
     }
-    
-    public List<OES_Payment> getAllPayment(){
+
+    public List<OES_Payment> getAllPayment() {
         return osbl.getAllPayment(email);
     }
-    
-    
+
     //********************Seller-Invoice*************************
-    public void createInvoice(){
-        Date date= new java.util.Date();
+    public void createInvoice() {
+        statusMessage = "A new invoice is successfully created.";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Status: " + statusMessage, ""));
+        Date date = new java.util.Date();
         Timestamp tmp = new Timestamp(date.getTime());
-        String releasedate=tmp.toString();
+        String releasedate = tmp.toString();
         osbl.createInvoice(releasedate, notes, payment);
     }
-    
-    public OES_Invoice getInvoice(){
+
+    public OES_Invoice getInvoice() {
         return osbl.getInvoice(invoice_id);
     }
-    
-    public List<OES_Invoice> getAllInvoice(){
+
+    public List<OES_Invoice> getAllInvoice() {
         return osbl.getAllInvoice(email);
     }
-    
-    
-    
+
     //******************GETTER AND SETTER***************************
     public OESSessionLocal getOsbl() {
         return osbl;
@@ -427,5 +441,5 @@ public class OESManagedBean implements Serializable{
     public void setNotes(String notes) {
         this.notes = notes;
     }
-    
-}  
+
+}
