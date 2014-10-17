@@ -297,7 +297,7 @@ public class OESSession implements OESSessionLocal{
 
     @Override
     public OES_Invoice getInvoice(long invoice_id) {
-        Query q = em.createQuery("SELECT f FROM OES_Invioce f WHERE f.id=:id");
+        Query q = em.createQuery("SELECT f FROM OES_Invoice f WHERE f.id=:id");
         q.setParameter("id", invoice_id);
         return (OES_Invoice)q.getSingleResult();
     }
