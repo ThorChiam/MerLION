@@ -114,6 +114,7 @@
                                     <p:captcha id="captcha" label="Captcha" />
                                     <p:message for="captcha" />
                                     <p:commandButton id="btn" value="sign up" update="panel" actionListener="#{accountManagedBean.signup}" ajax="false" />
+                                    <p:message for="btn"/>
                                 </p:growl>
 
                                 <p:growl id="panel2" rendered="#{facesContext.externalContext.sessionMap['accountCreated']!=null}">

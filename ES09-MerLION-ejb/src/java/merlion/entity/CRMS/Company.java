@@ -260,14 +260,6 @@ public class Company implements Serializable {
         this.tmsfacility = tmsfacility;
     }
 
-
-    
-    
-    
-    
-    
-    
-      
     public Company(){
         setId(System.nanoTime());
     }

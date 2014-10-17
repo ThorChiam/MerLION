@@ -43,7 +43,8 @@
                     <b:inputText placeholder="Password" fieldSize="sm"/>
                 </div> 
                 #{' '}
-                <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+                <b:commandButton action="a"  value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+            
             </h:form>
         </b:navBar>
         <br/>
@@ -60,7 +61,7 @@
                         <br/>
                         <div class="container">
 
-                            <h:form id="signupform" role="form">
+                            <h:form id="signupform">
                                 <!--change panel to growl-->
                                 <p:growl id="panel">
                                     <h:panelGrid>
@@ -115,7 +116,8 @@
                                     </h:panelGrid>
                                     <br/>
 
-                                    <p:commandButton id="btn" value="Create Company Profile" update="panel" actionListener="#{companyProfileManagedBean.addCompanyProfile(FacesContext.externalContext.sessionMap['email'])}" ajax="false" />
+                                    <p:commandButton id="btn" value="Create Company Profile" update="panel" action="#{companyProfileManagedBean.addCompanyProfile(facesContext.externalContext.sessionMap['email'])}" ajax="false" />
+                                    <p:message for="btn"/>
                                 </p:growl>
                             </h:form>
                         </div>

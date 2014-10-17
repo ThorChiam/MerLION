@@ -18,9 +18,10 @@
     </h:head>
     <!-- Add 50px padding top to the body for the navbar -->
     <h:body style="padding-top: 40px; padding-bottom: 20px;">
+        <!--
 
         <b:navBar brand="My MerLION" brandHref="main.xhtml" inverse="false" fixed="top">
-            <b:navbarLinks>
+           <b:navbarLinks>
                 <b:navLink value="Sign Up" href="signUp.xhtml"></b:navLink>
                 <b:navLink value="About us" href="aboutUs.xhtml"></b:navLink>
                 <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>
@@ -33,20 +34,21 @@
                     <b:navLink value="Separated link" href="#"></b:navLink>
                     <b:navLink value="One more separated link" href="#"></b:navLink>
                 </b:dropMenu>
-            </b:navbarLinks>
+          </b:navbarLinks> 
 
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
                     <b:inputText placeholder="Email" fieldSize="sm"/>
-                    <!--input type="text" class="form-control" placeholder="Search"/-->
+                   
                 </div>
                 <div class="form-group">
                     <b:inputText placeholder="Password" fieldSize="sm"/>
                 </div> 
-                #{' '}
-                <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
-            </h:form>
-        </b:navBar>
+        #{' '}
+        <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+    </h:form>
+</b:navBar>
+        -->
         <br/>
 
 
@@ -71,10 +73,12 @@
                                                     <p:outputLabel for="Email" style="font-weight: bold" value="Email: " />
                                                 </p:column>
                                                 <p:column>
+
                                                     <p:inputText required="true" label="Email" requiredMessage="Email is required." id="Email" value="#{accountManagedBean.email}">
                                                         <f:validateLength minimum="1" maximum="16" />
                                                     </p:inputText>
-                                                    <p:message for="Email" />
+
+                                                    <p:message for="Email"/>
                                                 </p:column>
                                             </p:row>
                                         </div>
@@ -84,7 +88,7 @@
                                                     <p:outputLabel for="password" style="font-weight: bold" value="Password: " />
                                                 </p:column>
                                                 <p:column>
-                                                    <h:inputSecret required="true" label="password" requiredMessage="password is required." id="password" value="#{accountManagedBean.password}">
+                                                    <h:inputSecret required="true" label="password" requiredMessage="Password is required." id="password" value="#{accountManagedBean.password}">
                                                         <f:validateLength minimum="1" maximum="16" />
                                                     </h:inputSecret>          
                                                     <p:message for="password" />
@@ -98,11 +102,12 @@
                                 </p:growl>
                             </h:form>
                         </div>
+                        <a href ="resetPassword.xhtml"> forget your password?</a>
                     </font>
 
                 </b:column>
                 <br/>
-                <b:column col-md="6"><img src="image/signUp.png" width="400" height="280"/></b:column>
+                <b:column col-md="6"><img src="image/signIn.png" width="400" height="280"/></b:column>
             </b:row>
         </b:container>
 

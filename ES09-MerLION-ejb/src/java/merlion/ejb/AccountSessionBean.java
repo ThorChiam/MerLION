@@ -22,7 +22,6 @@ import merlion.entity.CommonInfrastructure.Account;
  * @author ThorChiam
  */
 @Stateless
-@TransactionManagement(TransactionManagementType.CONTAINER)
 public class AccountSessionBean implements AccountSessionBeanLocal {
 
 //    private InitialContext ic;
@@ -59,12 +58,16 @@ public class AccountSessionBean implements AccountSessionBeanLocal {
     public String validate(String email, String password) {
         //To change body of generated methods, choose Tools | Templates.
         Account systemUser = getAccount(email);
+        
+        System.out.println("*****test accountSession: email"+systemUser.getEmail());
+         System.out.println("*****test accountSession: companyName"+systemUser.getCompany().getCompanyName());
         if (systemUser == null) {
             return null;
         } else {
             if (systemUser.getPassword().equals(doMD5Hashing(password))) {
                 if (systemUser.getStatus().equals("activated")) {
                     return systemUser.getCompany().getCompanyName();
+                   
                 } else {
                     return "frozen";
                 }
@@ -72,6 +75,7 @@ public class AccountSessionBean implements AccountSessionBeanLocal {
                 return null;
             }
         }
+        
     }
 
     @Override

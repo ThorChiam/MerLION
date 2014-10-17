@@ -27,25 +27,26 @@ public class CompanyProfileSessionBean implements CompanyProfileSessionBeanLocal
     private Company companyProfile;
 
     @Override
-    public Long addCompanyProfile(String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision) {
+    public void addCompanyProfile(String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision) {
         Query q = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");
         q.setParameter("email", email);
-        Account a = (Account) q.getSingleResult();
-        List<Account> as = null;
-        as.add(a);
+        System.out.println("********"+email);
+        List<Account> as = (List<Account>) q.getResultList();
         companyProfile = new Company();
         companyProfile.setAccount(as);
         companyProfile.create(companyName, companyAddress, tel, email, website, companyHistory, service, vision);
         em.persist(companyProfile);
+        as.get(0).setCompany(companyProfile);
+        em.persist(as.get(0));
         em.flush();
 
-        return companyProfile.getId();
+        //return companyProfile.getId();
     }
 
     @Override
     public List getAllCompanyProfile(String email) {
-        Query q = em.createQuery("SELECT e FROM CompanyProfile e WHERE e.Account.email");
-        q.setParameter("email", email);
+        Query q = em.createQuery("SELECT e FROM CompanyProfile e WHERE e.Account.email=?1");
+        q.setParameter(1, email);
         return q.getResultList();
     }
 
