@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+         report page
+    </ui:define>
+
+    <ui:define name="content">
+        
+            <h2><h:outputText value="MRP - simple report" /></h2>
+            <h:form id="saveNewMPSForm">
+                
+                <h:outputText style="font-weight: bold" value="Message: " /><h:outputText value="#{OrderManagerBean.statusMessage}" />
+                <br/>
+   
+                <h:outputText style="font-weight: bold" value="Item Id: " /><h:outputText value="#{OrderManagerBean.itemId}" />
+                <br/>
+                <h:outputText style="font-weight: bold" value="Order Id: " /><h:outputText value="#{OrderManagerBean.orderId}" />
+                <br/>
+                <h:outputText style="font-weight: bold" value="Order Date: " /><h:outputText value="#{OrderManagerBean.time}" />
+                <br/>
+                <h:outputText style="font-weight: bold" value="Item supplier: " /><h:outputText value="#{OrderManagerBean.item.supplier}" />
+                <br/>
+                <h:outputText style="font-weight: bold" value="Lead time: " /><h:outputText value="#{OrderManagerBean.item.lead_time}" /><h:outputText value=" weeks" />
+                <br/>
+                 <h:outputText style="font-weight: bold" value="Amount ordered: " /><h:outputText value="#{OrderManagerBean.amount}" />
+                <br/>
+                <h:outputText style="font-weight: bold" value="Total cost: " /><h:outputText value="#{OrderManagerBean.cost}" /><h:outputText value=" dollars" />
+                <br/>
+                
+            </h:form>
+        
+    </ui:define>
+
+</ui:composition>

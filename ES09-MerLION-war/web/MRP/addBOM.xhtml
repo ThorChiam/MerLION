@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        Bill of material(BOM)
+    </ui:define>
+
+    <ui:define name="content">
+        <h2><h:outputLabel value="BOM management" /></h2>
+        <h:form id="formMain">
+            <p:panel id="panel" header="Add New Bill of Material">
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start">
+                        <h:graphicImage value="/images/spinner.gif" />
+                    </f:facet>
+                    <f:facet name="complete">
+                        <h:outputText value="" />
+                    </f:facet>
+                </p:ajaxStatus>
+                <p:messages />
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="itemId" style="font-weight: bold" value="Item ID: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="true" label="Item ID" requiredMessage="Item Id is required." id="itemId" value="#{BOMManagerBean.itemId}">
+                                <f:validateDoubleRange minimum="1" maximum="999999999" />
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="itemId" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="compId1" style="font-weight: bold" value="Component 1 ID: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="true" label="compId1" requiredMessage="Component 1 is required." id="compId1" value="#{BOMManagerBean.compId1}">
+                                <f:validateDoubleRange minimum="1" maximum="9999999" />
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="compId1" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="quantity1" style="font-weight: bold" value="Quantity for component 1: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="true" label="quantity 1" requiredMessage="quantity is required." id="quantity1" value="#{BOMManagerBean.quantity1}">
+                                <f:validateDoubleRange minimum="1" maximum="9999999" />
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="quantity1" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="compId2" style="font-weight: bold" value="Component 2 ID: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="false" label="compId2" id="compId2" value="#{BOMManagerBean.compId2}">
+                                <f:validateDoubleRange minimum="1" maximum="9999999" />
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="compId2" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="quantity2" style="font-weight: bold" value="Quantity for component 2: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="false" label="quantity2"  id="quantity2" value="#{BOMManagerBean.quantity2}">
+                                <f:validateDoubleRange minimum="1" maximum="9999999" />
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="quantity2" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="compId3" style="font-weight: bold" value="Component 3 ID: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="false" label="Amount to order"  id="compId3" value="#{BOMManagerBean.compId3}">
+                                <f:validateDoubleRange minimum="1" maximum="9999999" />
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="compId3" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="quantity3" style="font-weight: bold" value="Quantity for component 3: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="false" label="quantity3" id="quantity3" value="#{BOMManagerBean.quantity3}">
+                                <f:validateDoubleRange minimum="1" maximum="9999999" />
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="quantity3" />
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:commandButton id="btn" value="Save New BOM" update="panel" actionListener="#{BOMManagerBean.addNewBOM}" ajax="true" />  
+             
+            </p:panel>
+             </h:form>
+        <h:form>
+            <h:panelGrid id="delete" >
+                <p:outputLabel for="delete1" value="Enter item Id:" />
+             <p:inputText required="true" id="delete1" label="itemId"  value="#{BOMManagerBean.itemId}">
+                 <f:validateDoubleRange minimum="1" maximum="9999999" />
+             </p:inputText>
+             
+                <p:commandButton id="deletebutton" value="Delete a BOM" update="delete" actionListener="#{BOMManagerBean.deleteBOM}" ajax="true" />
+                <p:messages  />
+                </h:panelGrid>
+        </h:form>
+        <h:form>
+            <p:panel id="panel1" header="Display my Bill of Materials">
+                <p:dataTable var="b" value="#{BOMManagerBean.BOMList}" >
+                    <p:column headerText="Product Id">
+                        <h:inputText value="#{b.item.itemId}" >
+                            <f:validateDoubleRange minimum="1" maximum="9999999" />
+                        </h:inputText>
+                    </p:column>
+
+                    <p:column headerText="component 1">
+                        <h:inputText value="#{b.comp1}" >
+                            <f:validateDoubleRange minimum="1" maximum="9999999" />
+                        </h:inputText>
+                    </p:column>
+
+                    <p:column headerText="component 2">
+                        <h:inputText value="#{b.comp2}" >
+                            <f:validateDoubleRange minimum="1" maximum="9999999" />
+                        </h:inputText>
+                    </p:column>
+
+                    <p:column headerText="component 3">
+                        <h:inputText value="#{b.comp3}" >
+                            <f:validateDoubleRange minimum="1" maximum="9999999" />
+                        </h:inputText>
+                    </p:column>
+                    <p:column headerText="quantity 1">
+                        <h:inputText value="#{b.partnumber1}" >
+                            <f:validateDoubleRange minimum="1" maximum="9999999" />
+                        </h:inputText>
+                    </p:column>
+                    <p:column headerText="quantity 2">
+                        <h:inputText value="#{b.partnumber2}" >
+                            <f:validateDoubleRange minimum="1" maximum="9999999" />
+                        </h:inputText>
+                    </p:column>
+                    <p:column headerText="quantity 3">
+                        <h:inputText value="#{b.partnumber3}" >
+                            <f:validateDoubleRange minimum="1" maximum="9999999" />
+                        </h:inputText>
+                    </p:column>
+                    
+                </p:dataTable>
+          <p:commandButton id="btnn" value="Refresh" update="panel1" ajax="true" /> 
+          <p:commandButton id="savebtn" value ="save all changes" update="panel1" action="#{BOMManagerBean.saveAllBOMs}"/>
+          <p:messages />
+          
+            </p:panel>
+       </h:form>
+    </ui:define>
+
+</ui:composition>
