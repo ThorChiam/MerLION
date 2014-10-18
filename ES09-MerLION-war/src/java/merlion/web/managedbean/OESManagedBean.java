@@ -38,12 +38,12 @@ public class OESManagedBean implements Serializable {
     private OESSessionLocal osbl;
 
     //Product
-    String email;
-    String name;
-    String description;
-    double price;
-    int quantity;
-    long product_id;
+    private String email;
+    private String name;
+    private String description;
+    private double price;
+    private int quantity;
+    private long product_id;
 
     //Enquiry
     Account seller;
@@ -55,26 +55,26 @@ public class OESManagedBean implements Serializable {
     //Quotation
     OES_Enquiry enquiry;
     List<String> delivery_date;
-    long quotation_id;
+    private long quotation_id;
 
     //PurchaseOrder
-    double taxrate;
-    long purchase_id;
+    private double taxrate;
+    private long purchase_id;
 
     //SalesOrder
     OES_PurchaseOrder purchaseorder;
-    long sales_id;
+    private long sales_id;
 
     //Payment
     OES_SalesOrder salesorder;
-    String paymentdate;
-    String paymenttype;
-    String status;
-    long payment_id;
+   private String paymentdate;
+   private String paymenttype;
+   private String status;
+   private  long payment_id;
 
     //Invoice
     OES_Payment payment;
-    long invoice_id;
+   private long invoice_id;
     String notes;
 
     private String statusMessage;
