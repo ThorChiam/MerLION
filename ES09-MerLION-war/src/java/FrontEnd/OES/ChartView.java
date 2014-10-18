@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package FrontEnd;
+package FrontEnd.OES;
 
 import javax.annotation.PostConstruct;
 import java.io.Serializable;

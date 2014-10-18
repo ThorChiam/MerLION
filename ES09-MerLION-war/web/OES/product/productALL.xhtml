@@ -39,30 +39,30 @@
         <b:container>
             <b:row styleClass="show-grid">
                 <b:column col-xs="12" col-sm="6" col-md="2">
-                   
 
-                   
+
+
                     <h:form>
                         <p:panel header="Product">
-                  
-                        <b:listLinks>
 
-                            <b:navLink href="productMain.xhtml" value="NEW Product"
-                                       />
-                           
-                            <b:navLink href="productALL.xhtml" value="ALL Products"
-                                       />
-                            <b:navLink href="supplier.xhtml" value="Supplier"
-                                       />
-                            <b:navLink>
-                                
-                            </b:navLink>
+                            <b:listLinks>
+
+                                <b:navLink href="productMain.xhtml" value="NEW Product"
+                                           />
+
+                                <b:navLink href="productALL.xhtml" value="ALL Products"
+                                           />
+                                <b:navLink href="supplier.xhtml" value="Supplier"
+                                           />
+                                <b:navLink>
+
+                                </b:navLink>
 
 
-                        </b:listLinks>
-                     </p:panel>
+                            </b:listLinks>
+                        </p:panel>
                     </h:form>
-                  
+
                 </b:column>
 
                 <!-- display all the products-->
@@ -80,13 +80,13 @@
                             <p:column headerText="Name">
                                 <h:outputText value="#{product.name}" />
                             </p:column>
-                            
-                           
+
+
 
                             <p:column headerText="Unit Price">
                                 <h:outputText value="#{product.price}" />
                             </p:column>
-                            
+
                             <p:column headerText="Available Stock">
                                 <h:outputText value="#{product.quantity}" />
                             </p:column>
@@ -94,9 +94,9 @@
                             <p:column headerText="Description">
                                 <h:outputText value="#{product.description}" />
                             </p:column>
-                            
+
                             <!--Supplier here is only for Retail 1PL to order-->
-                             <p:column headerText="Suplier">
+                            <p:column headerText="Suplier">
                                 <h:outputText value="#{product.supplier}" />
                             </p:column>
                         </p:dataTable>
@@ -108,7 +108,25 @@
             </b:row>
 
         </b:container>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
     </h:body>
 </html>
 
