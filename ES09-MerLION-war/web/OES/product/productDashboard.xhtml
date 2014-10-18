@@ -60,7 +60,7 @@
 
             <p:breadCrumb>
                 <p:menuitem value="Home" url="/main.xhtml" />
-                <p:menuitem value="Dashboard" url="/OES/product/productDashboard.xhtml" />
+                <p:menuitem value="Dashboard" url="/productDashboard.xhtml" />
                 <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
                 <p:menuitem value="Quotation" url="#" />
                 <p:menuitem value="Sales Order" url="#" />
@@ -74,37 +74,29 @@
 
                 <h2>Order Entry System</h2>
 
-
-
             </b:well>
+
         </b:container>
+
         <b:container>
-            <h:form id="form">
+            <b:row>
+                <b:column>
 
-                <p:tabView orientation="left">
-                    <p:tab title="Product Management">
-                        <h:panelGrid columns="2" cellpadding="10">
-                          
-                            
-                            
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="Order Management">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                            <h:outputText value="Francis Ford Coppola's legendary..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="Customer/Supplier Management">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                            <h:outputText value="After a break of more than 15 years..." />
-                        </h:panelGrid>
-                    </p:tab>
-                </p:tabView>
-            </h:form>
 
+                    <h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
+                        <p:chart type="line" model="#{chartView.animatedModel1}" style="width:400px;" />
+                        <p:chart type="bar" model="#{chartView.animatedModel2}" style="width:400px;" />
+                    </h:panelGrid>
+
+
+                </b:column>
+
+
+
+            </b:row>
         </b:container>
+        
+       
 
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
@@ -130,6 +122,9 @@
 
     </h:body>
 </html>
+
+
+
 
 
 
