@@ -71,7 +71,7 @@ public class Account implements Serializable {
     
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<WMS_Shipment_Order> shipmentorder = new ArrayList<>();
-    
+
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<WMSOrder> wmsorder = new ArrayList<>();
   
@@ -81,6 +81,22 @@ public class Account implements Serializable {
   
 
     //Added by QT  
+    
+    public List<WMS_Shipment_Order> getShipmentorder() {
+        return shipmentorder;
+    }
+
+    public void setShipmentorder(List<WMS_Shipment_Order> shipmentorder) {
+        this.shipmentorder = shipmentorder;
+    }
+
+    public List<WMSOrder> getWmsorder() {
+        return wmsorder;
+    }
+
+    public void setWmsorder(List<WMSOrder> wmsorder) {
+        this.wmsorder = wmsorder;
+    }
     
     public List<Contract> getContract_requester() {
         return Contract_requester;
