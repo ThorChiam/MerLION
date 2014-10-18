@@ -7,7 +7,6 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-
         <title>MerLION Logistics</title>
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>       
@@ -194,14 +193,21 @@
                 </b:column>
 
                 <b:column col-md="8">
-                    <h4>Transportation Service Provider List</h4>
-                    <p> Recommendation Function: This area is designed to list service providers who paid for advertizing fee </p>
-                    <p><b:button outcome="" value="View details »"/></p>
+                    <h4>Recommended Transportation Service Provider</h4>
+                    <p>
+                        <img src="image/logo/dhlLogo.jpg" width="100" height="100"></img>
+                        &nbsp;
+                        <img src="image/logo/fedexLogo.jpg" width="100" height="100"></img>
+                        &nbsp;
+                        <img src="image/logo/nipponLogo.jpg" width="100" height="100"></img>
+                        &nbsp;
+                        <img src="image/logo/dachserLogo.png" width="100" height="100"></img>
+                        &nbsp;
+                        <img src="image/logo/damcoLogo.jpg" width="100" height="80"></img>
+
+                    </p>
+                    <p><b:button outcome="" value="View More »"/></p>
                 </b:column>
-
-
-
-
             </b:row>
         </b:container>
         <hr>
@@ -251,92 +257,35 @@
                 </b:column>
 
                 <b:column col-md="8">
-                    <h4>Warehouse </h4>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, 
-                        ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><b:button outcome="" value="View details Â»"/></p>
+                    <h4>Recommended Warehouse Service Provider</h4>
+                    <p>
+                        <img src="image/logo/astransLogo.png" width="80" height="70"></img>
+                        &nbsp;
+                        <img src="image/logo/cityLogo.jpg" width="100" height="70"></img>
+                        &nbsp;
+                        <img src="image/logo/welchLogo.gif" width="100" height="70"></img>
+                        &nbsp;
+                        <img src="image/logo/efnLogo.jpg" width="100" height="100"></img>
+                        &nbsp;
+                        <img src="image/logo/aeoLogo.jpg" width="100" height="100"></img>
 
-
-
+                    </p>
+                    <p><b:button outcome="" value="View More »"/></p>
                 </b:column>
             </b:row>
 
 
         </b:container>
-        <hr>
-        </hr>
-
-        <b:container>
-
-            <h:form>
-
-                <p:growl id="msgs" showDetail="true" />
-
-                <h4 style="margin-top:0"><b>Services</b></h4>
-                <p:tabView>
-                    <p:tab title="OES">
-                        <h:panelGrid columns="2" cellpadding="7">
-                            <p:graphicImage value="image/oesprocess.png" />
-                     
-                        
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="MRP">
-                        <h:panelGrid columns="2" cellpadding="7">
-                            <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                            <h:outputText value="Francis Ford Coppola's legendary..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="WMS">
-                        <h:panelGrid columns="2" cellpadding="7">
-                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                            <h:outputText value="After a break of more than 15 years..." />
-                        </h:panelGrid>
-                    </p:tab>
-
-                    <p:tab title="CRMS">
-                        <h:panelGrid columns="2" cellpadding="7">
-                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                            <h:outputText value="After a break of more than 15 years..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="GRNS">
-                        <h:panelGrid columns="2" cellpadding="7">
-                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                            <h:outputText value="After a break of more than 15 years..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="TMS">
-                        <h:panelGrid columns="2" cellpadding="7">
-                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                            <h:outputText value="After a break of more than 15 years..." />
-                        </h:panelGrid>
-                    </p:tab>
-                </p:tabView>
-            </h:form>
-
-        </b:container>
-
-
-        <b:container>
-         
-
-        </b:container>
-
-
-        
-                <p:stack icon="/image/OES.png" expanded="true">
-                    <p:menuitem value="OES" icon="/image/OES.png" url="OES/main.xhtml"/>
-                    <p:menuitem value="MRP" icon="/image/MRP.png" url="#"/>
-                    <p:menuitem value="TMS" icon="/image/TMS.png" url="TMS/sub-home.xhtml"/>
-                    <p:menuitem value="WMS" icon="/image/WMS.png" url="#"/>
-                    <p:menuitem value="CRMS" icon="/image/CRMS.png" url="#"/>
-                    <p:menuitem value="GRNS" icon="/image/GRNS.png" url="#"/>
-                </p:stack>
-
-
-
         <hr/>
+        <p:stack icon="/image/OES.png" expanded="true">
+            <p:menuitem value="OES" icon="/image/OES.png" url="OES/main.xhtml"/>
+            <p:menuitem value="MRP" icon="/image/MRP.png" url="#"/>
+            <p:menuitem value="TMS" icon="/image/TMS.png" url="TMS/sub-home.xhtml"/>
+            <p:menuitem value="WMS" icon="/image/WMS.png" url="#"/>
+            <p:menuitem value="CRMS" icon="/image/CRMS.png" url="#"/>
+            <p:menuitem value="GRNS" icon="/image/GRNS.png" url="#"/>
+        </p:stack>
+
         <hr/>
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">

@@ -10,7 +10,7 @@
 
 
     <h:head>
-        <title>Welcome to MRP System</title>
+        <title>Welcome to My MerLION</title>
 
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
@@ -45,6 +45,11 @@
             </h:form>
         </b:navBar>
 
+
+        <b:container>
+
+
+        </b:container>
         <b:container>
             <h:form>  
                 <p:menubar styleClass="show-grid">
@@ -70,9 +75,8 @@
 
                 </p:menubar>
             </h:form>
-
             <b:well>
-                <h3>MRP System</h3>   
+                <h3>MRP System - Display 6 Months Demand</h3>   
             </b:well>
         </b:container>
 
@@ -103,19 +107,68 @@
 
                             </p:submenu>
                         </p:panelMenu>
-                    </h:form>
-                </b:column>                 
+                    </h:form>               
+                </b:column>                   
                 <b:column col-xs="6" col-sm="6" col-md="9">
-                    <h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
-                        <p:chart type="line" model="#{chart.animatedModel1}" style="width:400px;" />
-                        <p:chart type="bar" model="#{chart.animatedModel2}" style="width:400px;" />
-                    </h:panelGrid>
+                    <h:form id="demand">
+                        <h:outputText style="font-weight: bold" value="item Id " />
+                        <h:inputText required="true" requiredMessage="Field is required." id="itemId" value="#{MPSManagerBean.itemId}">           
+                        </h:inputText>
+                        <p:commandButton value="show demand" action="#{MPSManagerBean.showDemand}" update="past">
+                        </p:commandButton>
 
+                        <p:panel id="panel" header="Past 6 Months Demand">
+                            <h:panelGroup id="past" layout="block">
+                                <p:dataTable value="#{MPSManagerBean.past}" var="d">
+
+                                    <p:column headerText ="month 1">                           
+                                        <h:outputText value="#{d[0]}" />
+                                    </p:column>
+
+                                    <p:column headerText ="month 2">
+
+                                        <h:outputText value="#{d[1]}"  />
+
+                                    </p:column>
+
+                                    <p:column headerText ="month 1">
+
+                                        <f:facet name="header">month 3</f:facet>
+
+                                        <h:outputText value="#{d[2]}"   />
+
+                                    </p:column>
+                                    <p:column headerText ="month 4">
+
+
+                                        <h:outputText value="#{d[3]}"   />
+
+                                    </p:column>
+                                    <p:column headerText ="month 5">
+
+                                        <h:outputText value="#{d[4]}"   />
+
+                                    </p:column> 
+                                    <p:column headerText ="month 6">
+
+                                        <h:outputText value="#{d[5]}"  />
+
+                                    </p:column>     
+
+                                </p:dataTable>
+                            </h:panelGroup>
+                        </p:panel>
+                        <br/>
+                    </h:form>
                 </b:column>
 
             </b:row>
 
         </b:container>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 

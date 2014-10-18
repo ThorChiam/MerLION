@@ -10,7 +10,7 @@
 
 
     <h:head>
-        <title>Welcome to MRP System</title>
+        <title>Welcome to My MerLION</title>
 
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
@@ -45,6 +45,11 @@
             </h:form>
         </b:navBar>
 
+
+        <b:container>
+
+
+        </b:container>
         <b:container>
             <h:form>  
                 <p:menubar styleClass="show-grid">
@@ -70,9 +75,8 @@
 
                 </p:menubar>
             </h:form>
-
             <b:well>
-                <h3>MRP System</h3>   
+                <h3>MRP System - Demand Prediction</h3>   
             </b:well>
         </b:container>
 
@@ -103,19 +107,69 @@
 
                             </p:submenu>
                         </p:panelMenu>
-                    </h:form>
-                </b:column>                 
+                    </h:form>              
+                </b:column>                   
                 <b:column col-xs="6" col-sm="6" col-md="9">
-                    <h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
-                        <p:chart type="line" model="#{chart.animatedModel1}" style="width:400px;" />
-                        <p:chart type="bar" model="#{chart.animatedModel2}" style="width:400px;" />
-                    </h:panelGrid>
+                    <h:form id="demand">
+                        <p:panel id="panel1" header="Demand Prediction">
+                            <p:outputLabel for="console" value="Select Demand Type:" />
+                            &nbsp;
+                            <p:selectOneMenu id="console" value="#{MPSManagerBean.demandType}">
+                                <f:selectItem itemLabel="seasonal" itemValue="seasonal" />
+                                <f:selectItem itemLabel="non-seasonal" itemValue="non-seasonal" />
+                            </p:selectOneMenu>
+                            &nbsp;
+                            <p:commandButton value="predict demand" action="#{MPSManagerBean.PredictDemand}"  update="prediction">
+                            </p:commandButton>
+                            <h:panelGroup id="prediction" layout="block">
+                                <p:dataTable value="#{MPSManagerBean.prediction}" var="p" >
 
+                                    <p:column headerText ="month 1">                           
+                                        <h:outputText value="#{p[0]}" />
+                                    </p:column>
+
+                                    <p:column headerText ="month 2">
+
+                                        <h:outputText value="#{p[1]}"  />
+
+                                    </p:column>
+
+                                    <p:column headerText ="month 1">
+
+                                        <f:facet name="header">month 3</f:facet>
+
+                                        <h:outputText value="#{p[2]}"   />
+
+                                    </p:column>
+                                    <p:column headerText ="month 4">
+
+                                        <h:outputText value="#{p[3]}"   />
+
+                                    </p:column>
+                                    <p:column headerText ="month 5">
+
+                                        <h:outputText value="#{p[4]}"   />
+
+                                    </p:column> 
+                                    <p:column headerText ="month 6">
+
+                                        <h:outputText value="#{p[5]}"  />
+
+                                    </p:column> 
+                                </p:dataTable>
+                            </h:panelGroup>
+
+                        </p:panel>
+                    </h:form>
                 </b:column>
 
             </b:row>
 
         </b:container>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 

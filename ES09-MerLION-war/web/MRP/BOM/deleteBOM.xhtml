@@ -10,7 +10,7 @@
 
 
     <h:head>
-        <title>Welcome to MRP System</title>
+        <title>Welcome to My MerLION</title>
 
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
@@ -45,6 +45,11 @@
             </h:form>
         </b:navBar>
 
+
+        <b:container>
+
+
+        </b:container>
         <b:container>
             <h:form>  
                 <p:menubar styleClass="show-grid">
@@ -70,9 +75,8 @@
 
                 </p:menubar>
             </h:form>
-
             <b:well>
-                <h3>MRP System</h3>   
+                <h3>MRP System - Delete BOM</h3>   
             </b:well>
         </b:container>
 
@@ -103,19 +107,31 @@
 
                             </p:submenu>
                         </p:panelMenu>
-                    </h:form>
-                </b:column>                 
+                    </h:form>                 
+                </b:column>                   
                 <b:column col-xs="6" col-sm="6" col-md="9">
-                    <h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
-                        <p:chart type="line" model="#{chart.animatedModel1}" style="width:400px;" />
-                        <p:chart type="bar" model="#{chart.animatedModel2}" style="width:400px;" />
-                    </h:panelGrid>
-
+                    <h:form>
+                        <p:panel id="panel" header="Add New Bill of Material">
+                            <h:panelGrid id="delete" >
+                                <p:outputLabel for="delete1" value="Enter item Id:" />
+                                <p:inputText required="true" id="delete1" label="itemId"  value="#{BOMManagerBean.itemId}">
+                                    <f:validateDoubleRange minimum="1" maximum="9999999" />
+                                </p:inputText>
+                                <br/>
+                                <p:commandButton id="deletebutton" value="Delete a BOM" update="delete" actionListener="#{BOMManagerBean.deleteBOM}" ajax="true" />
+                                <p:messages  />
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:form>
                 </b:column>
 
             </b:row>
 
         </b:container>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 
