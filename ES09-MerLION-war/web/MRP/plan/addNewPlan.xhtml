@@ -10,7 +10,7 @@
 
 
     <h:head>
-        <title>Welcome to MRP System</title>
+        <title>Welcome to My MerLION</title>
 
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
@@ -45,6 +45,11 @@
             </h:form>
         </b:navBar>
 
+
+        <b:container>
+
+
+        </b:container>
         <b:container>
             <h:form>  
                 <p:menubar styleClass="show-grid">
@@ -70,9 +75,8 @@
 
                 </p:menubar>
             </h:form>
-
             <b:well>
-                <h3>MRP System</h3>   
+                <h3>MRP System - Add New Plan</h3>   
             </b:well>
         </b:container>
 
@@ -103,19 +107,119 @@
 
                             </p:submenu>
                         </p:panelMenu>
-                    </h:form>
-                </b:column>                 
+                    </h:form>              
+                </b:column>                   
                 <b:column col-xs="6" col-sm="6" col-md="9">
-                    <h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
-                        <p:chart type="line" model="#{chart.animatedModel1}" style="width:400px;" />
-                        <p:chart type="bar" model="#{chart.animatedModel2}" style="width:400px;" />
-                    </h:panelGrid>
+                    <h:form id="addNewTemplateForm">
+                        <p:panel id="panel" header="Planning Table">
+                            <h:outputText style="font-weight: bold" value="item Id " />
+                            <h:inputText required="true" requiredMessage="item Id Field is required." id="startDateTime" value="#{TemplateManagerBean.itemId}">
+                            </h:inputText>
 
+                            <p:dataTable value="#{TemplateManagerBean.tempList}" var="t">
+
+                                <p:column>
+
+                                    <f:facet name="header">weekly</f:facet>
+
+                                    <h:outputText value="#{t.name}" />
+
+                                </p:column>
+
+                                <p:column>
+
+                                    <f:facet name="header">week 1</f:facet>
+
+                                    <h:inputText value="#{t.first}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+                                    <h:outputText value="#{t.first}" rendered="#{not t.editable}" />
+
+                                </p:column>
+
+                                <p:column>
+
+                                    <f:facet name="header">week 2</f:facet>
+
+                                    <h:inputText value="#{t.second}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+                                    <h:outputText value="#{t.second}" rendered="#{not t.editable}" />
+
+                                </p:column>
+
+                                <p:column>
+
+                                    <f:facet name="header">week 3</f:facet>
+
+                                    <h:inputText value="#{t.third}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+                                    <h:outputText value="#{t.third}" rendered="#{not t.editable}" />
+
+                                </p:column>
+                                <p:column>
+
+                                    <f:facet name="header">week 4</f:facet>
+
+                                    <h:inputText value="#{t.fourth}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+                                    <h:outputText value="#{t.fourth}" rendered="#{not t.editable}" />
+
+                                </p:column>
+                                <p:column>
+
+                                    <f:facet name="header">week 5</f:facet>
+
+                                    <h:inputText value="#{t.fifth}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+                                    <h:outputText value="#{t.fifth}" rendered="#{not t.editable}" />
+
+                                </p:column>
+                                <p:column>
+
+                                    <f:facet name="header">week 6</f:facet>
+
+                                    <h:inputText value="#{t.sixth}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+
+                                    <h:outputText value="#{t.sixth}" rendered="#{not t.editable}" />
+
+                                </p:column>
+                                <p:column>
+
+                                    <f:facet name="header">week 7</f:facet>
+
+                                    <h:inputText value="#{t.seventh}"  rendered="#{t.editable}" ><f:validateDoubleRange minimum="0" maximum="9999999" />
+                                    </h:inputText>
+
+                                    <h:outputText value="#{t.seventh}" rendered="#{not t.editable}" />
+                                </p:column>
+
+                                <p:column>
+
+                                    <f:facet name="header">Action</f:facet>
+
+                                    <h:commandLink value="Edit" action="#{TemplateManagerBean.editAction(t)}" 
+                                                   rendered="#{not t.editable}" />
+                                </p:column>
+
+                            </p:dataTable>
+                            <br/>
+                            <p:commandButton action="saveNewTemplate.xhtml" value="Save New Plan" actionListener="#{TemplateManagerBean.saveNewTemplate}" />
+
+                        </p:panel>
+                    </h:form>
                 </b:column>
-
             </b:row>
-
         </b:container>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 
@@ -130,12 +234,9 @@
                     <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
                     <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
 
-
                 </div>
-
             </div>
         </foot>
-
     </h:body>
 </html>
 

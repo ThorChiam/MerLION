@@ -51,17 +51,32 @@
 
         </b:container>
         <b:container>
+            <h:form>  
+                <p:menubar styleClass="show-grid">
+                    <p:submenu label="Bill of Material">                    
+                        <p:menuitem value="Add New BOM" url="/MRP/BOM/addBOM.xhtml" />
+                        <p:menuitem value="Delete BOM" url="/MRP/BOM/deleteBOM.xhtml" />
+                        <p:menuitem value="Display/Update BOM" url="/MRP/BOM/displayBOM.xhtml" />
+                    </p:submenu>
 
-            <p:breadCrumb>
-                <p:menuitem value="Home" url="index" />
-                <p:menuitem value="Home" url="index" />
-                <p:menuitem value="Add BOM" url="addBOM" />
-                <p:menuitem value="Add New Plans" url="addNewPlan" />
-                <p:menuitem value="Demand Management" url="DemandManagement" />
-                <p:menuitem value="Order Management" url="orderManagement" />         
-            </p:breadCrumb>
+                    <p:submenu label="Material Requirement Plan">
+                        <p:menuitem value="Add New Plan" url="/MRP/plan/addNewPlan.xhtml"/>
+                        <p:menuitem value="Display Plan" url="/MRP/plan/displayPlan.xhtml" />
+                    </p:submenu>
+
+                    <p:submenu label="Demand Management">
+                        <p:menuitem value="Display Demand" url="/MRP/demandManagement/DemandManagement.xhtml" />
+                        <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
+                    </p:submenu>
+
+                    <p:submenu label="Order Management">
+                        <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml"/>
+                    </p:submenu>
+
+                </p:menubar>
+            </h:form>
             <b:well>
-                <h3>MRP System - Demand Management</h3>   
+                <h3>MRP System - Save Production Schedule</h3>   
             </b:well>
         </b:container>
 
@@ -69,72 +84,33 @@
         <b:container>
             <b:row styleClass="show-grid">
                 <b:column col-xs="6" col-sm="6" col-md="3">
+                     <h:form>
+                        <p:growl autoUpdate="true"/>
+                        <p:panelMenu style="width:280px">
+                            <p:submenu label="Bill of Marerial Management">
+                                <p:menuitem value="Add New BOM" url="/MRP/BOM/addBOM.xhtml"/>
+                                <p:menuitem value="Delete BOM" url="/MRP/BOM/deleteBOM.xhtml"/>
+                                <p:menuitem value="Display/Update BOM" url="/MRP/BOM/displayBOM.xhtml"/>
+                            </p:submenu>
+                            <p:submenu label="Material Requirement Plan Management">
+                                <p:menuitem value="Add New Plan"  url="/MRP/plan/addNewPlan.xhtml"/>
+                                <p:menuitem value="Display Plan"  url="/MRP/plan/displayPlan.xhtml"/>
+                            </p:submenu>
+                            <p:separator />
+                            <p:submenu label="Demand Management" >
+                                <p:menuitem value="Display 6 Months Demand" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                                <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
+                                <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/saveProductionSchedule.xhtml"/>
+                            </p:submenu>
+                            <p:submenu label="Order Management" >
+                                <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml" />
 
-
-                    <h:form>
-                        <p:panel header="MRP">
-
-                            <b:listLinks>
-
-                                <b:navLink href="addBOM.xhtml.xhtml" value="Add BOM"/>                          
-                                <b:navLink href="addNewPlan.xhtml" value="Add New Plan"/>
-                                <b:navLink href="DemandManagement.xhtml" value="Demand Management"/>
-                                <b:navLink href="orderManagement.xhtml" value="Order Management"/>
-
-                            </b:listLinks>
-                        </p:panel>
-                    </h:form>                 
+                            </p:submenu>
+                        </p:panelMenu>
+                    </h:form>            
                 </b:column>                   
                 <b:column col-xs="6" col-sm="6" col-md="9">
                     <h:form id="demand">
-                        <h:outputText style="font-weight: bold" value="item Id " />
-                        <h:inputText required="true" requiredMessage="Field is required." id="itemId" value="#{MPSManagerBean.itemId}">           
-                        </h:inputText>
-                        <p:commandButton value="show demand" action="#{MPSManagerBean.showDemand}" update="past">
-                        </p:commandButton>
-
-                        <p:panel id="panel" header="Past 6 Months Demand">
-                            <h:panelGroup id="past" layout="block">
-                                <p:dataTable value="#{MPSManagerBean.past}" var="d">
-
-                                    <p:column headerText ="month 1">                           
-                                        <h:outputText value="#{d[0]}" />
-                                    </p:column>
-
-                                    <p:column headerText ="month 2">
-
-                                        <h:outputText value="#{d[1]}"  />
-
-                                    </p:column>
-
-                                    <p:column headerText ="month 1">
-
-                                        <f:facet name="header">month 3</f:facet>
-
-                                        <h:outputText value="#{d[2]}"   />
-
-                                    </p:column>
-                                    <p:column headerText ="month 4">
-
-
-                                        <h:outputText value="#{d[3]}"   />
-
-                                    </p:column>
-                                    <p:column headerText ="month 5">
-
-                                        <h:outputText value="#{d[4]}"   />
-
-                                    </p:column> 
-                                    <p:column headerText ="month 6">
-
-                                        <h:outputText value="#{d[5]}"  />
-
-                                    </p:column>     
-
-                                </p:dataTable>
-                            </h:panelGroup>
-                        </p:panel>
-                        <br/>
                         <p:panel id="panel1" header="Demand Prediction">
                             <p:outputLabel for="console" value="Select Demand Type:" />
                             <p:selectOneMenu id="console" value="#{MPSManagerBean.demandType}">
@@ -182,47 +158,6 @@
                                 </p:dataTable>
                             </h:panelGroup>
 
-                        </p:panel>
-                        <br/>
-                        <p:panel id="panel2" header="Monthly Master Production Schedule">
-                            <p:dataTable value="#{MPSManagerBean}" var="t" id="MPS">
-
-                                <p:column headerText ="month 1">                           
-                                    <h:inputText value="#{t.first}" />
-                                </p:column>
-
-                                <p:column headerText ="month 2">
-
-                                    <h:inputText value="#{t.second}"  />
-
-                                </p:column>
-
-                                <p:column headerText ="month 3">
-
-                                    <f:facet name="header">month 3</f:facet>
-
-                                    <h:inputText value="#{t.third}"   />
-
-                                </p:column>
-                                <p:column headerText ="month 4">
-
-                                    <h:inputText value="#{t.fourth}"   />
-
-                                </p:column>
-                                <p:column headerText ="month 5">
-
-                                    <h:inputText value="#{t.fifth}"   />
-
-                                </p:column> 
-                                <p:column headerText ="month 6">
-
-                                    <h:inputText value="#{t.sixth}"  />
-
-                                </p:column>     
-
-                            </p:dataTable>
-                            <br/>
-                            <p:commandButton action="saveNewMPS.xhtml" value="Save master production schedule" actionListener="#{MPSManagerBean.addNewMPS}" />
                         </p:panel>
                     </h:form>
                 </b:column>
