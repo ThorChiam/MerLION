@@ -23,7 +23,7 @@ public class Feedback implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private double rating;
-    private double feedback_content;
+    private String feedback_content;
     private String feedback_date;
 
 
@@ -50,11 +50,11 @@ public class Feedback implements Serializable {
         this.feedback_date = feedback_date;
     }
 
-    public double getFeedback_content() {
+    public String getFeedback_content() {
         return feedback_content;
     }
 
-    public void setFeedback_content(double feedback_content) {
+    public void setFeedback_content(String feedback_content) {
         this.feedback_content = feedback_content;
     }
     
