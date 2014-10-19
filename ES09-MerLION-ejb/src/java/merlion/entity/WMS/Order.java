@@ -23,11 +23,17 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String orderdate;
+
     
 
     @ManyToOne
-    private Account Account;
+    private Account requester;
+    
+    @ManyToOne
+    private Account provider;
 
+    
     public Long getId() {
         return id;
     }
@@ -36,12 +42,28 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public Account getAccount() {
-        return Account;
+    public String getOrderdate() {
+        return orderdate;
     }
 
-    public void setAccount(Account Account) {
-        this.Account = Account;
+    public void setOrderdate(String orderdate) {
+        this.orderdate = orderdate;
+    }
+    
+    public Account getRequester() {
+        return requester;
+    }
+
+    public void setRequester(Account requester) {
+        this.requester = requester;
+    }
+
+    public Account getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Account provider) {
+        this.provider = provider;
     }
 
     @Override

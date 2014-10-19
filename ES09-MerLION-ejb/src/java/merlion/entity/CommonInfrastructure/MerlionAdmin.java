@@ -28,6 +28,8 @@ public class MerlionAdmin implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="admin")
     private List<AggregateDemand> aggregatedemand = new ArrayList<>();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "admin")

@@ -22,6 +22,10 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
+    private String status;
+    private String jobtype;
+
     
     @ManyToOne
     private Warehouse WMSWarehouse;
@@ -34,6 +38,30 @@ public class Employee implements Serializable {
         this.WMSWarehouse = warehouse;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getJobtype() {
+        return jobtype;
+    }
+
+    public void setJobtype(String jobtype) {
+        this.jobtype = jobtype;
+    }
+    
     public Long getId() {
         return id;
     }

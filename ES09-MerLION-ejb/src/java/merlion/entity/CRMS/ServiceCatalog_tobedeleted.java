@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
  * @author USER
  */
 @Entity(name = "ServiceCatalog")
-public class ServiceCatalog implements Serializable {
+public class ServiceCatalog_tobedeleted implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,7 +35,7 @@ public class ServiceCatalog implements Serializable {
     @ManyToOne
     private Company Company;
 
-    public ServiceCatalog(){
+    public ServiceCatalog_tobedeleted(){
       
         setServiceId(System.nanoTime());
     
@@ -153,10 +153,10 @@ public class ServiceCatalog implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ServiceCatalog)) {
+        if (!(object instanceof ServiceCatalog_tobedeleted)) {
             return false;
         }
-        ServiceCatalog other = (ServiceCatalog) object;
+        ServiceCatalog_tobedeleted other = (ServiceCatalog_tobedeleted) object;
         if ((this.serviceId == null && other.serviceId != null) || (this.serviceId != null && !this.serviceId.equals(other.serviceId))) {
             return false;
         }

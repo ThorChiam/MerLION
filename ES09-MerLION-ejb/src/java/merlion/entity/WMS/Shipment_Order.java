@@ -13,9 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import merlion.entity.CommonInfrastructure.Account;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -27,19 +26,37 @@ public class Shipment_Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private Long orderdate;
+    private List<Integer> quantity= new ArrayList();
     
     @OneToMany(cascade={CascadeType.PERSIST})
     private List<Inventory> inventory=new ArrayList();
     
-    @ManyToOne
-    private Account Account;
+    @OneToOne
+    private Order Order;
 
-    public Account getAccount() {
-        return Account;
+    public Long getOrderdate() {
+        return orderdate;
     }
 
-    public void setAccount(Account Account) {
-        this.Account = Account;
+    public void setOrderdate(Long orderdate) {
+        this.orderdate = orderdate;
+    }
+
+    public List<Integer> getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(List<Integer> quantity) {
+        this.quantity = quantity;
+    }
+
+    public Order getOrder() {
+        return Order;
+    }
+
+    public void setOrder(Order Order) {
+        this.Order = Order;
     }
     
     public List<Inventory> getInventory() {

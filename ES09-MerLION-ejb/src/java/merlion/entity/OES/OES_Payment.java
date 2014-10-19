@@ -27,7 +27,7 @@ public class OES_Payment implements Serializable {
     private String status;
     
     @OneToOne
-    Invoice invoice;
+    OES_Invoice invoice;
     
     @OneToOne(mappedBy="payment")
     SalesOrder salesorder;
@@ -45,11 +45,11 @@ public class OES_Payment implements Serializable {
         this.status = status;
     }
     
-    public Invoice getInvoice() {
+    public OES_Invoice getInvoice() {
         return invoice;
     }
 
-    public void setInvoice(Invoice invoice) {
+    public void setInvoice(OES_Invoice invoice) {
         this.invoice = invoice;
     }
 

@@ -16,10 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import merlion.entity.CRMS.Company;
-import merlion.entity.CRMS.Contract;
-import merlion.entity.CRMS.Payment;
 import merlion.entity.MRP.Item;
 import merlion.entity.CRMS.Post;
+import merlion.entity.CRMS.ServiceOrder;
 import merlion.entity.WMS.Order;
 import merlion.entity.WMS.Shipment_Order;
 
@@ -52,24 +51,24 @@ public class Account implements Serializable {
     @ManyToMany(cascade={CascadeType.PERSIST})
     @JoinTable(name="ACCOUNT_ANNOUNCEMENT")
     private Set<Announcement> announcements=new HashSet<>();
-    
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="requester")
-    private List<Contract> Contract_requester = new ArrayList<>();
-    
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="provider")
-    private List<Contract> Contract_provider = new ArrayList<>();
-
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="payer")
-    private List<Payment> Payment_payer = new ArrayList<>();
- 
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="receiver")
-    private List<Payment> Payment_receiver = new ArrayList<>();
-    
+   
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<Shipment_Order> shipmentorder = new ArrayList<>();
 
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<Order> wmsorder = new ArrayList<>();
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="requester")
+    private List<Order> request_wmsorder = new ArrayList<>();
+    
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="service_requester")
+    private List<ServiceOrder> request_service = new ArrayList<>();
+    
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="service_provider")
+    private List<ServiceOrder> provide_service = new ArrayList<>();
+     
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="provider")
+    private List<Order> provide_wmsorder = new ArrayList<>();
+
+    
+
     
     
   
@@ -77,6 +76,22 @@ public class Account implements Serializable {
     
     
     //Added by QT  
+    
+    public List<ServiceOrder> getRequest_service() {
+        return request_service;
+    }
+
+    public void setRequest_service(List<ServiceOrder> request_service) {
+        this.request_service = request_service;
+    }
+
+    public List<ServiceOrder> getProvide_service() {
+        return provide_service;
+    }
+
+    public void setProvide_service(List<ServiceOrder> provide_service) {
+        this.provide_service = provide_service;
+    }
     
     public List<Shipment_Order> getShipmentorder() {
         return shipmentorder;
@@ -86,46 +101,22 @@ public class Account implements Serializable {
         this.shipmentorder = shipmentorder;
     }
 
-    public List<Order> getWmsorder() {
-        return wmsorder;
+    public List<Order> getRequest_wmsorder() {
+        return request_wmsorder;
     }
 
-    public void setWmsorder(List<Order> wmsorder) {
-        this.wmsorder = wmsorder;
+    public void setRequest_wmsorder(List<Order> request_wmsorder) {
+        this.request_wmsorder = request_wmsorder;
+    }
+
+    public List<Order> getProvide_wmsorder() {
+        return provide_wmsorder;
+    }
+
+    public void setProvide_wmsorder(List<Order> provide_wmsorder) {
+        this.provide_wmsorder = provide_wmsorder;
     }
     
-    public List<Contract> getContract_requester() {
-        return Contract_requester;
-    }
-
-    public void setContract_requester(List<Contract> Contract_requester) {
-        this.Contract_requester = Contract_requester;
-    }
-
-    public List<Contract> getContract_provider() {
-        return Contract_provider;
-    }
-
-    public void setContract_provider(List<Contract> Contract_provider) {
-        this.Contract_provider = Contract_provider;
-    }
-
-    public List<Payment> getPayment_payer() {
-        return Payment_payer;
-    }
-
-    public void setPayment_payer(List<Payment> Payment_payer) {
-        this.Payment_payer = Payment_payer;
-    }
-
-    public List<Payment> getPayment_receiver() {
-        return Payment_receiver;
-    }
-
-    public void setPayment_receiver(List<Payment> Payment_receiver) {
-        this.Payment_receiver = Payment_receiver;
-    }
-   
     public MerlionAdmin getMerlionAdmin() {
         return admin;
     }

@@ -10,18 +10,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class Customer implements Serializable {
+public class OES_Invoice implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String Release_date;
+    private String notes;
+    
+    @OneToOne(mappedBy="invoice") 
+    OES_Payment payment;
 
+    public OES_Invoice(){
+        setId(System.nanoTime());
+    }
+    
     public Long getId() {
         return id;
     }
@@ -29,6 +39,31 @@ public class Customer implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public OES_Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(OES_Payment payment) {
+        this.payment = payment;
+    }
+
+    public String getRelease_date() {
+        return Release_date;
+    }
+
+    public void setRelease_date(String release_date) {
+        this.Release_date = release_date;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
 
     @Override
     public int hashCode() {
@@ -40,10 +75,10 @@ public class Customer implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Customer)) {
+        if (!(object instanceof OES_Invoice)) {
             return false;
         }
-        Customer other = (Customer) object;
+        OES_Invoice other = (OES_Invoice) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -52,7 +87,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion.entity.OES.Customer[ id=" + id + " ]";
+        return "OES.entity.OES_Invoice[ id=" + id + " ]";
     }
     
 }

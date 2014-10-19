@@ -27,6 +27,11 @@ public class Inventory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
+    private String quantity;
+    private String status;
+    
+    
     
     @ManyToOne
     private Shipment_Order shipmentorder;
@@ -57,7 +62,30 @@ public class Inventory implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+   
     @Override
     public int hashCode() {
         int hash = 0;
