@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import merlion.entity.CommonInfrastructure.Account;
 import merlion.entity.MRP.Template;
 
@@ -38,9 +39,20 @@ public class Contract implements Serializable {
     
     @ManyToOne
     private Account provider;
+    
+    @OneToOne
+    private Payment Payment;
 
+  
     public Long getId() {
         return id;
+    }
+  public Payment getPayment() {
+        return Payment;
+    }
+
+    public void setPayment(Payment Payment) {
+        this.Payment = Payment;
     }
 
     public void setId(Long id) {

@@ -5,7 +5,6 @@
  */
 package merlion.entity.CRMS;
 
-import merlion.entity.CRMS.Company;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,9 +33,8 @@ public class ServiceOrder implements Serializable {
     private Company service_receiver;
 
     @OneToOne
-    Payment Payment;
-    
-    
+    private Contract Contract;
+
     
     public Long getId() {
         return id;
@@ -46,6 +44,13 @@ public class ServiceOrder implements Serializable {
         this.id = id;
     }
 
+    public Contract getContract() {
+        return Contract;
+    }
+
+    public void setContract(Contract Contract) {
+        this.Contract = Contract;
+    }
     
     public Company getService_requester() {
         return service_requester;
@@ -61,14 +66,6 @@ public class ServiceOrder implements Serializable {
 
     public void setService_receiver(Company service_receiver) {
         this.service_receiver = service_receiver;
-    }
-
-    public Payment getPayment() {
-        return Payment;
-    }
-
-    public void setPayment(Payment Payment) {
-        this.Payment = Payment;
     }
 
     @Override

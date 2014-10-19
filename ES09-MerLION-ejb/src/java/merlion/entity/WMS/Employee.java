@@ -6,50 +6,34 @@
 package merlion.entity.WMS;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class WMSInventory implements Serializable {
+public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
     @ManyToOne
-    private WMS_Shipment_Order shipmentorder;
-    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Inventory")
-    private List<WMSStorageArea> storagebin = new ArrayList<>();
+    private Warehouse WMSWarehouse;
 
-    public List<WMSStorageArea> getStoragebin() {
-        return storagebin;
+    public Warehouse getWarehouse() {
+        return WMSWarehouse;
     }
 
-    public void setStoragebin(List<WMSStorageArea> storagebin) {
-        this.storagebin = storagebin;
+    public void setWarehouse(Warehouse warehouse) {
+        this.WMSWarehouse = warehouse;
     }
 
-    public WMS_Shipment_Order getShipmentorder() {
-        return shipmentorder;
-    }
-
-    public void setShipmentorder(WMS_Shipment_Order shipmentorder) {
-        this.shipmentorder = shipmentorder;
-    }
-    
     public Long getId() {
         return id;
     }
@@ -68,10 +52,10 @@ public class WMSInventory implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof WMSInventory)) {
+        if (!(object instanceof Employee)) {
             return false;
         }
-        WMSInventory other = (WMSInventory) object;
+        Employee other = (Employee) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -80,7 +64,7 @@ public class WMSInventory implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_new_enetity.Inventory[ id=" + id + " ]";
+        return "merlion_new_enetity.Employee[ id=" + id + " ]";
     }
     
 }

@@ -3,35 +3,53 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity.OES;
+package merlion.entity.WMS;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import merlion.entity.CommonInfrastructure.Account;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class OES_Invoice implements Serializable {
+public class Shipment_Order implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String Release_date;
-    private String notes;
     
-    @OneToOne(mappedBy="invoice") 
-    OES_Payment payment;
+    @OneToMany(cascade={CascadeType.PERSIST})
+    private List<Inventory> inventory=new ArrayList();
+    
+    @ManyToOne
+    private Account Account;
 
-    public OES_Invoice(){
-        setId(System.nanoTime());
+    public Account getAccount() {
+        return Account;
+    }
+
+    public void setAccount(Account Account) {
+        this.Account = Account;
     }
     
+    public List<Inventory> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(List<Inventory> inventory) {
+        this.inventory = inventory;
+    }
+
     public Long getId() {
         return id;
     }
@@ -39,31 +57,6 @@ public class OES_Invoice implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public OES_Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(OES_Payment payment) {
-        this.payment = payment;
-    }
-
-    public String getRelease_date() {
-        return Release_date;
-    }
-
-    public void setRelease_date(String release_date) {
-        this.Release_date = release_date;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
 
     @Override
     public int hashCode() {
@@ -75,10 +68,10 @@ public class OES_Invoice implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OES_Invoice)) {
+        if (!(object instanceof Shipment_Order)) {
             return false;
         }
-        OES_Invoice other = (OES_Invoice) object;
+        Shipment_Order other = (Shipment_Order) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -87,7 +80,7 @@ public class OES_Invoice implements Serializable {
 
     @Override
     public String toString() {
-        return "OES.entity.OES_Invoice[ id=" + id + " ]";
+        return "merlion_new_enetity.WMS_Shipment_Order[ id=" + id + " ]";
     }
     
 }

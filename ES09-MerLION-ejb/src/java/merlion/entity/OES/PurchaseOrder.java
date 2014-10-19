@@ -24,7 +24,7 @@ import merlion.entity.CommonInfrastructure.Account;
  * @author sunny
  */
 @Entity
-public class OES_PurchaseOrder implements Serializable {
+public class PurchaseOrder implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,20 +36,20 @@ public class OES_PurchaseOrder implements Serializable {
     private String createdate;
     
     @OneToOne
-    OES_SalesOrder salesorder;
+    SalesOrder salesorder;
     
     @ManyToMany(cascade={CascadeType.ALL},mappedBy="purchaseorder")
-    private Set<OES_Product> product=new HashSet<>();
+    private Set<Product> product=new HashSet<>();
 
-    public OES_PurchaseOrder(){
+    public PurchaseOrder(){
         setId(System.nanoTime());
     }
     
-    public Set<OES_Product> getProduct() {
+    public Set<Product> getProduct() {
         return product;
     }
 
-    public void setProduct(Set<OES_Product> product) {
+    public void setProduct(Set<Product> product) {
         this.product = product;
     }
     
@@ -101,11 +101,11 @@ public class OES_PurchaseOrder implements Serializable {
         this.quantity = quantity;
     }
 
-    public OES_SalesOrder getSalesorder() {
+    public SalesOrder getSalesorder() {
         return salesorder;
     }
 
-    public void setSalesorder(OES_SalesOrder salesorder) {
+    public void setSalesorder(SalesOrder salesorder) {
         this.salesorder = salesorder;
     }
    
@@ -121,10 +121,10 @@ public class OES_PurchaseOrder implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OES_PurchaseOrder)) {
+        if (!(object instanceof PurchaseOrder)) {
             return false;
         }
-        OES_PurchaseOrder other = (OES_PurchaseOrder) object;
+        PurchaseOrder other = (PurchaseOrder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

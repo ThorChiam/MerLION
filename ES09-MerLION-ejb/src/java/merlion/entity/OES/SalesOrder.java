@@ -3,25 +3,61 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity.CommonInfrastructure;
+package merlion.entity.OES;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class LogisticTools implements Serializable {
+public class SalesOrder implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String createdate;
 
+    @OneToOne(mappedBy="salesorder")
+    PurchaseOrder purchaseorder;
+    
+    @OneToOne
+    OES_Payment payment;
+
+    public SalesOrder(){
+        setId(System.nanoTime());
+    }
+    
+     public String getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(String createdate) {
+        this.createdate = createdate;
+    }
+    
+    public OES_Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(OES_Payment payment) {
+        this.payment = payment;
+    }
+    
+    public PurchaseOrder getPurchaseorder() {
+        return purchaseorder;
+    }
+
+    public void setPurchaseorder(PurchaseOrder purchaseorder) {
+        this.purchaseorder = purchaseorder;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -40,10 +76,10 @@ public class LogisticTools implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LogisticTools)) {
+        if (!(object instanceof SalesOrder)) {
             return false;
         }
-        LogisticTools other = (LogisticTools) object;
+        SalesOrder other = (SalesOrder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -52,7 +88,7 @@ public class LogisticTools implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_new_enetity.LogisticTools[ id=" + id + " ]";
+        return "OES.entity.OES_SalesOrder[ id=" + id + " ]";
     }
     
 }

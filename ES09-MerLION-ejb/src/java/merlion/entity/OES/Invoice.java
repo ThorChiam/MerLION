@@ -3,37 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity.WMS;
+package merlion.entity.OES;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class WMSEmployee implements Serializable {
+public class Invoice implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String Release_date;
+    private String notes;
     
-    @ManyToOne
-    private WMSWarehouse WMSWarehouse;
+    @OneToOne(mappedBy="invoice") 
+    OES_Payment payment;
 
-    public WMSWarehouse getWarehouse() {
-        return WMSWarehouse;
+    public Invoice(){
+        setId(System.nanoTime());
     }
-
-    public void setWarehouse(WMSWarehouse warehouse) {
-        this.WMSWarehouse = warehouse;
-    }
-
+    
     public Long getId() {
         return id;
     }
@@ -41,6 +39,31 @@ public class WMSEmployee implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public OES_Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(OES_Payment payment) {
+        this.payment = payment;
+    }
+
+    public String getRelease_date() {
+        return Release_date;
+    }
+
+    public void setRelease_date(String release_date) {
+        this.Release_date = release_date;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
 
     @Override
     public int hashCode() {
@@ -52,10 +75,10 @@ public class WMSEmployee implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof WMSEmployee)) {
+        if (!(object instanceof Invoice)) {
             return false;
         }
-        WMSEmployee other = (WMSEmployee) object;
+        Invoice other = (Invoice) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -64,7 +87,7 @@ public class WMSEmployee implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_new_enetity.Employee[ id=" + id + " ]";
+        return "OES.entity.OES_Invoice[ id=" + id + " ]";
     }
     
 }

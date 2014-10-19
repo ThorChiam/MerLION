@@ -22,7 +22,7 @@ import javax.persistence.OneToOne;
  * @author sunny
  */
 @Entity
-public class TMSDispatchOrder implements Serializable {
+public class DispatchOrder implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,7 +32,7 @@ public class TMSDispatchOrder implements Serializable {
     TMSOrder TMSOrder;
     
     @OneToOne
-    TMSCost TMSCost;
+    Cost TMSCost;
     
     @OneToMany(cascade={CascadeType.PERSIST})
     public List<TMSFacility> TMSFacility=new ArrayList<>(); 
@@ -60,11 +60,11 @@ public class TMSDispatchOrder implements Serializable {
         this.TMSOrder = TMSOrder;
     }
 
-    public TMSCost getTMSCost() {
+    public Cost getTMSCost() {
         return TMSCost;
     }
 
-    public void setTMSCost(TMSCost TMSCost) {
+    public void setTMSCost(Cost TMSCost) {
         this.TMSCost = TMSCost;
     }
 
@@ -94,10 +94,10 @@ public class TMSDispatchOrder implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TMSDispatchOrder)) {
+        if (!(object instanceof DispatchOrder)) {
             return false;
         }
-        TMSDispatchOrder other = (TMSDispatchOrder) object;
+        DispatchOrder other = (DispatchOrder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

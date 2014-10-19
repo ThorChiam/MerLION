@@ -17,12 +17,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import merlion.entity.CRMS.Company;
 import merlion.entity.CRMS.Contract;
-import merlion.entity.CRMS.Favorite;
 import merlion.entity.CRMS.Payment;
 import merlion.entity.MRP.Item;
 import merlion.entity.CRMS.Post;
-import merlion.entity.WMS.WMSOrder;
-import merlion.entity.WMS.WMS_Shipment_Order;
+import merlion.entity.WMS.Order;
+import merlion.entity.WMS.Shipment_Order;
 
 @Entity
 @Table(name = "Account")
@@ -31,19 +30,16 @@ public class Account implements Serializable {
     @Id
     private String email; 
     private String password;
-    private String accessright;
+    private String accessright;//区分用哪些系统
     private String status;
     private String security_question;
     private String security_answer;
-
+  
+     
     //Added by QT
-    
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<Item> items = new ArrayList<>();
 
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<Favorite> favorites = new ArrayList<>();
-    
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<Post> post = new ArrayList<>();
     
@@ -70,31 +66,31 @@ public class Account implements Serializable {
     private List<Payment> Payment_receiver = new ArrayList<>();
     
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<WMS_Shipment_Order> shipmentorder = new ArrayList<>();
+    private List<Shipment_Order> shipmentorder = new ArrayList<>();
 
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<WMSOrder> wmsorder = new ArrayList<>();
+    private List<Order> wmsorder = new ArrayList<>();
+    
+    
   
     
     
     
-  
-
     //Added by QT  
     
-    public List<WMS_Shipment_Order> getShipmentorder() {
+    public List<Shipment_Order> getShipmentorder() {
         return shipmentorder;
     }
 
-    public void setShipmentorder(List<WMS_Shipment_Order> shipmentorder) {
+    public void setShipmentorder(List<Shipment_Order> shipmentorder) {
         this.shipmentorder = shipmentorder;
     }
 
-    public List<WMSOrder> getWmsorder() {
+    public List<Order> getWmsorder() {
         return wmsorder;
     }
 
-    public void setWmsorder(List<WMSOrder> wmsorder) {
+    public void setWmsorder(List<Order> wmsorder) {
         this.wmsorder = wmsorder;
     }
     
@@ -162,13 +158,6 @@ public class Account implements Serializable {
         this.items = items;
     }
 
-    public List<Favorite> getFavorites() {
-        return favorites;
-    }
-
-    public void setFavorites(List<Favorite> favorites) {
-        this.favorites = favorites;
-    }
 
 
 
@@ -184,7 +173,7 @@ public class Account implements Serializable {
         this.security_question=security_question;
         this.security_answer=security_answer;
     }  
-    
+
     public Set<Announcement> getAnnouncements() {
         return announcements;
     }

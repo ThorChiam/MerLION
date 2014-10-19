@@ -3,34 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity.TMS;
+package merlion.entity.OES;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class TMSCost implements Serializable {
+public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @OneToOne(mappedBy="TMSCost")
-    TMSDispatchOrder TMSDispatchOrder;
 
-
-    public TMSCost(){
-        setId(System.nanoTime());
-    }
-    
     public Long getId() {
         return id;
     }
@@ -39,14 +30,6 @@ public class TMSCost implements Serializable {
         this.id = id;
     }
 
-    public TMSDispatchOrder getTMSDispatchOrder() {
-        return TMSDispatchOrder;
-    }
-
-    public void setTMSDispatchOrder(TMSDispatchOrder TMSDispatchOrder) {
-        this.TMSDispatchOrder = TMSDispatchOrder;
-    }
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -57,10 +40,10 @@ public class TMSCost implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TMSCost)) {
+        if (!(object instanceof Customer)) {
             return false;
         }
-        TMSCost other = (TMSCost) object;
+        Customer other = (Customer) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -69,7 +52,7 @@ public class TMSCost implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion.entity.TMS.TMSCost[ id=" + id + " ]";
+        return "merlion.entity.OES.Customer[ id=" + id + " ]";
     }
     
 }

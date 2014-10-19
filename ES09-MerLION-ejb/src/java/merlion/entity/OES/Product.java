@@ -18,7 +18,7 @@ import merlion.entity.CRMS.Company;
 
 @Entity
 @Table(name = "Product")
-public class OES_Product implements Serializable {
+public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,35 +27,36 @@ public class OES_Product implements Serializable {
     private double price;
     private int quantity;
     private String description;
+    
 
     @ManyToMany(cascade={CascadeType.PERSIST})
     @JoinTable(name="OES_PRODUCT_OES_ENQUIRY")
-    private Set<OES_Enquiry> enquiry=new HashSet<>();
+    private Set<Enquiry> enquiry=new HashSet<>();
     
     @ManyToOne
     private Company company;
     
     @ManyToMany(cascade={CascadeType.PERSIST})
     @JoinTable(name="OES_PRODUCT_OES_PURCHASEORDER")
-    private Set<OES_PurchaseOrder> purchaseorder=new HashSet<>();
+    private Set<PurchaseOrder> purchaseorder=new HashSet<>();
 
-    public OES_Product() {
+    public Product() {
         setId(System.nanoTime());
     }
     
-    public Set<OES_Enquiry> getEnquiry() {
+    public Set<Enquiry> getEnquiry() {
         return enquiry;
     }
 
-    public void setEnquiry(Set<OES_Enquiry> enquiry) {
+    public void setEnquiry(Set<Enquiry> enquiry) {
         this.enquiry = enquiry;
     }
 
-    public Set<OES_PurchaseOrder> getPurchaseorder() {
+    public Set<PurchaseOrder> getPurchaseorder() {
         return purchaseorder;
     }
 
-    public void setPurchaseorder(Set<OES_PurchaseOrder> purchaseorder) {
+    public void setPurchaseorder(Set<PurchaseOrder> purchaseorder) {
         this.purchaseorder = purchaseorder;
     }
 
@@ -116,10 +117,10 @@ public class OES_Product implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OES_Product)) {
+        if (!(object instanceof Product)) {
             return false;
         }
-        OES_Product other = (OES_Product) object;
+        Product other = (Product) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
