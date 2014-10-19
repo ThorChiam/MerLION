@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Welcome to Order Entry System</title>
+    </h:head>
+
+    <h:body>
+        <b:container>
+            <b:well>
+                <h2>Order Entry System</h2>
+           
+                <p:breadCrumb>
+                    <p:menuitem value="Home" url="/main.xhtml" />
+                    <p:menuitem value="Dashboard" url="" />
+                    <p:menuitem value="Product" url="productMain.xhtml" />
+                    <p:menuitem value="Quotation" url="#" />
+                    <p:menuitem value="Sales Order" url="#" />
+                    <p:menuitem value="Customer" url="#" />
+                    <p:menuitem value="Supplier" url="#" />
+                    <p:menuitem value="Payment" url="#" />
+
+
+                </p:breadCrumb>
+            </b:well>
+        </b:container>
+
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="12" col-sm="6" col-md="2">
+                    
+
+                   
+                    <h:form>
+                        <p:panel header="Product">
+                  
+                        <b:listLinks>
+
+                            <b:navLink href="productMain.xhtml" value="NEW Product"
+                                       />
+                           
+                            <b:navLink href="productALL.xhtml" value="ALL Products"
+                                       />
+                            <b:navLink href="supplier.xhtml" value="Supplier"
+                                       />
+                            <b:navLink>
+                                
+                            </b:navLink>
+
+
+                        </b:listLinks>
+                     </p:panel>
+                    </h:form>
+                  
+                </b:column>
+
+                <!-- display all the products-->
+                <b:column col-xs="6" col-sm="6" col-md="10">
+
+                    <h:form>
+                        <p:dataTable var="car" value="#{dtPaginatorView.suppliers}" rows="10"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15">
+                            <p:column headerText="Id">
+                                <h:outputText value="#{supplier.id}" />
+                            </p:column>
+
+                            <p:column headerText="Name">
+                                <h:outputText value="#{supplier.name}" />
+                            </p:column>
+                            
+                            <p:column headerText="Email">
+                                <h:outputText value="#{supplier.email}" />
+                            </p:column>
+                            
+                            <p:column headerText="Phone">
+                                <h:outputText value="#{supplier.phone}" />
+                            </p:column>
+                            
+                            
+                            <p:column headerText="Address">
+                                <h:outputText value="#{supplier.address}" />
+                            </p:column>
+                            
+                          
+                            <p:column headerText="Bank Account No.">
+                                <h:outputText value="#{supplier.account}" />
+                            </p:column>
+                            
+                           
+                            
+                        </p:dataTable>
+                    </h:form>      
+
+
+                </b:column>
+
+            </b:row>
+
+        </b:container>
+
+    </h:body>
+</html>
+
+
+
+
+
+
+

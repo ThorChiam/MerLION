@@ -7,7 +7,6 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-
         <title>MerLION Logistics</title>
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>       
@@ -27,8 +26,8 @@
                 <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>               
                 <b:dropMenu value="Services">
                     <b:navLink value="OES" href="/OES/main.xhtml"></b:navLink>
-                    <b:navLink value="Another action" href="#"></b:navLink>
-                    <b:navLink value="Something else here" href="#"></b:navLink>
+                    <b:navLink value="MRP" href="#"></b:navLink>
+                    <b:navLink value="TMS" href="/TMS/sub-home.xhtml"></b:navLink>
                     <b:navLink></b:navLink>
                     <b:navLink header="Nav header"></b:navLink>
                     <b:navLink value="Separated link" href="#"></b:navLink>
@@ -38,8 +37,8 @@
             </b:navbarLinks>
 
             <h:form styleClass="navbar-form navbar-right">
-               <b:commandButton action="signIn.xhtml" value="Sign in" look="success" iconAlign="right"/>
-               <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
+                <b:commandButton action="signIn.xhtml" value="Sign in" look="success" iconAlign="right"/>
+                <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
             </h:form> 
         </b:navBar>
 
@@ -111,44 +110,6 @@
                 <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
             </div>
         </b:container>
-        <hr>
-        </hr>
-        <b:container>
-            <b:row>
-
-                <b:column col-md="4">
-                    <h4><b>Track Your Cargo</b></h4>
-                    <h:form>
-                        <p:growl id="msg" showDetail="true" />
-                        <h:panelGrid columns="1" cellpadding="2">
-                            <p:outputLabel for="date" value="Track No.: " />
-                            <p:inputTextarea id="date"/>
-
-                        </h:panelGrid>
-                        <p:commandButton value="Submit" update="msg" actionListener="#{CalendarView.click}" icon="ui-icon-check" />
-                        <p:dialog widgetVar="dlg" modal="true" resizable="false" header="Values" showEffect="fade">
-                            <p:panelGrid id="display" columns="1" columnClasses="label,value">
-                                <h:outputText value="Track No.: " />
-                                <h:outputText id="dateValue"/>
-
-
-                            </p:panelGrid>
-                        </p:dialog>
-                    </h:form>
-
-                </b:column>
-                <b:column col-md="8">
-                    <h4>Latest News</h4>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, 
-                        ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><b:button outcome="" value="View details »"/></p>
-                </b:column>
-
-
-            </b:row>
-        </b:container>
-        <hr>
-        </hr>
 
         <b:container>
             <b:row>
@@ -194,14 +155,21 @@
                 </b:column>
 
                 <b:column col-md="8">
-                    <h4>Transportation Service Provider List</h4>
-                    <p> Recommendation Function: This area is designed to list service providers who paid for advertizing fee </p>
-                    <p><b:button outcome="" value="View details »"/></p>
+                    <h4>Recommended Transportation Service Provider</h4>
+                    <p>
+                        <img src="image/logo/dhlLogo.jpg" width="100" height="100"></img>
+                        &nbsp;
+                        <img src="image/logo/fedexLogo.jpg" width="100" height="100"></img>
+                        &nbsp;
+                        <img src="image/logo/nipponLogo.jpg" width="100" height="100"></img>
+                        &nbsp;
+                        <img src="image/logo/dachserLogo.png" width="100" height="100"></img>
+                        &nbsp;
+                        <img src="image/logo/damcoLogo.jpg" width="100" height="80"></img>
+
+                    </p>
+                    <p><b:button outcome="" value="View More »"/></p>
                 </b:column>
-
-
-
-
             </b:row>
         </b:container>
         <hr>
@@ -251,78 +219,79 @@
                 </b:column>
 
                 <b:column col-md="8">
-                    <h4>Warehouse </h4>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, 
-                        ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><b:button outcome="" value="View details Â»"/></p>
+                    <h4>Recommended Warehouse Service Provider</h4>
+                    <p>
+                        <img src="image/logo/astransLogo.png" width="80" height="70"></img>
+                        &nbsp;
+                        <img src="image/logo/cityLogo.jpg" width="100" height="70"></img>
+                        &nbsp;
+                        <img src="image/logo/welchLogo.gif" width="100" height="70"></img>
+                        &nbsp;
+                        <img src="image/logo/efnLogo.jpg" width="100" height="100"></img>
+                        &nbsp;
+                        <img src="image/logo/aeoLogo.jpg" width="100" height="100"></img>
 
-
-
+                    </p>
+                    <p><b:button outcome="" value="View More »"/></p>
                 </b:column>
             </b:row>
 
 
         </b:container>
-        <hr>
-        </hr>
-
+        <hr/>
         <b:container>
+            <b:row>
+                <b:column col-md="4">
+                    <h4><b>Track Your Cargo</b></h4>
+                    <h:form>
+                        <p:growl id="msg" showDetail="true" />
+                        <h:panelGrid columns="1" cellpadding="2">
+                            <p:outputLabel for="date" value="Track No.: " />
+                            <p:inputTextarea id="date"/>
 
-            <h:form>
-
-                <p:growl id="msgs" showDetail="true" />
-
-                <h4 style="margin-top:0"><b>Services</b></h4>
-                <p:tabView>
-                    <p:tab title="OES">
-                        <h:panelGrid columns="2" cellpadding="7">
-                            <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
-                            <h:outputText
-                                value="The story begins as Don Vito Corleone..." />
                         </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="MRP">
-                        <h:panelGrid columns="2" cellpadding="7">
-                            <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                            <h:outputText value="Francis Ford Coppola's legendary..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="WMS">
-                        <h:panelGrid columns="2" cellpadding="7">
-                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                            <h:outputText value="After a break of more than 15 years..." />
-                        </h:panelGrid>
-                    </p:tab>
-
-                    <p:tab title="CRMS">
-                        <h:panelGrid columns="2" cellpadding="7">
-                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                            <h:outputText value="After a break of more than 15 years..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="GRNS">
-                        <h:panelGrid columns="2" cellpadding="7">
-                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                            <h:outputText value="After a break of more than 15 years..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="TMS">
-                        <h:panelGrid columns="2" cellpadding="7">
-                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                            <h:outputText value="After a break of more than 15 years..." />
-                        </h:panelGrid>
-                    </p:tab>
-                </p:tabView>
-            </h:form>
-
-        </b:container>
+                        <p:commandButton value="Submit" update="msg" actionListener="#{CalendarView.click}" icon="ui-icon-check" />
+                        <p:dialog widgetVar="dlg" modal="true" resizable="false" header="Values" showEffect="fade">
+                            <p:panelGrid id="display" columns="1" columnClasses="label,value">
+                                <h:outputText value="Track No.: " />
+                                <h:outputText id="dateValue"/>
 
 
-        <b:container>
-            <img src="image/footer.png" alt="" />
+                            </p:panelGrid>
+                        </p:dialog>
+                    </h:form>
 
+                </b:column>
+                <b:column col-md="8">
+                    <h4>Latest News</h4> 
+                    <table>
+                        <tr>
+                            <td><img src="image/news.jpg" width="150" height="120"></img></td>
+                            <td>
+                                <ul style="list-style-type:circle">
+                                    <li><a href=""><font color="grey">Merlion Logistics development a logistic platform for 1-4 PL</font></a></li>
+                                    <li><a href=""><font color="grey">MerLION Global Forwarding moves to secure freight capacity</font></a></li>
+                                    <li><a href=""><font color="grey">Optimizing 3PL relationships: How to avoid commoditization</font></a></li>
+                                    <li><a href=""><font color="grey">Diesel prices drop to $3.698 per gallon</font></a></li>
+                                </ul>  
+                            </td>
+                        </tr>
+                    </table>
+                </b:column>
+
+
+            </b:row>
         </b:container>
         <hr/>
+        <p:stack icon="/image/OES.png" expanded="true">
+            <p:menuitem value="OES" icon="/image/OES.png" url="OES/main.xhtml"/>
+            <p:menuitem value="MRP" icon="/image/MRP.png" url="#"/>
+            <p:menuitem value="TMS" icon="/image/TMS.png" url="TMS/sub-home.xhtml"/>
+            <p:menuitem value="WMS" icon="/image/WMS.png" url="#"/>
+            <p:menuitem value="CRMS" icon="/image/CRMS.png" url="#"/>
+            <p:menuitem value="GRNS" icon="/image/GRNS.png" url="#"/>
+        </p:stack>
+
         <hr/>
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">

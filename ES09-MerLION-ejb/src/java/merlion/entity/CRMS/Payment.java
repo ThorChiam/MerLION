@@ -40,10 +40,8 @@ public class Payment implements Serializable {
     private Account receiver;
     
     @OneToOne(mappedBy="Payment")
-    private ServiceOrder serviceorder;
+    private Contract Contract;
 
-    
-    
     public Long getId() {
         return id;
     }
@@ -51,13 +49,13 @@ public class Payment implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }  
-    
-    public ServiceOrder getServiceorder() {
-        return serviceorder;
+  
+    public Contract getContract() {
+        return Contract;
     }
 
-    public void setServiceorder(ServiceOrder serviceorder) {
-        this.serviceorder = serviceorder;
+    public void setContract(Contract Contract) {
+        this.Contract = Contract;
     }
     
     public String getCurrency() {

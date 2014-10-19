@@ -48,8 +48,7 @@ public class FavoritesSessionBean implements FavoritesSessionBeanLocal {
         q.setParameter("id", companyId);
         Company c = (Company)q.getSingleResult();
         fav = new Favorite();
-        fav.setAccount(a);
-        fav.setCompany(c);
+        fav.setFavoritee(c);
         fav.setRemarks(remark);
         em.persist(fav);
     }
@@ -68,6 +67,6 @@ public class FavoritesSessionBean implements FavoritesSessionBeanLocal {
         fav = (Favorite)q.getSingleResult();
         fav.setRemarks(remark);
         em.merge(fav);
-        return fav.getCompany().getCompanyName();
+        return fav.getFavoritee().getCompanyName();
     }
 }

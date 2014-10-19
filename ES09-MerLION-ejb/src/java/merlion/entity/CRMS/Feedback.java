@@ -22,6 +22,9 @@ public class Feedback implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private double rating;
+
+  
     @ManyToOne
     private Company feedback_receiver;
     
@@ -51,6 +54,15 @@ public class Feedback implements Serializable {
     public void setSender(Company sender) {
         this.feedback_sender = sender;
     }
+    
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+    
 
     @Override
     public int hashCode() {
