@@ -27,7 +27,7 @@ public class Auction implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String Auction_date;
-    private String Auction_price;
+    private double Auction_price;
     private String Auction_status;
 
     @OneToOne(mappedBy="auction")
@@ -67,11 +67,11 @@ public class Auction implements Serializable {
         this.Auction_date = Auction_date;
     }
 
-    public String getAuction_price() {
+    public double getAuction_price() {
         return Auction_price;
     }
 
-    public void setAuction_price(String Auction_price) {
+    public void setAuction_price(double Auction_price) {
         this.Auction_price = Auction_price;
     }
 
