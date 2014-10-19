@@ -22,6 +22,10 @@ public class WMSFacility implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
+
+  
+    private String status;
     
     @ManyToOne
     private Warehouse WMSWarehouse;
@@ -40,6 +44,22 @@ public class WMSFacility implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

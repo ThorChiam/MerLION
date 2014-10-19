@@ -3,35 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity.OES;
+package merlion.entity.GRNS;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import merlion.entity.CRMS.Company;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class Invoice implements Serializable {
+public class DemandRequest implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String Release_date;
-    private String notes;
+    private String submit_date;
+    private String request_status;
     
-    @OneToOne(mappedBy="invoice") 
-    OES_Payment payment;
+    @OneToOne
+    private AggregateDemand AggregateDemand;
+    
+    @ManyToOne
+    private Company Company;
 
-    public Invoice(){
-        setId(System.nanoTime());
-    }
-    
+
     public Long getId() {
         return id;
     }
@@ -39,32 +41,39 @@ public class Invoice implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getSubmit_date() {
+        return submit_date;
+    }
+
+    public void setSubmit_date(String submit_date) {
+        this.submit_date = submit_date;
+    }
+
+    public String getRequest_status() {
+        return request_status;
+    }
+
+    public void setRequest_status(String request_status) {
+        this.request_status = request_status;
+    }
     
-    public OES_Payment getPayment() {
-        return payment;
+    public AggregateDemand getAggregateDemand() {
+        return AggregateDemand;
     }
 
-    public void setPayment(OES_Payment payment) {
-        this.payment = payment;
+    public void setAggregateDemand(AggregateDemand AggregateDemand) {
+        this.AggregateDemand = AggregateDemand;
     }
 
-    public String getRelease_date() {
-        return Release_date;
+    public Company getCompany() {
+        return Company;
     }
 
-    public void setRelease_date(String release_date) {
-        this.Release_date = release_date;
+    public void setCompany(Company Company) {
+        this.Company = Company;
     }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -75,10 +84,10 @@ public class Invoice implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Invoice)) {
+        if (!(object instanceof DemandRequest)) {
             return false;
         }
-        Invoice other = (Invoice) object;
+        DemandRequest other = (DemandRequest) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -87,7 +96,7 @@ public class Invoice implements Serializable {
 
     @Override
     public String toString() {
-        return "OES.entity.OES_Invoice[ id=" + id + " ]";
+        return "merlion.entity.GRNS.DemandRequest[ id=" + id + " ]";
     }
     
 }

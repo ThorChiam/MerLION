@@ -16,7 +16,7 @@ import merlion.ejb.local.OESSessionLocal;
 import merlion.entity.CommonInfrastructure.Account;
 import merlion.entity.CRMS.Company;
 import merlion.entity.OES.Enquiry;
-import merlion.entity.OES.Invoice;
+import merlion.entity.OES.OES_Invoice;
 import merlion.entity.OES.OES_Payment;
 import merlion.entity.OES.Product;
 import merlion.entity.OES.PurchaseOrder;
@@ -288,7 +288,7 @@ public class OESSession implements OESSessionLocal{
     //*****************************Invoice*********************************
     @Override
     public void createInvoice(String release_date, String notes, OES_Payment payment) {
-        Invoice tmp=new Invoice();
+        OES_Invoice tmp=new OES_Invoice();
         tmp.setNotes(notes);
         tmp.setRelease_date(release_date);
         tmp.setPayment(payment);
@@ -296,14 +296,14 @@ public class OESSession implements OESSessionLocal{
     }
 
     @Override
-    public Invoice getInvoice(long invoice_id) {
+    public OES_Invoice getInvoice(long invoice_id) {
         Query q = em.createQuery("SELECT f FROM OES_Invoice f WHERE f.id=:id");
         q.setParameter("id", invoice_id);
-        return (Invoice)q.getSingleResult();
+        return (OES_Invoice)q.getSingleResult();
     }
 
     @Override
-    public List<Invoice> getAllInvoice(String email) {
+    public List<OES_Invoice> getAllInvoice(String email) {
         Query q = em.createQuery("SELECT f FROM OES_Invoice f WHERE f.payment.salesorder.purchaseorder.seller.email=:email OR f.payment.salesorder.purchaseorder.buyer.email=:emails");
         q.setParameter("email", email);
         q.setParameter("emails",email);

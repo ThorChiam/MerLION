@@ -32,13 +32,7 @@ public class Payment implements Serializable {
    
     @OneToOne
     private Invoice invoice;
-    
-    @ManyToOne
-    private Account payer;
-    
-    @ManyToOne
-    private Account receiver;
-    
+   
     @OneToOne(mappedBy="Payment")
     private Contract Contract;
 
@@ -97,23 +91,7 @@ public class Payment implements Serializable {
     public void setNotes(String notes) {
         this.notes = notes;
     }
-    
-    public Account getPayer() {
-        return payer;
-    }
-
-    public void setPayer(Account payer) {
-        this.payer = payer;
-    }
-
-    public Account getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(Account receiver) {
-        this.receiver = receiver;
-    }
-
+  
     public Invoice getInvoice() {
         return invoice;
     }

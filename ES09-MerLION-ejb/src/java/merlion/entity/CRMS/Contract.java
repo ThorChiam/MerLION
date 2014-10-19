@@ -30,16 +30,13 @@ public class Contract implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String sign_date;
+
+    
     @ManyToMany(cascade={CascadeType.PERSIST})
     @JoinTable(name="CONTRACT_TEMPLATE")
     private Set<Template> template=new HashSet<>();
-    
-    @ManyToOne
-    private Account requester;
-    
-    @ManyToOne
-    private Account provider;
-    
+ 
     @OneToOne
     private Payment Payment;
 
@@ -47,7 +44,20 @@ public class Contract implements Serializable {
     public Long getId() {
         return id;
     }
-  public Payment getPayment() {
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getSign_date() {
+        return sign_date;
+    }
+
+    public void setSign_date(String sign_date) {
+        this.sign_date = sign_date;
+    }
+    
+    public Payment getPayment() {
         return Payment;
     }
 
@@ -55,26 +65,6 @@ public class Contract implements Serializable {
         this.Payment = Payment;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
-    public Account getRequester() {
-        return requester;
-    }
-
-    public void setRequester(Account requester) {
-        this.requester = requester;
-    }
-
-    public Account getProvider() {
-        return provider;
-    }
-
-    public void setProvider(Account provider) {
-        this.provider = provider;
-    }
-    
     public Set<Template> getTemplate() {
         return template;
     }

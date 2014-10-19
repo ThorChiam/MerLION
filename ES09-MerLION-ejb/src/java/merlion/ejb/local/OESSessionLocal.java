@@ -12,7 +12,7 @@ import java.util.Set;
 import javax.ejb.Local;
 import merlion.entity.CommonInfrastructure.Account;
 import merlion.entity.OES.Enquiry;
-import merlion.entity.OES.Invoice;
+import merlion.entity.OES.OES_Invoice;
 import merlion.entity.OES.OES_Payment;
 import merlion.entity.OES.Product;
 import merlion.entity.OES.PurchaseOrder;
@@ -77,6 +77,6 @@ public interface OESSessionLocal {
     
     //********************Seller-Invoice*************************
     public void createInvoice(String release_date, String notes, OES_Payment payment);
-    public Invoice getInvoice(long invoice_id);
-    public List<Invoice> getAllInvoice(String email);
+    public OES_Invoice getInvoice(long invoice_id);
+    public List<OES_Invoice> getAllInvoice(String email);
 }

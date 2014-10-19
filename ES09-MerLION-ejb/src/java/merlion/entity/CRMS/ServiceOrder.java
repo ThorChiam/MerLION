@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import merlion.entity.CommonInfrastructure.Account;
 
 /**
  *
@@ -23,18 +24,21 @@ public class ServiceOrder implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String create_date;
+    private String notes;
     
     
     //不是account么？
     @ManyToOne
-    private Company service_requester;
+    private Account service_requester;
     
     @ManyToOne
-    private Company service_receiver;
+    private Account service_provider;
 
     @OneToOne
     private Contract Contract;
 
+ 
     
     public Long getId() {
         return id;
@@ -43,7 +47,22 @@ public class ServiceOrder implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+   public String getCreate_date() {
+        return create_date;
+    }
 
+    public void setCreate_date(String create_date) {
+        this.create_date = create_date;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+    
     public Contract getContract() {
         return Contract;
     }
@@ -52,20 +71,20 @@ public class ServiceOrder implements Serializable {
         this.Contract = Contract;
     }
     
-    public Company getService_requester() {
+    public Account getService_requester() {
         return service_requester;
     }
 
-    public void setService_requester(Company service_requester) {
+    public void setService_requester(Account service_requester) {
         this.service_requester = service_requester;
     }
 
-    public Company getService_receiver() {
-        return service_receiver;
+    public Account getService_provider() {
+        return service_provider;
     }
 
-    public void setService_receiver(Company service_receiver) {
-        this.service_receiver = service_receiver;
+    public void setService_provider(Account service_provider) {
+        this.service_provider = service_provider;
     }
 
     @Override

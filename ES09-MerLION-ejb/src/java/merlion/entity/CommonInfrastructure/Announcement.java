@@ -22,6 +22,8 @@ public class Announcement implements Serializable {
     @Id 
     private Long annId;
     private String content;
+    private String releasedate;
+
     @ManyToMany(cascade={CascadeType.ALL},mappedBy="announcements")
     private Set<Account> accounts=new HashSet<>();
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
@@ -35,6 +37,13 @@ public class Announcement implements Serializable {
         this.content=content;
     }   
 
+    public String getReleasedate() {
+        return releasedate;
+    }
+
+    public void setReleasedate(String releasedate) {
+        this.releasedate = releasedate;
+    }
     
     public MerlionAdmin getMerlionAdmin() {
         return admin;

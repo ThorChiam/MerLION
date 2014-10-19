@@ -22,6 +22,9 @@ public class Invoice implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String generate_date;
+
+    
     @OneToOne(mappedBy="Invoice")
     private Payment payment;
 
@@ -31,6 +34,14 @@ public class Invoice implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public String getGenerate_date() {
+        return generate_date;
+    }
+
+    public void setGenerate_date(String generate_date) {
+        this.generate_date = generate_date;
     }
     
     public Payment getPayment() {

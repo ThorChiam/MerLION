@@ -26,6 +26,8 @@ public class ActionRecord implements Serializable {
     private Long id;
     private String accessed;
     private long accessTime;
+    
+    
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
     private MerlionAdmin admin;
 

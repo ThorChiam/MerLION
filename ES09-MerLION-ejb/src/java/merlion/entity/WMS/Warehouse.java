@@ -28,6 +28,11 @@ public class Warehouse implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
+    private String address;
+    private String capacity;
+
+    
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSWarehouse")
     private List<WMSFacility> facility = new ArrayList<>();
     
@@ -40,6 +45,30 @@ public class Warehouse implements Serializable {
     @ManyToOne
     private Company Company;
     
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
+    }
     
     public List<StorageArea> getStoragearea() {
         return storagearea;

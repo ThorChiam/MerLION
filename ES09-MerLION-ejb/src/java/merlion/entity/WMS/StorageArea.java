@@ -6,8 +6,6 @@
 package merlion.entity.WMS;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +22,8 @@ public class StorageArea implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String status;
+
     
     @ManyToOne
     private Warehouse WMSWarehouse;
@@ -39,6 +39,14 @@ public class StorageArea implements Serializable {
         this.id = id;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     public Warehouse getWMSWarehouse() {
         return WMSWarehouse;
     }
@@ -52,7 +60,7 @@ public class StorageArea implements Serializable {
     }
 
     public void setInventory(Inventory inventory) {
-        this.Inventory = Inventory;
+        this.Inventory = inventory;
     }
 
 

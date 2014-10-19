@@ -19,7 +19,7 @@ import javax.faces.context.FacesContext;
 import merlion.ejb.local.OESSessionLocal;
 import merlion.entity.CommonInfrastructure.Account;
 import merlion.entity.OES.Enquiry;
-import merlion.entity.OES.Invoice;
+import merlion.entity.OES.OES_Invoice;
 import merlion.entity.OES.OES_Payment;
 import merlion.entity.OES.Product;
 import merlion.entity.OES.PurchaseOrder;
@@ -233,11 +233,11 @@ public class OESManagedBean implements Serializable {
         osbl.createInvoice(releasedate, notes, payment);
     }
 
-    public Invoice getInvoice() {
+    public OES_Invoice getInvoice() {
         return osbl.getInvoice(invoice_id);
     }
 
-    public List<Invoice> getAllInvoice() {
+    public List<OES_Invoice> getAllInvoice() {
         return osbl.getAllInvoice(email);
     }
 

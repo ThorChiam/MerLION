@@ -21,6 +21,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import merlion.entity.GRNS.DemandRequest;
 import merlion.entity.OES.Product;
 import merlion.entity.TMS.TMSHumanResource;
 /**
@@ -76,22 +77,25 @@ public class Company implements Serializable {
     private List<Feedback> feedback_receiver = new ArrayList<>();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
-    private List<ServiceCatalog> servicecatalog = new ArrayList<>();
-    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "service_requester")
-    private List<ServiceOrder> service_requester = new ArrayList<>();
+    private List<ServiceCatalog_tobedeleted> servicecatalog = new ArrayList<>();
    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "service_requester")
-    private List<ServiceOrder> service_receiver = new ArrayList<>();
-
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<TMSFacility> TMSFacility = new ArrayList<>();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<TMSHumanResource> TMSHumanResource = new ArrayList<>();
+        
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    private List<DemandRequest> DemandRequest = new ArrayList<>();
 
+    public List<DemandRequest> getDemandRequest() {
+        return DemandRequest;
+    }
 
-
+    public void setDemandRequest(List<DemandRequest> DemandRequest) {
+        this.DemandRequest = DemandRequest;
+    }
+   
     public List<Favorite> getBefavorite() {
         return befavorite;
     }
@@ -140,14 +144,6 @@ public class Company implements Serializable {
     public void setWarehouse(List<Warehouse> warehouse) {
         this.warehouse = warehouse;
     }
-
-    public List<ServiceOrder> getService_receiver() {
-        return service_receiver;
-    }
-
-    public void setService_receiver(List<ServiceOrder> service_receiver) {
-        this.service_receiver = service_receiver;
-    }
     
     public List<TMSFacility> getTMSFacility() {
         return TMSFacility;
@@ -165,20 +161,12 @@ public class Company implements Serializable {
         this.TMSHumanResource = TMSHumanResource;
     }
     
-    public List<ServiceCatalog> getServicecatalog() {
+    public List<ServiceCatalog_tobedeleted> getServicecatalog() {
         return servicecatalog;
     }
 
-    public void setServicecatalog(List<ServiceCatalog> servicecatalog) {
+    public void setServicecatalog(List<ServiceCatalog_tobedeleted> servicecatalog) {
         this.servicecatalog = servicecatalog;
-    }
-
-    public List<ServiceOrder> getService_requester() {
-        return service_requester;
-    }
-
-    public void setService_requester(List<ServiceOrder> service_requester) {
-        this.service_requester = service_requester;
     }
     
     public List<Feedback> getFeedback_sender() {

@@ -12,7 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import merlion.entity.CRMS.Company;
-import merlion.entity.CRMS.ServiceCatalog;
+import merlion.entity.CRMS.ServiceCatalog_tobedeleted;
 
 /**
  *
@@ -24,14 +24,14 @@ public class SeviceCatalogSessionBean implements SeviceCatalogSessionBeanLocal {
     @PersistenceContext
     private EntityManager em;
 
-    private ServiceCatalog serviceCatalog;
+    private ServiceCatalog_tobedeleted serviceCatalog;
 
     @Override
     public Long addServiceCatalog(String email, String serviceType, String carrierType, String route, String availableScheduleFrom, String availableScheduleTo, long price, long maxVol, long availableVol) {
         Query q = em.createQuery("SELECT a FROM Company a WHERE a.email=:email");
         q.setParameter("email", email);
         Company a = (Company) q.getSingleResult();
-        serviceCatalog = new ServiceCatalog();
+        serviceCatalog = new ServiceCatalog_tobedeleted();
         serviceCatalog.setCompany(a);
         serviceCatalog.create(serviceType, carrierType, route, availableScheduleFrom, availableScheduleTo, price, maxVol, availableVol);
         em.persist(serviceCatalog);
