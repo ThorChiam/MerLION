@@ -5,7 +5,6 @@
  */
 package merlion.ejb;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import javax.ejb.Stateless;
@@ -174,8 +173,8 @@ public class OESSession implements OESSessionLocal{
     @Override
     public void createPurchaseOrder(Account buyer, Account seller, double taxrate, List<Integer> quantity, Set<Product> product, String createdate) {
         PurchaseOrder tmp= new PurchaseOrder();
-        tmp.setBuyer(buyer);
-        tmp.setSeller(seller);
+        tmp.setSender(buyer);
+        tmp.setReceiver(seller);
         tmp.setProduct(product);
         tmp.setQuantity(quantity);
         tmp.setTaxrate(taxrate);

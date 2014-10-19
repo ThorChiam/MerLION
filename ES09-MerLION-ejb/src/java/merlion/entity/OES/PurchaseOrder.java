@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import merlion.entity.CommonInfrastructure.Account;
 
@@ -28,9 +29,7 @@ public class PurchaseOrder implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private Account seller;
-    private Account buyer;
+    private Long id;   
     private double taxrate;
     private List<Integer> quantity = new ArrayList();
     private String createdate;
@@ -40,6 +39,13 @@ public class PurchaseOrder implements Serializable {
     
     @ManyToMany(cascade={CascadeType.ALL},mappedBy="purchaseorder")
     private Set<Product> product=new HashSet<>();
+    
+    @ManyToOne
+    private Account sender;
+    
+    @ManyToOne
+    private Account receiver;
+
 
     public PurchaseOrder(){
         setId(System.nanoTime());
@@ -76,22 +82,6 @@ public class PurchaseOrder implements Serializable {
     public void setTaxrate(double taxrate) {
         this.taxrate = taxrate;
     }
-    
-    public Account getSeller() {
-        return seller;
-    }
-
-    public void setSeller(Account seller) {
-        this.seller = seller;
-    }
-
-    public Account getBuyer() {
-        return buyer;
-    }
-
-    public void setBuyer(Account buyer) {
-        this.buyer = buyer;
-    }
 
     public List<Integer> getQuantity() {
         return quantity;
@@ -109,6 +99,21 @@ public class PurchaseOrder implements Serializable {
         this.salesorder = salesorder;
     }
    
+    public Account getSender() {
+        return sender;
+    }
+
+    public void setSender(Account sender) {
+        this.sender = sender;
+    }
+
+    public Account getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Account receiver) {
+        this.receiver = receiver;
+    }
 
 
     @Override
