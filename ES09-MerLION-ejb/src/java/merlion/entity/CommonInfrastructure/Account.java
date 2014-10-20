@@ -19,6 +19,7 @@ import merlion.entity.CRMS.Company;
 import merlion.entity.MRP.Item;
 import merlion.entity.CRMS.Post;
 import merlion.entity.CRMS.ServiceOrder;
+import merlion.entity.OES.PurchaseOrder;
 import merlion.entity.WMS.Order;
 import merlion.entity.WMS.Shipment_Order;
 
@@ -67,7 +68,11 @@ public class Account implements Serializable {
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="provider")
     private List<Order> provide_wmsorder = new ArrayList<>();
 
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="sender")
+    private List<PurchaseOrder> send_purchaseorder = new ArrayList<>();
     
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="receiver")
+    private List<PurchaseOrder> receive_purchaseorder = new ArrayList<>();
 
     
     
@@ -149,6 +154,21 @@ public class Account implements Serializable {
         this.items = items;
     }
 
+    public List<PurchaseOrder> getSend_purchaseorder() {
+        return send_purchaseorder;
+    }
+
+    public void setSend_purchaseorder(List<PurchaseOrder> send_purchaseorder) {
+        this.send_purchaseorder = send_purchaseorder;
+    }
+
+    public List<PurchaseOrder> getReceive_purchaseorder() {
+        return receive_purchaseorder;
+    }
+
+    public void setReceive_purchaseorder(List<PurchaseOrder> receive_purchaseorder) {
+        this.receive_purchaseorder = receive_purchaseorder;
+    }
 
 
 
