@@ -10,44 +10,44 @@
     <class>merlion.entity.Request</class>
     <class>merlion.entity.Salesquotation</class>
     <class>merlion.entity.Vendor</class>
-    <class>merlion.entity.CommonInfrastructure.Account</class>
-    <class>merlion.entity.CommonInfrastructure.MerlionAdmin</class>
     <class>merlion.entity.CommonInfrastructure.LogisticTools</class>
-    <class>merlion.entity.CommonInfrastructure.Chat</class>
-    <class>merlion.entity.CommonInfrastructure.Announcement</class>
-    <class>merlion.entity.CommonInfrastructure.ActionRecord</class>
-    <class>merlion.entity.CRMS.Post</class>
-    <class>merlion.entity.CRMS.Feedback</class>
     <class>merlion.entity.CRMS.Services</class>
-    <class>merlion.entity.CRMS.Contract</class>
-    <class>merlion.entity.CRMS.Promotion</class>
-    <class>merlion.entity.CRMS.Favorite</class>
     <class>merlion.entity.CRMS.PaymentTransactionLog</class>
-    <class>merlion.entity.MRP.MRPOrders</class>
-    <class>merlion.entity.MRP.BOM</class>
-    <class>merlion.entity.MRP.MPS</class>
-    <class>merlion.entity.MRP.Demand</class>
-    <class>merlion.entity.MRP.Template</class>
-    <class>merlion.entity.MRP.Item</class>
-    <class>merlion.entity.CRMS.Payment</class>
-    <class>merlion.entity.CRMS.Invoice</class>
-    <class>merlion.entity.GRNS.AggregateDemand</class>
-    <class>merlion.entity.GRNS.Auction</class>
-    <class>merlion.entity.WMS.Inventory</class>
     <class>merlion.entity.WMS.Storagebin</class>
-    <class>merlion.entity.WMS.Warehouse</class>
-    <class>merlion.entity.TMS.DispatchOrder</class>
-    <class>merlion.entity.CRMS.Company</class>
     <class>merlion.entity.CRMS.CompanyProfile</class>
     <class>merlion.entity.WMS.Facility</class>
-    <class>merlion.entity.CRMS.ServiceOrder</class>
-    <class>merlion.entity.CommonInfrastructure.Notification</class>
-    <class>merlion.entity.WMS.Order</class>
-    <class>merlion.entity.WMS.Employee</class>
     <class>merlion.entity.WMS.HumanResource</class>
-    <class>merlion.entity.TMS.TMSFacility</class>
-    <class>merlion.entity.WMS.Shipment_Order</class>
-    <class>merlion.entity.CRMS.ServiceCatalog_tobedeleted</class>
+    <class>CI.Entity.Chat</class>
+    <class>CI.Entity.Announcement</class>
+    <class>CI.Entity.ActionRecord</class>
+    <class>CI.Entity.Account</class>
+    <class>CI.Entity.MerlionAdmin</class>
+    <class>CI.Entity.Notification</class>
+    <class>CRMS.Entity.Feedback</class>
+    <class>CRMS.Entity.Payment</class>
+    <class>CRMS.Entity.Favorite</class>
+    <class>CRMS.Entity.Contract</class>
+    <class>CRMS.Entity.Post</class>
+    <class>CRMS.Entity.ServiceCatalog_tobedeleted</class>
+    <class>CRMS.Entity.Promotion</class>
+    <class>CRMS.Entity.Company</class>
+    <class>CRMS.Entity.ServiceOrder</class>
+    <class>CRMS.Entity.Invoice</class>
+    <class>GRNS.Entity.Auction</class>
+    <class>GRNS.Entity.AggregateDemand</class>
+    <class>MRP.Entity.BOM</class>
+    <class>MRP.Entity.MPS</class>
+    <class>MRP.Entity.Demand</class>
+    <class>MRP.Entity.MRPOrders</class>
+    <class>MRP.Entity.Template</class>
+    <class>MRP.Entity.Item</class>
+    <class>WMS.Entity.Inventory</class>
+    <class>WMS.Entity.Shipment_Order</class>
+    <class>WMS.Entity.Order</class>
+    <class>WMS.Entity.Warehouse</class>
+    <class>WMS.Entity.Employee</class>
+    <class>TMS.Entity.DispatchOrder</class>
+    <class>TMS.Entity.TMSFacility</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
