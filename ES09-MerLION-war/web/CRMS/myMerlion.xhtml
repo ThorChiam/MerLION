@@ -10,7 +10,7 @@
 
 
     <h:head>
-        <title>Welcome to MRP</title>
+        <title>Welcome to My MerLION</title>
 
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
@@ -19,35 +19,70 @@
 
     <h:body>
 
+
+        <b:navBar brand="MerLION Logistics" brandHref="#">
+
+            <b:navbarLinks>
+                <b:navLink value="SignUp" href="#"></b:navLink>
+                <b:navLink value="About us" href="#"></b:navLink>
+                <b:navLink value="My MerLION" href="#"></b:navLink>
+                <b:dropMenu value="Services">
+                    <b:navLink value="OES" href="/OES/main.xhtml"></b:navLink>
+                    <b:navLink value="Another action" href="#"></b:navLink>
+                    <b:navLink value="Something else here" href="#"></b:navLink>
+                    <b:navLink></b:navLink>
+                    <b:navLink header="Nav header"></b:navLink>
+                    <b:navLink value="Separated link" href="#"></b:navLink>
+                    <b:navLink value="One more separated link" href="#"></b:navLink>
+                </b:dropMenu>
+            </b:navbarLinks>
+
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
+
+                    <b:commandButton action="a" value="Logout" look="success" icon="ui-icon-extlink" iconAlign="right"/>
+                </div>
+            </h:form>
+        </b:navBar>
+
+
         <b:container>
-           <h:form>  
+
+
+        </b:container>
+        <b:container>
+            <h:form>  
                 <p:menubar styleClass="show-grid">
-                    <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                    <p:menuitem value="MRP Home" url="/MRP/index.xhtml" />
-                    <p:submenu label="Bill of Material">                    
+                    <p:menuitem value="Home" url="/myMerlion.xhtml" icon="ui-icon-home" />
+                    <p:submenu label="Account Setting">                    
                         <p:menuitem value="Add New BOM" url="/MRP/BOM/addBOM.xhtml" />
                         <p:menuitem value="Delete BOM" url="/MRP/BOM/deleteBOM.xhtml" />
                         <p:menuitem value="Display/Update BOM" url="/MRP/BOM/displayBOM.xhtml" />
                     </p:submenu>
 
-                    <p:submenu label="Material Requirement Plan">
+                    <p:submenu label="Contract Management">
                         <p:menuitem value="Add New Plan" url="/MRP/plan/addNewPlan.xhtml"/>
                         <p:menuitem value="Display Plan" url="/MRP/plan/displayPlan.xhtml" />
                     </p:submenu>
 
-                    <p:submenu label="Demand Management">
-                        <p:menuitem value="Display Demand" url="/MRP/demandManagement/DemandManagement.xhtml" />
-                        <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
+                    <p:submenu label="Transaction Management">
+                        <p:menuitem value="View Service Transaction History" url="/MRP/order/orderManagement.xhtml"/>
+                        <p:menuitem value="View Ongoing Transaction" url="/MRP/plan/addNewPlan.xhtml"/>
+                        <p:menuitem value="Vew Transaction History" url="/MRP/plan/displayPlan.xhtml" />
+                        <p:menuitem value="Vew Invoice" url="/MRP/plan/displayPlan.xhtml" />
                     </p:submenu>
 
-                    <p:submenu label="Order Management">
-                        <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml"/>
-                    </p:submenu>           
-                    
-                    <p:menuitem value="Log Out"/>
+                    <p:submenu label="Internal Communication">
+                        <p:menuitem value="Message" url="/MRP/demandManagement/DemandManagement.xhtml" />
+                        <p:menuitem value="Notification" url="/MRP/demandManagement/demandPrediction.xhtml"/>
+                        <p:menuitem value="Announcement" url="/MRP/demandManagement/demandPrediction.xhtml"/>
+                    </p:submenu>
 
                 </p:menubar>
             </h:form>
+            <b:well>
+                <h2>My MerLION</h2>   
+            </b:well>
         </b:container>
 
 
@@ -56,91 +91,36 @@
                 <b:column col-xs="6" col-sm="6" col-md="3">
                     <h:form>
                         <p:growl autoUpdate="true"/>
-                        <p:menu style="width:250px">
-                            <p:submenu label="Bill of Marerial Management">
+                        <p:panelMenu style="width:280px">
+                            <p:submenu label="Account Setting">
                                 <p:menuitem value="Add New BOM" url="/MRP/BOM/addBOM.xhtml"/>
                                 <p:menuitem value="Delete BOM" url="/MRP/BOM/deleteBOM.xhtml"/>
                                 <p:menuitem value="Display/Update BOM" url="/MRP/BOM/displayBOM.xhtml"/>
                             </p:submenu>
-                            <p:submenu label="Material Requirement Plan Management">
+                            <p:submenu label="Contract Management">
                                 <p:menuitem value="Add New Plan"  url="/MRP/plan/addNewPlan.xhtml"/>
                                 <p:menuitem value="Display Plan"  url="/MRP/plan/displayPlan.xhtml"/>
                             </p:submenu>
                             <p:separator />
-                            <p:submenu label="Demand Management" >
+                            <p:submenu label="Transaction Management" >
                                 <p:menuitem value="Display 6 Months Demand" url="/MRP/demandManagement/DemandManagement.xhtml"/>
                                 <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
                                 <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/saveProductionSchedule.xhtml"/>
                             </p:submenu>
-                            <p:submenu label="Order Management" >
+                            <p:submenu label="Internal Communication" >
                                 <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml" />
 
                             </p:submenu>
-                         
-                        </p:menu>
+                        </p:panelMenu>
                     </h:form>              
-                </b:column>                   
+                </b:column>                 
                 <b:column col-xs="6" col-sm="6" col-md="9">
-                    <h:form id="demand">
-                        <h:outputText style="font-weight: bold" value="item Id " />
-                        <h:inputText required="true" requiredMessage="Field is required." id="itemId" value="#{MPSManagerBean.itemId}">           
-                        </h:inputText>
-                        &nbsp;
-                        <p:commandButton value="show demand" action="#{MPSManagerBean.showDemand}" update="past">
-                        </p:commandButton>
 
-                        <p:panel id="panel" header="Past 6 Months Demand">
-                            <h:panelGroup id="past" layout="block">
-                                <p:dataTable value="#{MPSManagerBean.past}" var="d">
-
-                                    <p:column headerText ="month 1">                           
-                                        <h:outputText value="#{d[0]}" />
-                                    </p:column>
-
-                                    <p:column headerText ="month 2">
-
-                                        <h:outputText value="#{d[1]}"  />
-
-                                    </p:column>
-
-                                    <p:column headerText ="month 1">
-
-                                        <f:facet name="header">month 3</f:facet>
-
-                                        <h:outputText value="#{d[2]}"   />
-
-                                    </p:column>
-                                    <p:column headerText ="month 4">
-
-
-                                        <h:outputText value="#{d[3]}"   />
-
-                                    </p:column>
-                                    <p:column headerText ="month 5">
-
-                                        <h:outputText value="#{d[4]}"   />
-
-                                    </p:column> 
-                                    <p:column headerText ="month 6">
-
-                                        <h:outputText value="#{d[5]}"  />
-
-                                    </p:column>     
-
-                                </p:dataTable>
-                            </h:panelGroup>
-                        </p:panel>
-                        <br/>
-                    </h:form>
                 </b:column>
 
             </b:row>
 
         </b:container>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 

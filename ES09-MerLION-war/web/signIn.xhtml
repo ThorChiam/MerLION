@@ -16,6 +16,26 @@
         <link href="/ES09-MerLION-war/css/bootstrap.min.css" rel="stylesheet" />
         <link href="/ES09-MerLION-war/css/search.css" rel="stylesheet"/>
     </h:head>
+    <script type="text/javascript">
+    /**
+     * Faces Validator
+     */
+    PrimeFaces.validator['custom.emailValidator'] = {
+ 
+        pattern: /\S+@\S+/,
+ 
+        validate: function(element, value) {
+            //use element.data() to access validation metadata, in this case there is none.
+            if(!this.pattern.test(value)) {
+                throw {
+                    summary: 'Validation Error',
+                    detail: value + ' is not a valid email.'
+                }
+            }
+        }
+    };
+</script>
+
     <!-- Add 50px padding top to the body for the navbar -->
     <h:body style="padding-top: 40px; padding-bottom: 20px;">
         <!--
@@ -74,8 +94,8 @@
                                                 </p:column>
                                                 <p:column>
 
-                                                    <p:inputText required="true" label="Email" requiredMessage="Email is required." id="Email" value="#{accountManagedBean.email}">
-                                                        <f:validateLength minimum="1" maximum="16" />
+                                                    <p:inputText required="true" label="Email" requiredMessage="Email is required." id="Email" value="#{accountManagedBean.email}">                                    
+                                                         <f:validator validatorId="custom.emailValidator" />
                                                     </p:inputText>
 
                                                     <p:message for="Email"/>
@@ -102,7 +122,7 @@
                                 </p:growl>
                             </h:form>
                         </div>
-                        <a href ="resetPassword.xhtml"> forget your password?</a>
+                        <a href ="CRMS/account/resetPassword.xhtml"> forget your password?</a>
                     </font>
 
                 </b:column>

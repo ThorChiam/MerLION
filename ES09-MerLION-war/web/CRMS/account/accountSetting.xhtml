@@ -44,23 +44,17 @@
             </h:form>
         </b:navBar>
 
-
         <b:container>
+            <h:form>  
+                <p:menubar styleClass="show-grid">
+                    <p:menuitem value="Home" url="/myMerlion.xhtml" icon="ui-icon-home" />
+                    <p:menuitem value="Account Setting" />
+                    <p:menuitem value="Contract Management" />
+                    <p:menuitem value="Transaction Management" />
+                    <p:menuitem value="Internal Communication" />
 
-
-        </b:container>
-        <b:container>
-
-            <p:breadCrumb>
-                <p:menuitem value="Home" url="/main.xhtml" />
-                <p:menuitem value="Account Setting" url="accountSetting.xhtml" />
-                <p:menuitem value="Message/Notification" url="msg.xhtml" />
-                <p:menuitem value="Buying Requests" url="#" />
-                <p:menuitem value="Transaction/Logistics" url="#" />         
-            </p:breadCrumb>
-            <b:well>
-                <h2>My MerLION</h2>   
-            </b:well>
+                </p:menubar>
+            </h:form>
         </b:container>
 
 
@@ -73,8 +67,8 @@
                             <span><a href="viewCompanyProfile.xhtml">My Profile</a></span>
                             &nbsp;
                             <span><a href="">Edit Profile</a></span> 
-                            
-                            
+
+
                             <span><a href="accountSettingPhotoUpload.xhtml">Upload My Photo</a></span>  
                             <hr/>
                             <h4>Account Security</h4>
@@ -90,8 +84,8 @@
             </b:row>
 
         </b:container>
-        
-         <foot>
+
+        <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 
                 <div class="navbar-text pull-left">

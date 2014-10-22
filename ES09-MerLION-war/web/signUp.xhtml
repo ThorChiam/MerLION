@@ -15,6 +15,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
         <link href="/ES09-MerLION-war/css/bootstrap.min.css" rel="stylesheet" />
         <link href="/ES09-MerLION-war/css/search.css" rel="stylesheet"/>
+        <script type="text/javascript">
+            
+    /**
+     * Faces Validator
+     */
+    PrimeFaces.validator['custom.emailValidator'] = {
+ 
+        pattern: /\S+@\S+/,
+ 
+        validate: function(element, value) {
+            //use element.data() to access validation metadata, in this case there is none.
+            if(!this.pattern.test(value)) {
+                throw {
+                    summary: 'Validation Error',
+                    detail: value + ' is not a valid email.'
+                }
+            }
+        }
+    };
+</script>
     </h:head>
     <!-- Add 50px padding top to the body for the navbar -->
     <h:body style="padding-top: 40px; padding-bottom: 20px;">
@@ -63,6 +83,7 @@
                                             <h:outputLabel for="email" value="Email : "/>
                                             <h:inputText id="email" value="#{accountManagedBean.email}" required="true"
                                                          requiredMessage="Please enter Email" class="form-control" />
+                                            <f:validator validatorId="custom.emailValidator" />
                                             <h:message for="email" style="color: red;" />
                                         </div>
                                         <div class="form-group">

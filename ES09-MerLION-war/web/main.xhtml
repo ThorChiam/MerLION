@@ -28,16 +28,16 @@
                     <b:navLink value="OES" href="/OES/main.xhtml"></b:navLink>
                     <b:navLink value="MRP" href="#"></b:navLink>
                     <b:navLink value="TMS" href="/TMS/sub-home.xhtml"></b:navLink>
-                    <b:navLink></b:navLink>
-                    <b:navLink header="Nav header"></b:navLink>
                     <b:navLink value="Separated link" href="#"></b:navLink>
                     <b:navLink value="One more separated link" href="#"></b:navLink>
                 </b:dropMenu>
+                <b:navLink value="Help Desk" href="helpDesk.xhtml"></b:navLink>
 
             </b:navbarLinks>
 
             <h:form styleClass="navbar-form navbar-right">
                 <b:commandButton action="signIn.xhtml" value="Sign in" look="success" iconAlign="right"/>
+                &nbsp;
                 <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
             </h:form> 
         </b:navBar>
