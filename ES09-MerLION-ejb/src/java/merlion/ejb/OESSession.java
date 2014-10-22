@@ -245,7 +245,7 @@ public class OESSession implements OESSessionLocal{
     
     
     //***************************Payment************************
-    @Override
+    @Override//change parameter salesorder to purchaseorder
     public void createPayment(String paymentdate, String paymenttype, String status,  SalesOrder salesorder) {
         OES_Payment tmp=new OES_Payment();
         tmp.setPaymentDate(paymentdate);

@@ -28,7 +28,7 @@ public class OES_Payment implements Serializable {
     
     @OneToOne
     OES_Invoice invoice;
-    
+    //should be purchase order
     @OneToOne(mappedBy="payment")
     SalesOrder salesorder;
 
