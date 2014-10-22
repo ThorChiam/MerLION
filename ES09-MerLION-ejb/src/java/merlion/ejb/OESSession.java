@@ -52,7 +52,7 @@ public class OESSession implements OESSessionLocal{
     
     @Override
     public void updateProduct(long product_id, String name, double price, int quantity, String description){
-        Query q = em.createQuery("SELECT a FROM OES_Product a WHERE a.id=:id");
+        Query q = em.createQuery("SELECT a FROM Product a WHERE a.id=:id");
         q.setParameter("id",product_id);
         Product product = (Product)q.getSingleResult(); 
         product.setDescription(description);
@@ -64,21 +64,21 @@ public class OESSession implements OESSessionLocal{
 
     @Override
     public Product getProduct(long product_id) {
-        Query q = em.createQuery("SELECT f FROM OES_Product f WHERE f.id=:id");
+        Query q = em.createQuery("SELECT f FROM Product f WHERE f.id=:id");
         q.setParameter("id", product_id);
         return (Product)q.getSingleResult();
     }
 
     @Override
     public List<Product> getAllProduct(String email) {
-        Query q = em.createQuery("SELECT f FROM OES_Product f WHERE f.company.Account.email=:email");
+        Query q = em.createQuery("SELECT f FROM Product f WHERE f.company.Account.email=:email");
         q.setParameter("email", email);
         return q.getResultList();
     }
 
     @Override
     public void deleteProduct(long product_id) {
-        Query q = em.createQuery("DELETE FROM OES_Product f WHERE f.id=:id");
+        Query q = em.createQuery("DELETE FROM Product f WHERE f.id=:id");
         q.setParameter("id", product_id);
         q.executeUpdate();
     }
@@ -101,7 +101,7 @@ public class OESSession implements OESSessionLocal{
 
     @Override
     public Enquiry getEnquiry(long enquiry_id) {
-        Query q = em.createQuery("SELECT f FROM OES_Enquiry f WHERE f.id=:id");
+        Query q = em.createQuery("SELECT f FROM Enquiry f WHERE f.id=:id");
         q.setParameter("id", enquiry_id);
         return (Enquiry)q.getSingleResult();
     }
@@ -109,7 +109,7 @@ public class OESSession implements OESSessionLocal{
     //Both seller/buyer can see enquiries
     @Override
     public List<Enquiry> getAllEnquiry(String email) {
-        Query q = em.createQuery("SELECT f FROM OES_Enquiry f WHERE f.seller.email=:email OR f.buyer.email=:emails");
+        Query q = em.createQuery("SELECT f FROM Enquiry f WHERE f.seller.email=:email OR f.buyer.email=:emails");
         q.setParameter("email", email);
         q.setParameter("emails",email);
         return q.getResultList();
@@ -117,7 +117,7 @@ public class OESSession implements OESSessionLocal{
 
     @Override
     public void deleteEnquiry(long enquiry_id) {
-        Query q = em.createQuery("DELETE FROM OES_Enquiry f WHERE f.id=:id");
+        Query q = em.createQuery("DELETE FROM Enquiry f WHERE f.id=:id");
         q.setParameter("id", enquiry_id);
         q.executeUpdate();
     }
@@ -144,14 +144,14 @@ public class OESSession implements OESSessionLocal{
 
     @Override
     public Quotation getQuotation(long quotation_id) {
-        Query q = em.createQuery("SELECT f FROM OES_Quotation f WHERE f.id=:id");
+        Query q = em.createQuery("SELECT f FROM Quotation f WHERE f.id=:id");
         q.setParameter("id", quotation_id);
         return (Quotation)q.getSingleResult();
     }
 
     @Override
     public List<Quotation> getAllQuotation(String email) {
-        Query q = em.createQuery("SELECT f FROM OES_Quotation f WHERE f.enquiry.buyer.email=:email OR f.enquiry.seller.email=:emails");
+        Query q = em.createQuery("SELECT f FROM Quotation f WHERE f.enquiry.buyer.email=:email OR f.enquiry.seller.email=:emails");
         q.setParameter("email", email);
         q.setParameter("emails",email);
         return q.getResultList();
@@ -159,7 +159,7 @@ public class OESSession implements OESSessionLocal{
 
     @Override
     public void deleteQuotation(long quotation_id) {
-        Query q = em.createQuery("DELETE FROM OES_Quotation f WHERE f.id=:id");
+        Query q = em.createQuery("DELETE FROM Quotation f WHERE f.id=:id");
         q.setParameter("id", quotation_id);
         q.executeUpdate();
     }
@@ -184,14 +184,14 @@ public class OESSession implements OESSessionLocal{
 
     @Override
     public PurchaseOrder getPurchaseOrder(long purchase_id) {
-        Query q = em.createQuery("SELECT f FROM OES_PurchaseOrder f WHERE f.id=:id");
+        Query q = em.createQuery("SELECT f FROM PurchaseOrder f WHERE f.id=:id");
         q.setParameter("id", purchase_id);
         return (PurchaseOrder)q.getSingleResult();
     }
 
     @Override
     public List<PurchaseOrder> getAllPurchaseOrder(String email) {
-        Query q = em.createQuery("SELECT f FROM OES_PurchaseOrder f WHERE f.buyer.email=:email OR f.seller.email=:emails");
+        Query q = em.createQuery("SELECT f FROM PurchaseOrder f WHERE f.sender.email=:email OR f.receiver.email=:emails");
         q.setParameter("email", email);
         q.setParameter("emails",email);
         return q.getResultList();
@@ -199,7 +199,7 @@ public class OESSession implements OESSessionLocal{
 
     @Override
     public void deletePurchaseOrder(long purchase_id) {
-        Query q = em.createQuery("DELETE FROM OES_Quotation f WHERE f.id=:id");
+        Query q = em.createQuery("DELETE FROM Quotation f WHERE f.id=:id");
         q.setParameter("id", purchase_id);
         q.executeUpdate();
     }
@@ -219,14 +219,14 @@ public class OESSession implements OESSessionLocal{
 
     @Override
     public SalesOrder getSalesOrder(long salesOrder_id) {
-        Query q = em.createQuery("SELECT f FROM OES_SalesOrder f WHERE f.id=:id");
+        Query q = em.createQuery("SELECT f FROM SalesOrder f WHERE f.id=:id");
         q.setParameter("id", salesOrder_id);
         return (SalesOrder)q.getSingleResult();
     }
 
     @Override
     public List<SalesOrder> getAllSalesOrder(String email) {
-        Query q = em.createQuery("SELECT f FROM OES_SalesOrder f WHERE f.purchaseorder.buyer.email=:email OR f.purchaseorder.seller.email=:emails");
+        Query q = em.createQuery("SELECT f FROM SalesOrder f WHERE f.purchaseorder.sender.email=:email OR f.purchaseorder.receiver.email=:emails");
         q.setParameter("email", email);
         q.setParameter("emails",email);
         return q.getResultList();
@@ -234,7 +234,7 @@ public class OESSession implements OESSessionLocal{
 
     @Override
     public void deleteSalesOrder(long sales_id) {
-        Query q = em.createQuery("DELETE FROM OES_SalesOrder f WHERE f.id=:id");
+        Query q = em.createQuery("DELETE FROM SalesOrder f WHERE f.id=:id");
         q.setParameter("id", sales_id);
         q.executeUpdate();
     }
@@ -273,7 +273,7 @@ public class OESSession implements OESSessionLocal{
 
     @Override
     public List<OES_Payment> getAllPayment(String email) {
-        Query q = em.createQuery("SELECT f FROM OES_SalesOrder f WHERE f.purchaseorder.seller.email=:email OR f.purchaseorder.buyer.email=:emails");
+        Query q = em.createQuery("SELECT f FROM SalesOrder f WHERE f.purchaseorder.sender.email=:email OR f.purchaseorder.receiver.email=:emails");
         q.setParameter("email", email);
         q.setParameter("emails",email);
         return q.getResultList();
@@ -303,7 +303,7 @@ public class OESSession implements OESSessionLocal{
 
     @Override
     public List<OES_Invoice> getAllInvoice(String email) {
-        Query q = em.createQuery("SELECT f FROM OES_Invoice f WHERE f.payment.salesorder.purchaseorder.seller.email=:email OR f.payment.salesorder.purchaseorder.buyer.email=:emails");
+        Query q = em.createQuery("SELECT f FROM OES_Invoice f WHERE f.payment.salesorder.purchaseorder.sender.email=:email OR f.payment.salesorder.purchaseorder.receiver.email=:emails");
         q.setParameter("email", email);
         q.setParameter("emails",email);
         return q.getResultList();
