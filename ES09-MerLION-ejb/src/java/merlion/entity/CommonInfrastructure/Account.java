@@ -51,10 +51,7 @@ public class Account implements Serializable {
 
     @ManyToMany(cascade={CascadeType.PERSIST})
     @JoinTable(name="ACCOUNT_ANNOUNCEMENT")
-    private Set<Announcement> announcements=new HashSet<>();
-   
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<Shipment_Order> shipmentorder = new ArrayList<>();
+    private Set<Announcement> announcements=new HashSet<>();  
 
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="requester")
     private List<Order> request_wmsorder = new ArrayList<>();
@@ -97,15 +94,7 @@ public class Account implements Serializable {
     public void setProvide_service(List<ServiceOrder> provide_service) {
         this.provide_service = provide_service;
     }
-    
-    public List<Shipment_Order> getShipmentorder() {
-        return shipmentorder;
-    }
-
-    public void setShipmentorder(List<Shipment_Order> shipmentorder) {
-        this.shipmentorder = shipmentorder;
-    }
-
+   
     public List<Order> getRequest_wmsorder() {
         return request_wmsorder;
     }
