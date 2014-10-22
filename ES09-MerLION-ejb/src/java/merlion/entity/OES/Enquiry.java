@@ -25,7 +25,7 @@ import merlion.entity.CommonInfrastructure.Account;
  */
 
 @Entity
-public class OES_Enquiry implements Serializable {
+public class Enquiry implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,22 +35,22 @@ public class OES_Enquiry implements Serializable {
     private String createdate;
     
     @OneToOne 
-    private OES_Quotation quotation;
+    private Quotation quotation;
     
     @ManyToMany(cascade={CascadeType.ALL},mappedBy="enquiry")
-    private Set<OES_Product> product=new HashSet<>(); 
+    private Set<Product> product=new HashSet<>(); 
 
     private List<Integer> quantity = new ArrayList();
 
-    public OES_Enquiry(){
+    public Enquiry(){
         setId(System.nanoTime());
     }
      
-    public Set<OES_Product> getProduct() {
+    public Set<Product> getProduct() {
         return product;
     }
 
-    public void setProduct(Set<OES_Product> product) {
+    public void setProduct(Set<Product> product) {
         this.product = product;
     }
     
@@ -78,11 +78,11 @@ public class OES_Enquiry implements Serializable {
         this.buyer = buyer;
     }
     
-    public OES_Quotation getQuotation() {
+    public Quotation getQuotation() {
         return quotation;
     }
 
-    public void setQuotation(OES_Quotation quotation) {
+    public void setQuotation(Quotation quotation) {
         this.quotation = quotation;
     }
     
@@ -112,10 +112,10 @@ public class OES_Enquiry implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OES_Enquiry)) {
+        if (!(object instanceof Enquiry)) {
             return false;
         }
-        OES_Enquiry other = (OES_Enquiry) object;
+        Enquiry other = (Enquiry) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

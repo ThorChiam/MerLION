@@ -5,7 +5,6 @@
  */
 package merlion.entity.CRMS;
 
-import merlion.entity.CommonInfrastructure.Account;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -30,25 +29,10 @@ public class Favorite implements Serializable {
 
     //Added by QT
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
-    private Account Account;
+    private Company favoritor;
+    
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
-    private Company company;
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public Account getAccount() {
-        return Account;
-    }
-
-    public void setAccount(Account Account) {
-        this.Account = Account;
-    }
+    private Company favoritee;
 
     public Long getFavorite_id() {
         return favorite_id;
@@ -65,6 +49,24 @@ public class Favorite implements Serializable {
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
+    
+    public Company getFavoritor() {
+        return favoritor;
+    }
+
+    public void setFavoritor(Company favoritor) {
+        this.favoritor = favoritor;
+    }
+
+    public Company getFavoritee() {
+        return favoritee;
+    }
+
+    public void setFavoritee(Company favoritee) {
+        this.favoritee = favoritee;
+    }
+
+
 
     @Override
     public int hashCode() {

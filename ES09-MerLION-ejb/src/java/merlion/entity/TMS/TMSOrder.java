@@ -33,14 +33,14 @@ public class TMSOrder implements Serializable {
     Account Account;
     
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="TMSOrder")
-    private List<TMSDispatchOrder> dispactch = new ArrayList<>();
+    private List<DispatchOrder> dispactch = new ArrayList<>();
 
     
-    public List<TMSDispatchOrder> getDispactch() {
+    public List<DispatchOrder> getDispactch() {
         return dispactch;
     }
 
-    public void setDispactch(List<TMSDispatchOrder> dispactch) {
+    public void setDispactch(List<DispatchOrder> dispactch) {
         this.dispactch = dispactch;
     }
 

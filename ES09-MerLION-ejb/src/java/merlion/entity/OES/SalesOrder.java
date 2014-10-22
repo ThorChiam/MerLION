@@ -6,8 +6,6 @@
 package merlion.entity.OES;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,22 +17,23 @@ import javax.persistence.OneToOne;
  * @author sunny
  */
 @Entity
-public class OES_Quotation implements Serializable {
+public class SalesOrder implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private List<String> deliver_date=new ArrayList();
     private String createdate;
 
-    @OneToOne(mappedBy="quotation")
-    private OES_Enquiry enquiry;
-
+    @OneToOne(mappedBy="salesorder")
+    PurchaseOrder purchaseorder;
     
-    public OES_Quotation(){
+    @OneToOne
+    OES_Payment payment;
+
+    public SalesOrder(){
         setId(System.nanoTime());
     }
-   
+    
      public String getCreatedate() {
         return createdate;
     }
@@ -43,20 +42,20 @@ public class OES_Quotation implements Serializable {
         this.createdate = createdate;
     }
     
-    public List<String> getDeliver_date() {
-        return deliver_date;
+    public OES_Payment getPayment() {
+        return payment;
     }
 
-    public void setDeliver_date(List<String> deliver_date) {
-        this.deliver_date = deliver_date;
+    public void setPayment(OES_Payment payment) {
+        this.payment = payment;
     }
     
-    public OES_Enquiry getEnquiry() {
-        return enquiry;
+    public PurchaseOrder getPurchaseorder() {
+        return purchaseorder;
     }
 
-    public void setEnquiry(OES_Enquiry enquiry) {
-        this.enquiry = enquiry;
+    public void setPurchaseorder(PurchaseOrder purchaseorder) {
+        this.purchaseorder = purchaseorder;
     }
     
     public Long getId() {
@@ -66,7 +65,6 @@ public class OES_Quotation implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
 
     @Override
     public int hashCode() {
@@ -78,10 +76,10 @@ public class OES_Quotation implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OES_Quotation)) {
+        if (!(object instanceof SalesOrder)) {
             return false;
         }
-        OES_Quotation other = (OES_Quotation) object;
+        SalesOrder other = (SalesOrder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -90,7 +88,7 @@ public class OES_Quotation implements Serializable {
 
     @Override
     public String toString() {
-        return "OES.entity.OES_Quotation[ id=" + id + " ]";
+        return "OES.entity.OES_SalesOrder[ id=" + id + " ]";
     }
     
 }

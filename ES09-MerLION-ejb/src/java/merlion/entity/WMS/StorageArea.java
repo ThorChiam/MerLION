@@ -6,8 +6,6 @@
 package merlion.entity.WMS;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,17 +17,19 @@ import javax.persistence.ManyToOne;
  * @author sunny
  */
 @Entity
-public class WMSStorageArea implements Serializable {
+public class StorageArea implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String status;
+
     
     @ManyToOne
-    private WMSWarehouse WMSWarehouse;
+    private Warehouse WMSWarehouse;
     
     @ManyToOne
-    private WMSInventory Inventory;
+    private Inventory Inventory;
 
     public Long getId() {
         return id;
@@ -39,20 +39,28 @@ public class WMSStorageArea implements Serializable {
         this.id = id;
     }
 
-    public WMSWarehouse getWMSWarehouse() {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    public Warehouse getWMSWarehouse() {
         return WMSWarehouse;
     }
 
-    public void setWMSWarehouse(WMSWarehouse WMSWarehouse) {
+    public void setWMSWarehouse(Warehouse WMSWarehouse) {
         this.WMSWarehouse = WMSWarehouse;
     }
 
-    public WMSInventory getInventory() {
+    public Inventory getInventory() {
         return Inventory;
     }
 
-    public void setInventory(WMSInventory inventory) {
-        this.Inventory = Inventory;
+    public void setInventory(Inventory inventory) {
+        this.Inventory = inventory;
     }
 
 
@@ -66,10 +74,10 @@ public class WMSStorageArea implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof WMSStorageArea)) {
+        if (!(object instanceof StorageArea)) {
             return false;
         }
-        WMSStorageArea other = (WMSStorageArea) object;
+        StorageArea other = (StorageArea) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

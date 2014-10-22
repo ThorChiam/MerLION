@@ -16,13 +16,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import merlion.entity.CRMS.Company;
-import merlion.entity.CRMS.Contract;
-import merlion.entity.CRMS.Favorite;
-import merlion.entity.CRMS.Payment;
 import merlion.entity.MRP.Item;
 import merlion.entity.CRMS.Post;
-import merlion.entity.WMS.WMSOrder;
-import merlion.entity.WMS.WMS_Shipment_Order;
+import merlion.entity.CRMS.ServiceOrder;
+import merlion.entity.OES.PurchaseOrder;
+import merlion.entity.WMS.Order;
+import merlion.entity.WMS.Shipment_Order;
 
 @Entity
 @Table(name = "Account")
@@ -31,19 +30,16 @@ public class Account implements Serializable {
     @Id
     private String email; 
     private String password;
-    private String accessright;
+    private String accessright;//区分用哪些系统
     private String status;
     private String security_question;
     private String security_answer;
-
+  
+     
     //Added by QT
-    
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<Item> items = new ArrayList<>();
 
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<Favorite> favorites = new ArrayList<>();
-    
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
     private List<Post> post = new ArrayList<>();
     
@@ -56,80 +52,76 @@ public class Account implements Serializable {
     @ManyToMany(cascade={CascadeType.PERSIST})
     @JoinTable(name="ACCOUNT_ANNOUNCEMENT")
     private Set<Announcement> announcements=new HashSet<>();
-    
+   
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
+    private List<Shipment_Order> shipmentorder = new ArrayList<>();
+
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="requester")
-    private List<Contract> Contract_requester = new ArrayList<>();
+    private List<Order> request_wmsorder = new ArrayList<>();
     
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="service_requester")
+    private List<ServiceOrder> request_service = new ArrayList<>();
+    
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="service_provider")
+    private List<ServiceOrder> provide_service = new ArrayList<>();
+     
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="provider")
-    private List<Contract> Contract_provider = new ArrayList<>();
+    private List<Order> provide_wmsorder = new ArrayList<>();
 
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="payer")
-    private List<Payment> Payment_payer = new ArrayList<>();
- 
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="sender")
+    private List<PurchaseOrder> send_purchaseorder = new ArrayList<>();
+    
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="receiver")
-    private List<Payment> Payment_receiver = new ArrayList<>();
-    
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<WMS_Shipment_Order> shipmentorder = new ArrayList<>();
+    private List<PurchaseOrder> receive_purchaseorder = new ArrayList<>();
 
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
-    private List<WMSOrder> wmsorder = new ArrayList<>();
+    
+    
   
     
     
     
-  
-
     //Added by QT  
     
-    public List<WMS_Shipment_Order> getShipmentorder() {
+    public List<ServiceOrder> getRequest_service() {
+        return request_service;
+    }
+
+    public void setRequest_service(List<ServiceOrder> request_service) {
+        this.request_service = request_service;
+    }
+
+    public List<ServiceOrder> getProvide_service() {
+        return provide_service;
+    }
+
+    public void setProvide_service(List<ServiceOrder> provide_service) {
+        this.provide_service = provide_service;
+    }
+    
+    public List<Shipment_Order> getShipmentorder() {
         return shipmentorder;
     }
 
-    public void setShipmentorder(List<WMS_Shipment_Order> shipmentorder) {
+    public void setShipmentorder(List<Shipment_Order> shipmentorder) {
         this.shipmentorder = shipmentorder;
     }
 
-    public List<WMSOrder> getWmsorder() {
-        return wmsorder;
+    public List<Order> getRequest_wmsorder() {
+        return request_wmsorder;
     }
 
-    public void setWmsorder(List<WMSOrder> wmsorder) {
-        this.wmsorder = wmsorder;
+    public void setRequest_wmsorder(List<Order> request_wmsorder) {
+        this.request_wmsorder = request_wmsorder;
+    }
+
+    public List<Order> getProvide_wmsorder() {
+        return provide_wmsorder;
+    }
+
+    public void setProvide_wmsorder(List<Order> provide_wmsorder) {
+        this.provide_wmsorder = provide_wmsorder;
     }
     
-    public List<Contract> getContract_requester() {
-        return Contract_requester;
-    }
-
-    public void setContract_requester(List<Contract> Contract_requester) {
-        this.Contract_requester = Contract_requester;
-    }
-
-    public List<Contract> getContract_provider() {
-        return Contract_provider;
-    }
-
-    public void setContract_provider(List<Contract> Contract_provider) {
-        this.Contract_provider = Contract_provider;
-    }
-
-    public List<Payment> getPayment_payer() {
-        return Payment_payer;
-    }
-
-    public void setPayment_payer(List<Payment> Payment_payer) {
-        this.Payment_payer = Payment_payer;
-    }
-
-    public List<Payment> getPayment_receiver() {
-        return Payment_receiver;
-    }
-
-    public void setPayment_receiver(List<Payment> Payment_receiver) {
-        this.Payment_receiver = Payment_receiver;
-    }
-   
     public MerlionAdmin getMerlionAdmin() {
         return admin;
     }
@@ -162,12 +154,20 @@ public class Account implements Serializable {
         this.items = items;
     }
 
-    public List<Favorite> getFavorites() {
-        return favorites;
+    public List<PurchaseOrder> getSend_purchaseorder() {
+        return send_purchaseorder;
     }
 
-    public void setFavorites(List<Favorite> favorites) {
-        this.favorites = favorites;
+    public void setSend_purchaseorder(List<PurchaseOrder> send_purchaseorder) {
+        this.send_purchaseorder = send_purchaseorder;
+    }
+
+    public List<PurchaseOrder> getReceive_purchaseorder() {
+        return receive_purchaseorder;
+    }
+
+    public void setReceive_purchaseorder(List<PurchaseOrder> receive_purchaseorder) {
+        this.receive_purchaseorder = receive_purchaseorder;
     }
 
 
@@ -184,7 +184,7 @@ public class Account implements Serializable {
         this.security_question=security_question;
         this.security_answer=security_answer;
     }  
-    
+
     public Set<Announcement> getAnnouncements() {
         return announcements;
     }

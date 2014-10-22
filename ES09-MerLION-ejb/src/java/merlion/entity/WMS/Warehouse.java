@@ -23,29 +23,58 @@ import merlion.entity.CRMS.Company;
  * @author sunny
  */
 @Entity
-public class WMSWarehouse implements Serializable {
+public class Warehouse implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
+    private String address;
+    private String capacity;
+
+    
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSWarehouse")
     private List<WMSFacility> facility = new ArrayList<>();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSWarehouse")
-    private List<WMSEmployee> employee = new ArrayList<>();
+    private List<Employee> employee = new ArrayList<>();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSWarehouse")
-    private List<WMSStorageArea> storagearea = new ArrayList<>();
+    private List<StorageArea> storagearea = new ArrayList<>();
 
     @ManyToOne
     private Company Company;
     
     
-    public List<WMSStorageArea> getStoragearea() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
+    }
+    
+    public List<StorageArea> getStoragearea() {
         return storagearea;
     }
 
-    public void setStoragearea(List<WMSStorageArea> storagearea) {
+    public void setStoragearea(List<StorageArea> storagearea) {
         this.storagearea = storagearea;
     }
             
@@ -57,11 +86,11 @@ public class WMSWarehouse implements Serializable {
         this.Company = company;
     }
 
-    public List<WMSEmployee> getEmployee() {
+    public List<Employee> getEmployee() {
         return employee;
     }
 
-    public void setEmployee(List<WMSEmployee> employee) {
+    public void setEmployee(List<Employee> employee) {
         this.employee = employee;
     }
 
@@ -91,10 +120,10 @@ public class WMSWarehouse implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof WMSWarehouse)) {
+        if (!(object instanceof Warehouse)) {
             return false;
         }
-        WMSWarehouse other = (WMSWarehouse) object;
+        Warehouse other = (Warehouse) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

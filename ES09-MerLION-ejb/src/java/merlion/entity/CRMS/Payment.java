@@ -32,18 +32,10 @@ public class Payment implements Serializable {
    
     @OneToOne
     private Invoice invoice;
-    
-    @ManyToOne
-    private Account payer;
-    
-    @ManyToOne
-    private Account receiver;
-    
+   
     @OneToOne(mappedBy="Payment")
-    private ServiceOrder serviceorder;
+    private Contract Contract;
 
-    
-    
     public Long getId() {
         return id;
     }
@@ -51,13 +43,13 @@ public class Payment implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }  
-    
-    public ServiceOrder getServiceorder() {
-        return serviceorder;
+  
+    public Contract getContract() {
+        return Contract;
     }
 
-    public void setServiceorder(ServiceOrder serviceorder) {
-        this.serviceorder = serviceorder;
+    public void setContract(Contract Contract) {
+        this.Contract = Contract;
     }
     
     public String getCurrency() {
@@ -99,23 +91,7 @@ public class Payment implements Serializable {
     public void setNotes(String notes) {
         this.notes = notes;
     }
-    
-    public Account getPayer() {
-        return payer;
-    }
-
-    public void setPayer(Account payer) {
-        this.payer = payer;
-    }
-
-    public Account getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(Account receiver) {
-        this.receiver = receiver;
-    }
-
+  
     public Invoice getInvoice() {
         return invoice;
     }

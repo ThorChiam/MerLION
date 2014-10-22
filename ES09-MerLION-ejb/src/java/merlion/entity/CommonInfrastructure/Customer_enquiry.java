@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity.WMS;
+package merlion.entity.CommonInfrastructure;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -17,27 +17,27 @@ import javax.persistence.ManyToOne;
  * @author sunny
  */
 @Entity
-public class WMSFacility implements Serializable {
+public class Customer_enquiry implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-
-  
+    private String contact_email;
+    private String question;
     private String status;
+    private String answer;
+    private String rating;
     
-    @ManyToOne
-    private Warehouse WMSWarehouse;
+    @ManyToOne 
+    MerlionAdmin MerlionAdmin;
 
-    public Warehouse getWarehouse() {
-        return WMSWarehouse;
+
+   
+
+    public Customer_enquiry(){
+        setId(System.nanoTime());
     }
-
-    public void setWarehouse(Warehouse warehouse) {
-        this.WMSWarehouse = warehouse;
-    }
-
+    
     public Long getId() {
         return id;
     }
@@ -46,12 +46,36 @@ public class WMSFacility implements Serializable {
         this.id = id;
     }
     
-    public String getName() {
-        return name;
+    public MerlionAdmin getMerlionAdmin() {
+        return MerlionAdmin;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMerlionAdmin(MerlionAdmin MerlionAdmin) {
+        this.MerlionAdmin = MerlionAdmin;
+    }
+    
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+    
+    public String getContact_email() {
+        return contact_email;
+    }
+
+    public void setContact_email(String contact_email) {
+        this.contact_email = contact_email;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
     public String getStatus() {
@@ -62,6 +86,14 @@ public class WMSFacility implements Serializable {
         this.status = status;
     }
 
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -72,10 +104,10 @@ public class WMSFacility implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof WMSFacility)) {
+        if (!(object instanceof Customer_enquiry)) {
             return false;
         }
-        WMSFacility other = (WMSFacility) object;
+        Customer_enquiry other = (Customer_enquiry) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -84,7 +116,7 @@ public class WMSFacility implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_new_enetity.Facility[ id=" + id + " ]";
+        return "merlion.entity.CommonInfrastructure.Customer_enquiry[ id=" + id + " ]";
     }
     
 }

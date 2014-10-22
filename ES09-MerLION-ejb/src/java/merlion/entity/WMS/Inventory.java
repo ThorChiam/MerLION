@@ -22,31 +22,36 @@ import javax.persistence.OneToMany;
  * @author sunny
  */
 @Entity
-public class WMSInventory implements Serializable {
+public class Inventory implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
+    private String quantity;
+    private String status;
+    
+    
     
     @ManyToOne
-    private WMS_Shipment_Order shipmentorder;
+    private Shipment_Order shipmentorder;
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Inventory")
-    private List<WMSStorageArea> storagebin = new ArrayList<>();
+    private List<StorageArea> storagebin = new ArrayList<>();
 
-    public List<WMSStorageArea> getStoragebin() {
+    public List<StorageArea> getStoragebin() {
         return storagebin;
     }
 
-    public void setStoragebin(List<WMSStorageArea> storagebin) {
+    public void setStoragebin(List<StorageArea> storagebin) {
         this.storagebin = storagebin;
     }
 
-    public WMS_Shipment_Order getShipmentorder() {
+    public Shipment_Order getShipmentorder() {
         return shipmentorder;
     }
 
-    public void setShipmentorder(WMS_Shipment_Order shipmentorder) {
+    public void setShipmentorder(Shipment_Order shipmentorder) {
         this.shipmentorder = shipmentorder;
     }
     
@@ -57,7 +62,30 @@ public class WMSInventory implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+   
     @Override
     public int hashCode() {
         int hash = 0;
@@ -68,10 +96,10 @@ public class WMSInventory implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof WMSInventory)) {
+        if (!(object instanceof Inventory)) {
             return false;
         }
-        WMSInventory other = (WMSInventory) object;
+        Inventory other = (Inventory) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

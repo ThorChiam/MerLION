@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import merlion.entity.CommonInfrastructure.Account;
 import merlion.entity.MRP.Template;
 
@@ -29,40 +30,41 @@ public class Contract implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String sign_date;
+
+    
     @ManyToMany(cascade={CascadeType.PERSIST})
     @JoinTable(name="CONTRACT_TEMPLATE")
     private Set<Template> template=new HashSet<>();
-    
-    @ManyToOne
-    private Account requester;
-    
-    @ManyToOne
-    private Account provider;
+ 
+    @OneToOne
+    private Payment Payment;
 
+  
     public Long getId() {
         return id;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
     }
     
-    public Account getRequester() {
-        return requester;
+    public String getSign_date() {
+        return sign_date;
     }
 
-    public void setRequester(Account requester) {
-        this.requester = requester;
-    }
-
-    public Account getProvider() {
-        return provider;
-    }
-
-    public void setProvider(Account provider) {
-        this.provider = provider;
+    public void setSign_date(String sign_date) {
+        this.sign_date = sign_date;
     }
     
+    public Payment getPayment() {
+        return Payment;
+    }
+
+    public void setPayment(Payment Payment) {
+        this.Payment = Payment;
+    }
+
     public Set<Template> getTemplate() {
         return template;
     }

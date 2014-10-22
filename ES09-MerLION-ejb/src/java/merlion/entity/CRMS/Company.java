@@ -7,7 +7,7 @@ package merlion.entity.CRMS;
 
 import merlion.entity.CommonInfrastructure.Notification;
 import merlion.entity.TMS.TMSFacility;
-import merlion.entity.WMS.WMSWarehouse;
+import merlion.entity.WMS.Warehouse;
 import merlion.entity.GRNS.Auction;
 import merlion.entity.CommonInfrastructure.Account;
 import java.io.Serializable;
@@ -21,7 +21,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import merlion.entity.OES.OES_Product;
+import merlion.entity.GRNS.DemandRequest;
+import merlion.entity.OES.Product;
 import merlion.entity.TMS.TMSHumanResource;
 /**
  *
@@ -40,26 +41,34 @@ public class Company implements Serializable {
     private String website;
     private String companyHistory;
     private String service;
-    private String vision;
-    
-    
+    private String vision;   
+    private String membertype;
+    private String companyvalue;
+
+   
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<TMSFacility> tmsfacility = new ArrayList<>();
+    
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<Auction> auction = new ArrayList<>();
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "favoritor")
     private List<Favorite> favorite = new ArrayList<>();
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "favoritee")
+    private List<Favorite> befavorite = new ArrayList<>();
+    
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<Notification> notification = new ArrayList<>();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
-    private List<WMSWarehouse> warehouse = new ArrayList();
+    private List<Warehouse> warehouse = new ArrayList();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<Account> Account=new ArrayList<>();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "company")
-    private Collection<OES_Product> products=new ArrayList<>();
+    private Collection<Product> products=new ArrayList<>();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "feedback_sender")
     private List<Feedback> feedback_sender = new ArrayList<>();
@@ -68,36 +77,72 @@ public class Company implements Serializable {
     private List<Feedback> feedback_receiver = new ArrayList<>();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
-    private List<ServiceCatalog> servicecatalog = new ArrayList<>();
-    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "service_requester")
-    private List<ServiceOrder> service_requester = new ArrayList<>();
+    private List<ServiceCatalog_tobedeleted> servicecatalog = new ArrayList<>();
    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "service_requester")
-    private List<ServiceOrder> service_receiver = new ArrayList<>();
-
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<TMSFacility> TMSFacility = new ArrayList<>();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<TMSHumanResource> TMSHumanResource = new ArrayList<>();
+        
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+    private List<DemandRequest> DemandRequest = new ArrayList<>();
 
+    public List<DemandRequest> getDemandRequest() {
+        return DemandRequest;
+    }
+
+    public void setDemandRequest(List<DemandRequest> DemandRequest) {
+        this.DemandRequest = DemandRequest;
+    }
+   
+    public List<Favorite> getBefavorite() {
+        return befavorite;
+    }
+
+    public void setBefavorite(List<Favorite> befavorite) {
+        this.befavorite = befavorite;
+    }
     
+    public List<Favorite> getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(List<Favorite> favorite) {
+        this.favorite = favorite;
+    }
+
+    public String getMembertype() {
+        return membertype;
+    }
+
+    public void setMembertype(String membertype) {
+        this.membertype = membertype;
+    }
+
+    public String getCompanyvalue() {
+        return companyvalue;
+    }
+
+    public void setCompanyvalue(String companyvalue) {
+        this.companyvalue = companyvalue;
+    }
+
+    public String getCompany_accessright() {
+        return company_accessright;
+    }
+
+    public void setCompany_accessright(String company_accessright) {
+        this.company_accessright = company_accessright;
+    }
+    private String company_accessright;
   
-    public List<WMSWarehouse> getWarehouse() {
+    public List<Warehouse> getWarehouse() {
         return warehouse;
     }
 
-    public void setWarehouse(List<WMSWarehouse> warehouse) {
+    public void setWarehouse(List<Warehouse> warehouse) {
         this.warehouse = warehouse;
-    }
-
-    public List<ServiceOrder> getService_receiver() {
-        return service_receiver;
-    }
-
-    public void setService_receiver(List<ServiceOrder> service_receiver) {
-        this.service_receiver = service_receiver;
     }
     
     public List<TMSFacility> getTMSFacility() {
@@ -116,20 +161,12 @@ public class Company implements Serializable {
         this.TMSHumanResource = TMSHumanResource;
     }
     
-    public List<ServiceCatalog> getServicecatalog() {
+    public List<ServiceCatalog_tobedeleted> getServicecatalog() {
         return servicecatalog;
     }
 
-    public void setServicecatalog(List<ServiceCatalog> servicecatalog) {
+    public void setServicecatalog(List<ServiceCatalog_tobedeleted> servicecatalog) {
         this.servicecatalog = servicecatalog;
-    }
-
-    public List<ServiceOrder> getService_requester() {
-        return service_requester;
-    }
-
-    public void setService_requester(List<ServiceOrder> service_requester) {
-        this.service_requester = service_requester;
     }
     
     public List<Feedback> getFeedback_sender() {
@@ -212,7 +249,7 @@ public class Company implements Serializable {
         this.vision = vision;
     }
     
-    public Collection<OES_Product> getProducts() {
+    public Collection<Product> getProducts() {
         return products;
     }
 
@@ -224,7 +261,7 @@ public class Company implements Serializable {
         this.Account = Account;
     }
     
-    public void setProducts(Collection<OES_Product> products) {
+    public void setProducts(Collection<Product> products) {
         this.products = products;
     }
 
@@ -235,15 +272,7 @@ public class Company implements Serializable {
     public void setNotification(List<Notification> notification) {
         this.notification = notification;
     }
-    
-    public List<Favorite> getFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(List<Favorite> favorite) {
-        this.favorite = favorite;
-    }
-
+  
     public List<Auction> getAuction() {
         return auction;
     }

@@ -25,6 +25,51 @@ public class Promotion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String description;
+    private double rate;
+    private String target_membertype;
+    private String expire_date;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getExpire_date() {
+        return expire_date;
+    }
+
+    public void setExpire_date(String expire_date) {
+        this.expire_date = expire_date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
+    public String getTarget_membertype() {
+        return target_membertype;
+    }
+
+    public void setTarget_membertype(String target_membertype) {
+        this.target_membertype = target_membertype;
+    }
+    
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
     private MerlionAdmin admin;
     
@@ -34,14 +79,6 @@ public class Promotion implements Serializable {
 
     public void setMerlionAdmin(MerlionAdmin admin) {
         this.admin = admin;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     @Override

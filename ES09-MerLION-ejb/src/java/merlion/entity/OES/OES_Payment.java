@@ -30,7 +30,7 @@ public class OES_Payment implements Serializable {
     OES_Invoice invoice;
     
     @OneToOne(mappedBy="payment")
-    OES_SalesOrder salesorder;
+    SalesOrder salesorder;
 
     
     public OES_Payment(){
@@ -69,11 +69,11 @@ public class OES_Payment implements Serializable {
         this.PaymentType = paymenttype;
     }
 
-    public OES_SalesOrder getSalesorder() {
+    public SalesOrder getSalesorder() {
         return salesorder;
     }
 
-    public void setSalesorder(OES_SalesOrder salesorder) {
+    public void setSalesorder(SalesOrder salesorder) {
         this.salesorder = salesorder;
     }
 

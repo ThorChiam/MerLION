@@ -3,53 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity.WMS;
+package merlion.entity.TMS;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import merlion.entity.CommonInfrastructure.Account;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class WMS_Shipment_Order implements Serializable {
+public class Cost implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @OneToMany(cascade={CascadeType.PERSIST})
-    private List<WMSInventory> inventory=new ArrayList();
-    
-    @ManyToOne
-    private Account Account;
+    @OneToOne(mappedBy="TMSCost")
+    DispatchOrder TMSDispatchOrder;
 
-    public Account getAccount() {
-        return Account;
-    }
 
-    public void setAccount(Account Account) {
-        this.Account = Account;
+    public Cost(){
+        setId(System.nanoTime());
     }
     
-    public List<WMSInventory> getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(List<WMSInventory> inventory) {
-        this.inventory = inventory;
-    }
-
     public Long getId() {
         return id;
     }
@@ -58,6 +39,14 @@ public class WMS_Shipment_Order implements Serializable {
         this.id = id;
     }
 
+    public DispatchOrder getTMSDispatchOrder() {
+        return TMSDispatchOrder;
+    }
+
+    public void setTMSDispatchOrder(DispatchOrder TMSDispatchOrder) {
+        this.TMSDispatchOrder = TMSDispatchOrder;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -68,10 +57,10 @@ public class WMS_Shipment_Order implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof WMS_Shipment_Order)) {
+        if (!(object instanceof Cost)) {
             return false;
         }
-        WMS_Shipment_Order other = (WMS_Shipment_Order) object;
+        Cost other = (Cost) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -80,7 +69,7 @@ public class WMS_Shipment_Order implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_new_enetity.WMS_Shipment_Order[ id=" + id + " ]";
+        return "merlion.entity.TMS.TMSCost[ id=" + id + " ]";
     }
     
 }

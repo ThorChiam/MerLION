@@ -18,13 +18,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import merlion.ejb.local.OESSessionLocal;
 import merlion.entity.CommonInfrastructure.Account;
-import merlion.entity.OES.OES_Enquiry;
+import merlion.entity.OES.Enquiry;
 import merlion.entity.OES.OES_Invoice;
 import merlion.entity.OES.OES_Payment;
-import merlion.entity.OES.OES_Product;
-import merlion.entity.OES.OES_PurchaseOrder;
-import merlion.entity.OES.OES_Quotation;
-import merlion.entity.OES.OES_SalesOrder;
+import merlion.entity.OES.Product;
+import merlion.entity.OES.PurchaseOrder;
+import merlion.entity.OES.Quotation;
+import merlion.entity.OES.SalesOrder;
 
 /**
  *
@@ -48,12 +48,12 @@ public class OESManagedBean implements Serializable {
     //Enquiry
     Account seller;
     Account buyer;
-    Set<OES_Product> products;
+    Set<Product> products;
     List<Integer> quantitys = new ArrayList();
     long enquiry_id;
 
     //Quotation
-    OES_Enquiry enquiry;
+    Enquiry enquiry;
     List<String> delivery_date;
     private long quotation_id;
 
@@ -62,15 +62,15 @@ public class OESManagedBean implements Serializable {
     private long purchase_id;
 
     //SalesOrder
-    OES_PurchaseOrder purchaseorder;
-    private long sales_id;
+    PurchaseOrder purchaseorder;
+    long sales_id;
 
     //Payment
-    OES_SalesOrder salesorder;
-   private String paymentdate;
-   private String paymenttype;
-   private String status;
-   private  long payment_id;
+    SalesOrder salesorder;
+    String paymentdate;
+    String paymenttype;
+    String status;
+    long payment_id;
 
     //Invoice
     OES_Payment payment;
@@ -94,11 +94,11 @@ public class OESManagedBean implements Serializable {
         osbl.updateProduct(product_id, name, price, quantity, description);
     }
 
-    public OES_Product getProduct() {
+    public Product getProduct() {
         return osbl.getProduct(product_id);
     }
 
-    public List<OES_Product> getAllProduct() {
+    public List<Product> getAllProduct() {
         return osbl.getAllProduct(email);
     }
 
@@ -117,11 +117,11 @@ public class OESManagedBean implements Serializable {
                 "Status: " + statusMessage, ""));
     }
 
-    public OES_Enquiry getEnquiry() {
+    public Enquiry getEnquiry() {
         return osbl.getEnquiry(enquiry_id);
     }
 
-    public List<OES_Enquiry> getAllEnquiry() {
+    public List<Enquiry> getAllEnquiry() {
         return osbl.getAllEnquiry(email);
     }
 
@@ -130,7 +130,7 @@ public class OESManagedBean implements Serializable {
     }
 
     //********************Seller-Quotation***********************
-    public List<String> ATPcheck(OES_Enquiry enquiry) {
+    public List<String> ATPcheck(Enquiry enquiry) {
         return osbl.ATPcheck(enquiry);
     }
 
@@ -144,11 +144,11 @@ public class OESManagedBean implements Serializable {
         osbl.createQuotation(enquiry, delivery_date, createdate);
     }
 
-    public OES_Quotation getQuotation() {
+    public Quotation getQuotation() {
         return osbl.getQuotation(quotation_id);
     }
 
-    public List<OES_Quotation> getAllQuotation(String email) {//两边都能拿？？？？
+    public List<Quotation> getAllQuotation(String email) {//两边都能拿？？？？
         return osbl.getAllQuotation(email);
     }
 
@@ -167,11 +167,11 @@ public class OESManagedBean implements Serializable {
         osbl.createPurchaseOrder(buyer, seller, taxrate, quantitys, products, createdate);
     }
 
-    public OES_PurchaseOrder getPurchaseOrder() {
+    public PurchaseOrder getPurchaseOrder() {
         return osbl.getPurchaseOrder(purchase_id);
     }
 
-    public List<OES_PurchaseOrder> getAllPurchaseOrder() {//两边都能拿？？？？
+    public List<PurchaseOrder> getAllPurchaseOrder() {//两边都能拿？？？？
         return osbl.getAllPurchaseOrder(email);
     }
 
@@ -190,11 +190,11 @@ public class OESManagedBean implements Serializable {
         osbl.createSalesOrder(purchaseorder, createdate);
     }
 
-    public OES_SalesOrder getSalesOrder() {
+    public SalesOrder getSalesOrder() {
         return osbl.getSalesOrder(sales_id);
     }
 
-    public List<OES_SalesOrder> getAllSalesOrder() {
+    public List<SalesOrder> getAllSalesOrder() {
         return osbl.getAllSalesOrder(email);
     }
 
@@ -314,11 +314,11 @@ public class OESManagedBean implements Serializable {
         this.buyer = buyer;
     }
 
-    public Set<OES_Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<OES_Product> products) {
+    public void setProducts(Set<Product> products) {
         this.products = products;
     }
 
@@ -370,11 +370,11 @@ public class OESManagedBean implements Serializable {
         this.purchase_id = purchase_id;
     }
 
-    public OES_PurchaseOrder getPurchaseorder() {
+    public PurchaseOrder getPurchaseorder() {
         return purchaseorder;
     }
 
-    public void setPurchaseorder(OES_PurchaseOrder purchaseorder) {
+    public void setPurchaseorder(PurchaseOrder purchaseorder) {
         this.purchaseorder = purchaseorder;
     }
 
@@ -386,11 +386,11 @@ public class OESManagedBean implements Serializable {
         this.sales_id = sales_id;
     }
 
-    public OES_SalesOrder getSalesorder() {
+    public SalesOrder getSalesorder() {
         return salesorder;
     }
 
-    public void setSalesorder(OES_SalesOrder salesorder) {
+    public void setSalesorder(SalesOrder salesorder) {
         this.salesorder = salesorder;
     }
 

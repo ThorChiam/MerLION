@@ -28,12 +28,16 @@ public class MerlionAdmin implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="admin")
     private List<AggregateDemand> aggregatedemand = new ArrayList<>();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "admin")
     private List<ActionRecord> actionrecord = new ArrayList<>();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "admin")
     private List<Announcement> announcement = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "MerlionAdmin")
+    private List<Customer_enquiry> enquiry = new ArrayList<>();
     @OneToOne(mappedBy="admin")
     private Account Account;
 
@@ -45,6 +49,14 @@ public class MerlionAdmin implements Serializable {
         this.id = id;
     }
 
+    public List<Customer_enquiry> getEnquiry() {
+        return enquiry;
+    }
+
+    public void setEnquiry(List<Customer_enquiry> enquiry) {
+        this.enquiry = enquiry;
+    }
+    
     public List<AggregateDemand> getAggregatedemand() {
         return aggregatedemand;
     }

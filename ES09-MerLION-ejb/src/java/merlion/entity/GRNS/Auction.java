@@ -26,6 +26,10 @@ public class Auction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String Auction_date;
+    private double Auction_price;
+    private String Auction_status;
+
     @OneToOne(mappedBy="auction")
     private AggregateDemand aggregatedemand;
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
@@ -55,6 +59,30 @@ public class Auction implements Serializable {
         this.id = id;
     }
 
+    public String getAuction_date() {
+        return Auction_date;
+    }
+
+    public void setAuction_date(String Auction_date) {
+        this.Auction_date = Auction_date;
+    }
+
+    public double getAuction_price() {
+        return Auction_price;
+    }
+
+    public void setAuction_price(double Auction_price) {
+        this.Auction_price = Auction_price;
+    }
+
+    public String getAuction_status() {
+        return Auction_status;
+    }
+
+    public void setAuction_status(String Auction_status) {
+        this.Auction_status = Auction_status;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

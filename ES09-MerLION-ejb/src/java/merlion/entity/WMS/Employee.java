@@ -3,59 +3,63 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity.OES;
+package merlion.entity.WMS;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class OES_SalesOrder implements Serializable {
+public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String createdate;
+    private String name;
+    private String status;
+    private String jobtype;
 
-    @OneToOne(mappedBy="salesorder")
-    OES_PurchaseOrder purchaseorder;
     
-    @OneToOne
-    OES_Payment payment;
+    @ManyToOne
+    private Warehouse WMSWarehouse;
 
-    public OES_SalesOrder(){
-        setId(System.nanoTime());
-    }
-    
-     public String getCreatedate() {
-        return createdate;
+    public Warehouse getWarehouse() {
+        return WMSWarehouse;
     }
 
-    public void setCreatedate(String createdate) {
-        this.createdate = createdate;
-    }
-    
-    public OES_Payment getPayment() {
-        return payment;
+    public void setWarehouse(Warehouse warehouse) {
+        this.WMSWarehouse = warehouse;
     }
 
-    public void setPayment(OES_Payment payment) {
-        this.payment = payment;
-    }
-    
-    public OES_PurchaseOrder getPurchaseorder() {
-        return purchaseorder;
+    public String getName() {
+        return name;
     }
 
-    public void setPurchaseorder(OES_PurchaseOrder purchaseorder) {
-        this.purchaseorder = purchaseorder;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getJobtype() {
+        return jobtype;
+    }
+
+    public void setJobtype(String jobtype) {
+        this.jobtype = jobtype;
     }
     
     public Long getId() {
@@ -76,10 +80,10 @@ public class OES_SalesOrder implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OES_SalesOrder)) {
+        if (!(object instanceof Employee)) {
             return false;
         }
-        OES_SalesOrder other = (OES_SalesOrder) object;
+        Employee other = (Employee) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -88,7 +92,7 @@ public class OES_SalesOrder implements Serializable {
 
     @Override
     public String toString() {
-        return "OES.entity.OES_SalesOrder[ id=" + id + " ]";
+        return "merlion_new_enetity.Employee[ id=" + id + " ]";
     }
     
 }

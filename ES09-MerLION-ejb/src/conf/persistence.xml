@@ -23,7 +23,6 @@
     <class>merlion.entity.CRMS.Promotion</class>
     <class>merlion.entity.CRMS.Favorite</class>
     <class>merlion.entity.CRMS.PaymentTransactionLog</class>
-    <class>merlion.entity.CRMS.ServiceCatalog</class>
     <class>merlion.entity.MRP.MRPOrders</class>
     <class>merlion.entity.MRP.BOM</class>
     <class>merlion.entity.MRP.MPS</class>
@@ -36,10 +35,8 @@
     <class>merlion.entity.GRNS.Auction</class>
     <class>merlion.entity.WMS.Inventory</class>
     <class>merlion.entity.WMS.Storagebin</class>
-    <class>merlion.entity.WMS.WMS_Shipment_Order</class>
     <class>merlion.entity.WMS.Warehouse</class>
     <class>merlion.entity.TMS.DispatchOrder</class>
-    <class>merlion.entity.TMS.TMSFacility</class>
     <class>merlion.entity.CRMS.Company</class>
     <class>merlion.entity.CRMS.CompanyProfile</class>
     <class>merlion.entity.WMS.Facility</class>
@@ -48,6 +45,9 @@
     <class>merlion.entity.WMS.Order</class>
     <class>merlion.entity.WMS.Employee</class>
     <class>merlion.entity.WMS.HumanResource</class>
+    <class>merlion.entity.TMS.TMSFacility</class>
+    <class>merlion.entity.WMS.Shipment_Order</class>
+    <class>merlion.entity.CRMS.ServiceCatalog_tobedeleted</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

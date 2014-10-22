@@ -3,43 +3,47 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package merlion.entity.CRMS;
+package merlion.entity.TMS;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import merlion.entity.CommonInfrastructure.Account;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class ServiceOrder implements Serializable {
+public class DispatchOrder implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String create_date;
-    private String notes;
-    
-    
-    //不是account么？
-    @ManyToOne
-    private Account service_requester;
     
     @ManyToOne
-    private Account service_provider;
-
+    TMSOrder TMSOrder;
+    
     @OneToOne
-    private Contract Contract;
-
- 
+    Cost TMSCost;
     
+    @OneToMany(cascade={CascadeType.PERSIST})
+    public List<TMSFacility> TMSFacility=new ArrayList<>(); 
+    
+    @OneToMany(cascade={CascadeType.PERSIST})
+    public List<TMSHumanResource> TMSHumanResource=new ArrayList<>();
+    
+    
+
+   
+
     public Long getId() {
         return id;
     }
@@ -47,46 +51,39 @@ public class ServiceOrder implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-   public String getCreate_date() {
-        return create_date;
+
+    public TMSOrder getTMSOrder() {
+        return TMSOrder;
     }
 
-    public void setCreate_date(String create_date) {
-        this.create_date = create_date;
+    public void setTMSOrder(TMSOrder TMSOrder) {
+        this.TMSOrder = TMSOrder;
     }
 
-    public String getNotes() {
-        return notes;
+    public Cost getTMSCost() {
+        return TMSCost;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setTMSCost(Cost TMSCost) {
+        this.TMSCost = TMSCost;
+    }
+
+    public List<TMSFacility> getTMSFacility() {
+        return TMSFacility;
+    }
+
+    public void setTMSFacility(List<TMSFacility> TMSFacility) {
+        this.TMSFacility = TMSFacility;
+    }
+
+    public List<TMSHumanResource> getTMSHumanResource() {
+        return TMSHumanResource;
+    }
+
+    public void setTMSHumanResource(List<TMSHumanResource> TMSHumanResource) {
+        this.TMSHumanResource = TMSHumanResource;
     }
     
-    public Contract getContract() {
-        return Contract;
-    }
-
-    public void setContract(Contract Contract) {
-        this.Contract = Contract;
-    }
-    
-    public Account getService_requester() {
-        return service_requester;
-    }
-
-    public void setService_requester(Account service_requester) {
-        this.service_requester = service_requester;
-    }
-
-    public Account getService_provider() {
-        return service_provider;
-    }
-
-    public void setService_provider(Account service_provider) {
-        this.service_provider = service_provider;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -97,10 +94,10 @@ public class ServiceOrder implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ServiceOrder)) {
+        if (!(object instanceof DispatchOrder)) {
             return false;
         }
-        ServiceOrder other = (ServiceOrder) object;
+        DispatchOrder other = (DispatchOrder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -109,7 +106,7 @@ public class ServiceOrder implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_new_enetity.ServiceOrder[ id=" + id + " ]";
+        return "merlion_new_enetity.DispatchOrder[ id=" + id + " ]";
     }
     
 }
