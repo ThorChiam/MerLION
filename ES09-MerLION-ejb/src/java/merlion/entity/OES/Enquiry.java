@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import merlion.entity.CommonInfrastructure.Account;
 
@@ -30,9 +31,13 @@ public class Enquiry implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Account seller;
-    private Account buyer;
     private String createdate;
+    
+    @ManyToOne 
+    private Account seller;
+    
+    @ManyToOne
+    private Account buyer;
     
     @OneToOne 
     private Quotation quotation;

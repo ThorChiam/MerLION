@@ -19,9 +19,9 @@ import merlion.entity.CRMS.Company;
 import merlion.entity.MRP.Item;
 import merlion.entity.CRMS.Post;
 import merlion.entity.CRMS.ServiceOrder;
+import merlion.entity.OES.Enquiry;
 import merlion.entity.OES.PurchaseOrder;
 import merlion.entity.WMS.Order;
-import merlion.entity.WMS.Shipment_Order;
 
 @Entity
 @Table(name = "Account")
@@ -71,13 +71,31 @@ public class Account implements Serializable {
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="receiver")
     private List<PurchaseOrder> receive_purchaseorder = new ArrayList<>();
 
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="buyer")
+    private List<Enquiry> buyer_enquiry = new ArrayList<>();
     
-    
-  
-    
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="seller")
+    private List<Enquiry> seller_enquiry = new ArrayList<>();
+
+   
     
     
     //Added by QT  
+    public List<Enquiry> getBuyer_enquiry() {
+        return buyer_enquiry;
+    }
+
+    public void setBuyer_enquiry(List<Enquiry> buyer_enquiry) {
+        this.buyer_enquiry = buyer_enquiry;
+    }
+
+    public List<Enquiry> getSeller_enquiry() {
+        return seller_enquiry;
+    }
+
+    public void setSeller_enquiry(List<Enquiry> seller_enquiry) {
+        this.seller_enquiry = seller_enquiry;
+    }
     
     public List<ServiceOrder> getRequest_service() {
         return request_service;
