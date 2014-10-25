@@ -13,7 +13,7 @@ import javax.ejb.Local;
  * @author ThorChiam
  */
 @Local
-public interface CompanyProfileSessionBeanLocal {
+public interface CompanyProfileSessionLocal {
 
     public void addCompanyProfile(String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision);
 

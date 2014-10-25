@@ -19,12 +19,12 @@ import CI.Entity.Account;
  * @author ThorChiam
  */
 @Stateless
-public class AccountSessionBean implements AccountSessionBeanLocal {
+public class AccountSession implements AccountSessionLocal {
 
     @PersistenceContext
     private EntityManager em;
 
-    public AccountSessionBean() {
+    public AccountSession() {
     }
     
     @Override

@@ -6,7 +6,7 @@
 package CRMS.Session;
 
 import java.util.List;
-import CRMS.Session.PaymentTransactionLogSessionBeanLocal;
+import CRMS.Session.PaymentTransactionLogSessionLocal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,7 +18,7 @@ import CRMS.Entity.Payment;
  * @author ThorChiam
  */
 @Stateless
-public class PaymentTransactionLogSessionBean implements PaymentTransactionLogSessionBeanLocal {
+public class PaymentTransactionLogSession implements PaymentTransactionLogSessionLocal {
 
     @PersistenceContext
     private EntityManager em;

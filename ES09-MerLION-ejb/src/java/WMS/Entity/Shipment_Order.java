@@ -8,12 +8,10 @@ package WMS.Entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -22,18 +20,15 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Shipment_Order implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long orderdate;
-    private List<Integer> quantity= new ArrayList();
-    
-    @OneToMany(cascade={CascadeType.PERSIST})
-    private List<Inventory> inventory=new ArrayList();
-    
+
     @OneToOne
-    private Order Order;
+    private WMSOrder Order;
 
     public Long getOrderdate() {
         return orderdate;
@@ -43,28 +38,12 @@ public class Shipment_Order implements Serializable {
         this.orderdate = orderdate;
     }
 
-    public List<Integer> getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(List<Integer> quantity) {
-        this.quantity = quantity;
-    }
-
-    public Order getOrder() {
+    public WMSOrder getOrder() {
         return Order;
     }
 
-    public void setOrder(Order Order) {
+    public void setOrder(WMSOrder Order) {
         this.Order = Order;
-    }
-    
-    public List<Inventory> getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(List<Inventory> inventory) {
-        this.inventory = inventory;
     }
 
     public Long getId() {
@@ -99,5 +78,5 @@ public class Shipment_Order implements Serializable {
     public String toString() {
         return "merlion_new_enetity.WMS_Shipment_Order[ id=" + id + " ]";
     }
-    
+
 }

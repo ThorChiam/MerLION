@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import CI.Session.AdministratorSessionBeanLocal;
+import CI.Session.AdministratorSessionLocal;
 import CI.Entity.MerlionAdmin;
 
 /**
@@ -26,7 +26,7 @@ public class AdministratorManagedBean implements Serializable {
      * Creates a new instance of AdministratorManagedBean
      */
     @EJB
-    private AdministratorSessionBeanLocal adsbl;
+    private AdministratorSessionLocal adsbl;
     private String email;
     private String password;
     private String accessright;

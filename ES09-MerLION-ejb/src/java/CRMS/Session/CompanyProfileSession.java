@@ -18,7 +18,7 @@ import CI.Entity.Account;
  * @author ThorChiam
  */
 @Stateless
-public class CompanyProfileSessionBean implements CompanyProfileSessionBeanLocal {
+public class CompanyProfileSession implements CompanyProfileSessionLocal {
 
     @PersistenceContext
     private EntityManager em;

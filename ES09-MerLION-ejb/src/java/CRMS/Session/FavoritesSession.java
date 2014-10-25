@@ -6,7 +6,7 @@
 package CRMS.Session;
 
 import java.util.List;
-import CRMS.Session.FavoritesSessionBeanLocal;
+import CRMS.Session.FavoritesSessionLocal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,7 +20,7 @@ import CRMS.Entity.Favorite;
  * @author ThorChiam
  */
 @Stateless
-public class FavoritesSessionBean implements FavoritesSessionBeanLocal {
+public class FavoritesSession implements FavoritesSessionLocal {
 
     @PersistenceContext
     private EntityManager em;

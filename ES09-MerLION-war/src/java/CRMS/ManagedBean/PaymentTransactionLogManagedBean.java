@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import CRMS.Session.PaymentTransactionLogSessionBeanLocal;
+import CRMS.Session.PaymentTransactionLogSessionLocal;
 
 /**
  *
@@ -24,7 +24,7 @@ public class PaymentTransactionLogManagedBean implements Serializable {
      * Creates a new instance of PaymentTrasactionLogManagedBean
      */
     @EJB
-    private PaymentTransactionLogSessionBeanLocal ptlsbl;
+    private PaymentTransactionLogSessionLocal ptlsbl;
     public PaymentTransactionLogManagedBean() {
     }
     public List getPaymentTransactionLog(String email){

@@ -12,6 +12,6 @@ import javax.ejb.Local;
  * @author ThorChiam
  */
 @Local
-public interface WMSOrderSessionBeanLocal {
+public interface WMSOrderSessionLocal {
     
 }

@@ -12,7 +12,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import CRMS.Session.CompanyProfileSessionBeanLocal;
+import CRMS.Session.CompanyProfileSessionLocal;
 
 /**
  *
@@ -26,7 +26,7 @@ public class CompanyProfileManagedBean implements Serializable {
      * Creates a new instance of CompanyProfileManagedBean
      */
     @EJB
-    private CompanyProfileSessionBeanLocal cpsbl;
+    private CompanyProfileSessionLocal cpsbl;
     private String companyName;
     private String companyAddress;
     private String tel;
@@ -62,11 +62,11 @@ public class CompanyProfileManagedBean implements Serializable {
         cpsbl.updateCompanyProfile(companyId, companyName, companyAddress, tel, email, website, companyHistory, service, vision);
     }
 
-    public CompanyProfileSessionBeanLocal getCpsbl() {
+    public CompanyProfileSessionLocal getCpsbl() {
         return cpsbl;
     }
 
-    public void setCpsbl(CompanyProfileSessionBeanLocal cpsbl) {
+    public void setCpsbl(CompanyProfileSessionLocal cpsbl) {
         this.cpsbl = cpsbl;
     }
 
