@@ -6,10 +6,15 @@
 package WMS.Entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 /**
@@ -18,19 +23,23 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class StorageArea implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String status;
+    private int totalCapacity;
 
-    
     @ManyToOne
     private Warehouse WMSWarehouse;
-    
-    @ManyToOne
-    private Inventory Inventory;
 
+//    @ManyToOne
+//    private Inventory Inventory;
+
+    @ManyToMany(cascade={CascadeType.PERSIST})
+    @JoinTable(name="StorageArea_Inventory")
+    private Set<Inventory> Inventory = new HashSet<>();
     public Long getId() {
         return id;
     }
@@ -46,7 +55,7 @@ public class StorageArea implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
     public Warehouse getWMSWarehouse() {
         return WMSWarehouse;
     }
@@ -55,14 +64,21 @@ public class StorageArea implements Serializable {
         this.WMSWarehouse = WMSWarehouse;
     }
 
-    public Inventory getInventory() {
+    public Set<Inventory> getInventory() {
         return Inventory;
     }
 
-    public void setInventory(Inventory inventory) {
+    public void setInventory(Set<Inventory> inventory) {
         this.Inventory = inventory;
     }
 
+    public int getTotalCapacity() {
+        return totalCapacity;
+    }
+
+    public void setTotalCapacity(int totalCapacity) {
+        this.totalCapacity = totalCapacity;
+    }
 
     @Override
     public int hashCode() {
@@ -88,5 +104,5 @@ public class StorageArea implements Serializable {
     public String toString() {
         return "merlion_new_enetity.Storagebin[ id=" + id + " ]";
     }
-    
+
 }

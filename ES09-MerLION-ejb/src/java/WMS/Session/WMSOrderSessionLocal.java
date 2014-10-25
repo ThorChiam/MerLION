@@ -5,6 +5,8 @@
  */
 package WMS.Session;
 
+import WMS.Entity.WMSOrder;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +15,10 @@ import javax.ejb.Local;
  */
 @Local
 public interface WMSOrderSessionLocal {
-    
+
+    public List<WMSOrder> getAllOrders(String email);
+
+    public WMSOrder getOrder(Long orderId);
+
+    public List<Integer> checkInventoryLevel(Long orderId);
 }

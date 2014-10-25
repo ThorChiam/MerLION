@@ -24,6 +24,7 @@ import CRMS.Entity.Company;
  */
 @Entity
 public class Warehouse implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,20 +33,20 @@ public class Warehouse implements Serializable {
     private String address;
     private String capacity;
 
-    
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSWarehouse")
     private List<WMSFacility> facility = new ArrayList<>();
-    
+
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSWarehouse")
     private List<Employee> employee = new ArrayList<>();
-    
+
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSWarehouse")
     private List<StorageArea> storagearea = new ArrayList<>();
 
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSWarehouse")
+    private List<Inventory> inventory = new ArrayList<>();
     @ManyToOne
     private Company Company;
-    
-    
+
     public String getName() {
         return name;
     }
@@ -69,7 +70,7 @@ public class Warehouse implements Serializable {
     public void setCapacity(String capacity) {
         this.capacity = capacity;
     }
-    
+
     public List<StorageArea> getStoragearea() {
         return storagearea;
     }
@@ -77,7 +78,7 @@ public class Warehouse implements Serializable {
     public void setStoragearea(List<StorageArea> storagearea) {
         this.storagearea = storagearea;
     }
-            
+
     public Company getCompany() {
         return Company;
     }
@@ -96,6 +97,14 @@ public class Warehouse implements Serializable {
 
     public List<WMSFacility> getFacility() {
         return facility;
+    }
+
+    public List<Inventory> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(List<Inventory> inventory) {
+        this.inventory = inventory;
     }
 
     public void setFacility(List<WMSFacility> facility) {
@@ -134,5 +143,5 @@ public class Warehouse implements Serializable {
     public String toString() {
         return "merlion_new_enetity.Warehouse[ id=" + id + " ]";
     }
-    
+
 }
