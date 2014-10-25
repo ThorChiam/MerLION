@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
  * @author sunny
  */
 @Entity
-public class Customer_enquiry implements Serializable {
+public class Customer_Enquiry implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,7 +34,7 @@ public class Customer_enquiry implements Serializable {
 
    
 
-    public Customer_enquiry(){
+    public Customer_Enquiry(){
         setId(System.nanoTime());
     }
     
@@ -104,10 +104,10 @@ public class Customer_enquiry implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Customer_enquiry)) {
+        if (!(object instanceof Customer_Enquiry)) {
             return false;
         }
-        Customer_enquiry other = (Customer_enquiry) object;
+        Customer_Enquiry other = (Customer_Enquiry) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

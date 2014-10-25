@@ -29,6 +29,10 @@ public class Promotion implements Serializable {
     private double rate;
     private String target_membertype;
     private String expire_date;
+    
+     
+    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
+    private MerlionAdmin admin;
 
     public Long getId() {
         return id;
@@ -69,9 +73,6 @@ public class Promotion implements Serializable {
     public void setTarget_membertype(String target_membertype) {
         this.target_membertype = target_membertype;
     }
-    
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private MerlionAdmin admin;
     
     public MerlionAdmin getMerlionAdmin() {
         return admin;

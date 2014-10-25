@@ -49,9 +49,9 @@ public class Account implements Serializable {
     @OneToOne
     private MerlionAdmin admin;
 
-    @ManyToMany(cascade={CascadeType.PERSIST})
-    @JoinTable(name="ACCOUNT_ANNOUNCEMENT")
-    private Set<Announcement> announcements=new HashSet<>();  
+    //@ManyToMany(cascade={CascadeType.PERSIST})
+    //@JoinTable(name="ACCOUNT_ANNOUNCEMENT")
+    //private Set<Announcement> announcements=new HashSet<>();  
 
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="requester")
     private List<Order> request_wmsorder = new ArrayList<>();
@@ -192,6 +192,7 @@ public class Account implements Serializable {
         this.security_answer=security_answer;
     }  
 
+    /*
     public Set<Announcement> getAnnouncements() {
         return announcements;
     }
@@ -199,6 +200,7 @@ public class Account implements Serializable {
     public void setAnnouncements(Set<Announcement> announcements) {
         this.announcements = announcements;
     }
+    */
   
     public String getPassword() {
         return password;

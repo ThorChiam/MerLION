@@ -27,8 +27,6 @@ public class SalesOrder implements Serializable {
     @OneToOne(mappedBy="salesorder")
     PurchaseOrder purchaseorder;
     
-    @OneToOne
-    OES_Payment payment;
 
     public SalesOrder(){
         setId(System.nanoTime());
@@ -41,15 +39,7 @@ public class SalesOrder implements Serializable {
     public void setCreatedate(String createdate) {
         this.createdate = createdate;
     }
-    
-    public OES_Payment getPayment() {
-        return payment;
-    }
 
-    public void setPayment(OES_Payment payment) {
-        this.payment = payment;
-    }
-    
     public PurchaseOrder getPurchaseorder() {
         return purchaseorder;
     }

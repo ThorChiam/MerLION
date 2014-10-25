@@ -32,6 +32,8 @@ public class Enquiry implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String createdate;
+    private int delete_status;
+
     
     @ManyToOne 
     private Account seller;
@@ -51,6 +53,15 @@ public class Enquiry implements Serializable {
         setId(System.nanoTime());
     }
      
+    
+    public int getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(int delete_status) {
+        this.delete_status = delete_status;
+    }
+    
     public Set<Product> getProduct() {
         return product;
     }
