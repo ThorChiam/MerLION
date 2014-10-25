@@ -37,7 +37,7 @@ public class MerlionAdmin implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "admin")
     private List<Announcement> announcement = new ArrayList<>();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "MerlionAdmin")
-    private List<Customer_enquiry> enquiry = new ArrayList<>();
+    private List<Customer_Enquiry> enquiry = new ArrayList<>();
     @OneToOne(mappedBy="admin")
     private Account Account;
 
@@ -49,11 +49,11 @@ public class MerlionAdmin implements Serializable {
         this.id = id;
     }
 
-    public List<Customer_enquiry> getEnquiry() {
+    public List<Customer_Enquiry> getEnquiry() {
         return enquiry;
     }
 
-    public void setEnquiry(List<Customer_enquiry> enquiry) {
+    public void setEnquiry(List<Customer_Enquiry> enquiry) {
         this.enquiry = enquiry;
     }
     

@@ -13,6 +13,6 @@ import javax.ejb.Local;
  * @author ThorChiam
  */
 @Local
-public interface PaymentTransactionLogSessionBeanLocal {
+public interface PaymentTransactionLogSessionLocal {
     public List getPaymentTransactionLog(String email);
 }

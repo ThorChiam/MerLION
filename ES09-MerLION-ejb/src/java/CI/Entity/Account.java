@@ -21,7 +21,7 @@ import CRMS.Entity.Post;
 import CRMS.Entity.ServiceOrder;
 import OES.Entity.Enquiry;
 import OES.Entity.PurchaseOrder;
-import WMS.Entity.Order;
+import WMS.Entity.WMSOrder;
 
 @Entity
 @Table(name = "Account")
@@ -49,12 +49,12 @@ public class Account implements Serializable {
     @OneToOne
     private MerlionAdmin admin;
 
-    @ManyToMany(cascade={CascadeType.PERSIST})
-    @JoinTable(name="ACCOUNT_ANNOUNCEMENT")
-    private Set<Announcement> announcements=new HashSet<>();  
+    //@ManyToMany(cascade={CascadeType.PERSIST})
+    //@JoinTable(name="ACCOUNT_ANNOUNCEMENT")
+    //private Set<Announcement> announcements=new HashSet<>();  
 
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="requester")
-    private List<Order> request_wmsorder = new ArrayList<>();
+    private List<WMSOrder> request_wmsorder = new ArrayList<>();
     
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="service_requester")
     private List<ServiceOrder> request_service = new ArrayList<>();
@@ -63,7 +63,7 @@ public class Account implements Serializable {
     private List<ServiceOrder> provide_service = new ArrayList<>();
      
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="provider")
-    private List<Order> provide_wmsorder = new ArrayList<>();
+    private List<WMSOrder> provide_wmsorder = new ArrayList<>();
 
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="sender")
     private List<PurchaseOrder> send_purchaseorder = new ArrayList<>();
@@ -113,19 +113,19 @@ public class Account implements Serializable {
         this.provide_service = provide_service;
     }
    
-    public List<Order> getRequest_wmsorder() {
+    public List<WMSOrder> getRequest_wmsorder() {
         return request_wmsorder;
     }
 
-    public void setRequest_wmsorder(List<Order> request_wmsorder) {
+    public void setRequest_wmsorder(List<WMSOrder> request_wmsorder) {
         this.request_wmsorder = request_wmsorder;
     }
 
-    public List<Order> getProvide_wmsorder() {
+    public List<WMSOrder> getProvide_wmsorder() {
         return provide_wmsorder;
     }
 
-    public void setProvide_wmsorder(List<Order> provide_wmsorder) {
+    public void setProvide_wmsorder(List<WMSOrder> provide_wmsorder) {
         this.provide_wmsorder = provide_wmsorder;
     }
     
@@ -192,6 +192,7 @@ public class Account implements Serializable {
         this.security_answer=security_answer;
     }  
 
+    /*
     public Set<Announcement> getAnnouncements() {
         return announcements;
     }
@@ -199,6 +200,7 @@ public class Account implements Serializable {
     public void setAnnouncements(Set<Announcement> announcements) {
         this.announcements = announcements;
     }
+    */
   
     public String getPassword() {
         return password;

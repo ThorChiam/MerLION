@@ -15,7 +15,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
-import CI.Session.AccountSessionBeanLocal;
+import CI.Session.AccountSessionLocal;
 import CI.Entity.Account;
 
 /**
@@ -30,7 +30,7 @@ public class AccountManagedBean implements Serializable {
      * Creates a new instance of AccountManagedBean
      */
     @EJB
-    private AccountSessionBeanLocal asbl;
+    private AccountSessionLocal asbl;
     private String email;
     private String password;
     private String comp_name;

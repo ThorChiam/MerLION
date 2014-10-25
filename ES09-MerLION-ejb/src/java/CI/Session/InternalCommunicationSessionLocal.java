@@ -15,7 +15,7 @@ import CI.Entity.Notification;
  * @author ThorChiam
  */
 @Local
-public interface InternalCommunicationSessionBeanLocal {
+public interface InternalCommunicationSessionLocal {
 
     public void createannou(Long id, Long announ_Id, String content);
 

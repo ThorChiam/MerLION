@@ -6,7 +6,7 @@
 package CRMS.Session;
 
 import java.util.List;
-import CRMS.Session.SeviceCatalogSessionBeanLocal;
+import CRMS.Session.SeviceCatalogSessionLocal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,7 +19,7 @@ import CRMS.Entity.ServiceCatalog_tobedeleted;
  * @author ThorChiam
  */
 @Stateless
-public class SeviceCatalogSessionBean implements SeviceCatalogSessionBeanLocal {
+public class SeviceCatalogSession implements SeviceCatalogSessionLocal {
 
     @PersistenceContext
     private EntityManager em;

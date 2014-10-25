@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import CI.Session.InternalCommunicationSessionBeanLocal;
+import CI.Session.InternalCommunicationSessionLocal;
 import CI.Entity.Announcement;
 import CI.Entity.Notification;
 
@@ -26,7 +26,7 @@ public class InternalCommunicationManagedBean implements Serializable {
      * Creates a new instance of InternalCommunicationManagedBean
      */
     @EJB
-    private InternalCommunicationSessionBeanLocal icsbl;
+    private InternalCommunicationSessionLocal icsbl;
     private Long noti_Id;
     private String n_title;
     private String content;

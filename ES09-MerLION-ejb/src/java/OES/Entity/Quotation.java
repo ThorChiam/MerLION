@@ -26,6 +26,8 @@ public class Quotation implements Serializable {
     private Long id;
     private List<String> deliver_date=new ArrayList();
     private String createdate;
+    private int delete_status;
+
 
     @OneToOne(mappedBy="quotation")
     private Enquiry enquiry;
@@ -35,7 +37,15 @@ public class Quotation implements Serializable {
         setId(System.nanoTime());
     }
    
-     public String getCreatedate() {
+    public int getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(int delete_status) {
+        this.delete_status = delete_status;
+    }
+    
+    public String getCreatedate() {
         return createdate;
     }
 

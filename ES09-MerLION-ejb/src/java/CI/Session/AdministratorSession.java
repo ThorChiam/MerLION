@@ -7,7 +7,7 @@ package CI.Session;
 
 import java.security.MessageDigest;
 import java.util.List;
-import CI.Session.AdministratorSessionBeanLocal;
+import CI.Session.AdministratorSessionLocal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,7 +24,7 @@ import CI.Entity.MerlionAdmin;
  * @author ThorChiam
  */
 @Stateless
-public class AdministratorSessionBean implements AdministratorSessionBeanLocal {
+public class AdministratorSession implements AdministratorSessionLocal {
 
     @PersistenceContext
     EntityManager em;

@@ -6,7 +6,7 @@
 package CI.Session;
 
 import java.util.List;
-import CI.Session.InternalCommunicationSessionBeanLocal;
+import CI.Session.InternalCommunicationSessionLocal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,7 +21,7 @@ import CI.Entity.Notification;
  * @author ThorChiam
  */
 @Stateless
-public class InternalCommunicationSessionBean implements InternalCommunicationSessionBeanLocal {
+public class InternalCommunicationSession implements InternalCommunicationSessionLocal {
 
     @PersistenceContext
     private EntityManager em;
