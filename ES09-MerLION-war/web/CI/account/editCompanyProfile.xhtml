@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:g="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+    <h:head>
+        <title>Welcome to My Merlion</title>
+
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+
+    </h:head>
+
+    <h:body>
+        <b:container>
+            <b:row>
+                <p:column colspan="3">
+                    <h:form>  
+                        <p:menubar styleClass="show-grid">
+                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                            <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
+                            <p:submenu label="Account Setting">
+                                <p:submenu label="Account Management">
+                                    <p:menuitem value="View Account Infomation" url="/MRP/BOM/addBOM.xhtml"/>
+                                    <p:menuitem value="Edit Account Information" url="/MRP/BOM/addBOM.xhtml"/>
+                                    <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>
+                                </p:submenu>
+                                <p:submenu label="Company Profile Management">
+                                    <p:menuitem value="View Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
+                                    <p:menuitem value="Edit Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
+                                </p:submenu>
+                            </p:submenu>
+
+                            <p:submenu label="Contract Management">
+                                <p:menuitem value="Add New Plan" url="/MRP/plan/addNewPlan.xhtml"/>
+                                <p:menuitem value="Display Plan" url="/MRP/plan/displayPlan.xhtml" />
+                            </p:submenu>
+
+                            <p:submenu label="Transaction Management">
+                                <p:menuitem value="View Service Transaction History" url="/MRP/demandManagement/DemandManagement.xhtml" />
+                                <p:menuitem value="View Ongoing Transaction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                                <p:menuitem value="View Transaction History" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                                <p:menuitem value="Invoice" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                            </p:submenu>
+
+                            <p:submenu label="Internal Communication">
+                                <p:menuitem value="Message" url="/MRP/order/orderManagement.xhtml"/>
+                                <p:menuitem value="Notification" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                                <p:menuitem value="Announcement" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                            </p:submenu>      
+
+                            <p:menuitem value="Log Out"/>
+
+                        </p:menubar>
+                    </h:form>
+                </p:column>
+            </b:row>
+
+        </b:container>
+        <br/>
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="5" col-sm="5" col-md="3">
+
+                    <h:form>
+                        <p:growl autoUpdate="true"/>
+                        <p:menu style="width:250px">   
+                            <p:submenu label="Account Setting"/>
+                            <p:separator/>
+                            <p:submenu label="Account Management">
+                                <p:menuitem value="View Account Infomation" url="/MRP/BOM/addBOM.xhtml"/>
+                                <p:menuitem value="Edit Account Information" url="/MRP/BOM/addBOM.xhtml"/>
+                                <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>                
+                            </p:submenu>
+                            <p:submenu label="Company Profile Management">
+                                <p:menuitem value="View Company Profile" url="/CI/account/viewCompanyProfile.xhtml"/>
+                                <p:menuitem value="Edit Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+
+                </b:column>                 
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                    <font color="#585858">
+                        <p:panel header="Edit Company Profile">
+                        <div class="container">
+
+                            <h:form id="signupform">
+                                <!--change panel to growl&&&& datatable-->
+                                <p:growl id="panel">
+                                    <h:panelGrid>
+                                        <div class="form-group">
+                                            <h:outputLabel for="companyName" value="Company Name : "/>
+                                            <h:inputText id="companyName" value="#{companyProfileManagedBean.companyName}" required="true"
+                                                         requiredMessage="Please enter Company Name" class="form-control" />
+                                            <h:message for="companyName" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="companyAddress" value="Company Address : "/>
+                                            <h:inputText id="companyAddress" value="#{companyProfileManagedBean.companyAddress}" required="true"
+                                                         requiredMessage="Please enter Company Address" class="form-control" />
+                                            <h:message for="companyAddress" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="tel" value="Tel : " />
+                                            <h:inputText id="tel" value="#{companyProfileManagedBean.tel}" required="true"
+                                                         requiredMessage="Please enter Tel" class="form-control"/>
+                                            <h:message for="tel" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="email" value="Email : " />
+                                            <h:inputText id="email" value="#{companyProfileManagedBean.email}" required="true"
+                                                         requiredMessage="Please enter Email" class="form-control"/>
+                                            <h:message for="email" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="website" value="Website : " />
+                                            <h:inputText id="website" value="#{companyProfileManagedBean.website}" required="true"
+                                                         requiredMessage="Please enter Website, if you do not have, please enter none" class="form-control"/>
+                                            <h:message for="website" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="companyHistory" value="Company History : " />
+                                            <h:inputText id="companyHistory" value="#{companyProfileManagedBean.companyHistory}" required="true"
+                                                         requiredMessage="Please enter Company History" class="form-control"/>
+                                            <h:message for="companyHistory" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="service" value="Service : " />
+                                            <h:inputText id="service" value="#{companyProfileManagedBean.service}" required="true"
+                                                         requiredMessage="Please enter Service you provide" class="form-control"/>
+                                            <h:message for="service" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="vision" value="Vision : " />
+                                            <h:inputText id="vision" value="#{companyProfileManagedBean.vision}" required="true"
+                                                         requiredMessage="Please enter vision of your company" class="form-control"/>
+                                            <h:message for="vision" style="color: red;" />
+                                        </div>
+                                    </h:panelGrid>
+                                    <br/>
+
+                                    <p:commandButton id="btn" value="Update Company Profile" update="panel" action="#{companyProfileManagedBean.updateCompanyProfile(facesContext.externalContext.sessionMap['email'])}" ajax="false" />
+                                    <p:message for="btn"/>
+                                </p:growl>
+                            </h:form>
+                        </div>
+                        </p:panel>
+                    </font>
+                </b:column>
+            </b:row>
+        </b:container>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+
+    </h:body>
+</html>
+
+
+
+
+
+

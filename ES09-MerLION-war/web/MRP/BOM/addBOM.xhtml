@@ -36,13 +36,14 @@
 
                     <p:submenu label="Demand Management">
                         <p:menuitem value="Display Demand" url="/MRP/demandManagement/DemandManagement.xhtml" />
-                        <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
+                        <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                        <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/DemandManagement.xhtml"/>
                     </p:submenu>
 
                     <p:submenu label="Order Management">
                         <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml"/>
                     </p:submenu>           
-                    
+
                     <p:menuitem value="Log Out"/>
 
                 </p:menubar>
@@ -74,7 +75,7 @@
                                 <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml" />
 
                             </p:submenu>
-                         
+
                         </p:menu>
                     </h:form>           
                 </b:column>                   
@@ -99,7 +100,7 @@
                                         <p:inputText required="true" label="Item ID" requiredMessage="Item Id is required." id="itemId" value="#{BOMManagerBean.itemId}">
                                             <f:validateDoubleRange minimum="1" maximum="999999999" />
                                         </p:inputText>
-                 
+
                                         <p:message for="itemId" />
                                     </p:column>
                                 </p:row>
@@ -111,7 +112,7 @@
                                         <p:inputText required="true" label="compId1" requiredMessage="Component 1 is required." id="compId1" value="#{BOMManagerBean.compId1}">
                                             <f:validateDoubleRange minimum="1" maximum="9999999" />
                                         </p:inputText>
-                          
+
                                         <p:message for="compId1" />
                                     </p:column>
                                 </p:row>
@@ -123,7 +124,7 @@
                                         <p:inputText required="true" label="quantity 1" requiredMessage="quantity is required." id="quantity1" value="#{BOMManagerBean.quantity1}">
                                             <f:validateDoubleRange minimum="1" maximum="9999999" />
                                         </p:inputText>
-                                   
+
                                         <p:message for="quantity1" />
                                     </p:column>
                                 </p:row>
@@ -135,7 +136,7 @@
                                         <p:inputText required="false" label="compId2" id="compId2" value="#{BOMManagerBean.compId2}">
                                             <f:validateDoubleRange minimum="1" maximum="9999999" />
                                         </p:inputText>
-                                  
+
                                         <p:message for="compId2" />
                                     </p:column>
                                 </p:row>
@@ -147,7 +148,7 @@
                                         <p:inputText required="false" label="quantity2"  id="quantity2" value="#{BOMManagerBean.quantity2}">
                                             <f:validateDoubleRange minimum="1" maximum="9999999" />
                                         </p:inputText>
-                                   
+
                                         <p:message for="quantity2" />
                                     </p:column>
                                 </p:row>
@@ -159,7 +160,7 @@
                                         <p:inputText required="false" label="Amount to order"  id="compId3" value="#{BOMManagerBean.compId3}">
                                             <f:validateDoubleRange minimum="1" maximum="9999999" />
                                         </p:inputText>
-                                   
+
                                         <p:message for="compId3" />
                                     </p:column>
                                 </p:row>
@@ -171,7 +172,7 @@
                                         <p:inputText required="false" label="quantity3" id="quantity3" value="#{BOMManagerBean.quantity3}">
                                             <f:validateDoubleRange minimum="1" maximum="9999999" />
                                         </p:inputText>
-                                    
+
                                         <p:message for="quantity3" />
                                     </p:column>
                                 </p:row>

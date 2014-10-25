@@ -36,25 +36,26 @@
 
                     <p:submenu label="Demand Management">
                         <p:menuitem value="Display Demand" url="/MRP/demandManagement/DemandManagement.xhtml" />
-                        <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
+                        <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                        <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/DemandManagement.xhtml"/>
                     </p:submenu>
 
                     <p:submenu label="Order Management">
                         <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml"/>
                     </p:submenu>           
-                    
+
                     <p:menuitem value="Log Out"/>
 
                 </p:menubar>
             </h:form>
-       
+
         </b:container>
 
 
         <b:container>
             <b:row styleClass="show-grid">
                 <b:column col-xs="6" col-sm="6" col-md="3">
-                       <h:form>
+                    <h:form>
                         <p:growl autoUpdate="true"/>
                         <p:menu style="width:250px">
                             <p:submenu label="Bill of Marerial Management">
@@ -76,7 +77,7 @@
                                 <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml" />
 
                             </p:submenu>
-                         
+
                         </p:menu>
                     </h:form>               
                 </b:column>                   

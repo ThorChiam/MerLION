@@ -36,7 +36,8 @@
 
                     <p:submenu label="Demand Management">
                         <p:menuitem value="Display Demand" url="/MRP/demandManagement/DemandManagement.xhtml" />
-                        <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
+                        <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                        <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/DemandManagement.xhtml"/>
                     </p:submenu>
 
                     <p:submenu label="Order Management">
@@ -81,7 +82,7 @@
                 </b:column>                   
                 <b:column col-xs="5" col-sm="5" col-md="9">
                     <h:form>
-                        <p:panel id="panel1" header="Display my Bill of Materials">
+                        <p:panel id="panel1" header="Display My Bill of Materials">
                             <p:dataTable var="b" value="#{BOMManagerBean.BOMList}" >
                                 <p:column headerText="Product Id">
                                     <h:inputText value="#{b.item.itemId}" >

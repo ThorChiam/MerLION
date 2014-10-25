@@ -10,7 +10,7 @@
 
 
     <h:head>
-        <title>Welcome to MRP System</title>
+        <title>Welcome to My Merlion</title>
 
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
@@ -24,26 +24,35 @@
                     <h:form>  
                         <p:menubar styleClass="show-grid">
                             <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                            <p:menuitem value="MRP Home" url="/MRP/index.xhtml" />
-                            <p:submenu label="Bill of Material">                    
-                                <p:menuitem value="Add New BOM" url="/MRP/BOM/addBOM.xhtml" />
-                                <p:menuitem value="Delete BOM" url="/MRP/BOM/deleteBOM.xhtml" />
-                                <p:menuitem value="Display/Update BOM" url="/MRP/BOM/displayBOM.xhtml" />
+                            <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
+                            <p:submenu label="Account Setting">
+                                <p:submenu label="Account Management">
+                                    <p:menuitem value="View Account Infomation" url="/MRP/BOM/addBOM.xhtml"/>
+                                    <p:menuitem value="Edit Account Information" url="/MRP/BOM/addBOM.xhtml"/>
+                                    <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>
+                                </p:submenu>
+                                <p:submenu label="Company Profile Management">
+                                    <p:menuitem value="View Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
+                                    <p:menuitem value="Edit Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
+                                </p:submenu>
                             </p:submenu>
 
-                            <p:submenu label="Material Requirement Plan">
+                            <p:submenu label="Contract Management">
                                 <p:menuitem value="Add New Plan" url="/MRP/plan/addNewPlan.xhtml"/>
                                 <p:menuitem value="Display Plan" url="/MRP/plan/displayPlan.xhtml" />
                             </p:submenu>
 
-                            <p:submenu label="Demand Management">
-                                <p:menuitem value="Display Demand" url="/MRP/demandManagement/DemandManagement.xhtml" />
-                                <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                            <p:submenu label="Transaction Management">
+                                <p:menuitem value="View Service Transaction History" url="/MRP/demandManagement/DemandManagement.xhtml" />
+                                <p:menuitem value="View Ongoing Transaction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                                <p:menuitem value="View Transaction History" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                                <p:menuitem value="Invoice" url="/MRP/demandManagement/DemandManagement.xhtml"/>
                             </p:submenu>
 
-                            <p:submenu label="Order Management">
-                                <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml"/>
+                            <p:submenu label="Internal Communication">
+                                <p:menuitem value="Message" url="/MRP/order/orderManagement.xhtml"/>
+                                <p:menuitem value="Notification" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                                <p:menuitem value="Announcement" url="/MRP/demandManagement/DemandManagement.xhtml"/>
                             </p:submenu>      
 
                             <p:menuitem value="Log Out"/>
@@ -61,22 +70,28 @@
                     <h:form>
                         <p:growl autoUpdate="true"/>
                         <p:menu style="width:250px">
-                            <p:submenu label="Bill of Marerial Management">
-                                <p:menuitem value="Add New BOM" url="/MRP/BOM/addBOM.xhtml"/>
-                                <p:menuitem value="Delete BOM" url="/MRP/BOM/deleteBOM.xhtml"/>
-                                <p:menuitem value="Display/Update BOM" url="/MRP/BOM/displayBOM.xhtml"/>
+                            <p:submenu label="Account Setting">
+                            
+                                    <p:menuitem value="View Account Infomation" url="/MRP/BOM/addBOM.xhtml"/>
+                                    <p:menuitem value="Edit Account Information" url="/MRP/BOM/addBOM.xhtml"/>
+                                    <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>
+                            
+                                    <p:menuitem value="View Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
+                                    <p:menuitem value="Edit Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
+                             
                             </p:submenu>
-                            <p:submenu label="Material Requirement Plan Management">
+                            <p:submenu label="Contract Management">
                                 <p:menuitem value="Add New Plan"  url="/MRP/plan/addNewPlan.xhtml"/>
                                 <p:menuitem value="Display Plan"  url="/MRP/plan/displayPlan.xhtml"/>
                             </p:submenu>
                             <p:separator />
-                            <p:submenu label="Demand Management" >
-                                <p:menuitem value="Display 6 Months Demand" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
-                                <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/saveProductionSchedule.xhtml"/>
+                            <p:submenu label="Transaction Management" >
+                                <p:menuitem value="View Service Transaction History" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                                <p:menuitem value="View Ongoing Transaction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
+                                <p:menuitem value="View Transaction History" url="/MRP/demandManagement/saveProductionSchedule.xhtml"/>
+                                <p:menuitem value="Invoice Management" url="/MRP/demandManagement/saveProductionSchedule.xhtml"/>
                             </p:submenu>
-                            <p:submenu label="Order Management" >
+                            <p:submenu label="Internal Communication" >
                                 <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml" />
 
                             </p:submenu>
@@ -85,8 +100,8 @@
 
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="6">
-                    <p:panel header="MRP System - Home">
-                        <img src="news.jpg" weight="600" width="500"/>
+                    <p:panel header="My MerLION - Home">
+                        <img src="account.jpg" weight="600" width="500"/>
                     </p:panel>
                 </b:column>
 

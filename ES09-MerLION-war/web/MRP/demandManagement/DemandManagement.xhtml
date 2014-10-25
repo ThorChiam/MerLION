@@ -20,7 +20,7 @@
     <h:body>
 
         <b:container>
-           <h:form>  
+            <h:form>  
                 <p:menubar styleClass="show-grid">
                     <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
                     <p:menuitem value="MRP Home" url="/MRP/index.xhtml" />
@@ -37,13 +37,14 @@
 
                     <p:submenu label="Demand Management">
                         <p:menuitem value="Display Demand" url="/MRP/demandManagement/DemandManagement.xhtml" />
-                        <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
+                        <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                        <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/DemandManagement.xhtml"/>
                     </p:submenu>
 
                     <p:submenu label="Order Management">
                         <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml"/>
                     </p:submenu>           
-                    
+
                     <p:menuitem value="Log Out"/>
 
                 </p:menubar>
@@ -69,14 +70,14 @@
                             <p:separator />
                             <p:submenu label="Demand Management" >
                                 <p:menuitem value="Display 6 Months Demand" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
-                                <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/saveProductionSchedule.xhtml"/>
+                                <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                                <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/DemandManagement.xhtml"/>
                             </p:submenu>
                             <p:submenu label="Order Management" >
                                 <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml" />
 
                             </p:submenu>
-                         
+
                         </p:menu>
                     </h:form>              
                 </b:column>                   
@@ -88,8 +89,9 @@
                         &nbsp;
                         <p:commandButton value="show demand" action="#{MPSManagerBean.showDemand}" update="past">
                         </p:commandButton>
+                        <br/>
+                        <p:panel header="Past 6 Months Demand">
 
-                        <p:panel id="panel" header="Past 6 Months Demand">
                             <h:panelGroup id="past" layout="block">
                                 <p:dataTable value="#{MPSManagerBean.past}" var="d">
 
@@ -131,11 +133,101 @@
                             </h:panelGroup>
                         </p:panel>
                         <br/>
+                        <p:panel header="Demand Prediction">
+                            <p:outputLabel for="console" value="Select Demand Type:" />
+                            <p:selectOneMenu id="console" value="#{MPSManagerBean.demandType}">
+                                <f:selectItem itemLabel="seasonal" itemValue="seasonal" />
+                                <f:selectItem itemLabel="non-seasonal" itemValue="non-seasonal" />
+                            </p:selectOneMenu> 
+                            &nbsp;
+                            <p:commandButton value="predict demand" action="#{MPSManagerBean.PredictDemand}"  update="prediction">
+                            </p:commandButton>
+
+
+                            <h:panelGroup id="prediction" layout="block">
+                                <p:dataTable value="#{MPSManagerBean.prediction}" var="p" >
+
+                                    <p:column headerText ="month 1">                           
+                                        <h:outputText value="#{p[0]}" />
+                                    </p:column>
+
+                                    <p:column headerText ="month 2">
+
+                                        <h:outputText value="#{p[1]}"  />
+
+                                    </p:column>
+
+                                    <p:column headerText ="month 1">
+
+                                        <f:facet name="header">month 3</f:facet>
+
+                                        <h:outputText value="#{p[2]}"   />
+
+                                    </p:column>
+                                    <p:column headerText ="month 4">
+
+                                        <h:outputText value="#{p[3]}"   />
+
+                                    </p:column>
+                                    <p:column headerText ="month 5">
+
+                                        <h:outputText value="#{p[4]}"   />
+
+                                    </p:column> 
+                                    <p:column headerText ="month 6">
+
+                                        <h:outputText value="#{p[5]}"  />
+
+                                    </p:column> 
+                                </p:dataTable>
+                            </h:panelGroup>
+
+                        </p:panel>
+                        <br/>
+                        <p:panel header="Monthly Master Production Schedule">
+
+                            <p:dataTable value="#{MPSManagerBean}" var="t" id="MPS">
+
+                                <p:column headerText ="month 1">                           
+                                    <h:inputText value="#{t.first}" />
+                                </p:column>
+
+                                <p:column headerText ="month 2">
+
+                                    <h:inputText value="#{t.second}"  />
+
+                                </p:column>
+
+                                <p:column headerText ="month 3">
+
+                                    <f:facet name="header">month 3</f:facet>
+
+                                    <h:inputText value="#{t.third}"   />
+
+                                </p:column>
+                                <p:column headerText ="month 4">
+
+                                    <h:inputText value="#{t.fourth}"   />
+
+                                </p:column>
+                                <p:column headerText ="month 5">
+
+                                    <h:inputText value="#{t.fifth}"   />
+
+                                </p:column> 
+                                <p:column headerText ="month 6">
+
+                                    <h:inputText value="#{t.sixth}"  />
+
+                                </p:column>     
+
+                            </p:dataTable>     
+                            <br/>
+                            <p:commandButton action="saveNewMPS.xhtml" value="Save master production schedule" actionListener="#{MPSManagerBean.addNewMPS}" />
+                        </p:panel>
                     </h:form>
                 </b:column>
-
             </b:row>
-
         </b:container>
         <br/>
         <br/>
