@@ -53,13 +53,13 @@ public class CompanyProfileManagedBean implements Serializable {
     }
 
     //admin can delete company profile
-    public String deleteCompanyProfile(String email, Long companyId) {
-        return cpsbl.deleteCompanyProfile(email, companyId);
+    public String deleteCompanyProfile(Long companyId) {
+        return cpsbl.deleteCompanyProfile(companyId);
     }
     //update company profile
 
-    public void updateCompanyProfile(String email, Long companyId) {
-        cpsbl.updateCompanyProfile(companyId, companyName, companyAddress, tel, email, website, companyHistory, service, vision);
+    public void updateCompanyProfile(String cemail) {
+        cpsbl.updateCompanyProfile(cemail,companyName, companyAddress, tel, email,website, companyHistory, service, vision);
     }
 
     public CompanyProfileSessionLocal getCpsbl() {

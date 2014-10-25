@@ -27,16 +27,29 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     private EntityManager em;
 
     //list by timeLogged in frontend
+    @Override
     public List<WMSOrder> getAllOrders(String email) {
         Query q = em.createQuery("SELECT o FROM WMSOrder o WHERE o.provider.email=:email");
         q.setParameter("email", email);
         return q.getResultList();
     }
-/**
- * check the inventory level
- * @param orderId
- * @return the condition of the stock:Adequate for the order/the number of lack
- */
+
+    //inventory list and corresponding quantity can be get by order
+    @Override
+    public WMSOrder getOrder(Long orderId) {
+        Query q = em.createQuery("SELECT o FROM WMSOrder o WHERE o.id=:orderId");
+        q.setParameter("orderId", orderId);
+        return (WMSOrder) q.getSingleResult();
+    }
+
+    /**
+     * check the inventory level
+     *
+     * @param orderId
+     * @return the condition of the stock:Adequate for the order/the number of
+     * lack
+     */
+    @Override
     public List<Integer> checkInventoryLevel(Long orderId) {
         Query q = em.createQuery("SELECT o FROM WMSOrder o WHERE o.id=:orderId");
         q.setParameter("orderId", orderId);
@@ -46,14 +59,14 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         List<Inventory> ins = o.getInventory();
         //ir:inventory Required
         List<Integer> ir = o.getQuantity();
-        for(int j=0;j<ins.size();j++){
-            checkI.add((ins.get(j).getQuantity()-ir.get(j)));
+        for (int j = 0; j < ins.size(); j++) {
+            checkI.add((ins.get(j).getQuantity() - ir.get(j)));
         }
         return checkI;
     }
     
-    public void allocateInventory(){
+    public void allocateInventory(List<Integer> allocateQty) {
         
     }
-    
+
 }

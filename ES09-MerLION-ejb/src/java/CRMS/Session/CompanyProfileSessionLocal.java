@@ -20,9 +20,9 @@ public interface CompanyProfileSessionLocal {
     public List getAllCompanyProfile(String email);
 
     //admin can delete company profile
-    public String deleteCompanyProfile(String email, Long companyId);
+    public String deleteCompanyProfile(Long companyId);
     //update company profile
 
-    public void updateCompanyProfile(Long companyId, String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision);
+    public void updateCompanyProfile(String cemail, String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision);
 
 }

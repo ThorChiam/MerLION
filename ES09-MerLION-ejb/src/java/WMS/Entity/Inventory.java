@@ -5,15 +5,19 @@
  */
 package WMS.Entity;
 
+import CI.Entity.Account;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -23,6 +27,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Inventory implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,21 +35,24 @@ public class Inventory implements Serializable {
     private String name;
     private int quantity;
     private String status;
-    
-    
-    
+
+    @ManyToOne
+    private Warehouse WMSWarehouse;
+
     @ManyToOne
     private WMSOrder order;
-    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Inventory")
-    private List<StorageArea> storagebin = new ArrayList<>();
 
-    public List<StorageArea> getStoragebin() {
-        return storagebin;
+//    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Inventory")
+//    private List<StorageArea> storagebin = new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "Inventory")
+    private Set<StorageArea> storageArea = new HashSet<>();
+
+    public Set<StorageArea> getStoragebin() {
+        return storageArea;
     }
 
-    public void setStoragebin(List<StorageArea> storagebin) {
-        this.storagebin = storagebin;
+    public void setStoragebin(Set<StorageArea> storageArea) {
+        this.storageArea = storageArea;
     }
 
     public WMSOrder getOrder() {
@@ -54,7 +62,15 @@ public class Inventory implements Serializable {
     public void setOrder(WMSOrder order) {
         this.order = order;
     }
-    
+
+    public Warehouse getWMSWarehouse() {
+        return WMSWarehouse;
+    }
+
+    public void setWMSWarehouse(Warehouse WMSWarehouse) {
+        this.WMSWarehouse = WMSWarehouse;
+    }
+
     public Long getId() {
         return id;
     }
@@ -62,7 +78,8 @@ public class Inventory implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-public String getName() {
+
+    public String getName() {
         return name;
     }
 
@@ -85,7 +102,7 @@ public String getName() {
     public void setStatus(String status) {
         this.status = status;
     }
-   
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -110,5 +127,5 @@ public String getName() {
     public String toString() {
         return "merlion_new_enetity.Inventory[ id=" + id + " ]";
     }
-    
+
 }
