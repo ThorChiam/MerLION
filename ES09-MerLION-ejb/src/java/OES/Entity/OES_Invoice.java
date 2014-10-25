@@ -24,6 +24,8 @@ public class OES_Invoice implements Serializable {
     private Long id;
     private String Release_date;
     private String notes;
+    private int delete_status;
+
     
     @OneToOne(mappedBy="invoice") 
     OES_Payment payment;
@@ -38,6 +40,15 @@ public class OES_Invoice implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    
+    public int getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(int delete_status) {
+        this.delete_status = delete_status;
     }
     
     public OES_Payment getPayment() {

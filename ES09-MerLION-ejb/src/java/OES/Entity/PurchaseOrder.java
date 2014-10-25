@@ -33,7 +33,9 @@ public class PurchaseOrder implements Serializable {
     private double taxrate;
     private List<Integer> quantity = new ArrayList();
     private String createdate;
-    
+    private String deliverydate;
+    private int delete_status;
+
     @OneToOne
     SalesOrder salesorder;
     
@@ -45,10 +47,37 @@ public class PurchaseOrder implements Serializable {
     
     @ManyToOne
     private Account receiver;
+    
+    @OneToOne
+    private OES_Payment payment;
 
 
     public PurchaseOrder(){
         setId(System.nanoTime());
+    }
+    
+    public OES_Payment getPayment() {
+        return payment;
+    }
+
+    public int getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(int delete_status) {
+        this.delete_status = delete_status;
+    }
+
+    public void setPayment(OES_Payment payment) {
+        this.payment = payment;
+    }
+    
+    public String getDeliverydate() {
+        return deliverydate;
+    }
+
+    public void setDeliverydate(String deliverydate) {
+        this.deliverydate = deliverydate;
     }
     
     public Set<Product> getProduct() {

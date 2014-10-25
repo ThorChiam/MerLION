@@ -38,12 +38,12 @@ public class OESManagedBean implements Serializable {
     private OESSessionLocal osbl;
 
     //Product
-    private String email;
     private String name;
     private String description;
     private double price;
     private int quantity;
     private long product_id;
+    private long company_id;
 
     //Enquiry
     Account seller;
@@ -60,13 +60,13 @@ public class OESManagedBean implements Serializable {
     //PurchaseOrder
     private double taxrate;
     private long purchase_id;
+    private String deliverydate;
 
     //SalesOrder
     PurchaseOrder purchaseorder;
     long sales_id;
 
     //Payment
-    SalesOrder salesorder;
     String paymentdate;
     String paymenttype;
     String status;
@@ -74,20 +74,27 @@ public class OESManagedBean implements Serializable {
 
     //Invoice
     OES_Payment payment;
-   private long invoice_id;
+    private long invoice_id;
     String notes;
 
     private String statusMessage;
 
     public OESManagedBean() {
     }
-
+    
     //********************Product********************************
-    public void createProduct() {
-        osbl.createProduct(email, name, price, quantity, description); 
-        statusMessage = "The new product is successfully added.";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "Status: " + statusMessage, ""));
+    public void createProduct(String email) {
+        boolean tmp = osbl.check_redundant(company_id, name);
+        if (tmp) {
+            statusMessage = "The new product is successfully added.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Status: " + statusMessage, ""));
+            osbl.createProduct(email, name, price, quantity, description);
+        } else {
+            statusMessage = "This product has already be added.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Status: " + statusMessage, ""));
+        }
     }
 
     public void updateProduct() {
@@ -98,7 +105,7 @@ public class OESManagedBean implements Serializable {
         return osbl.getProduct(product_id);
     }
 
-    public List<Product> getAllProduct() {
+    public List<Product> getAllProduct(String email) {
         return osbl.getAllProduct(email);
     }
 
@@ -106,6 +113,9 @@ public class OESManagedBean implements Serializable {
         osbl.deleteProduct(product_id);
     }
 
+    
+    
+    
     //********************Buyer-Enquiry**************************
     public void createEnquiry() {
         Date date = new java.util.Date();
@@ -121,14 +131,18 @@ public class OESManagedBean implements Serializable {
         return osbl.getEnquiry(enquiry_id);
     }
 
-    public List<Enquiry> getAllEnquiry() {
+    public List<Enquiry> getAllEnquiry(String email) {
         return osbl.getAllEnquiry(email);
     }
 
-    public void deleteEnquiry() {
-        osbl.deleteEnquiry(enquiry_id);
+    public void deleteEnquiry(String email) {
+        osbl.deleteEnquiry(enquiry_id,email);
     }
 
+    
+    
+    
+    
     //********************Seller-Quotation***********************
     public List<String> ATPcheck(Enquiry enquiry) {
         return osbl.ATPcheck(enquiry);
@@ -152,10 +166,14 @@ public class OESManagedBean implements Serializable {
         return osbl.getAllQuotation(email);
     }
 
-    public void deleteQuotation() {//只能buyer删?
-        osbl.deleteQuotation(product_id);
+    public void deleteQuotation(String email) {//只能buyer删?
+        osbl.deleteQuotation(product_id,email);
     }
 
+    
+    
+    
+    
     //********************Buyer-Purchase Order*******************
     public void createPurchaseOrder() {
         statusMessage = "A new purchase order is successfully created.";
@@ -164,21 +182,25 @@ public class OESManagedBean implements Serializable {
         Date date = new java.util.Date();
         Timestamp tmp = new Timestamp(date.getTime());
         String createdate = tmp.toString();
-        osbl.createPurchaseOrder(buyer, seller, taxrate, quantitys, products, createdate);
+        osbl.createPurchaseOrder(buyer, seller, taxrate, quantitys, products, createdate, deliverydate);
     }
 
     public PurchaseOrder getPurchaseOrder() {
         return osbl.getPurchaseOrder(purchase_id);
     }
 
-    public List<PurchaseOrder> getAllPurchaseOrder() {//两边都能拿？？？？
+    public List<PurchaseOrder> getAllPurchaseOrder(String email) {//两边都能拿？？？？
         return osbl.getAllPurchaseOrder(email);
     }
 
-    public void deletePurchaseOrder() {//只能buyer删?
-        osbl.deletePurchaseOrder(purchase_id);
+    public void deletePurchaseOrder(String email) {
+        osbl.deletePurchaseOrder(purchase_id,email);
     }
 
+    
+    
+    
+    
     //********************Seller-Sales Order*********************
     public void createSalesOrder() {
         statusMessage = "A new sales order is successfully created.";
@@ -194,7 +216,7 @@ public class OESManagedBean implements Serializable {
         return osbl.getSalesOrder(sales_id);
     }
 
-    public List<SalesOrder> getAllSalesOrder() {
+    public List<SalesOrder> getAllSalesOrder(String email) {
         return osbl.getAllSalesOrder(email);
     }
 
@@ -202,12 +224,16 @@ public class OESManagedBean implements Serializable {
         osbl.deleteSalesOrder(sales_id);
     }
 
+    
+    
+    
+    
     //********************Buyer-Payment**************************
     public void createPayment() {
         statusMessage = "Please finish your payment soon. Thanks!";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Status: " + statusMessage, ""));
-        osbl.createPayment(paymentdate, paymenttype, status, salesorder);
+        osbl.createPayment(paymentdate, paymenttype, status, purchaseorder);
     }
 
     public void updatePaymentStatus() {
@@ -218,10 +244,18 @@ public class OESManagedBean implements Serializable {
         return osbl.getPayment(payment_id);
     }
 
-    public List<OES_Payment> getAllPayment() {
+    public List<OES_Payment> getAllPayment(String email) {
         return osbl.getAllPayment(email);
     }
+    
+    public void deletePayment(String email){
+        osbl.deletePayment(payment_id,email);
+    }
 
+    
+    
+    
+    
     //********************Seller-Invoice*************************
     public void createInvoice() {
         statusMessage = "A new invoice is successfully created.";
@@ -237,9 +271,19 @@ public class OESManagedBean implements Serializable {
         return osbl.getInvoice(invoice_id);
     }
 
-    public List<OES_Invoice> getAllInvoice() {
+    public List<OES_Invoice> getAllInvoice(String email) {
         return osbl.getAllInvoice(email);
     }
+    
+    public void deleteInvoice(String email){
+        osbl.deleteInvoice(invoice_id,email);
+    }
+    
+    
+    
+    
+    
+    
 
     //******************GETTER AND SETTER***************************
     public OESSessionLocal getOsbl() {
@@ -248,14 +292,6 @@ public class OESManagedBean implements Serializable {
 
     public void setOsbl(OESSessionLocal osbl) {
         this.osbl = osbl;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getName() {
@@ -384,14 +420,6 @@ public class OESManagedBean implements Serializable {
 
     public void setSales_id(long sales_id) {
         this.sales_id = sales_id;
-    }
-
-    public SalesOrder getSalesorder() {
-        return salesorder;
-    }
-
-    public void setSalesorder(SalesOrder salesorder) {
-        this.salesorder = salesorder;
     }
 
     public String getPaymentdate() {

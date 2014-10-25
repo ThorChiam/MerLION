@@ -25,18 +25,37 @@ public class OES_Payment implements Serializable {
     private String PaymentDate;
     private String PaymentType;
     private String status;
+    private int delete_status;
+
     
     @OneToOne
     OES_Invoice invoice;
     
     @OneToOne(mappedBy="payment")
-    SalesOrder salesorder;
+    PurchaseOrder purchase;
 
     
     public OES_Payment(){
         setId(System.nanoTime());
     }   
     
+    
+    public int getDelete_status() {
+        return delete_status;
+    }
+
+    public void setDelete_status(int delete_status) {
+        this.delete_status = delete_status;
+    }
+    
+    public PurchaseOrder getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(PurchaseOrder purchase) {
+        this.purchase = purchase;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -67,14 +86,6 @@ public class OES_Payment implements Serializable {
 
     public void setPaymentType(String paymenttype) {
         this.PaymentType = paymenttype;
-    }
-
-    public SalesOrder getSalesorder() {
-        return salesorder;
-    }
-
-    public void setSalesorder(SalesOrder salesorder) {
-        this.salesorder = salesorder;
     }
 
     public Long getId() {

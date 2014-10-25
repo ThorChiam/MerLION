@@ -24,8 +24,9 @@ public class Announcement implements Serializable {
     private String content;
     private String releasedate;
 
-    @ManyToMany(cascade={CascadeType.ALL},mappedBy="announcements")
-    private Set<Account> accounts=new HashSet<>();
+    //@ManyToMany(cascade={CascadeType.ALL},mappedBy="announcements")
+    //private Set<Account> accounts=new HashSet<>();
+    
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
     private MerlionAdmin admin;
 
@@ -53,13 +54,15 @@ public class Announcement implements Serializable {
         this.admin = admin;
     }
 
-     public Set<Account> getAccounts() {
+    /*
+    public Set<Account> getAccounts() {
         return accounts;
     }
 
     public void setAccounts(Set<Account> accounts) {
         this.accounts = accounts;
     }
+    */
 
     public long getAnnId() {
         return annId;
