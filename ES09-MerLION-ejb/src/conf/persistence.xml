@@ -21,7 +21,6 @@
     <class>CI.Entity.Announcement</class>
     <class>CI.Entity.ActionRecord</class>
     <class>CI.Entity.Account</class>
-    <class>CI.Entity.MerlionAdmin</class>
     <class>CI.Entity.Notification</class>
     <class>CRMS.Entity.Feedback</class>
     <class>CRMS.Entity.Payment</class>
