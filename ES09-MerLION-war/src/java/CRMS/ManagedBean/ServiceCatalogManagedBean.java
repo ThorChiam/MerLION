@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import CRMS.Session.SeviceCatalogSessionBeanLocal;
+import CRMS.Session.SeviceCatalogSessionLocal;
 
 /**
  *
@@ -24,7 +24,7 @@ public class ServiceCatalogManagedBean implements Serializable {
      * Creates a new instance of ServiceCatalogManagedBean
      */
     @EJB
-    private SeviceCatalogSessionBeanLocal scsbl;
+    private SeviceCatalogSessionLocal scsbl;
     private String serviceType;
     private String carrierType;
     private String route;

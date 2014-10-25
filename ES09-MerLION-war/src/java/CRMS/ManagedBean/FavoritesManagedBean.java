@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import CRMS.Session.FavoritesSessionBeanLocal;
+import CRMS.Session.FavoritesSessionLocal;
 import CRMS.Entity.Favorite;
 
 /**
@@ -25,7 +25,7 @@ public class FavoritesManagedBean implements Serializable {
      * Creates a new instance of FavoritesManagedBean
      */
     @EJB
-    private FavoritesSessionBeanLocal fsbl;
+    private FavoritesSessionLocal fsbl;
     private Long companyId;
     private String remark;
     public FavoritesManagedBean() {

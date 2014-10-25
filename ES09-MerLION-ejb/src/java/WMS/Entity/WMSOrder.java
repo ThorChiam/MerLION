@@ -5,6 +5,7 @@
  */
 package WMS.Entity;
 //warehouse order management
+
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,28 +13,34 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import CI.Entity.Account;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class Order implements Serializable {
+public class WMSOrder implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String orderdate;
-
-    
+    private List<Integer> quantity = new ArrayList();
 
     @ManyToOne
     private Account requester;
-    
+
     @ManyToOne
     private Account provider;
 
-    
+    @OneToMany(cascade = {CascadeType.PERSIST})
+    private List<Inventory> inventory = new ArrayList();
+
     public Long getId() {
         return id;
     }
@@ -49,7 +56,7 @@ public class Order implements Serializable {
     public void setOrderdate(String orderdate) {
         this.orderdate = orderdate;
     }
-    
+
     public Account getRequester() {
         return requester;
     }
@@ -66,6 +73,22 @@ public class Order implements Serializable {
         this.provider = provider;
     }
 
+    public List<Inventory> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(List<Inventory> inventory) {
+        this.inventory = inventory;
+    }
+
+    public List<Integer> getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(List<Integer> quantity) {
+        this.quantity = quantity;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -76,10 +99,10 @@ public class Order implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Order)) {
+        if (!(object instanceof WMSOrder)) {
             return false;
         }
-        Order other = (Order) object;
+        WMSOrder other = (WMSOrder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -90,5 +113,5 @@ public class Order implements Serializable {
     public String toString() {
         return "merlion_ejb.entity.New_Order[ id=" + id + " ]";
     }
-    
+
 }

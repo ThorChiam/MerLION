@@ -14,7 +14,7 @@ import CI.Entity.Account;
  * @author ThorChiam
  */
 @Local
-public interface AccountSessionBeanLocal {
+public interface AccountSessionLocal {
 
     public Account getAccount(String email);
 

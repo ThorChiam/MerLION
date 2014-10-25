@@ -43,11 +43,11 @@
     <class>MRP.Entity.Item</class>
     <class>WMS.Entity.Inventory</class>
     <class>WMS.Entity.Shipment_Order</class>
-    <class>WMS.Entity.Order</class>
     <class>WMS.Entity.Warehouse</class>
     <class>WMS.Entity.Employee</class>
     <class>TMS.Entity.DispatchOrder</class>
     <class>TMS.Entity.TMSFacility</class>
+    <class>WMS.Entity.WMSOrder</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

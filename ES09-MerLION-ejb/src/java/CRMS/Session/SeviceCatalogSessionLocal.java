@@ -13,7 +13,7 @@ import javax.ejb.Local;
  * @author ThorChiam
  */
 @Local
-public interface SeviceCatalogSessionBeanLocal {
+public interface SeviceCatalogSessionLocal {
 
     //individual user can delete their own service catalog info
 

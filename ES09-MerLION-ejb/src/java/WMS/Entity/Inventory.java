@@ -28,13 +28,13 @@ public class Inventory implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String quantity;
+    private int quantity;
     private String status;
     
     
     
     @ManyToOne
-    private Shipment_Order shipmentorder;
+    private WMSOrder order;
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Inventory")
     private List<StorageArea> storagebin = new ArrayList<>();
@@ -47,12 +47,12 @@ public class Inventory implements Serializable {
         this.storagebin = storagebin;
     }
 
-    public Shipment_Order getShipmentorder() {
-        return shipmentorder;
+    public WMSOrder getOrder() {
+        return order;
     }
 
-    public void setShipmentorder(Shipment_Order shipmentorder) {
-        this.shipmentorder = shipmentorder;
+    public void setOrder(WMSOrder order) {
+        this.order = order;
     }
     
     public Long getId() {
@@ -70,11 +70,11 @@ public String getName() {
         this.name = name;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

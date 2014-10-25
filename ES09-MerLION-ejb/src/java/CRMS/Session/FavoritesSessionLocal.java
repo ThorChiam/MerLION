@@ -14,7 +14,7 @@ import CRMS.Entity.Favorite;
  * @author ThorChiam
  */
 @Local
-public interface FavoritesSessionBeanLocal {
+public interface FavoritesSessionLocal {
 
     public List<Favorite> getFavoriteList(String email);
 

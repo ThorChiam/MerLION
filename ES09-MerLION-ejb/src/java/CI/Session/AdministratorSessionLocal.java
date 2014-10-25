@@ -14,7 +14,7 @@ import CI.Entity.MerlionAdmin;
  * @author ThorChiam
  */
 @Local
-public interface AdministratorSessionBeanLocal {
+public interface AdministratorSessionLocal {
 
     public MerlionAdmin getMerlionAdmin(String email);
 
