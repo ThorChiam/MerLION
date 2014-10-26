@@ -80,21 +80,21 @@
 
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
-                    <p:panel header="Delivery Order List">
-                        <!-- value should be a LIST of delivery order -->
-                        <p:dataTable var="order" value="">
-                            <p:column headerText="Delivery Order">
+                    <p:panel header="Replenish Inventory">
+            <!-- value should be a LIST-->
+                        <p:dataTable var="detail" value="">
+                            <p:column headerText="Inventory Name">                          
                                 <h:outputText value="" />
                             </p:column>
 
-                            <p:column headerText="Action">
-                                <h:commandButton value="View Detail" action="orderDetail">
-                                    <f:setPropertyActionListener target="#{womb.orderId}" value="order.id" />
-                                </h:commandButton>
-
+                            <p:column headerText="Quantity">
+                                <h:inputText value=""/>
                             </p:column>
 
                         </p:dataTable>
+            <!-- actionLister call the back method to store the data-->
+            <h:commandButton value="Replenish" actionListener="" />
+
 
                     </p:panel>
                 </b:column>

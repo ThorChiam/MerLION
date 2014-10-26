@@ -25,6 +25,7 @@ public class WMSOrderManagedBean implements Serializable {
      */
     @EJB
     private WMSOrderSessionLocal wosl;
+    private Long orderId;
     
     public WMSOrderManagedBean() {
     }
