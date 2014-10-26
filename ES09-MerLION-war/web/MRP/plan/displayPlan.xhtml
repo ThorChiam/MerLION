@@ -147,7 +147,15 @@
                                         <h:outputText value="#{j.seventhweek}"  />
 
                                     </p:column>
+                                    
+                                    
+                                    <p:column headerText="Test" rendered="#{j.contract!=null}">
+                                        
 
+                                        <p:inputText value="#{j.firstweek}"/>
+
+                                    </p:column>
+                                    
                                 </p:dataTable>
                             </h:panelGroup>
                         </p:panel>
