@@ -142,7 +142,7 @@
                                 <h:outputText value="#{validationView.description}" />
                             </h:panelGrid>
 
-                            <p:commandButton value="Add" ajax="false" icon="ui-icon-check" validateClient="true" style="margin-right:10px"/>
+                            <p:commandButton value="Add" ajax="false" icon="ui-icon-check" actionListener="#{omb.createProduct(facesContext.externalContext.sessionMap['userId'])}" validateClient="true" style="margin-right:10px"/>
 
                         </p:panel>
                     </h:form>

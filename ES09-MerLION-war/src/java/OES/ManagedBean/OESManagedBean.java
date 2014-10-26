@@ -30,7 +30,7 @@ import OES.Entity.SalesOrder;
  *
  * @author sunny
  */
-@ManagedBean(name = "oESManagedBean")
+@ManagedBean(name = "omb")
 @SessionScoped
 public class OESManagedBean implements Serializable {
 
