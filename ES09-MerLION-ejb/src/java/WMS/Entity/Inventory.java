@@ -5,19 +5,15 @@
  */
 package WMS.Entity;
 
-import CI.Entity.Account;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -35,26 +31,22 @@ public class Inventory implements Serializable {
     private String name;
     private int quantity;
     private String status;
+//    private List<Integer> storageQty;//the storage quantity for each storage area
+//    private List<Integer> warehouseQty;//the storage quantity for each warehouse
 
-    @ManyToOne
-    private Warehouse WMSWarehouse;
-
+//    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "Inventory")
+//    private Set<Warehouse> warehouses;
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "inventory")
+    private List<StorageArea_Inventory> sa_inven = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "inventory")
+    private List<Warehouse_Inventory> ws_inven = new ArrayList<>();
     @ManyToOne
     private WMSOrder order;
 
 //    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Inventory")
 //    private List<StorageArea> storagebin = new ArrayList<>();
-    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "Inventory")
-    private Set<StorageArea> storageArea = new HashSet<>();
-
-    public Set<StorageArea> getStoragebin() {
-        return storageArea;
-    }
-
-    public void setStoragebin(Set<StorageArea> storageArea) {
-        this.storageArea = storageArea;
-    }
-
+//    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "Inventory")
+//    private Set<StorageArea> storageArea = new HashSet<>();
     public WMSOrder getOrder() {
         return order;
     }
@@ -63,14 +55,13 @@ public class Inventory implements Serializable {
         this.order = order;
     }
 
-    public Warehouse getWMSWarehouse() {
-        return WMSWarehouse;
-    }
-
-    public void setWMSWarehouse(Warehouse WMSWarehouse) {
-        this.WMSWarehouse = WMSWarehouse;
-    }
-
+//    public Set<Warehouse> getWarehouse() {
+//        return warehouses;
+//    }
+//
+//    public void setWarehouses(Set<Warehouse> warehouses) {
+//        this.warehouses = warehouses;
+//    }
     public Long getId() {
         return id;
     }
@@ -103,6 +94,45 @@ public class Inventory implements Serializable {
         this.status = status;
     }
 
+//    public List<Integer> getStorageQty() {
+//        return storageQty;
+//    }
+//
+//    public void setStorageQty(List<Integer> storageQty) {
+//        this.storageQty = storageQty;
+//    }
+//
+//    public List<Integer> getWarehouseQty() {
+//        return warehouseQty;
+//    }
+//
+//    public void setWarehouseQty(List<Integer> warehouseQty) {
+//        this.warehouseQty = warehouseQty;
+//    }
+
+    public List<StorageArea_Inventory> getSa_inven() {
+        return sa_inven;
+    }
+
+    public void setSa_inven(List<StorageArea_Inventory> sa_inven) {
+        this.sa_inven = sa_inven;
+    }
+
+    public List<Warehouse_Inventory> getWs_inven() {
+        return ws_inven;
+    }
+
+    public void setWs_inven(List<Warehouse_Inventory> ws_inven) {
+        this.ws_inven = ws_inven;
+    }
+
+//    public Set<StorageArea> getStorageArea() {
+//        return storageArea;
+//    }
+//
+//    public void setStorageArea(Set<StorageArea> storageArea) {
+//        this.storageArea = storageArea;
+//    }
     @Override
     public int hashCode() {
         int hash = 0;

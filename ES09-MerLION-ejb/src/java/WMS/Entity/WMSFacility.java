@@ -23,6 +23,7 @@ public class WMSFacility implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private String type;//packZone
 
   
     private String status;
@@ -60,6 +61,22 @@ public class WMSFacility implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Warehouse getWMSWarehouse() {
+        return WMSWarehouse;
+    }
+
+    public void setWMSWarehouse(Warehouse WMSWarehouse) {
+        this.WMSWarehouse = WMSWarehouse;
     }
 
     @Override
