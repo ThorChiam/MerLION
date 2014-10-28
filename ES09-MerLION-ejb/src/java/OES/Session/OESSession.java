@@ -41,6 +41,7 @@ public class OESSession implements OESSessionLocal {
         Company company = account.getCompany();
 
         Product tmp = new Product();
+        tmp.setName(name);
         tmp.setCompany(company);
         tmp.setDescription(description);
         tmp.setPrice(price);
@@ -90,9 +91,9 @@ public class OESSession implements OESSessionLocal {
         
         Query q = em.createQuery("SELECT c FROM Product c WHERE c.company.id=:id AND c.name=:name");
         q.setParameter("id", company_id);
-        q.setParameter("name", name);
-        
+        q.setParameter("name", name);  
         List tmp=q.getResultList();
+        
         if(tmp.isEmpty())
             return true;
        
