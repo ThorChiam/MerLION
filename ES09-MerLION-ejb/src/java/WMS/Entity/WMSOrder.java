@@ -40,8 +40,8 @@ public class WMSOrder implements Serializable {
     @ManyToOne
     private Account provider;
 
-    @OneToMany(cascade = {CascadeType.PERSIST})
-    private List<Inventory> inventory = new ArrayList();
+//    @OneToMany(cascade = {CascadeType.PERSIST})
+//    private List<Inventory> inventory = new ArrayList();
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "order")
     private List<WMSOrder_Inventory> wo_inven = new ArrayList();
@@ -90,13 +90,13 @@ public class WMSOrder implements Serializable {
         this.provider = provider;
     }
 
-    public List<Inventory> getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(List<Inventory> inventory) {
-        this.inventory = inventory;
-    }
+//    public List<Inventory> getInventory() {
+//        return inventory;
+//    }
+//
+//    public void setInventory(List<Inventory> inventory) {
+//        this.inventory = inventory;
+//    }
 
 //    public List<Integer> getQuantity() {
 //        return quantity;

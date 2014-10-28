@@ -19,6 +19,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Query;
 
 /**
@@ -149,13 +150,17 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     @Override
     public List<Warehouse_Inventory> getAvailableWarehouse(Long orderId) {
         WMSOrder order = this.getOrder(orderId);
-        List<Inventory> lin = order.getInventory();
+        List<WMSOrder_Inventory> lin = order.getWo_inven();
         Query q = em.createQuery("SELECT wi FROM Warehouse_Inventory wi");
         List<Warehouse_Inventory> wis = (List<Warehouse_Inventory>) q.getResultList();
         List<Warehouse_Inventory> awis = new ArrayList<>();
         for (Warehouse_Inventory wi : wis) {
-            if (lin.contains(wi.getInventory())) {
-                awis.add(wi);
+            Long w_inventoryId = wi.getInventory().getId();
+            for (WMSOrder_Inventory lin1 : lin) {
+                Long o_inventoryId = lin1.getInventory().getId();
+                if (Objects.equals(w_inventoryId, o_inventoryId)) {
+                    awis.add(wi);
+                }
             }
         }
         return awis;
@@ -289,14 +294,23 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         }
     }
 
+    private List<Inventory> convertInventory(List<WMSOrder_Inventory> lwi) {
+        List<Inventory> lin = new ArrayList();
+        for (WMSOrder_Inventory lwi1 : lwi) {
+            lin.add(lwi1.getInventory());
+        }
+        return lin;
+    }
+
     @Override
     public List<Inventory> report(Long orderId) {
         Query q = em.createQuery("SELECT wo FROM WMSOrder wo WHERE wo.id=:orderId");
         q.setParameter("orderId", orderId);
         WMSOrder wo = (WMSOrder) q.getSingleResult();
-        this.updateInventory(wo.getInventory());
+        List<Inventory> li = this.convertInventory(wo.getWo_inven());
+        this.updateInventory(li);
         wo.setStatus("allocated");
         em.merge(wo);
-        return wo.getInventory();
+        return li;
     }
 }

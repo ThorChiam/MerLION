@@ -42,20 +42,20 @@ public class Inventory implements Serializable {
     private List<Warehouse_Inventory> ws_inven = new ArrayList<>();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "inventory")
     private List<WMSOrder_Inventory> wo_inven = new ArrayList<>();
-    @ManyToOne
-    private WMSOrder order;
+//    @ManyToOne
+//    private WMSOrder order;
 
 //    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Inventory")
 //    private List<StorageArea> storagebin = new ArrayList<>();
 //    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "Inventory")
 //    private Set<StorageArea> storageArea = new HashSet<>();
-    public WMSOrder getOrder() {
-        return order;
-    }
-
-    public void setOrder(WMSOrder order) {
-        this.order = order;
-    }
+//    public WMSOrder getOrder() {
+//        return order;
+//    }
+//
+//    public void setOrder(WMSOrder order) {
+//        this.order = order;
+//    }
 
 //    public Set<Warehouse> getWarehouse() {
 //        return warehouses;
