@@ -82,12 +82,21 @@ public class OESSession implements OESSessionLocal {
     }
 
     @Override
-    public boolean check_redundant(long company_id, String name) {
+    public boolean check_redundant(String email, String name) {
         //check product redundancy
+        Query p = em.createQuery("SELECT m.Company.id FROM Account m WHERE m.email=:email");
+        p.setParameter("email", email);
+        long company_id = (long)p.getSingleResult();
+        
         Query q = em.createQuery("SELECT c FROM Product c WHERE c.company.id=:id AND c.name=:name");
         q.setParameter("id", company_id);
         q.setParameter("name", name);
-        return ((Product) q.getSingleResult() == null);
+        
+        List tmp=q.getResultList();
+        if(tmp.isEmpty())
+            return true;
+       
+        return false;
     }
 
     //************************Enquiry***************************

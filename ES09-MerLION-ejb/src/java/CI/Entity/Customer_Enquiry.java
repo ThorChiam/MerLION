@@ -14,10 +14,11 @@ import javax.persistence.ManyToOne;
 
 /**
  *
- * @author sunny
+ * @author Tomato
  */
 @Entity
 public class Customer_Enquiry implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,41 +28,22 @@ public class Customer_Enquiry implements Serializable {
     private String status;
     private String answer;
     private String rating;
-    
-    @ManyToOne 
+
+    @ManyToOne
     MerlionAdmin MerlionAdmin;
 
-
-   
-
-    public Customer_Enquiry(){
-        setId(System.nanoTime());
+    public Customer_Enquiry() {
+        this.setId(System.nanoTime());
     }
-    
+
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    private void setId(Long id) {
         this.id = id;
     }
-    
-    public MerlionAdmin getMerlionAdmin() {
-        return MerlionAdmin;
-    }
 
-    public void setMerlionAdmin(MerlionAdmin MerlionAdmin) {
-        this.MerlionAdmin = MerlionAdmin;
-    }
-    
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-    
     public String getContact_email() {
         return contact_email;
     }
@@ -93,7 +75,23 @@ public class Customer_Enquiry implements Serializable {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
-    
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public MerlionAdmin getMerlionAdmin() {
+        return MerlionAdmin;
+    }
+
+    public void setMerlionAdmin(MerlionAdmin MerlionAdmin) {
+        this.MerlionAdmin = MerlionAdmin;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -116,7 +114,7 @@ public class Customer_Enquiry implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion.entity.CommonInfrastructure.Customer_enquiry[ id=" + id + " ]";
+        return "CI.Entity.Customer_Enquiry[ id=" + id + " ]";
     }
-    
+
 }

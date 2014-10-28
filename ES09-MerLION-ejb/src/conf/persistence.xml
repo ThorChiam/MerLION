@@ -2,51 +2,6 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="ES09-MerLION-ejbPU" transaction-type="JTA">
     <jta-data-source>jdbc/merlionDB</jta-data-source>
-    <class>merlion.entity.Customer</class>
-    <class>merlion.entity.LineItem</class>
-    <class>merlion.entity.OrderRecord</class>
-    <class>merlion.entity.Product</class>
-    <class>merlion.entity.PurchaseOrder</class>
-    <class>merlion.entity.Request</class>
-    <class>merlion.entity.Salesquotation</class>
-    <class>merlion.entity.Vendor</class>
-    <class>merlion.entity.CommonInfrastructure.LogisticTools</class>
-    <class>merlion.entity.CRMS.Services</class>
-    <class>merlion.entity.CRMS.PaymentTransactionLog</class>
-    <class>merlion.entity.WMS.Storagebin</class>
-    <class>merlion.entity.CRMS.CompanyProfile</class>
-    <class>merlion.entity.WMS.Facility</class>
-    <class>merlion.entity.WMS.HumanResource</class>
-    <class>CI.Entity.Chat</class>
-    <class>CI.Entity.Announcement</class>
-    <class>CI.Entity.ActionRecord</class>
-    <class>CI.Entity.Account</class>
-    <class>CI.Entity.Notification</class>
-    <class>CRMS.Entity.Feedback</class>
-    <class>CRMS.Entity.Payment</class>
-    <class>CRMS.Entity.Favorite</class>
-    <class>CRMS.Entity.Contract</class>
-    <class>CRMS.Entity.Post</class>
-    <class>CRMS.Entity.ServiceCatalog_tobedeleted</class>
-    <class>CRMS.Entity.Promotion</class>
-    <class>CRMS.Entity.Company</class>
-    <class>CRMS.Entity.ServiceOrder</class>
-    <class>CRMS.Entity.Invoice</class>
-    <class>GRNS.Entity.Auction</class>
-    <class>GRNS.Entity.AggregateDemand</class>
-    <class>MRP.Entity.BOM</class>
-    <class>MRP.Entity.MPS</class>
-    <class>MRP.Entity.Demand</class>
-    <class>MRP.Entity.MRPOrders</class>
-    <class>MRP.Entity.Template</class>
-    <class>MRP.Entity.Item</class>
-    <class>WMS.Entity.Inventory</class>
-    <class>WMS.Entity.Warehouse</class>
-    <class>WMS.Entity.Employee</class>
-    <class>TMS.Entity.DispatchOrder</class>
-    <class>TMS.Entity.TMSFacility</class>
-    <class>WMS.Entity.WMSOrder</class>
-    <class>WMS.Entity.Shipment_Notice</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
