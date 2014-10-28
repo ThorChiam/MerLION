@@ -7,9 +7,9 @@ package WMS.Session;
 
 import CI.Entity.Account;
 import WMS.Entity.Inventory;
+import WMS.Entity.Shipment_Notice;
 import WMS.Entity.StorageArea;
 import WMS.Entity.StorageArea_Inventory;
-import WMS.Entity.WMSFacility;
 import WMS.Entity.WMSOrder;
 import WMS.Entity.Warehouse;
 import WMS.Entity.Warehouse_Inventory;
@@ -36,6 +36,15 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     public List<WMSOrder> getAllOrders(String email) {
         Query q = em.createQuery("SELECT o FROM WMSOrder o WHERE o.provider.email=:email");
         q.setParameter("email", email);
+        return q.getResultList();
+    }
+
+    //for generation of shipment_notice
+    @Override
+    public List<WMSOrder> getAllocatedOrders(String email) {
+        Query q = em.createQuery("SELECT o FROM WMSOrder o WHERE o.provider.email=:email AND o.status=:status");
+        q.setParameter("email", email);
+        q.setParameter("status", "allocated");
         return q.getResultList();
     }
 
@@ -69,6 +78,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         return checkI;
     }
 
+    @Override
     public List<Warehouse> getAllWarehouse(String email) {
         Query q = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");
         q.setParameter("email", email);
@@ -76,18 +86,21 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         return a.getCompany().getWarehouse();
     }
 
+    @Override
     public Warehouse getWarehouse(Long warehouseId) {
         Query q = em.createQuery("SELECT w FROM Warehouse w WHERE w.id=:warehouseId");
         q.setParameter("warehouseId", warehouseId);
         return (Warehouse) q.getSingleResult();
     }
 
+    @Override
     public Inventory getInventory(Long inventoryId) {
         Query q = em.createQuery("SELECT i FROM Inventory i WHERE i.id=:inventoryId");
         q.setParameter("inventoryId", inventoryId);
         return (Inventory) q.getSingleResult();
     }
 
+    @Override
     public List<Warehouse> getWarehouseByStorageArea(List<StorageArea> sas) {
         List<Warehouse> lw = new ArrayList<>();
         for (int i = 0; i < sas.size(); i++) {
@@ -121,7 +134,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
 //        }
 //        return wQty;
 //    }
-    public int countWarehouseQtyBySA(Long warehouseId, Long inventoryId) {
+    private int countWarehouseQtyBySA(Long warehouseId, Long inventoryId) {
         Query q = em.createQuery("SELECT si.qty FROM StorageArea_Inventory si WHERE si.inventory.id=:inventoryId AND si.sa.WMSWarehouse.id=:warehouseId");
         q.setParameter("inventoryId", inventoryId);
         q.setParameter("warehouseId", warehouseId);
@@ -133,18 +146,20 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         return total;
     }
 //pg-3
+
+    @Override
     public List<Warehouse_Inventory> getAvailableWarehouse(Long orderId) {
         WMSOrder order = this.getOrder(orderId);
         List<Inventory> lin = order.getInventory();
-            Query q = em.createQuery("SELECT wi FROM Warehouse_Inventory wi");
-            List<Warehouse_Inventory> wis = (List<Warehouse_Inventory>) q.getResultList();
-            List<Warehouse_Inventory> awis = new ArrayList<>();
-            for(int i=0;i<wis.size();i++){
-                if(lin.contains(wis.get(i).getInventory())){
-                    awis.add(wis.get(i));
-                }
+        Query q = em.createQuery("SELECT wi FROM Warehouse_Inventory wi");
+        List<Warehouse_Inventory> wis = (List<Warehouse_Inventory>) q.getResultList();
+        List<Warehouse_Inventory> awis = new ArrayList<>();
+        for (int i = 0; i < wis.size(); i++) {
+            if (lin.contains(wis.get(i).getInventory())) {
+                awis.add(wis.get(i));
             }
-            return awis;
+        }
+        return awis;
     }
 //    public List<Warehouse> getAllocateWarehouse(List<Warehouse> lw, List<Integer> allocateQty) {
 //
@@ -158,6 +173,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
 //        return lwo;
 //    }
 
+    @Override
     public void createInventory(String name, int quantity, String status, List<StorageArea> storageArea, List<Integer> storageQty) {
         inventory = new Inventory();
         inventory.setName(name);
@@ -208,25 +224,81 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
 //        return lwo;
 //    }
     //pg-4,bottom dynamic table
-    public List<StorageArea_Inventory> getPickTable(Long warehouseId, Long inventoryId, int iQty) {
+    @Override
+    public List<StorageArea_Inventory> getPickTable(Long warehouseId, Long inventoryId) {
         Query q = em.createQuery("SELECT si FROM StorageArea_Inventory si WHERE si.inventory.id=:inventoryId AND si.sa.WMSWarehouse.id=:warehouseId");
         q.setParameter("inventoryId", inventoryId);
         q.setParameter("warehouseId", warehouseId);
         List<StorageArea_Inventory> sal = q.getResultList();
         return sal;
     }
+//pg-extra
+//    public List<WMSFacility> getPack(Long warehouseId) {
+//        Query q = em.createQuery("SELECT wf FROM WMSFacility wf WHERE wf.type=:type");
+//        q.setParameter("type", "pack");
+//        return (List<WMSFacility>)q.getResultList();
+//    }
+
+    @Override
+    public Shipment_Notice createShippingNotice(Long orderId, Long orderDate) {
+        Shipment_Notice sn = new Shipment_Notice();
+        Query q = em.createQuery("SELECT wo FROM WMSOrder wo WHERE wo.id=:orderId");
+        q.setParameter("orderId", orderId);
+        WMSOrder wo = (WMSOrder) q.getSingleResult();
+        sn.setOrder(wo);
+        sn.setOrderdate(orderDate);
+        em.persist(sn);
+        return sn;
+    }
 //pg-4
-    public List<WMSFacility> getPack(Long warehouseId) {
-        Query q = em.createQuery("SELECT wf FROM WMSFacility wf WHERE wf.type=:type");
-        q.setParameter("type", "pack");
-        return (List<WMSFacility>)q.getResultList();
+
+    @Override
+    public int allocateInventory(List<Integer> san, Long warehouseId, Long inventoryId) {
+        List<StorageArea_Inventory> sal = this.getPickTable(warehouseId, inventoryId);
+        for (int i = 0; i < san.size(); i++) {
+            StorageArea_Inventory si = sal.get(i);
+            int tmpQty = si.getQty();
+            tmpQty -= san.get(i);
+            si.setQty(tmpQty);
+            em.merge(si);
+        }
+
+        Query q = em.createQuery("SELECT wi FROM Warehouse_Inventory wi WHERE wi.id=:warehouseId");
+        q.setParameter("warehouseId", warehouseId);
+        Warehouse_Inventory wi = (Warehouse_Inventory) q.getSingleResult();
+        int warehouseNewStock = this.countWarehouseQtyBySA(warehouseId, inventoryId);
+        wi.setQty(warehouseNewStock);
+        em.merge(wi);
+
+        return warehouseNewStock;
     }
 
-    public void report() {
-
+    private int countInventoryQty(Inventory inven) {
+        List<Warehouse_Inventory> wis = inven.getWs_inven();
+        int totalQty = 0;
+        for (int i = 0; i < wis.size(); i++) {
+            totalQty += wis.get(i).getQty();
+        }
+        return totalQty;
     }
 
-    public void generateShippingNotice() {
+    private void updateInventory(List<Inventory> li) {
+        for (int i = 0; i < li.size(); i++) {
+            Inventory inven = li.get(i);
+            int qty = this.countInventoryQty(inven);
+            inven.setQuantity(qty);
+            em.merge(inven);
+        }
+    }
 
+    @Override
+    public List<Inventory> report(Long orderId) {
+        Query q = em.createQuery("SELECT wo FROM WMSOrder wo WHERE wo.id=:orderId");
+        q.setParameter("orderId", orderId);
+        WMSOrder wo = (WMSOrder) q.getSingleResult();
+        this.updateInventory(wo.getInventory());
+        wo.setStatus("allocated");
+        em.merge(wo);
+        return wo.getInventory();
     }
 }

@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class WMSFacility implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,9 +26,8 @@ public class WMSFacility implements Serializable {
     private String name;
     private String type;//packZone
 
-  
     private String status;
-    
+
     @ManyToOne
     private Warehouse WMSWarehouse;
 
@@ -46,7 +46,7 @@ public class WMSFacility implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -103,5 +103,5 @@ public class WMSFacility implements Serializable {
     public String toString() {
         return "merlion_new_enetity.Facility[ id=" + id + " ]";
     }
-    
+
 }

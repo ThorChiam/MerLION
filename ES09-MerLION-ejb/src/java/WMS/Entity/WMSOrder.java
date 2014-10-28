@@ -30,6 +30,7 @@ public class WMSOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String orderdate;
+    private String status;//2 types:new;allocated
     private List<Integer> quantity = new ArrayList();
 
     @ManyToOne
@@ -41,12 +42,23 @@ public class WMSOrder implements Serializable {
     @OneToMany(cascade = {CascadeType.PERSIST})
     private List<Inventory> inventory = new ArrayList();
 
+    public WMSOrder(){
+        this.status = "new";
+    }
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getOrderdate() {

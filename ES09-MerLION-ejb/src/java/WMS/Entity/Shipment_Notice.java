@@ -24,8 +24,8 @@ public class Shipment_Notice implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long orderdate;
-    @OneToOne
-    private WMSFacility pack;
+//    @OneToOne
+//    private WMSFacility pack;
 
     @OneToOne
     private WMSOrder Order;
@@ -54,13 +54,13 @@ public class Shipment_Notice implements Serializable {
         this.id = id;
     }
 
-    public WMSFacility getPack() {
-        return pack;
-    }
-
-    public void setPack(WMSFacility pack) {
-        this.pack = pack;
-    }
+//    public WMSFacility getPack() {
+//        return pack;
+//    }
+//
+//    public void setPack(WMSFacility pack) {
+//        this.pack = pack;
+//    }
 
     @Override
     public int hashCode() {
