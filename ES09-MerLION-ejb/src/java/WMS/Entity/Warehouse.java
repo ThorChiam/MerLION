@@ -40,10 +40,16 @@ public class Warehouse implements Serializable {
     private List<Employee> employee = new ArrayList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSWarehouse")
-    private List<StorageArea> storagearea = new ArrayList<>();
+    private List<StorageArea> storageArea = new ArrayList<>();
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSWarehouse")
-    private List<Inventory> inventory = new ArrayList<>();
+//    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSWarehouse")
+//    private List<Inventory> inventory = new ArrayList<>();
+//    @ManyToMany(cascade={CascadeType.PERSIST})
+//    @JoinTable(name="Warehouse_Inventory")
+//    @JoinColumn
+//    private Set<Inventory> inventory = new HashSet<>();
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "warehouse")
+    private List<Warehouse_Inventory> ws_inven = new ArrayList<>();
     @ManyToOne
     private Company Company;
 
@@ -71,12 +77,12 @@ public class Warehouse implements Serializable {
         this.capacity = capacity;
     }
 
-    public List<StorageArea> getStoragearea() {
-        return storagearea;
+    public List<StorageArea> getStorageArea() {
+        return storageArea;
     }
 
-    public void setStoragearea(List<StorageArea> storagearea) {
-        this.storagearea = storagearea;
+    public void setStorageArea(List<StorageArea> storageArea) {
+        this.storageArea = storageArea;
     }
 
     public Company getCompany() {
@@ -99,14 +105,21 @@ public class Warehouse implements Serializable {
         return facility;
     }
 
-    public List<Inventory> getInventory() {
-        return inventory;
+    public List<Warehouse_Inventory> getWs_inven() {
+        return ws_inven;
     }
 
-    public void setInventory(List<Inventory> inventory) {
-        this.inventory = inventory;
+    public void setWs_inven(List<Warehouse_Inventory> ws_inven) {
+        this.ws_inven = ws_inven;
     }
 
+//    public Set<Inventory> getInventory() {
+//        return inventory;
+//    }
+//
+//    public void setInventory(Set<Inventory> inventory) {
+//        this.inventory = inventory;
+//    }
     public void setFacility(List<WMSFacility> facility) {
         this.facility = facility;
     }

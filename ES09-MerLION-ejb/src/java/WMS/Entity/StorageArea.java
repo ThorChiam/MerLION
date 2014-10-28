@@ -6,16 +6,16 @@
 package WMS.Entity;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -31,15 +31,16 @@ public class StorageArea implements Serializable {
     private String status;
     private int totalCapacity;
 
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "sa")
+    private List<StorageArea_Inventory> sa_inven = new ArrayList<>();
     @ManyToOne
     private Warehouse WMSWarehouse;
 
 //    @ManyToOne
 //    private Inventory Inventory;
-
-    @ManyToMany(cascade={CascadeType.PERSIST})
-    @JoinTable(name="StorageArea_Inventory")
-    private Set<Inventory> Inventory = new HashSet<>();
+//    @ManyToMany(cascade = {CascadeType.PERSIST})
+//    @JoinTable(name = "StorageArea_Inventory")
+//    private Set<Inventory> Inventory = new HashSet<>();
     public Long getId() {
         return id;
     }
@@ -64,12 +65,19 @@ public class StorageArea implements Serializable {
         this.WMSWarehouse = WMSWarehouse;
     }
 
-    public Set<Inventory> getInventory() {
-        return Inventory;
+    public List<StorageArea_Inventory> getSa_inven() {
+        return sa_inven;
     }
 
-    public void setInventory(Set<Inventory> inventory) {
-        this.Inventory = inventory;
+//    public Set<Inventory> getInventory() {
+//        return Inventory;
+//    }
+//
+//    public void setInventory(Set<Inventory> inventory) {
+//        this.Inventory = inventory;
+//    }
+    public void setSa_inven(List<StorageArea_Inventory> sa_inven) {
+        this.sa_inven = sa_inven;
     }
 
     public int getTotalCapacity() {

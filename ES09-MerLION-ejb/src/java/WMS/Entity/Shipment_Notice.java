@@ -17,13 +17,15 @@ import javax.persistence.OneToOne;
  * @author sunny
  */
 @Entity
-public class Shipment_Order implements Serializable {
+public class Shipment_Notice implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long orderdate;
+    @OneToOne
+    private WMSFacility pack;
 
     @OneToOne
     private WMSOrder Order;
@@ -52,6 +54,14 @@ public class Shipment_Order implements Serializable {
         this.id = id;
     }
 
+    public WMSFacility getPack() {
+        return pack;
+    }
+
+    public void setPack(WMSFacility pack) {
+        this.pack = pack;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -62,10 +72,10 @@ public class Shipment_Order implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Shipment_Order)) {
+        if (!(object instanceof Shipment_Notice)) {
             return false;
         }
-        Shipment_Order other = (Shipment_Order) object;
+        Shipment_Notice other = (Shipment_Notice) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

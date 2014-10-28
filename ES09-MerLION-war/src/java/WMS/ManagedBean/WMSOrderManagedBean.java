@@ -5,6 +5,7 @@
  */
 package WMS.ManagedBean;
 
+import WMS.Entity.Warehouse;
 import WMS.Session.WMSOrderSessionLocal;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -26,6 +27,7 @@ public class WMSOrderManagedBean implements Serializable {
     @EJB
     private WMSOrderSessionLocal wosl;
     private Long orderId;
+    private List<Warehouse> lw;
     
     public WMSOrderManagedBean() {
     }
