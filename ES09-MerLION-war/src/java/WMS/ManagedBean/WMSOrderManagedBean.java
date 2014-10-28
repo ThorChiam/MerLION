@@ -94,7 +94,7 @@ public class WMSOrderManagedBean implements Serializable {
     }
 
     public void createInventory(){
-        wosl.createInventory(inventoryName, inventoryQty, inventoryStatus, storageArea, storageQty);
+        wosl.createInventory(inventoryName, inventoryQty, inventoryStatus/*, storageArea, storageQty*/);
     }
 
     public List<StorageArea_Inventory> getPickTable(){
@@ -111,5 +111,9 @@ public class WMSOrderManagedBean implements Serializable {
 
     public List<Inventory> report(){
         return wosl.report(orderId);
+    }
+    //***************************InventoryManagement
+    public void reserveStorage(){
+        wosl.reserveInventory(inventoryId, storageArea, storageQty);
     }
 }
