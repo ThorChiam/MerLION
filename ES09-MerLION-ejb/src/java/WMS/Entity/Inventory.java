@@ -40,6 +40,8 @@ public class Inventory implements Serializable {
     private List<StorageArea_Inventory> sa_inven = new ArrayList<>();
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "inventory")
     private List<Warehouse_Inventory> ws_inven = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "inventory")
+    private List<WMSOrder_Inventory> wo_inven = new ArrayList<>();
     @ManyToOne
     private WMSOrder order;
 
@@ -109,7 +111,6 @@ public class Inventory implements Serializable {
 //    public void setWarehouseQty(List<Integer> warehouseQty) {
 //        this.warehouseQty = warehouseQty;
 //    }
-
     public List<StorageArea_Inventory> getSa_inven() {
         return sa_inven;
     }
@@ -124,6 +125,14 @@ public class Inventory implements Serializable {
 
     public void setWs_inven(List<Warehouse_Inventory> ws_inven) {
         this.ws_inven = ws_inven;
+    }
+
+    public List<WMSOrder_Inventory> getWo_inven() {
+        return wo_inven;
+    }
+
+    public void setWo_inven(List<WMSOrder_Inventory> wo_inven) {
+        this.wo_inven = wo_inven;
     }
 
 //    public Set<StorageArea> getStorageArea() {

@@ -11,6 +11,7 @@ import WMS.Entity.Shipment_Notice;
 import WMS.Entity.StorageArea;
 import WMS.Entity.StorageArea_Inventory;
 import WMS.Entity.WMSOrder;
+import WMS.Entity.WMSOrder_Inventory;
 import WMS.Entity.Warehouse;
 import WMS.Entity.Warehouse_Inventory;
 import java.util.ArrayList;
@@ -68,12 +69,10 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     public List<Integer> checkInventoryLevel(Long orderId) {
         WMSOrder o = this.getOrder(orderId);
         List<Integer> checkI = new ArrayList();
-        //ins:inventories
-        List<Inventory> ins = o.getInventory();
         //ir:inventory Required
-        List<Integer> ir = o.getQuantity();
-        for (int j = 0; j < ins.size(); j++) {
-            checkI.add((ins.get(j).getQuantity() - ir.get(j)));
+        List<WMSOrder_Inventory> irs = o.getWo_inven();
+        for (WMSOrder_Inventory ir : irs) {
+            checkI.add(ir.getInventory().getQuantity() - ir.getQty());
         }
         return checkI;
     }
@@ -103,8 +102,8 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     @Override
     public List<Warehouse> getWarehouseByStorageArea(List<StorageArea> sas) {
         List<Warehouse> lw = new ArrayList<>();
-        for (int i = 0; i < sas.size(); i++) {
-            Warehouse w = sas.get(i).getWMSWarehouse();
+        for (StorageArea sa : sas) {
+            Warehouse w = sa.getWMSWarehouse();
             if (!lw.contains(w)) {
                 lw.add(w);
             }
@@ -154,9 +153,9 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         Query q = em.createQuery("SELECT wi FROM Warehouse_Inventory wi");
         List<Warehouse_Inventory> wis = (List<Warehouse_Inventory>) q.getResultList();
         List<Warehouse_Inventory> awis = new ArrayList<>();
-        for (int i = 0; i < wis.size(); i++) {
-            if (lin.contains(wis.get(i).getInventory())) {
-                awis.add(wis.get(i));
+        for (Warehouse_Inventory wi : wis) {
+            if (lin.contains(wi.getInventory())) {
+                awis.add(wi);
             }
         }
         return awis;
@@ -191,11 +190,11 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         inventory.setSa_inven(sais);
         List<Warehouse> lw = this.getWarehouseByStorageArea(storageArea);
         List<Warehouse_Inventory> wis = new ArrayList<>();
-        for (int i = 0; i < lw.size(); i++) {
+        for (Warehouse lw1 : lw) {
             Warehouse_Inventory wi = new Warehouse_Inventory();
-            wi.setWarehouse(lw.get(i));
+            wi.setWarehouse(lw1);
             wi.setInventory(inventory);
-            wi.setQty(this.countWarehouseQtyBySA(lw.get(i).getId(), inventory.getId()));
+            wi.setQty(this.countWarehouseQtyBySA(lw1.getId(), inventory.getId()));
             em.persist(wi);
             wis.add(wi);
         }
@@ -276,15 +275,14 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     private int countInventoryQty(Inventory inven) {
         List<Warehouse_Inventory> wis = inven.getWs_inven();
         int totalQty = 0;
-        for (int i = 0; i < wis.size(); i++) {
-            totalQty += wis.get(i).getQty();
+        for (Warehouse_Inventory wi : wis) {
+            totalQty += wi.getQty();
         }
         return totalQty;
     }
 
     private void updateInventory(List<Inventory> li) {
-        for (int i = 0; i < li.size(); i++) {
-            Inventory inven = li.get(i);
+        for (Inventory inven : li) {
             int qty = this.countInventoryQty(inven);
             inven.setQuantity(qty);
             em.merge(inven);

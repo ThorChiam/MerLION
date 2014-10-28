@@ -16,6 +16,7 @@ import CI.Entity.Account;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 /**
@@ -31,7 +32,7 @@ public class WMSOrder implements Serializable {
     private Long id;
     private String orderdate;
     private String status;//2 types:new;allocated
-    private List<Integer> quantity = new ArrayList();
+//    private List<Integer> quantity = new ArrayList();
 
     @ManyToOne
     private Account requester;
@@ -42,9 +43,13 @@ public class WMSOrder implements Serializable {
     @OneToMany(cascade = {CascadeType.PERSIST})
     private List<Inventory> inventory = new ArrayList();
 
-    public WMSOrder(){
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "order")
+    private List<WMSOrder_Inventory> wo_inven = new ArrayList();
+
+    public WMSOrder() {
         this.status = "new";
     }
+
     public Long getId() {
         return id;
     }
@@ -93,12 +98,20 @@ public class WMSOrder implements Serializable {
         this.inventory = inventory;
     }
 
-    public List<Integer> getQuantity() {
-        return quantity;
+//    public List<Integer> getQuantity() {
+//        return quantity;
+//    }
+//
+//    public void setQuantity(List<Integer> quantity) {
+//        this.quantity = quantity;
+//    }
+
+    public List<WMSOrder_Inventory> getWo_inven() {
+        return wo_inven;
     }
 
-    public void setQuantity(List<Integer> quantity) {
-        this.quantity = quantity;
+    public void setWo_inven(List<WMSOrder_Inventory> wo_inven) {
+        this.wo_inven = wo_inven;
     }
 
     @Override
