@@ -14,19 +14,6 @@
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/> 
 
-        <script type="text/javascript">
-            function handleLoginRequest(xhr, status, args) {
-                if (args.validationFailed || !args.loggedIn) {
-                    PF('dlg').jq.effect("shake", {times: 5}, 100);
-                }
-                else {
-                    PF('dlg').hide();
-                    $('#loginLink').fadeOut();
-                }
-            }
-        </script>
-
-
     </h:head>
 
     <h:body>
@@ -93,62 +80,28 @@
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
                     <p:panel header="Inventory Allocation">
-                        <!-- value should be a LIST-->
-                        <p:dataTable var="detail" value="#{womb.lin}">
-                            <p:column headerText="Inventory Name">
-                                <!-- -->
-                                <h:outputText value="#{detail.name}" />
-                            </p:column>
+                        <h:form>
+                            <!-- value should be a LIST-->
+                            <p:dataTable var="storage" value="#">
+                                <p:column headerText="Inventory Name">
+                                    <!-- -->
+                                    <h:outputText value="#" />
+                                </p:column>
 
-                            <p:column headerText="Quantity">
-                                <h:outputText value="#{detail.quantity}" />
-                            </p:column>
+                                <p:column headerText="Quantity">
+                                    <h:outputText value="#" />
+                                </p:column>
 
-                            <!-- warehouse-->
-                            <p:columns var="wh" value="#{womb.availableWarehouse}">
-                                <f:facet name="header">  
-                                    #{wh.warehouse.name} 
-                                </f:facet> 
-
-                                <h:outputText value="#{wh.qty}" />
-                                
-                                &nbsp;
-
-                                <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="View">
-                                    <p:graphicImage name="WMS/deliveryOrder/view.png" />
-                                </h:outputLink>
-
-                                <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-
-                                <p:dialog header="Storgae Bin Allocation" widgetVar="dlg" resizable="false">
-                                    <h:panelGrid style="width: 350px; height: 500px">
-                                        <h:inputHidden value="#" id="hiddenInventoryId" />
-                                        <h:inputHidden value="#" id="hiddenWarehouseId" />
-
-                                        <h:outputText value="#{wh.warehouse.id}" />
-                                        <h:outputText value="#{wh.inventory.id}"/>
-
-                                        <p:dataTable var="storge" value="">
-                                            <p:column headerText="Storage ID">
-                                                <h:outputText value="" />
-                                            </p:column>
-
-                                            <p:column headerText="Quantity">
-                                                <h:outputText value="" />
-                                            </p:column>
-
-                                            <p:column headerText="Allocation">
-                                                <h:inputText value="" />
-                                            </p:column>
-                                        </p:dataTable>
-                                        <p:commandButton value="Allocate" update="growl" actionListener="#"
-                                                         oncomplete="handleLoginRequest(xhr, status, args)" />
-
-                                    </h:panelGrid>
-                                </p:dialog>
-                            </p:columns>
-                            
-                        </p:dataTable>
+                                <!-- storage area ???????? -->
+                                <p:columns var="sa" value="#">
+                                    <f:facet name="header">  
+                                        Storage Area #
+                                    </f:facet> 
+                                    <h:outputText value="#" />
+                                </p:columns>
+                            </p:dataTable>
+                            <h:commandButton value="Reserve" actionListener="#"/>
+                        </h:form>
                     </p:panel>
                 </b:column>
 
