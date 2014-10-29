@@ -8,7 +8,6 @@
       xmlns:p="http://primefaces.org/ui">
 
 
-
     <h:head>
         <title>Welcome to WMS System</title>
 
@@ -80,27 +79,33 @@
 
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
-                    <p:panel header="Replenish Inventory">
+                    <p:panel header="Inventory Allocation">
                         <h:form>
                             <!-- value should be a LIST-->
-                            <p:dataTable var="detail" value="#{womb.lin}">
-                                <p:column headerText="Inventory Name">                          
-                                    <h:outputText value="#{detail.name}" />
+                            <p:dataTable var="storage" value="#">
+                                <p:column headerText="Inventory Name">
+                                    <!-- -->
+                                    <h:outputText value="#" />
                                 </p:column>
 
                                 <p:column headerText="Quantity">
-                                    <h:inputText value="#{detail.quantity}"/>
+                                    <h:outputText value="#" />
                                 </p:column>
-                                <!--<p:column headerText="Status">
-                                    <h:inputText value="#{detail.status}"/>
-                                </p:column>-->
 
+                                <!-- storage area ???????? -->
+                                <p:columns var="sa" value="#">
+                                    <f:facet name="header">  
+                                        Storage Area #
+                                    </f:facet> 
+                                    <h:outputText value="#" />
+                                    <h:inputText value="#" />
+                                </p:columns>
                             </p:dataTable>
-                            <!-- actionLister call the back method to store the data-->
-                            <h:commandButton value="Replenish" actionListener="#{womb.replenish()}"/>
+                            <h:commandButton value="Reserve" actionListener="#"/>
                         </h:form>
                     </p:panel>
                 </b:column>
+
             </b:row>
         </b:container>
         <br/>

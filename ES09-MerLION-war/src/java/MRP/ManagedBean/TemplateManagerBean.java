@@ -15,6 +15,8 @@ import javax.faces.event.ActionEvent;
 import MRP.Session.TemplateSessionBean;
 import MRP.Entity.Item;
 import MRP.Entity.Template;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "TemplateManagerBean")
 @SessionScoped
@@ -48,10 +50,6 @@ public class TemplateManagerBean {
         this.templates = templates;
     }
 
-    
-
-  
-
     public Boolean isEditable() {
         return editable;
     }
@@ -59,7 +57,6 @@ public class TemplateManagerBean {
     public void setEditable(Boolean editable) {
         this.editable = editable;
     }
-    
 
     public String getStatusMessage() {
         return statusMessage;
@@ -92,17 +89,20 @@ public class TemplateManagerBean {
         try {
             for (Temp temp : tempList) {
 
-                 TemplateSessionBean.addNewTemplate(itemId, temp.name,
+                TemplateSessionBean.addNewTemplate(itemId, temp.name,
                         temp.first, temp.second, temp.third, temp.fourth, temp.fifth, temp.sixth, temp.seventh);
             }
             statusMessage = "New Template Saved Successfully";
-        }  catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
-            statusMessage="?";
+            statusMessage = "?";
         }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                statusMessage, ""));
     }
-    public void getItemTemplate(){
-        templates=TemplateSessionBean.getItemPlan(itemId);
+
+    public void getItemTemplate() {
+        templates = TemplateSessionBean.getItemPlan(itemId);
     }
 
     public static class Temp {
@@ -192,7 +192,7 @@ public class TemplateManagerBean {
         public void setSeventh(int seventh) {
             this.seventh = seventh;
         }
-        
+
         public boolean isEditable() {
             return editable;
         }

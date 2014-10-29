@@ -80,43 +80,24 @@
 
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
-                    <p:panel header="Order Detail">
+                    <p:panel header="Replenish Inventory">
                         <h:form>
-                            <!-- value should be a LIST return from getOrderDetail(Long orderId) 我随便取的名字。。。-->
+                            <!-- value should be a LIST-->
+                            <p:dataTable var="detail" value="#">
+                                <p:column headerText="Inventory Name">                          
+                                    <h:outputText value="#" />
+                                </p:column>
 
-                            <p:dataTable var="detail" value="#{womb.order.wo_inven}">
-                                <f:facet name="header">
-                                    Check Inventory Level
-                                </f:facet>
-
-                                <p:columnGroup type="header">
-                                    <p:row>
-                                        <p:column rowspan="1" headerText="Inventories" />
-                                        <p:column colspan="1" headerText="Conditions" />
-                                    </p:row>
-                                </p:columnGroup>
-
-                                <p:subTable var="conditions" value="#{womb.checkResult}">
-                                    
-                                    <p:column>
-                                        <h:outputText value="#{detail.qty}" />
-                                    </p:column>
-                                    <p:column>
-                                        <h:outputText value="#{conditions}" />
-                                    </p:column>
-                                    
-                                </p:subTable>
+                                <p:column headerText="Quantity">
+                                    <h:inputText value="#"/>
+                                </p:column>
+                     
                             </p:dataTable>
-
-                            <!-- value and action should be the String return by the method which is "Allocate"
-                            or "Replenishment"-->
-                            <h:commandButton value="#{womb.check()}" action="#{womb.check()}"/>
-
+                            <!-- actionLister call the back method to store the data-->
+                            <h:commandButton value="Replenish" actionListener="#"/>
                         </h:form>
                     </p:panel>
                 </b:column>
-
-
             </b:row>
         </b:container>
         <br/>

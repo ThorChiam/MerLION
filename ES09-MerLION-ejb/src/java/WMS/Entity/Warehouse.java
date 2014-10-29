@@ -32,6 +32,7 @@ public class Warehouse implements Serializable {
     private String name;
     private String address;
     private String capacity;
+    private List<Integer> available;
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "WMSWarehouse")
     private List<WMSFacility> facility = new ArrayList<>();
@@ -52,6 +53,14 @@ public class Warehouse implements Serializable {
     private List<Warehouse_Inventory> ws_inven = new ArrayList<>();
     @ManyToOne
     private Company Company;
+
+    public List<Integer> getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(List<Integer> available) {
+        this.available = available;
+    }
 
     public String getName() {
         return name;
