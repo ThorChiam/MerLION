@@ -45,7 +45,7 @@ public class AccountSession implements AccountSessionLocal {
         Account systemUser = getAccount(email);
         
         System.out.println("*****test accountSession: email"+systemUser.getEmail());
-        System.out.println("*****test accountSession: companyName"+systemUser.getCompany().getCompanyName());
+//        System.out.println("*****test accountSession: companyName"+systemUser.getCompany().getCompanyName());
         if (systemUser == null) {
             return null;
         } else {
