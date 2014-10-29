@@ -107,7 +107,6 @@ public class AccountManagedBean implements Serializable {
             statusMessage = "Invalid Login";
         } else if (response.equals("frozen")) {
             statusMessage = "Account frozen!";
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userId", email);
         } else {
             statusMessage = "login successful! welcome " + response;
             login = true;

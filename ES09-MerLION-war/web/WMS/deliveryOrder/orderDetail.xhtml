@@ -82,24 +82,24 @@
                 <b:column col-xs="5" col-sm="5" col-md="9">
                     <p:panel header="Order Detail">
             <!-- value should be a LIST return from getOrderDetail(Long orderId) 我随便取的名字。。。-->
-                        <p:dataTable var="detail" value="">
+            <p:dataTable var="detail" value="#{womb.order.wo_inven}">
                             <p:column headerText="Inventory Name">
                                 <!-- -->
-                                <h:outputText value="" />
+                                <h:outputText value="#{detail.inventory.name}" />
                             </p:column>
 
                             <p:column headerText="Quantity">
-                                <h:outputText value="" />
+                                <h:outputText value="#{detail.qty}" />
                             </p:column>
 
                             <p:column headerText="Inventory Condition">
-                                <h:outputText value="" />
+                                <h:outputText value="#" />
                             </p:column>
 
                         </p:dataTable>
             <!-- value and action should be the String return by the method which is "Allocate"
             or "Replenishment"-->
-            <h:commandButton value="#{xxx}" action="/WMS/deliveryOrder/#{xxx}"/>
+            <h:commandButton value="#{womb.check()}" action="#{womb.check()}"/>
 
 
                     </p:panel>

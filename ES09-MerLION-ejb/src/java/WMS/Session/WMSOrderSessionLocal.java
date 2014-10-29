@@ -51,4 +51,8 @@ public interface WMSOrderSessionLocal {
     public int allocateInventory(List<Integer> san, Long warehouseId, Long inventoryId);
 
     public List<Inventory> report(Long orderId);
+
+    public List<Inventory> getInventories(Long orderId);
+
+    public void replenish(List<Inventory> lis);
 }

@@ -330,6 +330,14 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         }
         return lin;
     }
+    @Override
+    public List<Inventory> getInventories(Long orderId) {
+        Query q = em.createQuery("SELECT wo FROM WMSOrder wo WHERE wo.id=:orderId");
+        q.setParameter("orderId", orderId);
+        WMSOrder wo = (WMSOrder) q.getSingleResult();
+        List<Inventory> li = this.convertInventory(wo.getWo_inven());
+        return li;
+    }
 
     @Override
     public List<Inventory> report(Long orderId) {
