@@ -85,17 +85,13 @@
                             <!-- value should be a LIST-->
                             <p:dataTable var="detail" value="#">
                                 <p:column headerText="Inventory Name">                          
-                                    <h:outputText value="#{detail.name}" />
+                                    <h:outputText value="#" />
                                 </p:column>
 
                                 <p:column headerText="Quantity">
-                                    <h:inputText value="#{detail.quantity}"/>
+                                    <h:inputText value="#"/>
                                 </p:column>
-                                
-                                <p:column headerText="Status">
-                                    <h:outputText value="#{detail.status}"/>
-                                </p:column>
-
+                     
                             </p:dataTable>
                             <!-- actionLister call the back method to store the data-->
                             <h:commandButton value="Replenish" actionListener="#"/>

@@ -15,9 +15,12 @@ import WMS.Entity.Warehouse_Inventory;
 import WMS.Session.WMSOrderSessionLocal;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -46,6 +49,11 @@ public class WMSOrderManagedBean implements Serializable {
     private List<Integer> san;//storageArea qty
     private List<Inventory> lin;
     private List<StorageArea_Inventory> imanage;
+    private List<Integer> checkResult;
+//    private List CCC;
+//    private ResultOfCheck roc;
+
+    private String statusMessage;
 
     public WMSOrderManagedBean() {
     }
@@ -57,6 +65,10 @@ public class WMSOrderManagedBean implements Serializable {
     public void setWosl(WMSOrderSessionLocal wosl) {
         this.wosl = wosl;
     }
+
+//    public ResultOfCheck getResultOfCheck() {
+//        return roc;
+//    }
 
     public Long getOrderId() {
         return orderId;
@@ -80,6 +92,14 @@ public class WMSOrderManagedBean implements Serializable {
 
     public void setInventoryId(Long inventoryId) {
         this.inventoryId = inventoryId;
+    }
+
+    public String getStatusMessage() {
+        return statusMessage;
+    }
+
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
     }
 
     public List<Warehouse> getLw() {
@@ -162,9 +182,21 @@ public class WMSOrderManagedBean implements Serializable {
      * @return the last element of the list indicate the stock condition,1 for
      * adequate,0 for any lack
      */
+//    public List getCCC() {
+//        CCC = new ArrayList<>();
+//        CCC.add(this.checkResult);
+//        return CCC;
+//    }
+
+    public List<Integer> getCheckResult() {
+        orderId = Long.valueOf(1);//testing use
+        checkResult = wosl.checkInventoryLevel(orderId);
+        return checkResult;
+    }
+
     public List<Integer> checkInventoryLevel() {
         orderId = Long.valueOf(1);//testing use
-        List<Integer> checkResult = wosl.checkInventoryLevel(orderId);
+        checkResult = wosl.checkInventoryLevel(orderId);
         for (int i = 0; i < checkResult.size(); i++) {
             if (checkResult.get(i) < 0) {
                 checkResult.add(0);
@@ -211,9 +243,20 @@ public class WMSOrderManagedBean implements Serializable {
     }
 
 //    public List<Warehouse> getWarehouseByStorageArea(List<StorageArea> sas);
-    public List<Warehouse_Inventory> getAvailableWarehouse() {
+    public List<Warehouse> getAvailableWarehouse() {
         orderId = Long.valueOf(1);//testing use
-        return wosl.getAvailableWarehouse(orderId);
+        List<Warehouse> lw = new ArrayList<>();
+        List<Warehouse_Inventory> olwi = wosl.getAvailableWarehouse(orderId);
+        List<Integer> avai = new ArrayList<>();
+        for(Warehouse_Inventory wi:olwi){
+            avai.add(wi.getQty());
+        }
+        for(Warehouse_Inventory wi:olwi){
+            Warehouse w = wi.getWarehouse();
+            w.setAvailable(avai);
+            lw.add(w);
+        }
+        return lw;
     }
 
     public void createInventory() {
@@ -262,9 +305,19 @@ public class WMSOrderManagedBean implements Serializable {
             in.setQuantity(tmp);
         }
         wosl.replenish(ins);
+
     }
 
     public List<Inventory> reportInventories(String email) {
         return wosl.reportInventories(email);
     }
+
+//    static class ResultOfCheck implements Serializable {
+//
+//        private List<Integer> checkResult;
+//
+//        public List<Integer> getCheckResult() {
+//            return checkResult;
+//        }
+//    }
 }

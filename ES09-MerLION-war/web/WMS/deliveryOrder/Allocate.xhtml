@@ -93,62 +93,72 @@
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
                     <p:panel header="Inventory Allocation">
-                        <!-- value should be a LIST-->
-                        <p:dataTable var="detail" value="#{womb.lin}">
-                            <p:column headerText="Inventory Name">
-                                <!-- -->
-                                <h:outputText value="#{detail.name}" />
+                        <h:form>
+                            <!-- value should be a LIST-->
+                            <p:dataTable var="detail" value="#{womb.lin}" style="width:200px">
+                                <p:column headerText="Inventory Name">
+                                    <!-- -->
+                                    <h:outputText value="#{detail.name}" />
+                                </p:column>
+
+                                <p:column headerText="Quantity">
+                                    <h:outputText value="#{detail.quantity}" />
+                                </p:column>
+
+                                <!-- warehouse-->
+                                <p:columns var="wh" value="#{womb.availableWarehouse}">
+                                    <f:facet name="header">  
+                                        #{wh.name} 
+                                    </f:facet> 
+                                    <p:dataList var="ava" value="#{wh.available}">
+                                        <h:outputText value="#{ava}" />
+                                    </p:dataList>
+                                    
+                                    &nbsp;
+
+                                    <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="View">
+                                        <p:graphicImage name="WMS/deliveryOrder/view.png" />
+                                    </h:outputLink>
+
+                                    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+                                    <p:dialog header="Storgae Bin Allocation" widgetVar="dlg" resizable="false">
+                                        <h:panelGrid style="width: 350px; height: 500px">
+                                            <h:inputHidden value="#" id="hiddenInventoryId" />
+                                            <h:inputHidden value="#" id="hiddenWarehouseId" />
+
+                                            <h:outputText value="#{detail.name}" />
+                                            <h:outputText value="#{detail.quantity}" />
+                                            <h:outputText value="#{wh.id}" />
+                                            <h:outputText value="#{detail.id}"/>
+
+                                            <p:dataTable var="storge" value="">
+                                                <p:column headerText="Storage ID">
+                                                    <h:outputText value="" />
+                                                </p:column>
+
+                                                <p:column headerText="Quantity">
+                                                    <h:outputText value="" />
+                                                </p:column>
+
+                                                <p:column headerText="Allocation">
+                                                    <h:inputText value="" />
+                                                </p:column>
+                                            </p:dataTable>
+                                            <p:commandButton value="Allocate" update="growl" actionListener="#"
+                                                             oncomplete="handleLoginRequest(xhr, status, args)" />
+
+                                        </h:panelGrid>
+                                    </p:dialog>
+                                </p:columns>
+
+                            </p:dataTable>
+                            <p:dataTable var="avas" value="#{womb.availableWarehouse}" style="width:200px">
+                            <p:column headerText="#{avas.name}">
+                                <h:outputText value="#{avas.name}"/>
                             </p:column>
-
-                            <p:column headerText="Quantity">
-                                <h:outputText value="#{detail.quantity}" />
-                            </p:column>
-
-                            <!-- warehouse-->
-                            <p:columns var="wh" value="#{womb.availableWarehouse}">
-                                <f:facet name="header">  
-                                    #{wh.warehouse.name} 
-                                </f:facet> 
-
-                                <h:outputText value="#{wh.qty}" />
-                                
-                                &nbsp;
-
-                                <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="View">
-                                    <p:graphicImage name="WMS/deliveryOrder/view.png" />
-                                </h:outputLink>
-
-                                <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-
-                                <p:dialog header="Storgae Bin Allocation" widgetVar="dlg" resizable="false">
-                                    <h:panelGrid style="width: 350px; height: 500px">
-                                        <h:inputHidden value="#" id="hiddenInventoryId" />
-                                        <h:inputHidden value="#" id="hiddenWarehouseId" />
-
-                                        <h:outputText value="#{wh.warehouse.id}" />
-                                        <h:outputText value="#{wh.inventory.id}"/>
-
-                                        <p:dataTable var="storge" value="">
-                                            <p:column headerText="Storage ID">
-                                                <h:outputText value="" />
-                                            </p:column>
-
-                                            <p:column headerText="Quantity">
-                                                <h:outputText value="" />
-                                            </p:column>
-
-                                            <p:column headerText="Allocation">
-                                                <h:inputText value="" />
-                                            </p:column>
-                                        </p:dataTable>
-                                        <p:commandButton value="Allocate" update="growl" actionListener="#"
-                                                         oncomplete="handleLoginRequest(xhr, status, args)" />
-
-                                    </h:panelGrid>
-                                </p:dialog>
-                            </p:columns>
-                            
-                        </p:dataTable>
+                            </p:dataTable>
+                        </h:form>
                     </p:panel>
                 </b:column>
 
