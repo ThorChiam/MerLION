@@ -45,36 +45,42 @@ public class OESManagedBean implements Serializable {
     private long product_id;
 
     //Enquiry
-    Account seller;
-    Account buyer;
-    Set<Product> products;
-    List<Integer> quantitys = new ArrayList();
-    long enquiry_id;
+    private Account seller;
+    private Account buyer;
+    private Set<Product> products;
+    private List<Integer> quantitys = new ArrayList();
+    private long enquiry_id;
+    private String delete_status_enquiry;
 
     //Quotation
-    Enquiry enquiry;
-    List<String> delivery_date;
+    private Enquiry enquiry;
+    private List<String> delivery_date;
     private long quotation_id;
+    private String delete_status_quotation;
 
     //PurchaseOrder
     private double taxrate;
     private long purchase_id;
     private String deliverydate;
+    private String delete_status_purchase;
 
     //SalesOrder
-    PurchaseOrder purchaseorder;
-    long sales_id;
+    private PurchaseOrder purchaseorder;
+    private long sales_id;
 
     //Payment
-    String paymentdate;
-    String paymenttype;
-    String status;
-    long payment_id;
+    private String paymentdate;
+    private String paymenttype;
+    private String status;
+    private long payment_id;
+    private String delete_status_payment;
+
 
     //Invoice
-    OES_Payment payment;
+    private OES_Payment payment;
     private long invoice_id;
-    String notes;
+    private String notes;
+    private String delete_status_invoice;
 
     private String statusMessage;
 
@@ -468,6 +474,46 @@ public class OESManagedBean implements Serializable {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+    
+    public String getDelete_status_enquiry() {
+        return delete_status_enquiry;
+    }
+
+    public void setDelete_status_enquiry(String delete_status_enquiry) {
+        this.delete_status_enquiry = delete_status_enquiry;
+    }
+
+    public String getDelete_status_quotation() {
+        return delete_status_quotation;
+    }
+
+    public void setDelete_status_quotation(String delete_status_quotation) {
+        this.delete_status_quotation = delete_status_quotation;
+    }
+
+    public String getDelete_status_purchase() {
+        return delete_status_purchase;
+    }
+
+    public void setDelete_status_purchase(String delete_status_purchase) {
+        this.delete_status_purchase = delete_status_purchase;
+    }
+
+    public String getDelete_status_payment() {
+        return delete_status_payment;
+    }
+
+    public void setDelete_status_payment(String delete_status_payment) {
+        this.delete_status_payment = delete_status_payment;
+    }
+
+    public String getDelete_status_invoice() {
+        return delete_status_invoice;
+    }
+
+    public void setDelete_status_invoice(String delete_status_invoice) {
+        this.delete_status_invoice = delete_status_invoice;
     }
 
 }

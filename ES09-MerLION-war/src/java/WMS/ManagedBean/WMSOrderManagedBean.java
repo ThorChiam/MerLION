@@ -45,89 +45,9 @@ public class WMSOrderManagedBean implements Serializable {
     private Long noticeDate;
     private List<Integer> san;//storageArea qty
     private List<Inventory> lin;
+    private List<StorageArea_Inventory> imanage;
 
     public WMSOrderManagedBean() {
-    }
-
-    /**
-     * check the inventory level
-     *
-     * @param orderId
-     * @return the last element of the list indicate the stock condition,1 for
-     * adequate,0 for any lack
-     */
-    public List<Integer> checkInventoryLevel() {
-        orderId = Long.valueOf(1);//testing use
-        List<Integer> checkResult = wosl.checkInventoryLevel(orderId);
-        for (int i = 0; i < checkResult.size(); i++) {
-            if (checkResult.get(i) < 0) {
-                checkResult.add(0);
-                return checkResult;
-            }
-        }
-        checkResult.add(1);
-        return checkResult;
-    }
-
-    public String check() {
-        int size = this.checkInventoryLevel().size();
-        int flag = this.checkInventoryLevel().get(size - 1);
-        if (flag == 1) {
-            return "Allocate";
-        } else {
-            return "Replenish";
-        }
-    }
-
-    public List<WMSOrder> getAllOrders(String email) {
-        return wosl.getAllOrders(email);
-    }
-
-    public WMSOrder getOrder() {
-        orderId = Long.valueOf(1);//testing use
-        return wosl.getOrder(orderId);
-    }
-
-    public List<WMSOrder> getAllocatedOrders(String email) {
-        return wosl.getAllocatedOrders(email);
-    }
-
-    public List<Warehouse> getAllWarehouse(String email) {
-        return wosl.getAllWarehouse(email);
-    }
-
-    public Warehouse getWarehouse() {
-        return wosl.getWarehouse(warehouseId);
-    }
-
-    public Inventory getInventory() {
-        return wosl.getInventory(inventoryId);
-    }
-
-//    public List<Warehouse> getWarehouseByStorageArea(List<StorageArea> sas);
-    public List<Warehouse_Inventory> getAvailableWarehouse() {
-        orderId = Long.valueOf(1);//testing use
-        return wosl.getAvailableWarehouse(orderId);
-    }
-
-    public void createInventory() {
-        wosl.createInventory(inventoryName, inventoryQty, inventoryStatus, storageArea, storageQty);
-    }
-
-    public List<StorageArea_Inventory> getPickTable() {
-        return wosl.getPickTable(warehouseId, inventoryId);
-    }
-
-    public Shipment_Notice createShippingNotice() {
-        return wosl.createShippingNotice(orderId, noticeDate);
-    }
-
-    public int allocateInventory() {
-        return wosl.allocateInventory(san, warehouseId, inventoryId);
-    }
-
-    public List<Inventory> report() {
-        return wosl.report(orderId);
     }
 
     public WMSOrderSessionLocal getWosl() {
@@ -226,14 +146,8 @@ public class WMSOrderManagedBean implements Serializable {
         this.san = san;
     }
 
-    public List<Inventory> getInventories() {
-        orderId = Long.valueOf(1);//testing use
-        
-        return wosl.getInventories(orderId);
-    }
-
     public List<Inventory> getLin() {
-        lin = this.getInventories();
+        lin = wosl.getInventories(orderId);
         return lin;
     }
 
@@ -241,16 +155,116 @@ public class WMSOrderManagedBean implements Serializable {
         this.lin = lin;
     }
 
-    public void replenish() {
-        System.out.println("**************test replenish");
+    /**
+     * check the inventory level
+     *
+     * @param orderId
+     * @return the last element of the list indicate the stock condition,1 for
+     * adequate,0 for any lack
+     */
+    public List<Integer> checkInventoryLevel() {
         orderId = Long.valueOf(1);//testing use
-        List<Inventory> afterRepl = wosl.getInventories(orderId);
-        for(int j=0;j<lin.size();j++){
-            int tmp = afterRepl.get(j).getQuantity()+ lin.get(j).getQuantity();
-            afterRepl.get(j).setQuantity(tmp);
-            System.out.println("*****af***:"+afterRepl.get(j).getQuantity()+"****lin***:"+lin.get(j).getQuantity());
+        List<Integer> checkResult = wosl.checkInventoryLevel(orderId);
+        for (int i = 0; i < checkResult.size(); i++) {
+            if (checkResult.get(i) < 0) {
+                checkResult.add(0);
+                return checkResult;
+            }
         }
-        wosl.replenish(afterRepl);
+        checkResult.add(1);
+        return checkResult;
     }
 
+    public String check() {
+        int size = this.checkInventoryLevel().size();
+        int flag = this.checkInventoryLevel().get(size - 1);
+        if (flag == 1) {
+            return "Allocate";
+        } else {
+            return "Replenish";
+        }
+    }
+
+    public List<WMSOrder> getAllOrders(String email) {
+        return wosl.getAllOrders(email);
+    }
+
+    public WMSOrder getOrder() {
+        orderId = Long.valueOf(1);//testing use
+        return wosl.getOrder(orderId);
+    }
+
+    public List<WMSOrder> getAllocatedOrders(String email) {
+        return wosl.getAllocatedOrders(email);
+    }
+
+    public List<Warehouse> getAllWarehouse(String email) {
+        return wosl.getAllWarehouse(email);
+    }
+
+    public Warehouse getWarehouse() {
+        return wosl.getWarehouse(warehouseId);
+    }
+
+    public Inventory getInventory() {
+        return wosl.getInventory(inventoryId);
+    }
+
+//    public List<Warehouse> getWarehouseByStorageArea(List<StorageArea> sas);
+    public List<Warehouse_Inventory> getAvailableWarehouse() {
+        orderId = Long.valueOf(1);//testing use
+        return wosl.getAvailableWarehouse(orderId);
+    }
+
+    public void createInventory() {
+        wosl.createInventory(inventoryName, inventoryQty, inventoryStatus/*, storageArea, storageQty*/);
+    }
+
+    public List<StorageArea_Inventory> getPickTable() {
+        return wosl.getPickTable(warehouseId, inventoryId);
+    }
+
+    public Shipment_Notice createShippingNotice() {
+        return wosl.createShippingNotice(orderId, noticeDate);
+    }
+
+    public int allocateInventory() {
+        return wosl.allocateInventory(san, warehouseId, inventoryId);
+    }
+
+    public List<Inventory> report() {
+        return wosl.report(orderId);
+    }
+
+    public List<StorageArea_Inventory> getImanage() {
+        return imanage;
+    }
+
+    //***************************InventoryManagement***********
+    public void setImanage(List<StorageArea_Inventory> imanage) {
+        this.imanage = imanage;
+    }
+
+    public void reserveStorage() {
+        this.setImanage(wosl.reserveStorage(inventoryId, storageArea, storageQty));
+    }
+
+    public void putAway() {
+        wosl.putAway(imanage);
+    }
+
+    public void replenish() {
+        List<Inventory> ins = wosl.getInventories(orderId);
+        for (int i = 0; i < ins.size(); i++) {
+            Inventory in = ins.get(i);
+            int tmp = in.getQuantity();
+            tmp += lin.get(i).getQuantity();
+            in.setQuantity(tmp);
+        }
+        wosl.replenish(ins);
+    }
+
+    public List<Inventory> reportInventories(String email) {
+        return wosl.reportInventories(email);
+    }
 }

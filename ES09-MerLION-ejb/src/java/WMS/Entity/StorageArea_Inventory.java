@@ -31,8 +31,10 @@ public class StorageArea_Inventory implements Serializable {
     @ManyToOne
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
-
+    @ManyToOne
+    private Warehouse_Inventory wi;
     private int qty;
+    private String status;//reserved;used
 
     public Long getId() {
         return id;
@@ -64,6 +66,22 @@ public class StorageArea_Inventory implements Serializable {
 
     public void setQty(int qty) {
         this.qty = qty;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Warehouse_Inventory getWi() {
+        return wi;
+    }
+
+    public void setWi(Warehouse_Inventory wi) {
+        this.wi = wi;
     }
 
     @Override
