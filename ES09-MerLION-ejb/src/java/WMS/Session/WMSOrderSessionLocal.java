@@ -42,7 +42,7 @@ public interface WMSOrderSessionLocal {
 
     public void createInventory(String name, int quantity, String status/*, List<StorageArea> storageArea, List<Integer> storageQty*/);
 
-    public void reserveInventory(Long inventoryId, List<StorageArea> storageArea, List<Integer> storageQty);
+    public void reserveStorage(Long inventoryId, List<StorageArea> storageArea, List<Integer> storageQty);
 
     public List<StorageArea_Inventory> getPickTable(Long warehouseId, Long inventoryId);
 

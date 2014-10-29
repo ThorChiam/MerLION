@@ -178,7 +178,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
 //    }
 
     @Override
-    public void reserveInventory(Long inventoryId, List<StorageArea> storageArea, List<Integer> storageQty) {
+    public void reserveStorage(Long inventoryId, List<StorageArea> storageArea, List<Integer> storageQty) {
         Query q = em.createQuery("SELECT iv FROM Inventory iv WHERE iv.id=:inventoryId");
         q.setParameter("inventoryId", inventoryId);
         inventory = (Inventory) q.getSingleResult();
@@ -330,6 +330,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         }
         return lin;
     }
+
     @Override
     public List<Inventory> getInventories(Long orderId) {
         Query q = em.createQuery("SELECT wo FROM WMSOrder wo WHERE wo.id=:orderId");
@@ -351,7 +352,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         return li;
     }
     @Override
-    public void updateStorageArea(List<Inventory> li){
+    public void replenish(List<Inventory> lis){
         
     }
 }
