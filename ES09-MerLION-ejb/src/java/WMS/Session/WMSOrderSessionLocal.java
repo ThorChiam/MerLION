@@ -32,15 +32,16 @@ public interface WMSOrderSessionLocal {
 
     public List<Warehouse> getAllWarehouse(String email);
 
+    public List<Inventory> getAllInventories(String email);
+
     public Warehouse getWarehouse(Long warehouseId);
 
     public Inventory getInventory(Long inventoryId);
 
-    public List<Warehouse> getWarehouseByStorageArea(List<StorageArea> sas);
-
+//    public List<Warehouse> getWarehouseByStorageArea(List<StorageArea> sas);
     public List<Warehouse_Inventory> getAvailableWarehouse(Long orderId);
 
-    public void createInventory(String name, int quantity, String status, List<StorageArea> storageArea, List<Integer> storageQty);
+    public void createInventory(String name, int quantity, String status/*, List<StorageArea> storageArea, List<Integer> storageQty*/);
 
     public List<StorageArea_Inventory> getPickTable(Long warehouseId, Long inventoryId);
 
@@ -52,5 +53,11 @@ public interface WMSOrderSessionLocal {
 
     public List<Inventory> getInventories(Long orderId);
 
+    public List<StorageArea_Inventory> reserveStorage(Long inventoryId, List<StorageArea> storageArea, List<Integer> storageQty);
+
+    public void putAway(List<StorageArea_Inventory> sais);
+
     public void replenish(List<Inventory> lis);
+
+    public List<Inventory> reportInventories(String email);
 }

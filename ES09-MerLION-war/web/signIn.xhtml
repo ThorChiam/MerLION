@@ -118,11 +118,12 @@
                                     </p:panelGrid>
                                     <p:captcha id="captcha" label="Captcha" />
                                     <p:message for="captcha" />
+                                    
                                     <p:commandButton id="btn" value="Login" update="panel" actionListener="#{accountManagedBean.loginin}" ajax="false" rendered="#{facesContext.externalContext.sessionMap['userId'] == null}"/>
                                 </p:growl>
                             </h:form>
                         </div>
-                        <a href ="CRMS/account/resetPassword.xhtml"> forget your password?</a>
+                        <a href ="CI/account/resetPassword.xhtml"> forget your password?</a>
                     </font>
 
                 </b:column>

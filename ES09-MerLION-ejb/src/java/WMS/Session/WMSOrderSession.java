@@ -50,6 +50,16 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         return q.getResultList();
     }
 
+    @Override
+    public List<Inventory> getAllInventories(String email) {
+        Query q = em.createQuery("SELECT a.Company.id FROM Account a WHERE a.email=:email");
+        q.setParameter("email", email);
+        Long companyId = (Long) q.getSingleResult();
+        q = em.createQuery("SELECT i FROM Inventory i WHERE i.ws_inven.warehouse.Company.id=:companyId");
+        q.setParameter("companyId", companyId);
+        return q.getResultList();
+    }
+
     //inventory list and corresponding quantity can be get by order,pg-2
     @Override
     public WMSOrder getOrder(Long orderId) {
@@ -100,18 +110,17 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         return (Inventory) q.getSingleResult();
     }
 
-    @Override
-    public List<Warehouse> getWarehouseByStorageArea(List<StorageArea> sas) {
-        List<Warehouse> lw = new ArrayList<>();
-        for (StorageArea sa : sas) {
-            Warehouse w = sa.getWMSWarehouse();
-            if (!lw.contains(w)) {
-                lw.add(w);
-            }
-        }
-        return lw;
-    }
-
+//    @Override
+//    public List<Warehouse> getWarehouseByStorageArea(List<StorageArea> sas) {
+//        List<Warehouse> lw = new ArrayList<>();
+//        for (StorageArea sa : sas) {
+//            Warehouse w = sa.getWMSWarehouse();
+//            if (!lw.contains(w)) {
+//                lw.add(w);
+//            }
+//        }
+//        return lw;
+//    }
 //    public List<Integer> getWarehouseQtyBySA(Set<StorageArea> sas, List<Integer> storageQty) {
 //        List<Integer> wQty = new ArrayList();
 //        List<Long> wId = new ArrayList();
@@ -135,9 +144,10 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
 //        return wQty;
 //    }
     private int countWarehouseQtyBySA(Long warehouseId, Long inventoryId) {
-        Query q = em.createQuery("SELECT si.qty FROM StorageArea_Inventory si WHERE si.inventory.id=:inventoryId AND si.sa.WMSWarehouse.id=:warehouseId");
+        Query q = em.createQuery("SELECT si.qty FROM StorageArea_Inventory si WHERE si.inventory.id=:inventoryId AND si.sa.WMSWarehouse.id=:warehouseId AND si.status=:status");
         q.setParameter("inventoryId", inventoryId);
         q.setParameter("warehouseId", warehouseId);
+        q.setParameter("status", "used");
         int total = 0;
         for (Object o : q.getResultList()) {
             int qty = (int) o;
@@ -178,32 +188,32 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
 //    }
 
     @Override
-    public void createInventory(String name, int quantity, String status, List<StorageArea> storageArea, List<Integer> storageQty) {
+    public void createInventory(String name, int quantity, String status/*, List<StorageArea> storageArea, List<Integer> storageQty*/) {
         inventory = new Inventory();
         inventory.setName(name);
         inventory.setStatus(status);
         inventory.setQuantity(quantity);
-        List<StorageArea_Inventory> sais = new ArrayList<>();
-        for (int i = 0; i < storageArea.size(); i++) {
-            StorageArea_Inventory sai = new StorageArea_Inventory();
-            sai.setSa(storageArea.get(i));
-            sai.setInventory(inventory);
-            sai.setQty(storageQty.get(i));
-            em.persist(sai);
-            sais.add(sai);
-        }
-        inventory.setSa_inven(sais);
-        List<Warehouse> lw = this.getWarehouseByStorageArea(storageArea);
-        List<Warehouse_Inventory> wis = new ArrayList<>();
-        for (Warehouse lw1 : lw) {
-            Warehouse_Inventory wi = new Warehouse_Inventory();
-            wi.setWarehouse(lw1);
-            wi.setInventory(inventory);
-            wi.setQty(this.countWarehouseQtyBySA(lw1.getId(), inventory.getId()));
-            em.persist(wi);
-            wis.add(wi);
-        }
-        inventory.setWs_inven(wis);
+//        List<StorageArea_Inventory> sais = new ArrayList<>();
+//        for (int i = 0; i < storageArea.size(); i++) {
+//            StorageArea_Inventory sai = new StorageArea_Inventory();
+//            sai.setSa(storageArea.get(i));
+//            sai.setInventory(inventory);
+//            sai.setQty(storageQty.get(i));
+//            em.persist(sai);
+//            sais.add(sai);
+//        }
+//        inventory.setSa_inven(sais);
+//        List<Warehouse> lw = this.getWarehouseByStorageArea(storageArea);
+//        List<Warehouse_Inventory> wis = new ArrayList<>();
+//        for (Warehouse lw1 : lw) {
+//            Warehouse_Inventory wi = new Warehouse_Inventory();
+//            wi.setWarehouse(lw1);
+//            wi.setInventory(inventory);
+//            wi.setQty(this.countWarehouseQtyBySA(lw1.getId(), inventory.getId()));
+//            em.persist(wi);
+//            wis.add(wi);
+//        }
+//        inventory.setWs_inven(wis);
         em.persist(inventory);
     }
 
@@ -230,9 +240,10 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     //pg-4,bottom dynamic table
     @Override
     public List<StorageArea_Inventory> getPickTable(Long warehouseId, Long inventoryId) {
-        Query q = em.createQuery("SELECT si FROM StorageArea_Inventory si WHERE si.inventory.id=:inventoryId AND si.sa.WMSWarehouse.id=:warehouseId");
+        Query q = em.createQuery("SELECT si FROM StorageArea_Inventory si WHERE si.inventory.id=:inventoryId AND si.sa.WMSWarehouse.id=:warehouseId AND si.status=:status");
         q.setParameter("inventoryId", inventoryId);
         q.setParameter("warehouseId", warehouseId);
+        q.setParameter("status", "used");
         List<StorageArea_Inventory> sal = q.getResultList();
         return sal;
     }
@@ -254,8 +265,8 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         em.persist(sn);
         return sn;
     }
-//pg-4
 
+//pg-4
     @Override
     public int allocateInventory(List<Integer> san, Long warehouseId, Long inventoryId) {
         List<StorageArea_Inventory> sal = this.getPickTable(warehouseId, inventoryId);
@@ -301,6 +312,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         }
         return lin;
     }
+
     @Override
     public List<Inventory> getInventories(Long orderId) {
         Query q = em.createQuery("SELECT wo FROM WMSOrder wo WHERE wo.id=:orderId");
@@ -321,10 +333,102 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         em.merge(wo);
         return li;
     }
+
+    //*****************************
     @Override
-    public void replenish(List<Inventory> lis){
-        for(Inventory i:lis){
+    public void replenish(List<Inventory> lis) {
+        for (Inventory i : lis) {
             em.merge(i);
         }
+    }
+
+    @Override
+    public List<StorageArea_Inventory> reserveStorage(Long inventoryId, List<StorageArea> storageArea, List<Integer> storageQty) {
+        Query q = em.createQuery("SELECT iv FROM Inventory iv WHERE iv.id=:inventoryId");
+        q.setParameter("inventoryId", inventoryId);
+        inventory = (Inventory) q.getSingleResult();
+        List<StorageArea_Inventory> sais = new ArrayList<>();
+        List<Warehouse_Inventory> wis = new ArrayList<>();
+
+        for (int i = 0; i < storageArea.size(); i++) {
+            StorageArea_Inventory sai = new StorageArea_Inventory();
+            sai.setSa(storageArea.get(i));
+            sai.setInventory(inventory);
+            sai.setQty(storageQty.get(i));
+            sai.setStatus("reserved");
+            if (i == 0) {
+                Warehouse_Inventory wi = new Warehouse_Inventory();
+                List<StorageArea_Inventory> wsais = new ArrayList<>();
+                wsais.add(sai);
+                wi.setWarehouse(storageArea.get(i).getWMSWarehouse());
+                wi.setInventory(inventory);
+                wi.setQty(sai.getQty());
+                wi.setStatus("reserved");
+                wi.setStorageArea_Inventory(wsais);
+                wis.add(wi);
+                sai.setWi(wi);
+            } else {
+                for (Warehouse_Inventory wi2 : wis) {
+                    if (wi2.getWarehouse().getId().equals(storageArea.get(i).getWMSWarehouse().getId())) {
+                        wi2.getStorageArea_Inventory().add(sai);
+                        int tmp = sai.getQty() + wi2.getQty();
+                        wi2.setQty(tmp);
+                        sai.setWi(wi2);
+                    } else {
+                        Warehouse_Inventory wi = new Warehouse_Inventory();
+                        List<StorageArea_Inventory> wsais = new ArrayList<>();
+                        wsais.add(sai);
+                        wi.setWarehouse(storageArea.get(i).getWMSWarehouse());
+                        wi.setInventory(inventory);
+                        wi.setQty(sai.getQty());
+                        wi.setStatus("reserved");
+                        wi.setStorageArea_Inventory(wsais);
+                        wis.add(wi);
+                        sai.setWi(wi);
+                    }
+                }
+            }
+            em.persist(sai);
+            sais.add(sai);
+        }
+        inventory.setSa_inven(sais);
+//        List<Warehouse> lw = this.getWarehouseByStorageArea(storageArea);
+//        for (Warehouse lw1 : lw) {
+//            Warehouse_Inventory wi = new Warehouse_Inventory();
+//            wi.setWarehouse(lw1);
+//            wi.setInventory(inventory);
+//            wi.setQty(this.countWarehouseQtyBySA(lw1.getId(), inventory.getId()));
+//            wi.setStatus("reserved");
+//            em.persist(wi);
+//            wis.add(wi);
+//        }
+        for (Warehouse_Inventory wi : wis) {
+            em.merge(wi);
+        }
+        inventory.setWs_inven(wis);
+        em.merge(inventory);
+        return sais;
+    }
+
+    @Override
+    public void putAway(List<StorageArea_Inventory> sais) {
+        for (StorageArea_Inventory sai : sais) {
+            sai.setStatus("used");
+            Warehouse_Inventory wi = sai.getWi();
+            Inventory i = sai.getInventory();
+            int tmp = i.getQuantity() + sai.getQty();
+            i.setQuantity(tmp);
+            int tmp2 = wi.getQty() + sai.getQty();
+            wi.setQty(tmp2);
+            em.merge(i);
+            em.persist(wi);
+            em.merge(sai);
+        }
+
+    }
+
+    @Override
+    public List<Inventory> reportInventories(String email) {
+        return this.getAllInventories(email);
     }
 }

@@ -111,47 +111,44 @@
                                 </f:facet> 
 
                                 <h:outputText value="#{wh.qty}" />
-
+                                
                                 &nbsp;
 
-                                <p:commandButton update="detail" oncomplete="PF('dialog').show()" icon="ui-icon-search" title="View">
-                                    <f:setPropertyActionListener value="#{car}" target="#{womb.warehouseId}" />
-                                </p:commandButton>
+                                <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="View">
+                                    <p:graphicImage name="WMS/deliveryOrder/view.png" />
+                                </h:outputLink>
 
+                                <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+                                <p:dialog header="Storgae Bin Allocation" widgetVar="dlg" resizable="false">
+                                    <h:panelGrid style="width: 350px; height: 500px">
+                                        <h:inputHidden value="#" id="hiddenInventoryId" />
+                                        <h:inputHidden value="#" id="hiddenWarehouseId" />
+
+                                        <h:outputText value="#{wh.warehouse.id}" />
+                                        <h:outputText value="#{wh.inventory.id}"/>
+
+                                        <p:dataTable var="storge" value="">
+                                            <p:column headerText="Storage ID">
+                                                <h:outputText value="" />
+                                            </p:column>
+
+                                            <p:column headerText="Quantity">
+                                                <h:outputText value="" />
+                                            </p:column>
+
+                                            <p:column headerText="Allocation">
+                                                <h:inputText value="" />
+                                            </p:column>
+                                        </p:dataTable>
+                                        <p:commandButton value="Allocate" update="growl" actionListener="#"
+                                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+
+                                    </h:panelGrid>
+                                </p:dialog>
                             </p:columns>
-
+                            
                         </p:dataTable>
-                        
-                        <p:dialog header="Allocation" widgetVar="dialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                            <p:outputPanel id="detail" style="text-align:center;">
-                                <h:panelGrid style="width: 350px; height: 500px">
-                                    <h:inputHidden value="#" id="hiddenInventoryId" />
-                                    <h:inputHidden value="#" id="hiddenWarehouseId" />
-
-                                    <h:outputText value="#{wh.warehouse.id}" />
-                                    <h:outputText value="#{wh.inventory.id}"/>
-
-                                    <p:dataTable var="storge" value="">
-                                        <p:column headerText="Storage ID">
-                                            <h:outputText value="" />
-                                        </p:column>
-
-                                        <p:column headerText="Quantity">
-                                            <h:outputText value="" />
-                                        </p:column>
-
-                                        <p:column headerText="Allocation">
-                                            <h:inputText value="" />
-                                        </p:column>
-                                    </p:dataTable>
-                                    <p:commandButton value="Allocate" update="detail" actionListener="#"
-                                                     oncomplete="handleLoginRequest(xhr, status, args)" />
-
-                                </h:panelGrid>
-                            </p:outputPanel>
-                        </p:dialog>
-
-
                     </p:panel>
                 </b:column>
 
