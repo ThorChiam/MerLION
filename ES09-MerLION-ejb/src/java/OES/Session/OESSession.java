@@ -70,9 +70,14 @@ public class OESSession implements OESSessionLocal {
 
     @Override
     public List<Product> getAllProduct(String email) {
-        Query q = em.createQuery("SELECT f FROM Product f WHERE f.company.Account.email=:email");
-        q.setParameter("email", email);
-        return q.getResultList();
+        Query q = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");
+        q.setParameter("email",email);
+        Account tmp=(Account)q.getSingleResult();
+        Company comp=tmp.getCompany();
+        
+        Query p = em.createQuery("SELECT f FROM Product f WHERE f.company=:comp");
+        p.setParameter("comp", comp);
+        return p.getResultList();
     }
 
     @Override
