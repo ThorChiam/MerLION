@@ -112,7 +112,7 @@ public class WMSOrderManagedBean implements Serializable {
     public List<Inventory> report(){
         return wosl.report(orderId);
     }
-    //***************************InventoryManagement
+    //***************************InventoryManagement***********
     public void reserveStorage(){
         wosl.reserveInventory(inventoryId, storageArea, storageQty);
     }

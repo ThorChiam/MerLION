@@ -178,11 +178,11 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
 //    }
 
     @Override
-    public void reserveInventory(Long inventoryId, List<StorageArea> storageArea, List<Integer> storageQty){
+    public void reserveInventory(Long inventoryId, List<StorageArea> storageArea, List<Integer> storageQty) {
         Query q = em.createQuery("SELECT iv FROM Inventory iv WHERE iv.id=:inventoryId");
         q.setParameter("inventoryId", inventoryId);
-        inventory = (Inventory)q.getSingleResult();
-       List<StorageArea_Inventory> sais = new ArrayList<>();
+        inventory = (Inventory) q.getSingleResult();
+        List<StorageArea_Inventory> sais = new ArrayList<>();
         for (int i = 0; i < storageArea.size(); i++) {
             StorageArea_Inventory sai = new StorageArea_Inventory();
             sai.setSa(storageArea.get(i));
@@ -205,6 +205,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         inventory.setWs_inven(wis);
         em.merge(inventory);
     }
+
     @Override
     public void createInventory(String name, int quantity, String status/*, List<StorageArea> storageArea, List<Integer> storageQty*/) {
         inventory = new Inventory();
@@ -282,8 +283,8 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         em.persist(sn);
         return sn;
     }
-//pg-4
 
+//pg-4
     @Override
     public int allocateInventory(List<Integer> san, Long warehouseId, Long inventoryId) {
         List<StorageArea_Inventory> sal = this.getPickTable(warehouseId, inventoryId);
@@ -340,5 +341,9 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         wo.setStatus("allocated");
         em.merge(wo);
         return li;
+    }
+    @Override
+    public void updateStorageArea(List<Inventory> li){
+        
     }
 }
