@@ -95,7 +95,7 @@
                     <p:panel header="Inventory Allocation">
                         <h:form>
                             <!-- value should be a LIST-->
-                            <p:dataTable var="detail" value="#{womb.lin}">
+                            <p:dataTable var="detail" value="#{womb.lin}" style="width:200px">
                                 <p:column headerText="Inventory Name">
                                     <!-- -->
                                     <h:outputText value="#{detail.name}" />
@@ -108,11 +108,12 @@
                                 <!-- warehouse-->
                                 <p:columns var="wh" value="#{womb.availableWarehouse}">
                                     <f:facet name="header">  
-                                        #{wh.warehouse.name} 
+                                        #{wh.name} 
                                     </f:facet> 
-
-                                    <h:outputText value="#{wh.qty}" />
-
+                                    <p:dataList var="ava" value="#{wh.available}">
+                                        <h:outputText value="#{ava}" />
+                                    </p:dataList>
+                                    
                                     &nbsp;
 
                                     <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="View">
@@ -128,8 +129,8 @@
 
                                             <h:outputText value="#{detail.name}" />
                                             <h:outputText value="#{detail.quantity}" />
-                                            <h:outputText value="#{wh.warehouse.id}" />
-                                            <h:outputText value="#{wh.inventory.id}"/>
+                                            <h:outputText value="#{wh.id}" />
+                                            <h:outputText value="#{detail.id}"/>
 
                                             <p:dataTable var="storge" value="">
                                                 <p:column headerText="Storage ID">
@@ -151,6 +152,11 @@
                                     </p:dialog>
                                 </p:columns>
 
+                            </p:dataTable>
+                            <p:dataTable var="avas" value="#{womb.availableWarehouse}" style="width:200px">
+                            <p:column headerText="#{avas.name}">
+                                <h:outputText value="#{avas.name}"/>
+                            </p:column>
                             </p:dataTable>
                         </h:form>
                     </p:panel>

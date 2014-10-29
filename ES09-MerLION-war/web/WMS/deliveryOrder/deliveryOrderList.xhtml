@@ -81,21 +81,22 @@
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
                     <p:panel header="Delivery Order List">
-                        <!-- value should be a LIST of delivery order -->
-                        <p:dataTable var="order" value="#{womb.getAllOrders(facesContext.externalContext.sessionMap['userId'])}">
-                            <p:column headerText="Delivery Order">
-                                <h:outputText value="#{order.id}" />
-                            </p:column>
+                        <h:form>
+                            <!-- value should be a LIST of delivery order -->
+                            <p:dataTable var="order" value="#{womb.getAllOrders(facesContext.externalContext.sessionMap['userId'])}">
+                                <p:column headerText="Delivery Order">
+                                    <h:outputText value="#{order.id}" />
+                                </p:column>
 
-                            <p:column headerText="Action">
-                                <h:commandButton value="View Detail" action="orderDetail.xhtml">
-                                    <f:setPropertyActionListener target="#{womb.orderId}" value="#{order.id}" />
-                                </h:commandButton>
+                                <p:column headerText="Action">
+                                    <h:commandButton value="View Detail" action="orderDetail">
+                                        <f:setPropertyActionListener target="#{womb.orderId}" value="#{order.id}" />
+                                    </h:commandButton>
 
-                            </p:column>
+                                </p:column>
 
-                        </p:dataTable>
-
+                            </p:dataTable>
+                        </h:form>
                     </p:panel>
                 </b:column>
 
