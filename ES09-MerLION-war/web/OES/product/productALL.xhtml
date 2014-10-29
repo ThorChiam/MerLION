@@ -67,37 +67,55 @@
                 <!-- display all the products-->
                 <b:column col-xs="6" col-sm="6" col-md="10">
 
-                    
-                  
+
+
                     <h:form>
-                        <p:dataTable var="product" value="#{productBean.getProducts(facesContext.externalContext.sessionMap['userId'])}" rows="10"
+                        <p:dataTable var="product" value="#{omb.getAllProduct(facesContext.externalContext.sessionMap['userId'])}" rows="10"
                                      paginator="true"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      rowsPerPageTemplate="5,10,15">
+
+
                             <p:column headerText="Id">
-                                <h:outputText value="#{product.id}" />
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{product.id}" /></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInput" value="#{product.id}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
                             </p:column>
 
                             <p:column headerText="Name">
-                                <h:outputText value="#{product.name}" />
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{product.name}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{product.name}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
                             </p:column>
-
-
-
-                            <p:column headerText="Unit Price">
-                                <h:outputText value="#{product.price}" />
+                            
+                             <p:column headerText="Unit Price">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{product.price}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{product.price}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
                             </p:column>
-
+                            
                             <p:column headerText="Available Stock">
-                                <h:outputText value="#{product.quantity}" />
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{product.quantity}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{product.quantity}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
                             </p:column>
-
+                         
                             <p:column headerText="Description">
-                                <h:outputText value="#{product.description}" />
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{product.description}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{product.description}" style="width:100%" label="Year"/></f:facet>
+                                </p:cellEditor>
                             </p:column>
+                         
 
                             <!--Supplier here is only for Retail 1PL to order-->
-                            
+                            <p:column style="width:32px">
+                                <p:rowEditor />
+                            </p:column>
                         </p:dataTable>
                     </h:form>      
 
