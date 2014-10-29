@@ -30,6 +30,7 @@ public interface OESSessionLocal {
     public List<Product> getAllProduct(String email);
     public void deleteProduct(long product_id);
     public boolean check_redundant(String email, String name); //check product redundancy
+    public List<Product> testProduct(long product_id);//test
     
    
     
