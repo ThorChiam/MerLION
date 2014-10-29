@@ -353,6 +353,8 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     }
     @Override
     public void replenish(List<Inventory> lis){
-        
+        for(Inventory i:lis){
+            em.merge(i);
+        }
     }
 }

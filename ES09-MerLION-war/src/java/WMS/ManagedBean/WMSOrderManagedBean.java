@@ -49,6 +49,111 @@ public class WMSOrderManagedBean implements Serializable {
     public WMSOrderManagedBean() {
     }
 
+    public WMSOrderSessionLocal getWosl() {
+        return wosl;
+    }
+
+    public void setWosl(WMSOrderSessionLocal wosl) {
+        this.wosl = wosl;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public Long getWarehouseId() {
+        return warehouseId;
+    }
+
+    public void setWarehouseId(Long warehouseId) {
+        this.warehouseId = warehouseId;
+    }
+
+    public Long getInventoryId() {
+        return inventoryId;
+    }
+
+    public void setInventoryId(Long inventoryId) {
+        this.inventoryId = inventoryId;
+    }
+
+    public List<Warehouse> getLw() {
+        return lw;
+    }
+
+    public void setLw(List<Warehouse> lw) {
+        this.lw = lw;
+    }
+
+    public String getInventoryName() {
+        return inventoryName;
+    }
+
+    public void setInventoryName(String inventoryName) {
+        this.inventoryName = inventoryName;
+    }
+
+    public int getInventoryQty() {
+        return inventoryQty;
+    }
+
+    public void setInventoryQty(int inventoryQty) {
+        this.inventoryQty = inventoryQty;
+    }
+
+    public String getInventoryStatus() {
+        return inventoryStatus;
+    }
+
+    public void setInventoryStatus(String inventoryStatus) {
+        this.inventoryStatus = inventoryStatus;
+    }
+
+    public List<StorageArea> getStorageArea() {
+        return storageArea;
+    }
+
+    public void setStorageArea(List<StorageArea> storageArea) {
+        this.storageArea = storageArea;
+    }
+
+    public List<Integer> getStorageQty() {
+        return storageQty;
+    }
+
+    public void setStorageQty(List<Integer> storageQty) {
+        this.storageQty = storageQty;
+    }
+
+    public Long getNoticeDate() {
+        return noticeDate;
+    }
+
+    public void setNoticeDate(Long noticeDate) {
+        this.noticeDate = noticeDate;
+    }
+
+    public List<Integer> getSan() {
+        return san;
+    }
+
+    public void setSan(List<Integer> san) {
+        this.san = san;
+    }
+
+    public List<Inventory> getLin() {
+        lin = wosl.getInventories(orderId);
+        return lin;
+    }
+
+    public void setLin(List<Inventory> lin) {
+        this.lin = lin;
+    }
+
     /**
      * check the inventory level
      *
@@ -132,5 +237,15 @@ public class WMSOrderManagedBean implements Serializable {
     //***************************InventoryManagement***********
     public void reserveStorage(){
         wosl.reserveStorage(inventoryId, storageArea, storageQty);
+    }
+    public void replenish(){
+        List<Inventory> ins = wosl.getInventories(orderId);
+        for(int i=0;i<ins.size();i++){
+            Inventory in = ins.get(i);
+            int tmp = in.getQuantity();
+            tmp += lin.get(i).getQuantity();
+            in.setQuantity(tmp);
+        }
+        wosl.replenish(ins);
     }
 }
