@@ -45,6 +45,7 @@ public class WMSOrderManagedBean implements Serializable {
     private Long noticeDate;
     private List<Integer> san;//storageArea qty
     private List<Inventory> lin;
+    private List<StorageArea_Inventory> imanage;
 
     public WMSOrderManagedBean() {
     }
@@ -215,7 +216,7 @@ public class WMSOrderManagedBean implements Serializable {
         return wosl.getAvailableWarehouse(orderId);
     }
 
-    public void createInventory(){
+    public void createInventory() {
         wosl.createInventory(inventoryName, inventoryQty, inventoryStatus/*, storageArea, storageQty*/);
     }
 
@@ -234,18 +235,36 @@ public class WMSOrderManagedBean implements Serializable {
     public List<Inventory> report() {
         return wosl.report(orderId);
     }
-    //***************************InventoryManagement***********
-    public void reserveStorage(){
-        wosl.reserveStorage(inventoryId, storageArea, storageQty);
+
+    public List<StorageArea_Inventory> getImanage() {
+        return imanage;
     }
-    public void replenish(){
+
+    //***************************InventoryManagement***********
+    public void setImanage(List<StorageArea_Inventory> imanage) {
+        this.imanage = imanage;
+    }
+
+    public void reserveStorage() {
+        this.setImanage(wosl.reserveStorage(inventoryId, storageArea, storageQty));
+    }
+
+    public void putAway() {
+        wosl.putAway(imanage);
+    }
+
+    public void replenish() {
         List<Inventory> ins = wosl.getInventories(orderId);
-        for(int i=0;i<ins.size();i++){
+        for (int i = 0; i < ins.size(); i++) {
             Inventory in = ins.get(i);
             int tmp = in.getQuantity();
             tmp += lin.get(i).getQuantity();
             in.setQuantity(tmp);
         }
         wosl.replenish(ins);
+    }
+
+    public List<Inventory> reportInventories(String email) {
+        return wosl.reportInventories(email);
     }
 }

@@ -6,12 +6,17 @@
 package WMS.Entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -30,8 +35,10 @@ public class Warehouse_Inventory implements Serializable {
     @ManyToOne
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
-
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "wi")
+    private List<StorageArea_Inventory> storageArea_Inventory = new ArrayList<>();
     private int qty;
+    private String status;//reserved;used
 
     public Long getId() {
         return id;
@@ -63,6 +70,22 @@ public class Warehouse_Inventory implements Serializable {
 
     public void setQty(int qty) {
         this.qty = qty;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<StorageArea_Inventory> getStorageArea_Inventory() {
+        return storageArea_Inventory;
+    }
+
+    public void setStorageArea_Inventory(List<StorageArea_Inventory> storageArea_Inventory) {
+        this.storageArea_Inventory = storageArea_Inventory;
     }
 
     @Override
