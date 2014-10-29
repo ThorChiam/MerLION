@@ -43,7 +43,6 @@ public class OESManagedBean implements Serializable {
     private double price;
     private int quantity;
     private long product_id;
-    private long company_id;
 
     //Enquiry
     Account seller;
@@ -84,7 +83,8 @@ public class OESManagedBean implements Serializable {
     
     //********************Product********************************
     public void createProduct(String email) {
-        boolean tmp = osbl.check_redundant(company_id, name);
+        
+        boolean tmp = osbl.check_redundant(email, name);
         if (tmp) {
             statusMessage = "The new product is successfully added.";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,

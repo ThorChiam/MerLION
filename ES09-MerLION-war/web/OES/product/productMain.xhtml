@@ -110,8 +110,8 @@
                         <p:panel header="NEW Product">
                             <p:messages autoUpdate="true"/>
 
-                            <h:panelGrid id="grid" columns="4" cellpadding="5">
-                                                  
+                            <h:panelGrid id="grid" columns="1" cellpadding="6">
+
                                 <p:outputLabel for="name" value="Product Name:" style="font-weight:bold"/>
                                 <p:inputText id="name" value="#{omb.name}" required="true" label="Name">
                                     <f:validateLength minimum="2" />
@@ -119,29 +119,27 @@
                                 <p:message for="name" display="icon" />
 
 
-
                                 <h:outputLabel for="dd" value="Unit Price:" style="font-weight:bold"/>                    
-                                <p:inputText id="dd" value="#{omb.price}" converterMessage="Cannot convert to double.">
-                                    <f:validateDoubleRange minimum="1.0" maximum="100000.0" />
+                                <p:inputText id="dd" value="#{omb.price}" label="Unit Price">
+                                    <f:validateLength minimum="2" />
                                 </p:inputText>
-                                <p:message for="dd" />
-                                <h:outputText value="#{omb.price}" />
+                                <p:message for="dd"  display="icon" />
+                            
 
                                 <h:outputLabel for="number" value="Available Stock:" style="font-weight:bold"/>                    
-                                <p:inputText id="number" value="#{omb.quantity}" label="Number">
-                                    <f:validateDoubleRange minimum="1" maximum="1000000" />
+                                <p:inputText id="number" value="#{omb.quantity}" label="Available Stock">
+                                    <f:validateLength minimum="2" />
                                 </p:inputText>
-                                <p:message for="number" />
-                                <h:outputText value="#{omb.quantity}" />
+                                <p:message for="number"  display="icon"/>
+                              
 
 
-
-                                <h:outputLabel for="desc" value="Description" style="font-weight:bold"/>
+                                <h:outputLabel for="desc" value="Description:" style="font-weight:bold"/>
                                 <p:inputTextarea id="desc" value="#{omb.description}" required="true" label="Description">
                                     <f:validateLength minimum="1" maximum="1000" /> 
                                 </p:inputTextarea>
-                                <p:message for="desc" />
-                                <h:outputText value="#{omb.description}" />
+                                <p:message for="desc"  display="icon" />
+                           
                             </h:panelGrid>
 
                             <p:commandButton value="Add" ajax="false" icon="ui-icon-check" actionListener="#{omb.createProduct(facesContext.externalContext.sessionMap['userId'])}" validateClient="true" style="margin-right:10px"/>
@@ -153,6 +151,12 @@
                 </b:column>
 
             </b:row>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
 
         </b:container>
         <foot>
