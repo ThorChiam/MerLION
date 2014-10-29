@@ -111,35 +111,37 @@
                             <p:messages autoUpdate="true"/>
 
                             <h:panelGrid id="grid" columns="4" cellpadding="5">
-                                <h:outputLabel for="name" value="Product Name:" style="font-weight:bold"/>                    
-                                <p:inputText id="name" value="#{validationView.text}" required="true" label="Name"/>
-                                <p:message for="name" />
-                                <h:outputText value="#{validationView.text}" />
+                                                  
+                                <p:outputLabel for="name" value="Product Name:" style="font-weight:bold"/>
+                                <p:inputText id="name" value="#{omb.name}" required="true" label="Name">
+                                    <f:validateLength minimum="2" />
+                                </p:inputText>
+                                <p:message for="name" display="icon" />
 
 
 
                                 <h:outputLabel for="dd" value="Unit Price:" style="font-weight:bold"/>                    
-                                <p:inputText id="dd" value="#{validationView.doubleNumber}" converterMessage="Cannot convert to double.">
-                                    <f:validateDoubleRange minimum="5.5" maximum="8.5" />
+                                <p:inputText id="dd" value="#{omb.price}" converterMessage="Cannot convert to double.">
+                                    <f:validateDoubleRange minimum="1.0" maximum="100000.0" />
                                 </p:inputText>
                                 <p:message for="dd" />
-                                <h:outputText value="#{validationView.doubleNumber}" />
+                                <h:outputText value="#{omb.price}" />
 
                                 <h:outputLabel for="number" value="Available Stock:" style="font-weight:bold"/>                    
-                                <p:inputText id="number" value="#{validationView.integer}" label="Number">
-                                    <f:validateDoubleRange minimum="5" maximum="8" />
+                                <p:inputText id="number" value="#{omb.quantity}" label="Number">
+                                    <f:validateDoubleRange minimum="1" maximum="1000000" />
                                 </p:inputText>
                                 <p:message for="number" />
-                                <h:outputText value="#{validationView.integer}" />
+                                <h:outputText value="#{omb.quantity}" />
 
 
 
                                 <h:outputLabel for="desc" value="Description" style="font-weight:bold"/>
-                                <p:inputTextarea id="desc" value="#{validationView.description}" required="true" label="Description">
-                                    <f:validateLength minimum="3" maximum="10" /> 
+                                <p:inputTextarea id="desc" value="#{omb.description}" required="true" label="Description">
+                                    <f:validateLength minimum="1" maximum="1000" /> 
                                 </p:inputTextarea>
                                 <p:message for="desc" />
-                                <h:outputText value="#{validationView.description}" />
+                                <h:outputText value="#{omb.description}" />
                             </h:panelGrid>
 
                             <p:commandButton value="Add" ajax="false" icon="ui-icon-check" actionListener="#{omb.createProduct(facesContext.externalContext.sessionMap['userId'])}" validateClient="true" style="margin-right:10px"/>
