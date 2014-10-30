@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import OES.Session.OESSessionLocal;
 import CI.Entity.Account;
+import CRMS.Entity.Company;
 import OES.Entity.Enquiry;
 import OES.Entity.OES_Invoice;
 import OES.Entity.OES_Payment;
@@ -87,7 +88,9 @@ public class OESManagedBean implements Serializable {
     private String notes;
     private String delete_status_invoice;
     private OES_Invoice invoice;
+    private String total_price;
 
+    
     private String statusMessage;
     private List<Product> productList;
 
@@ -111,8 +114,10 @@ public class OESManagedBean implements Serializable {
     }
 
     public void updateProduct() {
-       
-        osbl.updateProduct(product_id, name, price, quantity, description);
+       Product p = productList.get(0);
+       Long pid = p.getId();
+       String pname = p.getName();
+       osbl.updateProduct(pid, pname, price, quantity, description);
     }
 
     public void onCellEdit(CellEditEvent event) {
@@ -130,11 +135,18 @@ public class OESManagedBean implements Serializable {
         return product;
     }
 
-    public List<Product> getProductList(Long id) {
-        System.out.println("********test product id:" + id);
+    public void storePid(Long pid){
+        this.product_id = pid;
+    }
+    
+    public List<Product> getProductList() {
+        System.out.println("********test product id:" + product_id);
 
-        productList = osbl.testProduct(id);
+        productList = osbl.testProduct(product_id);
         return productList;
+    }
+    public void setProductList(List<Product> lp){
+        productList = lp;
     }
 
     public void passValue(Long value) {
@@ -175,10 +187,6 @@ public class OESManagedBean implements Serializable {
     }
 
     //********************Seller-Quotation***********************
-    public List<String> ATPcheck(Enquiry enquiry) {
-        return osbl.ATPcheck(enquiry);
-    }
-
     public void createQuotation() {
         statusMessage = "A new quotation is successfully created.";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -255,7 +263,7 @@ public class OESManagedBean implements Serializable {
         statusMessage = "Please finish your payment soon. Thanks!";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Status: " + statusMessage, ""));
-        osbl.createPayment(paymentdate, paymenttype, status, purchaseorder);
+        osbl.createPayment(paymentdate, paymenttype, status, purchaseorder, total_price);
     }
 
     public void updatePaymentStatus() {
@@ -299,7 +307,93 @@ public class OESManagedBean implements Serializable {
         osbl.deleteInvoice(invoice_id, email);
     }
 
+    
+    //**********************Others**************************
+    public List<Integer> ATPcheck(List<Long> product_id) {
+        return osbl.ATPcheck(product_id);
+    }
+    
+    public List<String> estimateDeliverydate(List<Integer> required, List<Integer> current){
+        List<String> deliveryDate = new ArrayList();
+        int n;
+        for(n=0;n<required.size();n++){
+            if(required.get(n)>current.get(n)){
+                deliveryDate.add("Within 30 working days.");
+            }
+            else deliveryDate.add("Within 15 working days.");
+        }
+        return deliveryDate;
+    }
+    
+    public Account getTheAccount(String email){
+        return osbl.getTheAccount(email);
+    }
+    
+    public List<Company> getTheCompanies(){
+        return osbl.getTheCompanies();
+    }
+    
+    public Company getTheCompany(long company_id){
+        return osbl.getTheCompany(company_id);
+    }
+    
+    public List<Product> getTheProducts(long company_id){
+        return osbl.getTheProducts(company_id);
+    }
+    
+    public boolean check_payment_side(String email, long payment_id){
+        if(osbl.getPayment(payment_id).getPurchase().getSender().getEmail().equals(email))
+            return false;//this one is the buyer
+        return true;//this one is the seller
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //******************GETTER AND SETTER***************************
+            
+    public String getDeliverydate() {
+        return deliverydate;
+    }
+
+    public void setDeliverydate(String deliverydate) {
+        this.deliverydate = deliverydate;
+    }
+
+    public SalesOrder getSalesorder() {
+        return salesorder;
+    }
+
+    public void setSalesorder(SalesOrder salesorder) {
+        this.salesorder = salesorder;
+    }
+
+    public String getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(String total_price) {
+        this.total_price = total_price;
+    }
+
+    public String getStatusMessage() {
+        return statusMessage;
+    }
+
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
+    }
+
     public OESSessionLocal getOsbl() {
         return osbl;
     }
@@ -309,7 +403,6 @@ public class OESManagedBean implements Serializable {
     }
 
     public String getName() {
-        name = productList.get(0).getName();
         return name;
     }
 
@@ -342,7 +435,6 @@ public class OESManagedBean implements Serializable {
     }
 
     public long getProduct_id() {
-        product_id = productList.get(0).getId();
         return product_id;
     }
 

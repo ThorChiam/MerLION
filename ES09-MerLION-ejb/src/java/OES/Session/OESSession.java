@@ -20,6 +20,7 @@ import OES.Entity.Product;
 import OES.Entity.PurchaseOrder;
 import OES.Entity.Quotation;
 import OES.Entity.SalesOrder;
+import java.util.ArrayList;
 
 /**
  *
@@ -165,11 +166,6 @@ public class OESSession implements OESSessionLocal {
     
     //***************************Quotation*******************
     @Override
-    public List<String> ATPcheck(Enquiry enquiry) {
-        return null;
-    }
-
-    @Override
     public void createQuotation(Enquiry enquiry, List<String> delivery_date, String createdate) {
         Quotation tmp = new Quotation();
         tmp.setDeliver_date(delivery_date);
@@ -303,12 +299,13 @@ public class OESSession implements OESSessionLocal {
     
     //***************************Payment************************
     @Override
-    public void createPayment(String paymentdate, String paymenttype, String status, PurchaseOrder purchaseorder) {
+    public void createPayment(String paymentdate, String paymenttype, String status, PurchaseOrder purchaseorder, String total_price) {
         OES_Payment tmp = new OES_Payment();
         tmp.setPaymentDate(paymentdate);
         tmp.setPaymentType(paymenttype);
         tmp.setPurchase(purchaseorder);
         tmp.setStatus(status);
+        tmp.setTotal_price(total_price);
         em.persist(tmp);
     }
 
@@ -397,6 +394,60 @@ public class OESSession implements OESSessionLocal {
         }
         else if(email.equals(tmp.getPayment().getPurchase().getSender().getEmail())) tmp.setDelete_status(1);
         else tmp.setDelete_status(3);   
+    }
+    
+    
+    
+    
+    
+    
+    //**************************Others****************************
+    @Override
+    public List<Integer> ATPcheck(List<Long> product_id) {
+        /*
+        int n=0;
+        List<Integer> tmp = new ArrayList();
+        tmp = checkInventoryLevel(product_id);
+        while(n<product_id.size()){
+          Query q = em.createQuery("SELECT a FROM Product a WHERE a=:id");
+          q.setParameter("id", product_id.get(n));
+          Product product = (Product) q.getSingleResult();
+          product.setQuantity(tmp.get(n));
+          em.merge(tmp);   
+        }
+        
+        return tmp;
+        */
+        return null;
+    }
+    
+    @Override
+    public Account getTheAccount(String email){
+        Query q = em.createQuery("SELECT f FROM Account f WHERE f.email=:email");
+        q.setParameter("email", email);
+        return (Account) q.getSingleResult();
+    }
+    
+    @Override
+    public List<Company> getTheCompanies(){
+        Query q = em.createQuery("SELECT DISTINCT p.company FROM Product p"); 
+        return q.getResultList();
+    }
+    
+    @Override
+    public Company getTheCompany(long company_id){
+        Query q = em.createQuery("SELECT f FROM Company f WHERE f.id=:id");
+        q.setParameter("id", company_id);
+        return (Company) q.getSingleResult();
+    }
+    
+    @Override
+    public List<Product> getTheProducts(long company_id){
+        Query q = em.createQuery("SELECT f FROM Company f WHERE f.id=:id");
+        q.setParameter("id", company_id);
+        Company tmp = (Company) q.getSingleResult();
+        List<Product> result = tmp.getProducts();  
+        return result;
     }
 
 }

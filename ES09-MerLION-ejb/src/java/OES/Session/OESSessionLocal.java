@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import javax.ejb.Local;
 import CI.Entity.Account;
+import CRMS.Entity.Company;
 import OES.Entity.Enquiry;
 import OES.Entity.OES_Invoice;
 import OES.Entity.OES_Payment;
@@ -43,7 +44,6 @@ public interface OESSessionLocal {
     
     
     //********************Seller-Quotation***********************
-    public List<String> ATPcheck(Enquiry enquiry);
     public void createQuotation(Enquiry enquiry, List<String> delivery_date, String createdate);
     public Quotation getQuotation(long quotation_id);
     public List<Quotation> getAllQuotation(String email);//两边都能拿？？？？
@@ -68,7 +68,7 @@ public interface OESSessionLocal {
     
     
     //********************Buyer-Payment**************************
-    public void createPayment(String paymentdate, String paymenttype, String status,  PurchaseOrder purchaseorder);
+    public void createPayment(String paymentdate, String paymenttype, String status,  PurchaseOrder purchaseorder, String total_price);
     public void updatePaymentStatus(long payment_id, String status);
     public OES_Payment getPayment(long payment_id);
     public List<OES_Payment> getAllPayment(String email);
@@ -82,4 +82,10 @@ public interface OESSessionLocal {
     public List<OES_Invoice> getAllInvoice(String email);
     public void deleteInvoice(long invoice_id, String email);
    
+    //********************Others********************************
+    public List<Integer> ATPcheck(List<Long> product_id);
+    public Account getTheAccount(String email);
+    public Company getTheCompany(long company_id);
+    public List<Company> getTheCompanies();
+    public List<Product> getTheProducts(long company_id);
 }

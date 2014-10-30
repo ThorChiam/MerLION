@@ -71,14 +71,14 @@
 
 
                     <h:form id="form">
-                     
-                        <p:dataTable var="pro" value="#{omb.getProductList(facesContext.externalContext.sessionMap['pid'])}">
+                        <h:inputHidden value="#{omb.storePid(facesContext.externalContext.sessionMap['pid'])}"/>
+                        <p:dataTable var="pro" value="#{omb.getProductList()}">
                             <p:column headerText="Product Id">
-                                <h:inputText value="#{omb.product_id}" />
+                                <h:inputText value="#{pro.id}" />
                             </p:column>
 
                             <p:column headerText="Name">
-                                <h:inputText value="#{omb.name}" />
+                                <h:inputText value="#{pro.name}" />
                             </p:column>
 
                             <p:column headerText="Price">
