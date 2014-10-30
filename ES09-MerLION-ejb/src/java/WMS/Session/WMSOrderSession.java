@@ -409,17 +409,17 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         em.merge(inventory);
         return sais;
     }
-//private void updateStorageCapacity(List<StorageArea_Inventory> sais){
-//    List<StorageArea> sas = new ArrayList<>();
-//    for(StorageArea_Inventory sai:sais){
-//        if(!sas.contains(sai.getSa())){
-//            sas.add(sai.getSa());
+//    private void updateStorageCapacity(List<StorageArea_Inventory> sais) {
+//        List<StorageArea> sas = new ArrayList<>();
+//        for (StorageArea_Inventory sai : sais) {
+//            if (!sas.contains(sai.getSa())) {
+//                sas.add(sai.getSa());
+//            }
+//        }
+//        for (StorageArea sa : sas) {
+//            Query q = em.createQuery("SELECT ")
 //        }
 //    }
-//    for(StorageArea sa:sas){
-//        Query q = em.createQuery("SELECT ")
-//    }
-//}
 private void updateWarehouseCapacity(List<Warehouse_Inventory> wis){
     
 }

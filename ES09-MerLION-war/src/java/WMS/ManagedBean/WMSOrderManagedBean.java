@@ -18,9 +18,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -52,6 +52,8 @@ public class WMSOrderManagedBean implements Serializable {
     private List<Integer> checkResult;
 //    private List CCC;
 //    private ResultOfCheck roc;
+    
+    private Long selectedInventoryId;
 
     private String statusMessage;
 
@@ -320,4 +322,19 @@ public class WMSOrderManagedBean implements Serializable {
 //            return checkResult;
 //        }
 //    }
+    
+    
+    public void test(ActionEvent event)
+    {
+        selectedInventoryId = (Long)event.getComponent().getAttributes().get("inventoryId");
+        
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("name", 1);
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("name");
+        
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("name", 1);
+        
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("name", 1);
+    }
+    
+    
 }
