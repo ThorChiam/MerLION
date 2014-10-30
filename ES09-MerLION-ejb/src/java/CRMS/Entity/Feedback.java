@@ -34,6 +34,10 @@ public class Feedback implements Serializable {
     @ManyToOne
     private Company feedback_sender;
 
+    public Feedback(){
+        setId(System.nanoTime());    
+    }
+    
     public Long getId() {
         return id;
     }

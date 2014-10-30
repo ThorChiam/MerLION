@@ -5,6 +5,9 @@
  */
 package CRMS.Session;
 
+import CRMS.Entity.Company;
+import CRMS.Entity.Feedback;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 
@@ -14,8 +17,26 @@ import javax.ejb.LocalBean;
  */
 @Stateless
 @LocalBean
-public class FeedbackSession {
+public class FeedbackSession implements FeedbackSessionLocal {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @Override
+    public void createFeedback(double rating, String feedback_content, String feedback_date, Company sender, Company receiver) {
+        
+    }
+
+    @Override
+    public void deleteFeedback(long feedback_id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Feedback getFeedback(long feedback_id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Feedback> getAllFeedback(String email) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

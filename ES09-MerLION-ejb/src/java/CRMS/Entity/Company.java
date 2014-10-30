@@ -68,7 +68,7 @@ public class Company implements Serializable {
     private List<Account> Account=new ArrayList<>();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "company")
-    private Collection<Product> products=new ArrayList<>();
+    private List<Product> products=new ArrayList<>();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "feedback_sender")
     private List<Feedback> feedback_sender = new ArrayList<>();
@@ -249,7 +249,7 @@ public class Company implements Serializable {
         this.vision = vision;
     }
     
-    public Collection<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
@@ -261,7 +261,7 @@ public class Company implements Serializable {
         this.Account = Account;
     }
     
-    public void setProducts(Collection<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 

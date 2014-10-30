@@ -20,6 +20,7 @@ import OES.Entity.Product;
 import OES.Entity.PurchaseOrder;
 import OES.Entity.Quotation;
 import OES.Entity.SalesOrder;
+import java.util.ArrayList;
 
 /**
  *
@@ -394,10 +395,58 @@ public class OESSession implements OESSessionLocal {
         else tmp.setDelete_status(3);   
     }
     
+    
+    
+    
+    
+    
+    //**************************Others****************************
     @Override
-    public List<String> ATPcheck(List<String> products) {
-        List<String> tmp = new ArrayList();
+    public List<Integer> ATPcheck(List<Long> product_id) {
+        /*
+        int n=0;
+        List<Integer> tmp = new ArrayList();
+        tmp = checkInventoryLevel(product_id);
+        while(n<product_id.size()){
+          Query q = em.createQuery("SELECT a FROM Product a WHERE a=:id");
+          q.setParameter("id", product_id.get(n));
+          Product product = (Product) q.getSingleResult();
+          product.setQuantity(tmp.get(n));
+          em.merge(tmp);   
+        }
+        
         return tmp;
+        */
+        return null;
+    }
+    
+    @Override
+    public Account getTheAccount(String email){
+        Query q = em.createQuery("SELECT f FROM Account f WHERE f.email=:email");
+        q.setParameter("email", email);
+        return (Account) q.getSingleResult();
+    }
+    
+    @Override
+    public List<Company> getTheCompanies(){
+        Query q = em.createQuery("SELECT DISTINCT p.company FROM Product p"); 
+        return q.getResultList();
+    }
+    
+    @Override
+    public Company getTheCompany(long company_id){
+        Query q = em.createQuery("SELECT f FROM Company f WHERE f.id=:id");
+        q.setParameter("id", company_id);
+        return (Company) q.getSingleResult();
+    }
+    
+    @Override
+    public List<Product> getTheProducts(long company_id){
+        Query q = em.createQuery("SELECT f FROM Company f WHERE f.id=:id");
+        q.setParameter("id", company_id);
+        Company tmp = (Company) q.getSingleResult();
+        List<Product> result = tmp.getProducts();  
+        return result;
     }
 
 }

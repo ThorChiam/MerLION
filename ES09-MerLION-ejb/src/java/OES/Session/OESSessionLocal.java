@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import javax.ejb.Local;
 import CI.Entity.Account;
+import CRMS.Entity.Company;
 import OES.Entity.Enquiry;
 import OES.Entity.OES_Invoice;
 import OES.Entity.OES_Payment;
@@ -82,5 +83,9 @@ public interface OESSessionLocal {
     public void deleteInvoice(long invoice_id, String email);
    
     //********************Others********************************
-    public List<String> ATPcheck(List<String> products);
+    public List<Integer> ATPcheck(List<Long> product_id);
+    public Account getTheAccount(String email);
+    public Company getTheCompany(long company_id);
+    public List<Company> getTheCompanies();
+    public List<Product> getTheProducts(long company_id);
 }

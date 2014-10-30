@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import OES.Session.OESSessionLocal;
 import CI.Entity.Account;
+import CRMS.Entity.Company;
 import OES.Entity.Enquiry;
 import OES.Entity.OES_Invoice;
 import OES.Entity.OES_Payment;
@@ -135,6 +136,7 @@ public class OESManagedBean implements Serializable {
     public void storePid(Long pid){
         this.product_id = pid;
     }
+    
     public List<Product> getProductList() {
         System.out.println("********test product id:" + product_id);
 
@@ -305,9 +307,47 @@ public class OESManagedBean implements Serializable {
 
     
     //**********************Others**************************
-    public List<String> ATPcheck(List<String> products) {
-        return osbl.ATPcheck(products);
+    public List<Integer> ATPcheck(List<Long> product_id) {
+        return osbl.ATPcheck(product_id);
     }
+    
+    public List<String> estimateDeliverydate(List<Integer> required, List<Integer> current){
+        List<String> deliveryDate = new ArrayList();
+        int n;
+        for(n=0;n<required.size();n++){
+            if(required.get(n)>current.get(n)){
+                deliveryDate.add("Within 30 working days.");
+            }
+            else deliveryDate.add("Within 15 working days.");
+        }
+        return deliveryDate;
+    }
+    
+    public Account getTheAccount(String email){
+        return osbl.getTheAccount(email);
+    }
+    
+    public List<Company> getTheCompanies(){
+        return osbl.getTheCompanies();
+    }
+    
+    public Company getTheCompany(long company_id){
+        return osbl.getTheCompany(company_id);
+    }
+    
+    public List<Product> getTheProducts(long company_id){
+        return osbl.getTheProducts(company_id);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
