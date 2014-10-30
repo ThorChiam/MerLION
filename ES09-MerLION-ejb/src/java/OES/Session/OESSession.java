@@ -52,13 +52,14 @@ public class OESSession implements OESSessionLocal {
     @Override
     public void updateProduct(long product_id, String name, double price, int quantity, String description) {
         Query q = em.createQuery("SELECT a FROM Product a WHERE a.id=:id");
+        System.out.println("****************Product Name:"+name);
         q.setParameter("id", product_id);
-        Product product = (Product) q.getSingleResult();
-        product.setDescription(description);
-        product.setName(name);
-        product.setPrice(price);
-        product.setQuantity(quantity);
-        em.merge(product);
+//        Product product = (Product) q.getSingleResult();
+//        product.setDescription(description);
+//        product.setName(name);
+//        product.setPrice(price);
+//        product.setQuantity(quantity);
+//        em.merge(product);
     }
 
     @Override
@@ -68,6 +69,15 @@ public class OESSession implements OESSessionLocal {
         return (Product) q.getSingleResult();
     }
 
+    @Override
+    public List<Product> testProduct(long product_id){
+        System.out.println("************ pID"+product_id);
+        Query q = em.createQuery("SELECT f FROM Product f WHERE f.id=:id");
+        q.setParameter("id", product_id);
+        return q.getResultList();
+       
+    }
+    
     @Override
     public List<Product> getAllProduct(String email) {
         Query q = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");

@@ -69,56 +69,78 @@
 
 
 
-                    <h:form>
-                        <p:dataTable var="product" value="#{omb.getAllProduct(facesContext.externalContext.sessionMap['userId'])}" rows="10"
-                                     paginator="true"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="5,10,15">
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true"/>
+                        
+
+                        <p:contextMenu for="product" widgetVar="cMenu">   
+                            <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellCars').showCellEditor();
+                                    return false;"/>  
+                            <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+                        </p:contextMenu> 
 
 
-                            <p:column headerText="Id">
+
+
+                        <p:dataTable id="product" var="product" value="#{omb.getAllProduct(facesContext.externalContext.sessionMap['userId'])}" editable="true" editMode="cell" widgetVar="cellCars">
+                            <f:facet name="header">
+                                Product Listing
+                            </f:facet>
+
+                            <p:ajax event="cellEdit" listener="#{omb.onCellEdit}" update=":form:msgs" />
+
+                            <p:column headerText="ID">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{product.id}" /></f:facet>
-                                    <f:facet name="input"><p:inputText id="modelInput" value="#{product.id}" style="width:100%"/></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInput" value="#{product.id}" style="width:96%"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
 
                             <p:column headerText="Name">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{product.name}" /></f:facet>
-                                    <f:facet name="input"><p:inputText value="#{product.name}" style="width:100%" label="Year"/></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{product.name}" style="width:96%" label="Name"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            
-                             <p:column headerText="Unit Price">
+
+                            <p:column headerText="Price">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{product.price}" /></f:facet>
-                                    <f:facet name="input"><p:inputText value="#{product.price}" style="width:100%" label="Year"/></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{product.price}" style="width:96%" label="Price"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            
-                            <p:column headerText="Available Stock">
+
+                            <p:column headerText="Quantity">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{product.quantity}" /></f:facet>
-                                    <f:facet name="input"><p:inputText value="#{product.quantity}" style="width:100%" label="Year"/></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{product.quantity}" style="width:96%" label="Quantity"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                         
+
                             <p:column headerText="Description">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{product.description}" /></f:facet>
-                                    <f:facet name="input"><p:inputText value="#{product.description}" style="width:100%" label="Year"/></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{product.description}" style="width:96%" label="Description"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                         
-
-                            <!--Supplier here is only for Retail 1PL to order-->
-                            <p:column style="width:32px">
-                                <p:rowEditor />
+                            
+                            <p:column headerText="Edit">
+                                
+                                <p:commandButton value="Edit"  actionListener="#{omb.updateProduct()}" styleClass="ui-priority-primary" ajax="false"/>
+                              
+                            
                             </p:column>
-                        </p:dataTable>
-                    </h:form>      
+                            
+                            
+                            <p:column headerText="Delete">
+                                
+                                <p:commandButton value="Delete"  actionListener="#{omb.deleteProduct(product.id)}" styleClass="ui-priority-primary" ajax="false"/>
+                              
+                            
+                            </p:column>
 
+                        </p:dataTable>
+                    </h:form>
 
                 </b:column>
 
