@@ -299,12 +299,13 @@ public class OESSession implements OESSessionLocal {
     
     //***************************Payment************************
     @Override
-    public void createPayment(String paymentdate, String paymenttype, String status, PurchaseOrder purchaseorder) {
+    public void createPayment(String paymentdate, String paymenttype, String status, PurchaseOrder purchaseorder, String total_price) {
         OES_Payment tmp = new OES_Payment();
         tmp.setPaymentDate(paymentdate);
         tmp.setPaymentType(paymenttype);
         tmp.setPurchase(purchaseorder);
         tmp.setStatus(status);
+        tmp.setTotal_price(total_price);
         em.persist(tmp);
     }
 

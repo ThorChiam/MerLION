@@ -68,7 +68,7 @@ public interface OESSessionLocal {
     
     
     //********************Buyer-Payment**************************
-    public void createPayment(String paymentdate, String paymenttype, String status,  PurchaseOrder purchaseorder);
+    public void createPayment(String paymentdate, String paymenttype, String status,  PurchaseOrder purchaseorder, String total_price);
     public void updatePaymentStatus(long payment_id, String status);
     public OES_Payment getPayment(long payment_id);
     public List<OES_Payment> getAllPayment(String email);

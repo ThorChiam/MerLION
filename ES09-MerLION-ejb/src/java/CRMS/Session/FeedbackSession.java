@@ -21,12 +21,12 @@ public class FeedbackSession implements FeedbackSessionLocal {
 
     @Override
     public void createFeedback(double rating, String feedback_content, String feedback_date, Company sender, Company receiver) {
-        
-    }
-
-    @Override
-    public void deleteFeedback(long feedback_id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Feedback tmp = new Feedback();
+        tmp.setFeedback_content(feedback_content);
+        tmp.setFeedback_date(feedback_date);
+        tmp.setRating(rating);
+        tmp.setReciever(receiver);
+        tmp.setSender(sender);
     }
 
     @Override
