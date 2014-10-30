@@ -43,7 +43,6 @@ public interface OESSessionLocal {
     
     
     //********************Seller-Quotation***********************
-    public List<String> ATPcheck(Enquiry enquiry);
     public void createQuotation(Enquiry enquiry, List<String> delivery_date, String createdate);
     public Quotation getQuotation(long quotation_id);
     public List<Quotation> getAllQuotation(String email);//两边都能拿？？？？
@@ -82,4 +81,6 @@ public interface OESSessionLocal {
     public List<OES_Invoice> getAllInvoice(String email);
     public void deleteInvoice(long invoice_id, String email);
    
+    //********************Others********************************
+    public List<String> ATPcheck(List<String> products);
 }

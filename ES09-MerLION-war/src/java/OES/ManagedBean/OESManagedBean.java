@@ -111,8 +111,10 @@ public class OESManagedBean implements Serializable {
     }
 
     public void updateProduct() {
-       
-        osbl.updateProduct(product_id, name, price, quantity, description);
+       Product p = productList.get(0);
+       Long pid = p.getId();
+       String pname = p.getName();
+       osbl.updateProduct(pid, pname, price, quantity, description);
     }
 
     public void onCellEdit(CellEditEvent event) {
@@ -130,11 +132,17 @@ public class OESManagedBean implements Serializable {
         return product;
     }
 
-    public List<Product> getProductList(Long id) {
-        System.out.println("********test product id:" + id);
+    public void storePid(Long pid){
+        this.product_id = pid;
+    }
+    public List<Product> getProductList() {
+        System.out.println("********test product id:" + product_id);
 
-        productList = osbl.testProduct(id);
+        productList = osbl.testProduct(product_id);
         return productList;
+    }
+    public void setProductList(List<Product> lp){
+        productList = lp;
     }
 
     public void passValue(Long value) {
@@ -175,10 +183,6 @@ public class OESManagedBean implements Serializable {
     }
 
     //********************Seller-Quotation***********************
-    public List<String> ATPcheck(Enquiry enquiry) {
-        return osbl.ATPcheck(enquiry);
-    }
-
     public void createQuotation() {
         statusMessage = "A new quotation is successfully created.";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -299,6 +303,15 @@ public class OESManagedBean implements Serializable {
         osbl.deleteInvoice(invoice_id, email);
     }
 
+    
+    //**********************Others**************************
+    public List<String> ATPcheck(List<String> products) {
+        return osbl.ATPcheck(products);
+    }
+    
+    
+    
+    
     //******************GETTER AND SETTER***************************
     public OESSessionLocal getOsbl() {
         return osbl;
@@ -309,7 +322,6 @@ public class OESManagedBean implements Serializable {
     }
 
     public String getName() {
-        name = productList.get(0).getName();
         return name;
     }
 
@@ -342,7 +354,6 @@ public class OESManagedBean implements Serializable {
     }
 
     public long getProduct_id() {
-        product_id = productList.get(0).getId();
         return product_id;
     }
 

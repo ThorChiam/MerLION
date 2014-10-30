@@ -165,11 +165,6 @@ public class OESSession implements OESSessionLocal {
     
     //***************************Quotation*******************
     @Override
-    public List<String> ATPcheck(Enquiry enquiry) {
-        return null;
-    }
-
-    @Override
     public void createQuotation(Enquiry enquiry, List<String> delivery_date, String createdate) {
         Quotation tmp = new Quotation();
         tmp.setDeliver_date(delivery_date);
@@ -397,6 +392,12 @@ public class OESSession implements OESSessionLocal {
         }
         else if(email.equals(tmp.getPayment().getPurchase().getSender().getEmail())) tmp.setDelete_status(1);
         else tmp.setDelete_status(3);   
+    }
+    
+    @Override
+    public List<String> ATPcheck(List<String> products) {
+        List<String> tmp = new ArrayList();
+        return tmp;
     }
 
 }
