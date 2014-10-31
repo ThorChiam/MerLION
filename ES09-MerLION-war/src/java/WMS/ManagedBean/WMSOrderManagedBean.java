@@ -13,12 +13,12 @@ import WMS.Entity.WMSOrder;
 import WMS.Entity.Warehouse;
 import WMS.Entity.Warehouse_Inventory;
 import WMS.Session.WMSOrderSessionLocal;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -50,28 +50,54 @@ public class WMSOrderManagedBean implements Serializable {
     private List<Inventory> lin;
     private List<StorageArea_Inventory> imanage;
     private List<Integer> checkResult;
-//    private List CCC;
-//    private ResultOfCheck roc;
     
-    private Long selectedInventoryId;
-
+    private String whName;
+    private String inName;
+    private Long whId;
+    private Long inId;
+    private Long selectedStainId;
+    private List<StorageArea_Inventory> stain;
     private String statusMessage;
+//    private List<AllocateWarehouse> aws;
+//    private List<allocateWarehouse> aws;
+//private List<String[]> wss; 
 
     public WMSOrderManagedBean() {
     }
-
-    public WMSOrderSessionLocal getWosl() {
-        return wosl;
-    }
-
-    public void setWosl(WMSOrderSessionLocal wosl) {
-        this.wosl = wosl;
-    }
-
 //    public ResultOfCheck getResultOfCheck() {
 //        return roc;
 //    }
 
+//    public List<String[]> getWss(){
+//        this.initWss();
+//        return wss;
+//    }
+//    private void initWss(){
+//        orderId = Long.valueOf(2);//testing use
+//        List<WMSOrder_Inventory> woil = wosl.getOrder(orderId).getWo_inven();
+//        List<Warehouse_Inventory> olwi = wosl.getAvailableWarehouse(orderId);
+//        int columnNo = olwi.size()+2;
+//        
+//        String[] header;
+//        header = new String[columnNo];
+//           header[0] = "Inventory Name";
+//           header[1] = "Qty";
+//           for(int j=2;j<olwi.size();j++){
+//               header[j] = olwi.get(j).getWarehouse().getName();
+//           }
+//           wss.add(header);
+//        for(int i=0;i<woil.size();i++){
+//           String[] wsi;
+//            wsi = new String[columnNo];
+//           wsi[0] = woil.get(i).getInventory().getName();
+//           wsi[1] = String.valueOf(woil.get(i).getQty());
+//           for(int j=2;j<olwi.size();j++){
+//               wsi[j] = String.valueOf(olwi.get(i).getQty());
+//           }
+//           wss.add(wsi);
+//        }
+//        
+//    }
     public Long getOrderId() {
         return orderId;
     }
@@ -169,6 +195,7 @@ public class WMSOrderManagedBean implements Serializable {
     }
 
     public List<Inventory> getLin() {
+        orderId = Long.valueOf(2);
         lin = wosl.getInventories(orderId);
         return lin;
     }
@@ -177,27 +204,14 @@ public class WMSOrderManagedBean implements Serializable {
         this.lin = lin;
     }
 
-    /**
-     * check the inventory level
-     *
-     * @param orderId
-     * @return the last element of the list indicate the stock condition,1 for
-     * adequate,0 for any lack
-     */
-//    public List getCCC() {
-//        CCC = new ArrayList<>();
-//        CCC.add(this.checkResult);
-//        return CCC;
-//    }
-
     public List<Integer> getCheckResult() {
-        orderId = Long.valueOf(1);//testing use
+        orderId = Long.valueOf(2);//testing use
         checkResult = wosl.checkInventoryLevel(orderId);
         return checkResult;
     }
 
     public List<Integer> checkInventoryLevel() {
-        orderId = Long.valueOf(1);//testing use
+        orderId = Long.valueOf(2);//testing use
         checkResult = wosl.checkInventoryLevel(orderId);
         for (int i = 0; i < checkResult.size(); i++) {
             if (checkResult.get(i) < 0) {
@@ -224,7 +238,7 @@ public class WMSOrderManagedBean implements Serializable {
     }
 
     public WMSOrder getOrder() {
-        orderId = Long.valueOf(1);//testing use
+        orderId = Long.valueOf(2);//testing use
         return wosl.getOrder(orderId);
     }
 
@@ -244,21 +258,26 @@ public class WMSOrderManagedBean implements Serializable {
         return wosl.getInventory(inventoryId);
     }
 
+    public List<Warehouse_Inventory> showWarhouseInventory() {
+        orderId = Long.valueOf(2);
+        return wosl.getAvailableWarehouse(orderId);
+    }
 //    public List<Warehouse> getWarehouseByStorageArea(List<StorageArea> sas);
+
     public List<Warehouse> getAvailableWarehouse() {
-        orderId = Long.valueOf(1);//testing use
-        List<Warehouse> lw = new ArrayList<>();
+        orderId = Long.valueOf(2);//testing use
+        List<Warehouse> lww = new ArrayList<>();
         List<Warehouse_Inventory> olwi = wosl.getAvailableWarehouse(orderId);
         List<Integer> avai = new ArrayList<>();
-        for(Warehouse_Inventory wi:olwi){
+        for (Warehouse_Inventory wi : olwi) {
             avai.add(wi.getQty());
         }
-        for(Warehouse_Inventory wi:olwi){
+        for (Warehouse_Inventory wi : olwi) {
             Warehouse w = wi.getWarehouse();
             w.setAvailable(avai);
-            lw.add(w);
+            lww.add(w);
         }
-        return lw;
+        return lww;
     }
 
     public void createInventory() {
@@ -322,19 +341,196 @@ public class WMSOrderManagedBean implements Serializable {
 //            return checkResult;
 //        }
 //    }
-    
-    
-    public void test(ActionEvent event)
-    {
-        selectedInventoryId = (Long)event.getComponent().getAttributes().get("inventoryId");
-        
+    public String whName(){
+       Long tmpId = (Long)FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("whId");
+       return wosl.getWarehouse(tmpId).getName();
+    }
+    public String inName(){
+        Long tmpId = (Long)FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("inId");
+       return wosl.getInventory(tmpId).getName();
+    }
+    public List<StorageArea_Inventory> getStain() {
+        stain = wosl.getPickTable(whId, inId);
+        return stain;
+    }
+
+    public void setStain(List<StorageArea_Inventory> stain) {
+        this.stain = stain;
+    }
+
+    public void putStain(ActionEvent event) {
+        whId = (Long) event.getComponent().getAttributes().get("whId");
+        inId = (Long) event.getComponent().getAttributes().get("inId");
+        whName = (String) event.getComponent().getAttributes().get("whName");
+        inName = (String) event.getComponent().getAttributes().get("inName");
+        System.out.println("*****  w:"+whName+";**********   i:"+inName);
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("whId", whId);
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("inId", inId);
+    }
+
+    public String getWhName() {
+        return whName;
+    }
+
+    public void setWhName(String whName) {
+        this.whName = whName;
+    }
+
+    public String getInName() {
+        return inName;
+    }
+
+    public void setInName(String inName) {
+        this.inName = inName;
+    }
+
+    public void setSelectedStainId(ActionEvent event) {
+        selectedStainId = (Long) event.getComponent().getAttributes().get("stain");
+    }
+
+    public Long getSelectedStainId() {
+        return selectedStainId;
+    }
+
+    public void test(ActionEvent event) {
+        selectedStainId = (Long) event.getComponent().getAttributes().get("inventoryId");
+
         FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("name", 1);
         FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("name");
-        
+
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("name", 1);
-        
+
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("name", 1);
     }
-    
-    
+
+//    private List<Warehouse_Inventory> sortWi(List<Warehouse_Inventory> olwi, List<Long> wiList) {
+//        List<Warehouse_Inventory> tmp = new ArrayList<>();
+//        for (Long w : wiList) {
+//            for (Warehouse_Inventory wi : olwi) {
+//                if (wi.getWarehouse().getId().equals(w)) {
+//                    tmp.add(wi);
+//                }
+//            }
+//        }
+//        return tmp;
+//    }
+//    public List<AllocateWarehouse> getAws() {
+//        return aws;
+//    }
+//
+//    public void setAws(List<AllocateWarehouse> aws) {
+//        this.aws = aws;
+//    }
+//    public List<allocateWarehouse> getAws() {
+//        orderId = Long.valueOf(2);//testing use
+//        aws = new ArrayList<>();
+//        List<Warehouse_Inventory> olwi = wosl.getAvailableWarehouse(orderId);
+//        List<WMSOrder_Inventory> woil = wosl.getOrder(orderId).getWo_inven();
+//        List<Long> wiList = new ArrayList();
+//        for (Warehouse_Inventory kw : olwi) {
+//            wiList.add(kw.getWarehouse().getId());
+//        }
+//        Collections.sort(wiList);
+//        List<Warehouse_Inventory> sorted = this.sortWi(olwi, wiList);
+//
+//        for (WMSOrder_Inventory woil1 : woil) {
+//            String iName = woil1.getInventory().getName();
+//            int iQty = woil1.getQty();
+//            List<Integer> tmp = new ArrayList<>();
+////            System.out.println("****Qty:"+tmp.size()+",Sort:"+sorted.size());
+//            for (Warehouse_Inventory wii : sorted) {
+//                tmp.add(wii.getQty());
+//                System.out.println("****Qty:" + tmp.size() + "," + wii.getQty());
+//            }
+//            allocateWarehouse aw = new allocateWarehouse(iName, iQty, tmp);
+//            aws.add(aw);
+//        }
+//        return aws;
+//    }
+//
+//    public void setAws(List<allocateWarehouse> aws) {
+//        this.aws = aws;
+//    }
+//
+//    public List<ColumnModel> getColumns() {
+//        return columns;
+//    }
+//
+//    public void setColumns(List<ColumnModel> columns) {
+//        this.columns = columns;
+//    }
+//
+//    static public class allocateWarehouse implements Serializable {
+//
+//        private String inventoryName;
+//        private int inventoryQty;
+//        private List<Integer> wil;//{w1-i1,w2-i1,w3-i1}
+//
+//        public allocateWarehouse(String inventoryName, int inventoryQty, List<Integer> wil) {
+//            this.inventoryName = inventoryName;
+//            this.inventoryQty = inventoryQty;
+//            this.wil = wil;
+//        }
+//
+//        public String getInventoryName() {
+//            return inventoryName;
+//        }
+//
+//        public void setInventoryName(String inventoryName) {
+//            this.inventoryName = inventoryName;
+//        }
+//
+//        public int getInventoryQty() {
+//            return inventoryQty;
+//        }
+//
+//        public void setInventoryQty(int inventoryQty) {
+//            this.inventoryQty = inventoryQty;
+//        }
+//
+//        public List<Integer> getWil() {
+//            return wil;
+//        }
+//
+//        public void setWil(List<Integer> wil) {
+//            this.wil = wil;
+//        }
+//
+//    }
+//    static public class ColumnModel implements Serializable {
+//
+//        private String header;
+//        private String property;
+//
+//        public ColumnModel(String header, String property) {
+//            this.header = header;
+//            this.property = property;
+//        }
+//
+//        public String getHeader() {
+//            return header;
+//        }
+//
+//        public String getProperty() {
+//            return property;
+//        }
+//    }
+//    static public class AllocateWarehouse implements Serializable {
+//
+//        private String wName;
+//        private int wQty;
+//
+//        public AllocateWarehouse(String wName, int wQty) {
+//            this.wName = wName;
+//            this.wQty = wQty;
+//        }
+//
+//        public String getWName() {
+//            return wName;
+//        }
+//
+//        public int getWQty() {
+//            return wQty;
+//        }
+//    }
 }

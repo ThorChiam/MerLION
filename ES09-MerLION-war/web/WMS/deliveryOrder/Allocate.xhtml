@@ -95,70 +95,66 @@
                     <p:panel header="Inventory Allocation">
                         <h:form>
                             <!-- value should be a LIST-->
-                            <p:dataTable var="detail" value="#{womb.lin}" style="width:200px">
+                            <p:dataTable var="woin" value="#{womb.order.wo_inven}">
+                                <p:column headerText="Inventory ID">
+                                    <h:outputText value="#{woin.inventory.id}"/>
+                                </p:column>
                                 <p:column headerText="Inventory Name">
-                                    <!-- -->
-                                    <h:outputText value="#{detail.name}" />
+                                    <h:outputText value="#{woin.inventory.name}"/>
                                 </p:column>
-                                <p:column  headerText="Quantity">
-                                    <h:outputText value="#{detail.quantity}" />
+                                <p:column headerText="Qty">
+                                    <h:outputText value="#{woin.qty}"/>
                                 </p:column>
-                                
-                                <!-- warehouse-->
-                                <p:columns  var="wh" value="#{womb.availableWarehouse}" columnIndexVar="columnIndexVar">
-                                    <f:facet name="header">  
-                                         #{columnIndexVar}
-                                    </f:facet> 
-                                    <!--<p:dataList var="ava" value="#{wh.available}">
-                                        <h:outputText value="#{ava}" />
-                                    </p:dataList>-->
-                                    
-                                    &nbsp;
-
-                                    <h:commandLink actionListener="" value="javascript:void(0)" onclick="PF('dlg').show();" title="View">
+                            </p:dataTable>
+                            <p:dataTable var="whin" value="#{womb.showWarhouseInventory()}">
+                                <p:column headerText="Inventory ID">
+                                    <h:outputText value="#{whin.inventory.id}"/>
+                                </p:column>
+                                <p:column headerText="Warehouse ID">
+                                    <h:outputText value="#{whin.warehouse.id}"/>
+                                </p:column>
+                                <p:column headerText="Qty">
+                                    <h:outputText value="#{whin.qty}"/>
+                                    <!--value="javascript:void(0)"-->
+                                    <h:outputLabel onclick="PF('dlg').show();" title="View">
+                                        <h:commandLink actionListener="#{womb.putStain}">
                                         <p:graphicImage name="WMS/deliveryOrder/view.png" />
-                                        <f:attribute name="inventoryId" value="#{detail.id}" />
-                                        <f:attribute name="warehouseId" value="#{wh.id}" />
+                                        <f:attribute name="whId" value="#{whin.warehouse.id}" />
+                                        <f:attribute name="inId" value="#{whin.inventory.id}" />
+                                        <f:attribute name="whName" value="#{whin.warehouse.name}" />
+                                        <f:attribute name="inName" value="#{whin.inventory.name}" />
                                     </h:commandLink>
+                                    </h:outputLabel>
 
-                                    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                                    <p:growl id="growl" sticky="true" showDetail="true" life="300000" />
 
                                     <p:dialog header="Storgae Bin Allocation" widgetVar="dlg" resizable="false">
                                         <h:panelGrid style="width: 350px; height: 500px">
-                                            <h:inputHidden value="#" id="hiddenInventoryId" />
-                                            <h:inputHidden value="#" id="hiddenWarehouseId" />
+                                          <!--  <h:inputHidden  value="#{womb.getWhName()}" id="hiddenWhinId" />-->
+                                            <p:outputLabel for="whName" value="Warehouse Name"/>
+                                            <h:outputText  id="whName" value="#{womb.getWhName()}" />
+                                            <p:outputLabel for="inName" value="Inventory Name" />
+                                            <h:outputText id="inName" value="#{womb.getInName()}" />
 
-                                            <h:outputText value="#{detail.name}" />
-                                            <h:outputText value="#{detail.quantity}" />
-                                            <h:outputText value="#{wh.id}" />
-                                            <h:outputText value="#{detail.id}"/>
-
-                                            <p:dataTable var="storge" value="">
+                                            <p:dataTable var="sai" value="#{womb.stain}">
                                                 <p:column headerText="Storage ID">
-                                                    <h:outputText value="" />
+                                                    <h:outputText value="#{sai.sa.id}" />
                                                 </p:column>
-
                                                 <p:column headerText="Quantity">
-                                                    <h:outputText value="" />
+                                                    <h:outputText value="#{sai.qty}" />
                                                 </p:column>
 
                                                 <p:column headerText="Allocation">
-                                                    <h:inputText value="" />
+                                                    <h:inputText value="#" />
                                                 </p:column>
                                             </p:dataTable>
-                                            <p:commandButton value="Allocate" update="growl" actionListener="#"
+                                            <p:commandButton value="Allocate" update="growl" actionListener="#{womb.putStain}"
                                                              oncomplete="handleLoginRequest(xhr, status, args)" />
 
                                         </h:panelGrid>
                                     </p:dialog>
-                                </p:columns>
-
+                                </p:column>
                             </p:dataTable>
-                        <!--    <p:dataTable var="avas" value="#{womb.availableWarehouse}" style="width:200px">
-                            <p:column headerText="#{avas.name}">
-                                <h:outputText value="#{avas.name}"/>
-                            </p:column>
-                            </p:dataTable>-->
                         </h:form>
                     </p:panel>
                 </b:column>
