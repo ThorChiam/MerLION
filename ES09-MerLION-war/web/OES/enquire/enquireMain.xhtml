@@ -7,7 +7,6 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    
     <h:head>
         <title>Welcome to Order Entry System</title>
 
@@ -77,20 +76,15 @@
         <b:container>
             <b:row styleClass="show-grid">
                 <b:column col-xs="6" col-sm="6" col-md="2">
-
-
                     <h:form>
-                        <p:panel header="Product">
+                        <p:panel header="Enquire">
 
                             <b:listLinks>
-
-                                <b:navLink href="productMain.xhtml" value="NEW Product"
+                                <b:navLink href="enquireMain.xhtml" value="Create New Enquire"
+                                           />
+                                <b:navLink href="viewEnquire.xhtml" value="View Enquire"
                                            />
 
-                                <b:navLink href="productALL.xhtml" value="ALL Products"
-                                           />
-                                <b:navLink href="supplier.xhtml" value="Supplier"
-                                           />
                                 <b:navLink>
 
                                 </b:navLink>
@@ -104,56 +98,55 @@
 
                 <b:column col-xs="6" col-sm="6" col-md="10">
                     <h:form>
-                        <p:panel header="NEW Product">
-                            <p:messages autoUpdate="true"/>
+                        <p:panel header="NEW Enquire">
+                            <h:outputLabel for="buyer" value="From Buyer:" style="font-weight:bold" />
+                            <p:inputText id="buyer" value="#{omb.getBuyName(facesContext.externalContext.sessionMap['userId'])}" required="true" label="buyer">
+                                
+                            </p:inputText>
+                         
+                            <br/>
 
-                            <h:panelGrid id="grid" columns="1" cellpadding="6">
-
-                                <p:outputLabel for="name" value="Product Name:" style="font-weight:bold"/>
-                                <p:inputText id="name" value="#{omb.name}" required="true" label="Name">
-                                    <f:validateLength minimum="2" />
-                                </p:inputText>
-                                <p:message for="name" display="icon" />
-
-
-                                <h:outputLabel for="dd" value="Unit Price:" style="font-weight:bold"/>                    
-                                <p:inputText id="dd" value="#{omb.price}" label="Unit Price">
-                                    <f:validateLength minimum="2" />
-                                </p:inputText>
-                                <p:message for="dd"  display="icon" />
-                            
-
-                                <h:outputLabel for="number" value="Available Stock:" style="font-weight:bold"/>                    
-                                <p:inputText id="number" value="#{omb.quantity}" label="Available Stock">
-                                    <f:validateLength minimum="2" />
-                                </p:inputText>
-                                <p:message for="number"  display="icon"/>
+                            <p:outputLabel for="seller" value="To Seller:" style="font-weight:bold"/>
+                            <p:selectOneMenu id="seller" value="#{omb.sellerName}" style="width:150px">
+                                <f:selectItem itemLabel="Select Seller" itemValue="#{omb.companyName}" noSelectionOption="true" />
+                                <f:selectItems value="#"  var="tc" itemLabel="#{tc}" itemValue="#{tc}" />
+                            </p:selectOneMenu>
+                             <br/>
+                             
+                            <p:outputLabel for="date" value="Quotation Date:" style="font-weight:bold" />
+                            <p:calendar id="date" value="#{omb.createdate}" showOn="button" />
                               
-                                <h:outputLabel for="desc" value="Description:" style="font-weight:bold"/>
-                                <p:inputTextarea id="desc" value="#{omb.description}" required="true" label="Description">
-                                    <f:validateLength minimum="1" maximum="1000" /> 
-                                </p:inputTextarea>
-                                <p:message for="desc"  display="icon" />
-                           
-                            </h:panelGrid>
+                            <br/>
+                            <br/>
+                          
+                            <p:outputLabel for="products" value="Select Product" style="font-weight:bold" />
+                            <h:selectOneMenu id="products" value="#{omb.product_id}" style="width:150px">
+                                <f:selectItem itemLabel="Select Product" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{omb.produtList}" var="ps" itemLabel="#{ps}" itemValue="#{ps}"/>
 
-                            <p:commandButton value="Add" ajax="false" icon="ui-icon-check" actionListener="#{omb.createProduct(facesContext.externalContext.sessionMap['userId'])}" validateClient="true" style="margin-right:10px"/>
+                            </h:selectOneMenu>
+                          
+                            
+                            <h:outputLabel for="quantity" value="Quantity:" style="font-weight:bold" />
+                            <p:inputText id="quantity" value="#{omb.pqty}" required="true" label="quantity">
+
+                            </p:inputText>
+                     
+                        
+                            <br/>
+                            <br/>
+                            
+                            <p:commandButton value="Create Enquire" ajax="false" icon="ui-icon-check" actionListener="#{omb.createEnquiry(facesContext.externalContext.sessionMap['userId'])}" validateClient="true" style="margin-right:10px"/>
 
                         </p:panel>
                     </h:form>
 
-
                 </b:column>
-
             </b:row>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
 
 
         </b:container>
+
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 
@@ -175,6 +168,7 @@
         </foot>
     </h:body>
 </html>
+
 
 
 

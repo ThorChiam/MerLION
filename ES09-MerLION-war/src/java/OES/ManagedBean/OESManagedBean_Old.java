@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import OES.Session.OESSessionLocal;
 import CI.Entity.Account;
+import CRMS.Entity.Company;
 import OES.Entity.Enquiry;
 import OES.Entity.OES_Invoice;
 import OES.Entity.OES_Payment;
@@ -21,7 +23,6 @@ import OES.Entity.PurchaseOrder;
 import OES.Entity.Quotation;
 import OES.Entity.SalesOrder;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -33,8 +34,9 @@ import org.primefaces.event.CellEditEvent;
  * @author sunny
  */
 @ManagedBean(name = "omb")
+@SessionScoped
 @ViewScoped
-public class OESManagedBean implements Serializable {
+public class OESManagedBean_Old implements Serializable {
 
     @EJB
     private OESSessionLocal osbl;
@@ -86,19 +88,13 @@ public class OESManagedBean implements Serializable {
     private String notes;
     private String delete_status_invoice;
     private OES_Invoice invoice;
+    private String total_price;
 
+    
     private String statusMessage;
     private List<Product> productList;
-    
-    private List<Product> allProducts;
 
-    public OESManagedBean() {
-    }
-    
-    @PostConstruct
-    public void init()
-    {
-        allProducts = osbl.getAllProduct(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId").toString());
+    public OESManagedBean_Old() {
     }
 
     //********************Product********************************
@@ -117,16 +113,14 @@ public class OESManagedBean implements Serializable {
         }
     }
 
-    public void updateProduct(Long product_id,String name,double price,int quantity,String description) {
-       
-        osbl.updateProduct(product_id, name, price, quantity, description);
+    public void updateProduct() {
+       Product p = productList.get(0);
+       Long pid = p.getId();
+       String pname = p.getName();
+       osbl.updateProduct(pid, pname, price, quantity, description);
     }
-   
-   
-     
+
     public void onCellEdit(CellEditEvent event) {
-        System.err.println("Selected row: " + allProducts.get(event.getRowIndex()).getId());
-        updateProduct(allProducts.get(event.getRowIndex()).getId(),allProducts.get(event.getRowIndex()).getName(),allProducts.get(event.getRowIndex()).getPrice(),allProducts.get(event.getRowIndex()).getQuantity(),allProducts.get(event.getRowIndex()).getDescription());
         Object oldValue = event.getOldValue();
         Object newValue = event.getNewValue();
 
@@ -141,11 +135,18 @@ public class OESManagedBean implements Serializable {
         return product;
     }
 
-    public List<Product> getProductList(Long id) {
-        System.out.println("********test product id:" + id);
+    public void storePid(Long pid){
+        this.product_id = pid;
+    }
+    
+    public List<Product> getProductList() {
+        System.out.println("********test product id:" + product_id);
 
-        productList = osbl.testProduct(id);
+        productList = osbl.testProduct(product_id);
         return productList;
+    }
+    public void setProductList(List<Product> lp){
+        productList = lp;
     }
 
     public void passValue(Long value) {
@@ -171,10 +172,6 @@ public class OESManagedBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Status: " + statusMessage, ""));
     }
-    
-    public String getBuyName(String email){
-        return osbl.getBuyName(email);
-    }
 
     public Enquiry getEnquiry() {
         enquiry = osbl.getEnquiry(enquiry_id);
@@ -190,10 +187,6 @@ public class OESManagedBean implements Serializable {
     }
 
     //********************Seller-Quotation***********************
-    /*public List<String> ATPcheck(Enquiry enquiry) {
-        return osbl.ATPcheck(enquiry);
-    }
-*/
     public void createQuotation() {
         statusMessage = "A new quotation is successfully created.";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -266,13 +259,17 @@ public class OESManagedBean implements Serializable {
     }
 
     //********************Buyer-Payment**************************
-   /* public void createPayment() {
+    public void createPayment() {
         statusMessage = "Please finish your payment soon. Thanks!";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Status: " + statusMessage, ""));
-        osbl.createPayment(paymentdate, paymenttype, status, purchaseorder);
+        Date date = new java.util.Date();
+        Timestamp tmp = new Timestamp(date.getTime());
+        String payment_date = tmp.toString();
+        status="Pending";
+        osbl.createPayment(payment_date, paymenttype, status, purchaseorder, total_price);
     }
-*/
+
     public void updatePaymentStatus() {
         osbl.updatePaymentStatus(payment_id, status);
     }
@@ -314,7 +311,93 @@ public class OESManagedBean implements Serializable {
         osbl.deleteInvoice(invoice_id, email);
     }
 
+    
+    //**********************Others**************************
+    public List<Integer> ATPcheck(List<Long> product_id) {
+        return osbl.ATPcheck(product_id);
+    }
+    
+    public List<String> estimateDeliverydate(List<Integer> required, List<Integer> current){
+        List<String> deliveryDate = new ArrayList();
+        int n;
+        for(n=0;n<required.size();n++){
+            if(required.get(n)>current.get(n)){
+                deliveryDate.add("Within 30 working days.");
+            }
+            else deliveryDate.add("Within 15 working days.");
+        }
+        return deliveryDate;
+    }
+    
+    public Account getTheAccount(String email){
+        return osbl.getTheAccount(email);
+    }
+    
+    public List<Company> getTheCompanies(){
+        return osbl.getTheCompanies();
+    }
+    
+    public Company getTheCompany(long company_id){
+        return osbl.getTheCompany(company_id);
+    }
+    
+    public List<Product> getTheProducts(long company_id){
+        return osbl.getTheProducts(company_id);
+    }
+    
+    public boolean check_payment_side(String email, long payment_id){
+        if(osbl.getPayment(payment_id).getPurchase().getSender().getEmail().equals(email))
+            return false;//this one is the buyer
+        return true;//this one is the seller
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //******************GETTER AND SETTER***************************
+            
+    public String getDeliverydate() {
+        return deliverydate;
+    }
+
+    public void setDeliverydate(String deliverydate) {
+        this.deliverydate = deliverydate;
+    }
+
+    public SalesOrder getSalesorder() {
+        return salesorder;
+    }
+
+    public void setSalesorder(SalesOrder salesorder) {
+        this.salesorder = salesorder;
+    }
+
+    public String getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(String total_price) {
+        this.total_price = total_price;
+    }
+
+    public String getStatusMessage() {
+        return statusMessage;
+    }
+
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
+    }
+
     public OESSessionLocal getOsbl() {
         return osbl;
     }
@@ -324,7 +407,6 @@ public class OESManagedBean implements Serializable {
     }
 
     public String getName() {
-        //name = productList.get(0).getName();
         return name;
     }
 
@@ -357,7 +439,6 @@ public class OESManagedBean implements Serializable {
     }
 
     public long getProduct_id() {
-        product_id = productList.get(0).getId();
         return product_id;
     }
 
@@ -539,14 +620,6 @@ public class OESManagedBean implements Serializable {
 
     public void setDelete_status_invoice(String delete_status_invoice) {
         this.delete_status_invoice = delete_status_invoice;
-    }
-
-    public List<Product> getAllProducts() {
-        return allProducts;
-    }
-
-    public void setAllProducts(List<Product> allProducts) {
-        this.allProducts = allProducts;
     }
 
 }

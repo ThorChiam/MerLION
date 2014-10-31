@@ -27,7 +27,7 @@
                     <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
                     <p:menuitem value="Quotation" url="#" />
                     <p:menuitem value="Sales Order" url="#" />
-                    <p:menuitem value="Customer" url="#" />
+                    <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />
                     <p:menuitem value="Supplier" url="#" />
                     <p:menuitem value="Payment" url="#" />
 
@@ -68,28 +68,21 @@
                 <!-- display all the products-->
                 <b:column col-xs="6" col-sm="6" col-md="10">
 
-
-
                     <h:form id="form">
                         <p:growl id="msgs" showDetail="true"/>
                         
-
                         <p:contextMenu for="product" widgetVar="cMenu">   
                             <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellCars').showCellEditor();
                                     return false;"/>  
                             <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
                         </p:contextMenu> 
-
-
-
-
-                        <p:dataTable id="product" var="product" value="#{omb.getAllProduct(facesContext.externalContext.sessionMap['userId'])}" editable="true" editMode="cell" widgetVar="cellCars">
+  
+                        <p:dataTable id="product" var="product" value="#{omb.allProducts}" editable="true" editMode="cell" widgetVar="cellCars">
                             <f:facet name="header">
                                 Product Listing
                             </f:facet>
 
                             <p:ajax event="cellEdit" listener="#{omb.onCellEdit}" update=":form:msgs" />
-
                             <p:column headerText="ID">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{product.id}" /></f:facet>
@@ -125,19 +118,11 @@
                                 </p:cellEditor>
                             </p:column>
                             
-                            <p:column headerText="Edit">
-                                
-                                <p:commandButton value="Edit"  actionListener="#{omb.updateProduct()}" styleClass="ui-priority-primary" ajax="false"/>
-                              
-                            
-                            </p:column>
-                            
-                            
+            
                             <p:column headerText="Delete">
                                 
                                 <p:commandButton value="Delete"  actionListener="#{omb.deleteProduct(product.id)}" styleClass="ui-priority-primary" ajax="false"/>
                               
-                            
                             </p:column>
 
                         </p:dataTable>
