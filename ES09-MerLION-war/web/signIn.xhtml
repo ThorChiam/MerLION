@@ -5,7 +5,6 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-
     <h:head>
         <title>MerLION Logistics</title>
         <meta name="author" content="The Author"></meta>
@@ -16,58 +15,65 @@
         <link href="/ES09-MerLION-war/css/search.css" rel="stylesheet"/>
     </h:head>
     <script type="text/javascript">
-    /**
-     * Faces Validator
-     */
-    PrimeFaces.validator['custom.emailValidator'] = {
- 
-        pattern: /\S+@\S+/,
- 
-        validate: function(element, value) {
-            //use element.data() to access validation metadata, in this case there is none.
-            if(!this.pattern.test(value)) {
-                throw {
-                    summary: 'Validation Error',
-                    detail: value + ' is not a valid email.'
+        /**
+         * Faces Validator
+         */
+        PrimeFaces.validator['custom.emailValidator'] = {
+            pattern: /\S+@\S+/,
+            validate: function (element, value) {
+                //use element.data() to access validation metadata, in this case there is none.
+                if (!this.pattern.test(value)) {
+                    throw {
+                        summary: 'Validation Error',
+                        detail: value + ' is not a valid email.'
+                    }
                 }
             }
-        }
-    };
-</script>
+        };
+    </script>
 
     <!-- Add 50px padding top to the body for the navbar -->
     <h:body style="padding-top: 40px; padding-bottom: 20px;">
-        <!--
+
 
         <b:navBar brand="My MerLION" brandHref="main.xhtml" inverse="false" fixed="top">
-           <b:navbarLinks>
-                <b:navLink value="Sign Up" href="signUp.xhtml"></b:navLink>
-                <b:navLink value="About us" href="aboutUs.xhtml"></b:navLink>
-                <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>
-                <b:dropMenu value="Services">
-                    <b:navLink value="Action" href="#"></b:navLink>
-                    <b:navLink value="Another action" href="#"></b:navLink>
-                    <b:navLink value="Something else here" href="#"></b:navLink>
-                    <b:navLink></b:navLink>
-                    <b:navLink header="Nav header"></b:navLink>
-                    <b:navLink value="Separated link" href="#"></b:navLink>
-                    <b:navLink value="One more separated link" href="#"></b:navLink>
-                </b:dropMenu>
-          </b:navbarLinks> 
+            <b:navBar brand="MerLION Logistics" brandHref="main.xhtml" inverse="false" fixed="top">
+                <b:navbarLinks>
+                    <b:navLink value="Sign Up" href="signUp.xhtml"></b:navLink>
+                    <b:navLink value="My MerLION" href="myMerlion.xhtml"></b:navLink>
+                    <b:navLink value="About us" href="aboutUs.xhtml"></b:navLink>
+                    <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>               
+                    <b:dropMenu value="Services">
+                        <b:navLink value="OES" href="/OES/main.xhtml"></b:navLink>
+                        <b:navLink value="MRP" href="#"></b:navLink>
+                        <b:navLink value="TMS" href="/TMS/sub-home.xhtml"></b:navLink>
+                        <b:navLink value="Separated link" href="#"></b:navLink>
+                        <b:navLink value="One more separated link" href="#"></b:navLink>
+                    </b:dropMenu>
+                    <b:navLink value="Help Desk" href="helpDesk.xhtml"></b:navLink>
+
+                </b:navbarLinks>
+
+                <h:form styleClass="navbar-form navbar-right">
+                    <b:commandButton action="signIn.xhtml" value="Sign in" look="success" iconAlign="right"/>
+                    
+                    <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
+                </h:form> 
+            </b:navBar>
 
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
                     <b:inputText placeholder="Email" fieldSize="sm"/>
-                   
+
                 </div>
                 <div class="form-group">
                     <b:inputText placeholder="Password" fieldSize="sm"/>
                 </div> 
-        #{' '}
-        <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
-    </h:form>
-</b:navBar>
-        -->
+                #{' '}
+                <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+            </h:form>
+        </b:navBar>
+
         <br/>
 
 
@@ -86,6 +92,10 @@
                             <h:form id="formMain">
                                 <p:growl id="panel">
                                     <p:panelGrid>
+                                        <f:facet name="header">
+                                            <p:messages id="msgs" />
+                                        </f:facet>
+
                                         <div class="form-group">
                                             <p:row>
                                                 <p:column>
@@ -94,10 +104,10 @@
                                                 <p:column>
 
                                                     <p:inputText required="true" label="Email" requiredMessage="Email is required." id="Email" value="#{accountManagedBean.email}">                                    
-                                                         <f:validator validatorId="custom.emailValidator" />
+                                                        <f:validator validatorId="custom.emailValidator" />
                                                     </p:inputText>
 
-                                                    <p:message for="Email"/>
+                                                    <!--     <p:message for="Email"/>  -->
                                                 </p:column>
                                             </p:row>
                                         </div>
@@ -117,8 +127,8 @@
                                     </p:panelGrid>
                                     <p:captcha id="captcha" label="Captcha" />
                                     <p:message for="captcha" />
-                                    
-                                    <p:commandButton id="btn" value="Login" update="panel" actionListener="#{accountManagedBean.loginin}" ajax="false" rendered="#{facesContext.externalContext.sessionMap['userId'] == null}"/>
+
+                                    <p:commandButton id="btn" value="Login" update="panel" actionListener="#{accountManagedBean.loginin}" ajax="false" rendered="#{facesContext.externalContext.sessionMap['userId'] == null}" action="main"/>
                                 </p:growl>
                             </h:form>
                         </div>

@@ -23,11 +23,13 @@ public class Payment implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String currency;
-    private long amount;
-    private long transactionDate;
+    private String amount;
+    private String transactionDate;
     private String paymentStatus;
     private String notes;
-   
+    private String deletestatus;
+
+  
     @OneToOne
     private Invoice invoice;
    
@@ -58,19 +60,19 @@ public class Payment implements Serializable {
         this.currency = currency;
     }
 
-    public long getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
-    public long getTransactionDate() {
+    public String getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(long transactionDate) {
+    public void setTransactionDate(String transactionDate) {
         this.transactionDate = transactionDate;
     }
 
@@ -97,6 +99,15 @@ public class Payment implements Serializable {
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
     }
+      
+    public String getDeletestatus() {
+        return deletestatus;
+    }
+
+    public void setDeletestatus(String deletestatus) {
+        this.deletestatus = deletestatus;
+    }
+   
  
 
     @Override

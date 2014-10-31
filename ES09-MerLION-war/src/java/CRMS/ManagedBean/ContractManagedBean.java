@@ -5,21 +5,64 @@
  */
 package CRMS.ManagedBean;
 
+import CRMS.Entity.Contract;
+import CRMS.Entity.ServiceOrder;
+import CRMS.Session.ContractSessionLocal;
+import OES.Session.OESSessionLocal;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author sunny
  */
-@Named(value = "contractManagedBean")
-@Dependent
-public class ContractManagedBean {
+@ManagedBean(name = "omb")
+@SessionScoped
+@ViewScoped
+public class ContractManagedBean implements Serializable {
 
-    /**
-     * Creates a new instance of ContractManagedBean
-     */
+    @EJB
+    private ContractSessionLocal csbl;
+    private String sign_date;
+    private String contract_status;
+    private String total_price;
+    private ServiceOrder serviceorder;
+    
     public ContractManagedBean() {
     }
+    public void createCrontract(){
+        Date date = new java.util.Date();
+        Timestamp tmp = new Timestamp(date.getTime());
+        String sign_date= tmp.toString();
+        csbl.createCrontract(sign_date, total_price, contract_status, serviceorder);
+        
+    }
+    public Contract getContract(long contract_id){
+        return csbl.getContract(contract_id);
+    }
+    
+    public List<Contract> getAllContract(String email){
+        return csbl.getAllContract(email);
+    }
+    public void deleteContract(long contract_id){
+        csbl.deleteContract(contract_id);
+    }
+    
+    public void terminateContract(long contract_id){
+        csbl.terminateContract(contract_id);
+    }  
+    
+    public ServiceOrder getServiceOrder(long id){
+        return csbl.getServiceOrder(id);
+    }
+    
     
 }

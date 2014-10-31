@@ -15,9 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import CI.Entity.Account;
 import MRP.Entity.Template;
 
 /**
@@ -31,16 +29,49 @@ public class Contract implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String sign_date;
+    private String contract_status;
+    private String total_price;
 
-    
+        
     @ManyToMany(cascade={CascadeType.PERSIST})
     @JoinTable(name="CONTRACT_TEMPLATE")
     private Set<Template> template=new HashSet<>();
  
     @OneToOne
     private Payment Payment;
+    
+    @OneToOne(mappedBy="Contract")
+    private ServiceOrder serviceorder;
 
+    public ServiceOrder getServiceorder() {
+        return serviceorder;
+    }
+
+    public void setServiceorder(ServiceOrder serviceorder) {
+        this.serviceorder = serviceorder;
+    }
+
+    public Contract(){
+        setId(System.nanoTime());
+    }
   
+    
+    public String getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(String total_price) {
+        this.total_price = total_price;
+    }
+    
+    public String getContract_status() {
+        return contract_status;
+    }
+
+    public void setContract_status(String contract_status) {
+        this.contract_status = contract_status;
+    }
+    
     public Long getId() {
         return id;
     }
