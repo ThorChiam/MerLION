@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Welcome to Order Entry System</title>
+    </h:head>
+
+    <h:body>
+        <b:container>
+
+           <p:breadCrumb>
+                    <p:menuitem value="Home" url="/main.xhtml" />
+                    <p:menuitem value="Dashboard" url="" />
+                    <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
+                    <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
+                    <p:menuitem value="Sales Order" url="#" />
+                    <p:menuitem value="Enquire" url="/OES/enquire/createEnquire.xhtml" />
+                 
+                    <p:menuitem value="Payment" url="#" />
+
+                </p:breadCrumb>
+            <b:well>
+                <h2>Order Entry System</h2>   
+            </b:well>
+        </b:container>
+
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="12" col-sm="6" col-md="2">
+                    <h:form>
+                        <p:panel header="Quotation">
+
+                            <b:listLinks>
+
+                                <b:navLink href="createQuotation.xhtml" value="Create New Quotation"
+                                           />
+                                 <b:navLink href="viewQuotation.xhtml" value="View Quotation"
+                                           />
+                            </b:listLinks>
+                        </p:panel>
+                    </h:form>
+
+                </b:column>
+
+
+                      <b:column col-xs="6" col-sm="6" col-md="10">
+                    <h:form>
+                        <p:panel header="NEW Quotation">
+                            <h:outputLabel for="buyer" value="From Buyer:" style="font-weight:bold" />
+                            <p:inputText id="buyer" value="#{omb.buyerName}" required="true" label="buyer">
+                                
+                            </p:inputText>
+                         
+                            <br/>
+
+                            <p:outputLabel for="seller" value="To Seller:" style="font-weight:bold"/>
+                            <p:selectOneMenu id="seller" value="#{omb.sellerName}" style="width:150px">
+                                <f:selectItem itemLabel="Select Seller" itemValue="#{omb.companyName}" noSelectionOption="true" />
+                                <f:selectItems value="#{omb.theCompanies}"  var="tc" itemLabel="#{tc}" itemValue="#{tc}" />
+                            </p:selectOneMenu>
+                             <br/>
+                             
+                            <p:outputLabel for="date" value="Quotation Date:" style="font-weight:bold" />
+                            <p:calendar id="date" value="#{omb.createdate}" showOn="button" />
+                              
+                            <br/>
+                            <br/>
+                          
+                            <p:outputLabel for="products" value="Select Product" style="font-weight:bold" />
+                            <h:selectOneMenu id="products" value="#{omb.product_id}" style="width:150px">
+                                <f:selectItem itemLabel="Select Product" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{omb.produtList}" var="ps" itemLabel="#{ps}" itemValue="#{ps}"/>
+
+                            </h:selectOneMenu>
+                          
+                            
+                            <h:outputLabel for="quantity" value="Quantity:" style="font-weight:bold" />
+                            <p:inputText id="quantity" value="#{omb.pqty}" required="true" label="quantity">
+
+                            </p:inputText>
+                            <br/>
+                            <br/>
+                            
+                            <p:commandButton value="Create Enquire" ajax="false" icon="ui-icon-check" actionListener="#{omb.createEnquiry(facesContext.externalContext.sessionMap['userId'])}" validateClient="true" style="margin-right:10px"/>
+
+                        </p:panel>
+                    </h:form>
+                    
+                    
+                </b:column>
+
+            </b:row>
+
+        </b:container>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+    </h:body>
+</html>
+
+
+
+
+
+
+
