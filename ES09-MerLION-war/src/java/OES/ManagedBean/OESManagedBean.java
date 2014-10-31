@@ -263,7 +263,11 @@ public class OESManagedBean implements Serializable {
         statusMessage = "Please finish your payment soon. Thanks!";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Status: " + statusMessage, ""));
-        osbl.createPayment(paymentdate, paymenttype, status, purchaseorder, total_price);
+        Date date = new java.util.Date();
+        Timestamp tmp = new Timestamp(date.getTime());
+        String payment_date = tmp.toString();
+        status="Pending";
+        osbl.createPayment(payment_date, paymenttype, status, purchaseorder, total_price);
     }
 
     public void updatePaymentStatus() {

@@ -7,9 +7,13 @@ package CRMS.Session;
 
 import CRMS.Entity.Company;
 import CRMS.Entity.Feedback;
+import OES.Entity.Product;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -18,7 +22,10 @@ import javax.ejb.LocalBean;
 @Stateless
 @LocalBean
 public class FeedbackSession implements FeedbackSessionLocal {
-
+    @PersistenceContext
+    private EntityManager em;
+    
+    
     @Override
     public void createFeedback(double rating, String feedback_content, String feedback_date, Company sender, Company receiver) {
         Feedback tmp = new Feedback();
@@ -27,16 +34,22 @@ public class FeedbackSession implements FeedbackSessionLocal {
         tmp.setRating(rating);
         tmp.setReciever(receiver);
         tmp.setSender(sender);
+        em.persist(tmp);
     }
 
     @Override
     public Feedback getFeedback(long feedback_id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createQuery("SELECT f FROM Product f WHERE f.id=:id");
+        q.setParameter("id", feedback_id);
+        return (Feedback) q.getSingleResult();
     }
 
     @Override
     public List<Feedback> getAllFeedback(String email) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createQuery("SELECT f FROM Feedback f WHERE f.feedback_receiver.email=:email OR f.feedback_receiver.email=:emails");
+        q.setParameter("email", email);
+        q.setParameter("emails", email);
+        return q.getResultList();
     }
 
 }

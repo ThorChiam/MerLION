@@ -15,9 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import CI.Entity.Account;
 import MRP.Entity.Template;
 
 /**
@@ -39,7 +37,21 @@ public class Contract implements Serializable {
  
     @OneToOne
     private Payment Payment;
+    
+    @OneToOne(mappedBy="Contract")
+    private ServiceOrder serviceorder;
 
+    public ServiceOrder getServiceorder() {
+        return serviceorder;
+    }
+
+    public void setServiceorder(ServiceOrder serviceorder) {
+        this.serviceorder = serviceorder;
+    }
+
+    public Contract(){
+        setId(System.nanoTime());
+    }
   
     public Long getId() {
         return id;
