@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:g="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Welcome to CRMS</title>
+
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+
+        <link href="/MFront-war/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="css/custom.css" rel="stylesheet"/>
+        <script src="/MFront-war/js/ie-emulation-modes-warning.js"
+        type="text/javascript"></script>
+
+        <link href="/MFront-war/css/carousel.css" rel="stylesheet" />
+    </h:head>
+
+    <h:body>
+
+        <b:container>
+
+            <p:breadCrumb>
+                <p:menuitem value="MerLION Home" url="/main.xhtml" />
+                <p:menuitem value="Home" url="/CRMS/main.xhtml" />
+                <p:menuitem value="Contract Management" url="/CRMS/contract/viewContractList.xhtml" />
+                <p:menuitem value="Feedback" url="/CRMS/contract/viewFeedbackList.xhtml" />
+
+
+
+            </p:breadCrumb>
+            <b:well>
+
+                <h2>CRMS</h2>
+
+
+
+            </b:well>
+        </b:container>
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="5" col-sm="5" col-md="3">
+                    <h:form>
+                        <p:growl autoUpdate="true"/>
+                        <p:menu style="width:250px">
+                            <p:submenu label="Contract Management">
+                                <p:menuitem value="View Contract List" url="/CRMS/contract/viewContractList.xhtml"/>                      
+
+                            </p:submenu>
+
+
+                        </p:menu>
+                    </h:form>
+                </b:column>
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                    <p:panel header="Contract List">
+                        <h:form>
+
+
+                            <p:dataTable var="" value="">
+                                <p:column headerText="Contract List">
+                                    <h:outputText value="Contract 1" />
+                                </p:column>
+                                <p:column headerText="Action">
+                                    <h:commandButton value="View Detail" action="contractDetail"/>                                      
+                                </p:column>
+                            </p:dataTable>
+
+
+                        </h:form>
+
+                    </p:panel>
+                </b:column>
+            </b:row>
+        </b:container>
+
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+
+
+
+    </h:body>
+</html>
+
+
+
+
+
+
