@@ -6,6 +6,7 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+
     <h:head>
         <title>MerLION Logistics</title>
         <meta name="author" content="The Author"></meta>
@@ -265,7 +266,7 @@
                 </b:column>
                 <b:column col-md="8">
                     <h4>Latest News</h4> 
-                 
+
                     <table>
                         <tr>
                             <td><img src="image/news.jpg" width="150" height="120"></img></td>
@@ -285,8 +286,15 @@
             </b:row>
         </b:container>
         <hr/>
+        <p:stack icon="/image/OES.png" expanded="true" rendered="#{facesContext.externalContext.sessionMap['userId'] != null}">
+            <p:menuitem value="OES" icon="/image/OES.png" url="OES/main.xhtml"/>
+            <p:menuitem value="MRP" icon="/image/MRP.png" url="#"/>
+            <p:menuitem value="TMS" icon="/image/TMS.png" url="TMS/sub-home.xhtml"/>
+            <p:menuitem value="WMS" icon="/image/WMS.png" url="WMS/index.xhtml"/>
+            <p:menuitem value="CRMS" icon="/image/CRMS.png" url="#"/>
+            <p:menuitem value="GRNS" icon="/image/GRNS.png" url="#"/>
+        </p:stack>
 
-        
         <hr/>
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">

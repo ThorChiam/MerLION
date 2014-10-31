@@ -29,8 +29,10 @@ public class Contract implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String sign_date;
+    private String contract_status;
+    private String total_price;
 
-    
+        
     @ManyToMany(cascade={CascadeType.PERSIST})
     @JoinTable(name="CONTRACT_TEMPLATE")
     private Set<Template> template=new HashSet<>();
@@ -53,6 +55,23 @@ public class Contract implements Serializable {
         setId(System.nanoTime());
     }
   
+    
+    public String getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(String total_price) {
+        this.total_price = total_price;
+    }
+    
+    public String getContract_status() {
+        return contract_status;
+    }
+
+    public void setContract_status(String contract_status) {
+        this.contract_status = contract_status;
+    }
+    
     public Long getId() {
         return id;
     }

@@ -8,7 +8,6 @@
       xmlns:p="http://primefaces.org/ui">
 
 
-
     <h:head>
         <title>Welcome to WMS System</title>
 
@@ -26,22 +25,11 @@
                             <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
                             <p:menuitem value="WMS Home" url="/WMS/index.xhtml" />
                             <p:menuitem value="Delivery Order" url="/WMS/deliveryOrder/deliveryOrderList.xhtml"/>                    
-                            <p:submenu label="XXXX">
-                                <p:menuitem value="Add New Plan" url="/MRP/plan/addNewPlan.xhtml"/>
-                                <p:menuitem value="Display Plan" url="/MRP/plan/displayPlan.xhtml" />
+                            <p:submenu label="Storage Management">
+                                <p:menuitem value="Reserve Storage" url="/WMS/storage/reserveStorage.xhtml"/>
+                                <p:menuitem value="Update Storage" url="/WMS/storge/updateStorage.xhtml" />
                             </p:submenu>
-
-                            <p:submenu label="XXXX">
-                                <p:menuitem value="Display Demand" url="/MRP/demandManagement/DemandManagement.xhtml" />
-                                <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                            </p:submenu>
-
-                            <p:submenu label="XXXX">
-                                <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml"/>
-                            </p:submenu>      
-
-                            <p:menuitem value="Log Out"/>
+                            <p:menuitem value="Log Out" action="signIn.xhtml"  actionListener="#{accountManagedBean.logout}"/>
 
                         </p:menubar>
                     </h:form>
@@ -56,32 +44,26 @@
                     <h:form>
                         <p:growl autoUpdate="true"/>
                         <p:menu style="width:250px">
-                            <p:submenu label="Bill of Marerial Management">
-                                <p:menuitem value="Add New BOM" url="/MRP/BOM/addBOM.xhtml"/>
-                                <p:menuitem value="Delete BOM" url="/MRP/BOM/deleteBOM.xhtml"/>
-                                <p:menuitem value="Display/Update BOM" url="/MRP/BOM/displayBOM.xhtml"/>
+                            <p:submenu label="Delivery Order">
+                                <p:menuitem value="View Order List" url="/WMS/deliveryOrder/deliveryOrderList.xhtml"/>
+                              
                             </p:submenu>
-                            <p:submenu label="Material Requirement Plan Management">
-                                <p:menuitem value="Add New Plan"  url="/MRP/plan/addNewPlan.xhtml"/>
-                                <p:menuitem value="Display Plan"  url="/MRP/plan/displayPlan.xhtml"/>
+                            <p:submenu label="Replenish Inventory">
+                                <p:menuitem value="Replenish"  url="/WMS/deliveryOrder/replenishAll.xhtml"/>
                             </p:submenu>
-                            <p:separator />
-                            <p:submenu label="Demand Management" >
-                                <p:menuitem value="Display 6 Months Demand" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
-                                <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/saveProductionSchedule.xhtml"/>
+                            
+                            <p:submenu label="Storage Management">
+                                <p:menuitem value="Reserve Storage" url="/WMS/storage/reserveStorage.xhtml"/>
+                              <p:menuitem value="Update Storage"  url="/WMS/storage/updateStorage.xhtml"/>
                             </p:submenu>
-                            <p:submenu label="Order Management" >
-                                <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml" />
-
-                            </p:submenu>
+                         
                         </p:menu>
                     </h:form>
 
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="6">
-                    <p:panel header="MRP System - Home">
-                        <img src="news.jpg" weight="600" width="500"/>
+                    <p:panel header="WMS System - Home">
+                        <img src="warehouse.png" weight="600" width="500"/>
                     </p:panel>
                 </b:column>
 
