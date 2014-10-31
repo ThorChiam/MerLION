@@ -79,7 +79,7 @@
                 <b:column col-xs="5" col-sm="5" col-md="9">
                     <p:panel header="View All Inventory">
 
-                        <p:dataTable var="all" value="#{womb.reportInventories(facesContext.externalContext.sessionMap['userId'])}">
+                        <p:dataTable var="all" value="#{womb.reportInventories()}">
                             <p:column headerText="Inventory ID">
                                 <h:outputText value="#{all.id}" />
                             </p:column>
