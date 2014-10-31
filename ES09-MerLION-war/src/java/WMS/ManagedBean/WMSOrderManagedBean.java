@@ -10,6 +10,7 @@ import WMS.Entity.Shipment_Notice;
 import WMS.Entity.StorageArea;
 import WMS.Entity.StorageArea_Inventory;
 import WMS.Entity.WMSOrder;
+import WMS.Entity.WMSOrder_Inventory;
 import WMS.Entity.Warehouse;
 import WMS.Entity.Warehouse_Inventory;
 import WMS.Session.WMSOrderSessionLocal;
@@ -62,6 +63,8 @@ public class WMSOrderManagedBean implements Serializable {
     private String statusMessage;
     private int tempQty;
     private List<Inventory> allInventories;
+    private List<WMSOrder_Inventory> ri;
+    private List<StorageArea_Inventory> allSis;
 //    private List<AllocateWarehouse> aws;
 //    private List<allocateWarehouse> aws;
 //private List<String[]> wss; 
@@ -106,6 +109,17 @@ public class WMSOrderManagedBean implements Serializable {
     private void init() {
         email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
         allInventories = this.reportInventories();
+        allSis = wosl.getAllSis();
+        ri = new ArrayList<>();
+        ri.add(wosl.gotRI());
+    }
+
+    public List<StorageArea_Inventory> getAllSis() {
+        return allSis;
+    }
+
+    public void setAllSis(List<StorageArea_Inventory> allSis) {
+        this.allSis = allSis;
     }
 
     public Long getOrderId() {
@@ -329,7 +343,22 @@ public class WMSOrderManagedBean implements Serializable {
         this.imanage = imanage;
     }
 
+    public List<WMSOrder_Inventory> getRi() {
+        return ri;
+    }
+
+    public void setRi(List<WMSOrder_Inventory> ri) {
+        this.ri = ri;
+    }
+
     public void reserveStorage() {
+        inventoryId = ri.get(0).getInventory().getId();
+        storageArea = new ArrayList<>();
+        storageQty = new ArrayList<>();
+        for(StorageArea_Inventory si:allSis){
+            storageArea.add(si.getSa());
+            storageQty.add(si.getQty());
+        }
         this.setImanage(wosl.reserveStorage(inventoryId, storageArea, storageQty));
     }
 
@@ -578,4 +607,5 @@ public class WMSOrderManagedBean implements Serializable {
         orderId = (Long) event.getComponent().getAttributes().get("oId");
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("orderId", orderId);
     }
+    
 }

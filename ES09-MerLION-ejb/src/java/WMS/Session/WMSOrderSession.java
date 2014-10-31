@@ -255,6 +255,11 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         List<StorageArea_Inventory> sal = q.getResultList();
         return sal;
     }
+    @Override
+    public List<StorageArea_Inventory> getAllSis(){
+        Query q = em.createQuery("SELECT si FROM StorageArea_Inventory si");
+        return (List<StorageArea_Inventory>)q.getResultList();
+    }
 //pg-extra
 //    public List<WMSFacility> getPack(Long warehouseId) {
 //        Query q = em.createQuery("SELECT wf FROM WMSFacility wf WHERE wf.type=:type");
@@ -417,6 +422,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         em.merge(inventory);
         return sais;
     }
+
 //    private void updateStorageCapacity(List<StorageArea_Inventory> sais) {
 //        List<StorageArea> sas = new ArrayList<>();
 //        for (StorageArea_Inventory sai : sais) {
@@ -452,5 +458,11 @@ private void updateWarehouseCapacity(List<Warehouse_Inventory> wis){
     @Override
     public List<Inventory> reportInventories(String email) {
         return this.getAllInventories(email);
+    }
+    @Override
+    public WMSOrder_Inventory gotRI(){
+        Query q = em.createQuery("SELECT ri FROM WMSOrder_Inventory ri");
+        List<WMSOrder_Inventory> ris = q.getResultList();
+        return ris.get(0);
     }
 }
