@@ -7,7 +7,6 @@ package CRMS.Session;
 
 import CRMS.Entity.Company;
 import CRMS.Entity.Feedback;
-import OES.Entity.Product;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
