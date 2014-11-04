@@ -19,6 +19,16 @@
         type="text/javascript"></script>
 
         <link href="/MFront-war/css/carousel.css" rel="stylesheet" />
+
+        <script type="text/javascript">
+            function start() {
+                PF('statusDialog').show();
+            }
+
+            function stop() {
+                PF('statusDialog').hide();
+            }
+        </script>
     </h:head>
 
     <h:body>
@@ -58,7 +68,11 @@
                     </h:form>
                 </b:column>
                 <b:column col-xs="5" col-sm="5" col-md="9">
-                    <p:panel header="Contract Detail">
+                    <p:panel header="Contract Detail" >
+                        
+                        <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
+                            <p:graphicImage name="/demo/images/ajaxloadingbar.gif" />
+                        </p:dialog>
                         <h:form>
 
 
@@ -76,6 +90,9 @@
                                 <h:outputText value="Ternimate Successfully!" />
                             </p:dialog>
 
+                            <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                <p:fileDownload value="#{fileDownloadView.file}" />
+                            </p:commandButton>
 
                         </h:form>
 
