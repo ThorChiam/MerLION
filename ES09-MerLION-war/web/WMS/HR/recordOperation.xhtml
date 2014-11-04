@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:g="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Welcome to WMS System</title>
+
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/> 
+
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times: 5}, 100);
+                }
+                else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+                }
+            }
+        </script>
+
+
+    </h:head>
+
+    <h:body>
+        <b:container>
+            <b:row>
+                <p:column colspan="3">
+                    <h:form>  
+                        <p:menubar styleClass="show-grid">
+                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                            <p:menuitem value="WMS Home" url="/WMS/index.xhtml" />
+                            <p:menuitem value="Delivery Order" url="/WMS/deliveryOrder/deliveryOrderList.xhtml"/>                    
+                            <p:submenu label="XXXX">
+                                <p:menuitem value="Add New Plan" url="/MRP/plan/addNewPlan.xhtml"/>
+                                <p:menuitem value="Display Plan" url="/MRP/plan/displayPlan.xhtml" />
+                            </p:submenu>
+
+                            <p:submenu label="XXXX">
+                                <p:menuitem value="Display Demand" url="/MRP/demandManagement/DemandManagement.xhtml" />
+                                <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                                <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                            </p:submenu>
+
+                            <p:submenu label="XXXX">
+                                <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml"/>
+                            </p:submenu>      
+
+                            <p:menuitem value="Log Out"/>
+
+                        </p:menubar>
+                    </h:form>
+                </p:column>
+            </b:row>
+
+        </b:container>
+        <br/>
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="5" col-sm="5" col-md="3">
+                    <h:form>
+                        <p:growl autoUpdate="true"/>
+                        <p:menu style="width:250px">
+                            <p:submenu label="Bill of Marerial Management">
+                                <p:menuitem value="Add New BOM" url="/MRP/BOM/addBOM.xhtml"/>
+                                <p:menuitem value="Delete BOM" url="/MRP/BOM/deleteBOM.xhtml"/>
+                                <p:menuitem value="Display/Update BOM" url="/MRP/BOM/displayBOM.xhtml"/>
+                            </p:submenu>
+                            <p:submenu label="Material Requirement Plan Management">
+                                <p:menuitem value="Add New Plan"  url="/MRP/plan/addNewPlan.xhtml"/>
+                                <p:menuitem value="Display Plan"  url="/MRP/plan/displayPlan.xhtml"/>
+                            </p:submenu>
+                            <p:separator />
+                            <p:submenu label="Demand Management" >
+                                <p:menuitem value="Display 6 Months Demand" url="/MRP/demandManagement/DemandManagement.xhtml"/>
+                                <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
+                                <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/saveProductionSchedule.xhtml"/>
+                            </p:submenu>
+                            <p:submenu label="Order Management" >
+                                <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml" />
+
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+
+                </b:column>                 
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                    <p:panel header="Generate Schedule">
+                        <h:form>
+                            <!-- value should be a LIST-->
+                            <p:dataTable var="woin" value="#">
+                                <p:column headerText="Inventory ID">
+                                    <h:outputText value="#"/>
+                                </p:column>
+                                <p:column headerText="Inventory Name">
+                                    <h:outputText value="#"/>
+                                </p:column>
+                                <p:column headerText="Qty">
+                                    <h:outputText value="#"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:dataTable var="whin" value="#">
+                                <p:column headerText="Inventory ID">
+                                    <h:outputText value="#"/>
+                                </p:column>
+                                <p:column headerText="Warehouse ID">
+                                    <h:outputText value="#"/>
+                                </p:column>
+                                <p:column headerText="Qty">
+                                    <h:outputText value="#"/>
+                                    
+                                        <h:commandLink actionListener="#{womb.putStain}">
+                                        <p:graphicImage name="WMS/deliveryOrder/view.png" />
+                                        <f:attribute name="whId" value="#{whin.warehouse.id}" />
+                                        <f:attribute name="inId" value="#{whin.inventory.id}" />
+                                        <f:attribute name="whName" value="#{whin.warehouse.name}" />
+                                        <f:attribute name="inName" value="#{whin.inventory.name}" />
+                                    </h:commandLink>
+                                    
+
+                                    <p:growl id="growl" sticky="true" showDetail="true" life="300000" />
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </p:panel>
+                </b:column>
+
+            </b:row>
+        </b:container>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+
+    </h:body>
+</html>

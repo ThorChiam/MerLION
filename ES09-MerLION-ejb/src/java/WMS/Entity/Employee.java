@@ -24,8 +24,7 @@ public class Employee implements Serializable {
     private Long id;
     private String name;
     private String status;
-    private String jobtype;
-
+    private String jobType;
     
     @ManyToOne
     private Warehouse WMSWarehouse;
@@ -54,12 +53,12 @@ public class Employee implements Serializable {
         this.status = status;
     }
 
-    public String getJobtype() {
-        return jobtype;
+    public String getJobType() {
+        return jobType;
     }
 
-    public void setJobtype(String jobtype) {
-        this.jobtype = jobtype;
+    public void setJobType(String jobType) {
+        this.jobType = jobType;
     }
     
     public Long getId() {
