@@ -57,20 +57,21 @@
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
                     <p:panel header="Replenish Inventory">
-                        <h:form>
+                         <h:form>
                             <!-- value should be a LIST-->
-                            <p:dataTable var="detail" value="#">
+                            <p:dataTable var="detail" value="#{womb.allInventories}">
                                 <p:column headerText="Inventory Name">                          
-                                    <h:outputText value="#" />
+                                    <h:outputText value="#{detail.name}" />
                                 </p:column>
 
                                 <p:column headerText="Quantity">
-                                    <h:inputText value="#"/>
+                                    <h:inputText value="#{detail.quantity}"/>
                                 </p:column>
+                               
 
                             </p:dataTable>
                             <!-- actionLister call the back method to store the data-->
-                            <p:commandButton value="Replenish" actionListener="#"/>
+                            <h:commandButton value="Replenish" actionListener="#{womb.replenishAll()}"/>
                         </h:form>
                     </p:panel>
                 </b:column>

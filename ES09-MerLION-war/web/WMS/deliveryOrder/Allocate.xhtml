@@ -115,7 +115,9 @@
                                 <p:column headerText="Qty">
                                     <h:outputText value="#{whin.qty}"/>
                                     <!--value="javascript:void(0)"-->
-                                    <h:outputLabel onclick="PF('dlg').show();" title="View">
+                                    <h:outputLink  value="javascript:void(0)" onclick="PF('dlg').show();" title="View">
+                                        <p:graphicImage name="WMS/deliveryOrder/view.png" />
+                                        </h:outputLink>
                                         <h:commandLink actionListener="#{womb.putStain}">
                                         <p:graphicImage name="WMS/deliveryOrder/view.png" />
                                         <f:attribute name="whId" value="#{whin.warehouse.id}" />
@@ -123,7 +125,7 @@
                                         <f:attribute name="whName" value="#{whin.warehouse.name}" />
                                         <f:attribute name="inName" value="#{whin.inventory.name}" />
                                     </h:commandLink>
-                                    </h:outputLabel>
+                                    
 
                                     <p:growl id="growl" sticky="true" showDetail="true" life="300000" />
 
@@ -144,10 +146,10 @@
                                                 </p:column>
 
                                                 <p:column headerText="Allocation">
-                                                    <h:inputText value="#" />
+                                                    <h:inputText value="#{womb.tempQty}" />
                                                 </p:column>
                                             </p:dataTable>
-                                            <p:commandButton value="Allocate" update="growl" actionListener="#{womb.putStain}"
+                                            <p:commandButton value="Allocate" update="growl" actionListener="#{womb.allocateInventory()}"
                                                              oncomplete="handleLoginRequest(xhr, status, args)" />
 
                                         </h:panelGrid>

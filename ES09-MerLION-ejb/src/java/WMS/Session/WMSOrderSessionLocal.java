@@ -10,6 +10,7 @@ import WMS.Entity.Shipment_Notice;
 import WMS.Entity.StorageArea;
 import WMS.Entity.StorageArea_Inventory;
 import WMS.Entity.WMSOrder;
+import WMS.Entity.WMSOrder_Inventory;
 import WMS.Entity.Warehouse;
 import WMS.Entity.Warehouse_Inventory;
 import java.util.List;
@@ -60,4 +61,8 @@ public interface WMSOrderSessionLocal {
     public void replenish(List<Inventory> lis);
 
     public List<Inventory> reportInventories(String email);
+    
+    public WMSOrder_Inventory gotRI();
+    
+    public List<StorageArea_Inventory> getAllSis();
 }

@@ -54,25 +54,23 @@
                     <p:panel header="Update Storage">
                         <h:form>
                             <!-- value should be a LIST-->
-                            <p:dataTable var="storage" value="#">
+                            <p:dataTable var="ri" value="#{womb.ri}">
                                 <p:column headerText="Inventory Name">
                                     <!-- -->
-                                    <h:outputText value="#" />
+                                    <h:outputText value="#{ri.inventory.name}" />
                                 </p:column>
-
                                 <p:column headerText="Quantity">
-                                    <h:outputText value="#" />
+                                    <h:outputText value="#{ri.qty}" />
                                 </p:column>
-
-                                <!-- storage area ???????? -->
-                                <p:columns var="sa" value="#">
-                                    <f:facet name="header">  
-                                        Storage Area #
-                                    </f:facet> 
-                                    <h:outputText value="#" />
+                                <p:columns var="si" value="#{womb.allSis}">
+                                    <f:facet name="header">
+                                        Storage Area #{si.sa.id}
+                                    </f:facet>
+                                    <h:outputText value="#{si.sa.totalCapacity}"/>
+                                    <h:outputText value="#{si.qty}"/>
                                 </p:columns>
                             </p:dataTable>
-                            <h:commandButton value="Confirm" actionListener="#"/>
+                            <h:commandButton value="Confirm" actionListener="#{womb.reserveStorage()}"/>
                         </h:form>
                     </p:panel>
                 </b:column>

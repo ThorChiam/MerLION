@@ -52,12 +52,21 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
 
     @Override
     public List<Inventory> getAllInventories(String email) {
-        Query q = em.createQuery("SELECT a.Company.id FROM Account a WHERE a.email=:email");
+        Query q = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");
         q.setParameter("email", email);
-        Long companyId = (Long) q.getSingleResult();
-        q = em.createQuery("SELECT i FROM Inventory i WHERE i.ws_inven.warehouse.Company.id=:companyId");
+        Account a = (Account)q.getSingleResult();
+        Long companyId = a.getCompany().getId();
+        q = em.createQuery("SELECT whin FROM  Warehouse_Inventory whin WHERE whin.warehouse.Company.id=:companyId");
         q.setParameter("companyId", companyId);
-        return q.getResultList();
+        List<Warehouse_Inventory> whin = q.getResultList();
+        List<Inventory> lin = new ArrayList<>();
+        for(Warehouse_Inventory wi:whin){
+            if(!lin.contains(wi.getInventory())){
+                lin.add(wi.getInventory());
+            }
+        }
+        
+        return lin;
     }
 
     //inventory list and corresponding quantity can be get by order,pg-2
@@ -240,12 +249,16 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     //pg-4,bottom dynamic table
     @Override
     public List<StorageArea_Inventory> getPickTable(Long warehouseId, Long inventoryId) {
-        Query q = em.createQuery("SELECT si FROM StorageArea_Inventory si WHERE si.inventory.id=:inventoryId AND si.sa.WMSWarehouse.id=:warehouseId AND si.status=:status");
+        Query q = em.createQuery("SELECT si FROM StorageArea_Inventory si WHERE si.inventory.id=:inventoryId AND si.sa.WMSWarehouse.id=:warehouseId");
         q.setParameter("inventoryId", inventoryId);
         q.setParameter("warehouseId", warehouseId);
-        q.setParameter("status", "used");
         List<StorageArea_Inventory> sal = q.getResultList();
         return sal;
+    }
+    @Override
+    public List<StorageArea_Inventory> getAllSis(){
+        Query q = em.createQuery("SELECT si FROM StorageArea_Inventory si");
+        return (List<StorageArea_Inventory>)q.getResultList();
     }
 //pg-extra
 //    public List<WMSFacility> getPack(Long warehouseId) {
@@ -409,6 +422,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         em.merge(inventory);
         return sais;
     }
+
 //    private void updateStorageCapacity(List<StorageArea_Inventory> sais) {
 //        List<StorageArea> sas = new ArrayList<>();
 //        for (StorageArea_Inventory sai : sais) {
@@ -444,5 +458,11 @@ private void updateWarehouseCapacity(List<Warehouse_Inventory> wis){
     @Override
     public List<Inventory> reportInventories(String email) {
         return this.getAllInventories(email);
+    }
+    @Override
+    public WMSOrder_Inventory gotRI(){
+        Query q = em.createQuery("SELECT ri FROM WMSOrder_Inventory ri");
+        List<WMSOrder_Inventory> ris = q.getResultList();
+        return ris.get(0);
     }
 }

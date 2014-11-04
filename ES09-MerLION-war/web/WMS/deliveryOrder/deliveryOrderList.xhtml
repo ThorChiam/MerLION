@@ -58,13 +58,14 @@
                     <p:panel header="Delivery Order List">
                         <h:form>
                             <!-- value should be a LIST of delivery order -->
-                            <p:dataTable var="order" value="#{womb.getAllOrders(facesContext.externalContext.sessionMap['userId'])}">
+                            <p:dataTable var="order" value="#{womb.getAllOrders()}">
                                 <p:column headerText="Delivery Order">
                                     <h:outputText value="#{order.id}" />
                                 </p:column>
 
                                 <p:column headerText="Action">
-                                    <h:commandButton value="View Detail" action="orderDetail">
+                                    <h:commandButton value="View Detail" action="orderDetail" actionListener="#{womb.initOrderId}">
+                                        <f:attribute name="oId" value="#{order.id}" />
                                         <f:setPropertyActionListener target="#{womb.orderId}" value="#{order.id}" />
                                     </h:commandButton>
 

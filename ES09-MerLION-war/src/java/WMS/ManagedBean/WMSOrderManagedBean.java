@@ -10,12 +10,14 @@ import WMS.Entity.Shipment_Notice;
 import WMS.Entity.StorageArea;
 import WMS.Entity.StorageArea_Inventory;
 import WMS.Entity.WMSOrder;
+import WMS.Entity.WMSOrder_Inventory;
 import WMS.Entity.Warehouse;
 import WMS.Entity.Warehouse_Inventory;
 import WMS.Session.WMSOrderSessionLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -35,6 +37,7 @@ public class WMSOrderManagedBean implements Serializable {
      */
     @EJB
     private WMSOrderSessionLocal wosl;
+    private String email;
     private Long orderId;
     private Long warehouseId;
     private Long inventoryId;
@@ -50,7 +53,7 @@ public class WMSOrderManagedBean implements Serializable {
     private List<Inventory> lin;
     private List<StorageArea_Inventory> imanage;
     private List<Integer> checkResult;
-    
+
     private String whName;
     private String inName;
     private Long whId;
@@ -58,6 +61,10 @@ public class WMSOrderManagedBean implements Serializable {
     private Long selectedStainId;
     private List<StorageArea_Inventory> stain;
     private String statusMessage;
+    private int tempQty;
+    private List<Inventory> allInventories;
+    private List<WMSOrder_Inventory> ri;
+    private List<StorageArea_Inventory> allSis;
 //    private List<AllocateWarehouse> aws;
 //    private List<allocateWarehouse> aws;
 //private List<String[]> wss; 
@@ -73,7 +80,7 @@ public class WMSOrderManagedBean implements Serializable {
 //        return wss;
 //    }
 //    private void initWss(){
-//        orderId = Long.valueOf(2);//testing use
+//        // orderId = Long.valueOf(2);//testing use
 //        List<WMSOrder_Inventory> woil = wosl.getOrder(orderId).getWo_inven();
 //        List<Warehouse_Inventory> olwi = wosl.getAvailableWarehouse(orderId);
 //        int columnNo = olwi.size()+2;
@@ -98,6 +105,23 @@ public class WMSOrderManagedBean implements Serializable {
 //        }
 //        
 //    }
+    @PostConstruct
+    private void init() {
+        email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        allInventories = this.reportInventories();
+        allSis = wosl.getAllSis();
+        ri = new ArrayList<>();
+        ri.add(wosl.gotRI());
+    }
+
+    public List<StorageArea_Inventory> getAllSis() {
+        return allSis;
+    }
+
+    public void setAllSis(List<StorageArea_Inventory> allSis) {
+        this.allSis = allSis;
+    }
+
     public Long getOrderId() {
         return orderId;
     }
@@ -195,7 +219,7 @@ public class WMSOrderManagedBean implements Serializable {
     }
 
     public List<Inventory> getLin() {
-        orderId = Long.valueOf(2);
+        // orderId = Long.valueOf(2);
         lin = wosl.getInventories(orderId);
         return lin;
     }
@@ -205,13 +229,13 @@ public class WMSOrderManagedBean implements Serializable {
     }
 
     public List<Integer> getCheckResult() {
-        orderId = Long.valueOf(2);//testing use
+        // orderId = Long.valueOf(2);//testing use
         checkResult = wosl.checkInventoryLevel(orderId);
         return checkResult;
     }
 
     public List<Integer> checkInventoryLevel() {
-        orderId = Long.valueOf(2);//testing use
+        // orderId = Long.valueOf(2);//testing use
         checkResult = wosl.checkInventoryLevel(orderId);
         for (int i = 0; i < checkResult.size(); i++) {
             if (checkResult.get(i) < 0) {
@@ -233,20 +257,20 @@ public class WMSOrderManagedBean implements Serializable {
         }
     }
 
-    public List<WMSOrder> getAllOrders(String email) {
+    public List<WMSOrder> getAllOrders() {
         return wosl.getAllOrders(email);
     }
 
     public WMSOrder getOrder() {
-        orderId = Long.valueOf(2);//testing use
+        // orderId = Long.valueOf(2);//testing use
         return wosl.getOrder(orderId);
     }
 
-    public List<WMSOrder> getAllocatedOrders(String email) {
+    public List<WMSOrder> getAllocatedOrders() {
         return wosl.getAllocatedOrders(email);
     }
 
-    public List<Warehouse> getAllWarehouse(String email) {
+    public List<Warehouse> getAllWarehouse() {
         return wosl.getAllWarehouse(email);
     }
 
@@ -259,13 +283,13 @@ public class WMSOrderManagedBean implements Serializable {
     }
 
     public List<Warehouse_Inventory> showWarhouseInventory() {
-        orderId = Long.valueOf(2);
+        // orderId = Long.valueOf(2);
         return wosl.getAvailableWarehouse(orderId);
     }
 //    public List<Warehouse> getWarehouseByStorageArea(List<StorageArea> sas);
 
     public List<Warehouse> getAvailableWarehouse() {
-        orderId = Long.valueOf(2);//testing use
+        // orderId = Long.valueOf(2);//testing use
         List<Warehouse> lww = new ArrayList<>();
         List<Warehouse_Inventory> olwi = wosl.getAvailableWarehouse(orderId);
         List<Integer> avai = new ArrayList<>();
@@ -292,8 +316,18 @@ public class WMSOrderManagedBean implements Serializable {
         return wosl.createShippingNotice(orderId, noticeDate);
     }
 
-    public int allocateInventory() {
-        return wosl.allocateInventory(san, warehouseId, inventoryId);
+    public int getTempQty() {
+        return tempQty;
+    }
+
+    public void setTempQty(int tempQty) {
+        this.tempQty = tempQty;
+    }
+
+    public void allocateInventory() {
+        san = new ArrayList<>();
+        san.add(tempQty);
+        wosl.allocateInventory(san, whId, inId);
     }
 
     public List<Inventory> report() {
@@ -309,7 +343,22 @@ public class WMSOrderManagedBean implements Serializable {
         this.imanage = imanage;
     }
 
+    public List<WMSOrder_Inventory> getRi() {
+        return ri;
+    }
+
+    public void setRi(List<WMSOrder_Inventory> ri) {
+        this.ri = ri;
+    }
+
     public void reserveStorage() {
+        inventoryId = ri.get(0).getInventory().getId();
+        storageArea = new ArrayList<>();
+        storageQty = new ArrayList<>();
+        for(StorageArea_Inventory si:allSis){
+            storageArea.add(si.getSa());
+            storageQty.add(si.getQty());
+        }
         this.setImanage(wosl.reserveStorage(inventoryId, storageArea, storageQty));
     }
 
@@ -328,8 +377,18 @@ public class WMSOrderManagedBean implements Serializable {
         wosl.replenish(ins);
 
     }
+    public void replenishAll() {
+        List<Inventory> ins = wosl.getAllInventories(email);
+        for (int i = 0; i < ins.size(); i++) {
+            Inventory in = ins.get(i);
+            int tmp = in.getQuantity();
+            tmp += allInventories.get(i).getQuantity();
+            in.setQuantity(tmp);
+        }
+        wosl.replenish(ins);
+    }
 
-    public List<Inventory> reportInventories(String email) {
+    public List<Inventory> reportInventories() {
         return wosl.reportInventories(email);
     }
 
@@ -341,16 +400,18 @@ public class WMSOrderManagedBean implements Serializable {
 //            return checkResult;
 //        }
 //    }
-    public String whName(){
-       Long tmpId = (Long)FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("whId");
-       return wosl.getWarehouse(tmpId).getName();
+    public String whName() {
+        Long tmpId = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("whId");
+        return wosl.getWarehouse(tmpId).getName();
     }
-    public String inName(){
-        Long tmpId = (Long)FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("inId");
-       return wosl.getInventory(tmpId).getName();
+
+    public String inName() {
+        Long tmpId = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("inId");
+        return wosl.getInventory(tmpId).getName();
     }
+
     public List<StorageArea_Inventory> getStain() {
-        stain = wosl.getPickTable(whId, inId);
+
         return stain;
     }
 
@@ -361,9 +422,10 @@ public class WMSOrderManagedBean implements Serializable {
     public void putStain(ActionEvent event) {
         whId = (Long) event.getComponent().getAttributes().get("whId");
         inId = (Long) event.getComponent().getAttributes().get("inId");
+        stain = wosl.getPickTable(whId, inId);
         whName = (String) event.getComponent().getAttributes().get("whName");
         inName = (String) event.getComponent().getAttributes().get("inName");
-        System.out.println("*****  w:"+whName+";**********   i:"+inName);
+        System.out.println("*****  w:" + whName + ";**********   i:" + inName);
         FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("whId", whId);
         FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("inId", inId);
     }
@@ -390,6 +452,14 @@ public class WMSOrderManagedBean implements Serializable {
 
     public Long getSelectedStainId() {
         return selectedStainId;
+    }
+
+    public List<Inventory> getAllInventories() {
+        return allInventories;
+    }
+
+    public void setAllInventories(List<Inventory> allInventories) {
+        this.allInventories = allInventories;
     }
 
     public void test(ActionEvent event) {
@@ -422,7 +492,7 @@ public class WMSOrderManagedBean implements Serializable {
 //        this.aws = aws;
 //    }
 //    public List<allocateWarehouse> getAws() {
-//        orderId = Long.valueOf(2);//testing use
+//        // orderId = Long.valueOf(2);//testing use
 //        aws = new ArrayList<>();
 //        List<Warehouse_Inventory> olwi = wosl.getAvailableWarehouse(orderId);
 //        List<WMSOrder_Inventory> woil = wosl.getOrder(orderId).getWo_inven();
@@ -533,4 +603,9 @@ public class WMSOrderManagedBean implements Serializable {
 //            return wQty;
 //        }
 //    }
+    public void initOrderId(ActionEvent event) {
+        orderId = (Long) event.getComponent().getAttributes().get("oId");
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("orderId", orderId);
+    }
+    
 }
