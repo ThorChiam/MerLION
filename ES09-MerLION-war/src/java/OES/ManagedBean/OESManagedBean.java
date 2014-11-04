@@ -172,9 +172,9 @@ public class OESManagedBean implements Serializable {
                 "Status: " + statusMessage, ""));
     }
     
-    public String getBuyName(String email){
-        return osbl.getBuyName(email);
-    }
+//    public String getBuyName(String email){
+//        return osbl.getBuyName(email);
+//    }
 
     public Enquiry getEnquiry() {
         enquiry = osbl.getEnquiry(enquiry_id);

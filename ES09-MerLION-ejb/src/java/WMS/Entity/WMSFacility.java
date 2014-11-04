@@ -25,7 +25,6 @@ public class WMSFacility implements Serializable {
     private Long id;
     private String name;
     private String type;//packZone
-
     private String status;
 
     @ManyToOne

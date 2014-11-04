@@ -5,10 +5,12 @@
  */
 package WMS.Session;
 
+import WMS.Entity.Employee;
 import WMS.Entity.Inventory;
 import WMS.Entity.Shipment_Notice;
 import WMS.Entity.StorageArea;
 import WMS.Entity.StorageArea_Inventory;
+import WMS.Entity.WMSFacility;
 import WMS.Entity.WMSOrder;
 import WMS.Entity.WMSOrder_Inventory;
 import WMS.Entity.Warehouse;
@@ -61,8 +63,16 @@ public interface WMSOrderSessionLocal {
     public void replenish(List<Inventory> lis);
 
     public List<Inventory> reportInventories(String email);
-    
+
     public WMSOrder_Inventory gotRI();
-    
+
     public List<StorageArea_Inventory> getAllSis();
+
+    public void generateSchedule(Long employeeId, Long facilityId, String scheduleContent, long scheduleStart, long scheduleEnd);
+
+    public List<Employee> getEmployees(Long warehouseId);
+
+    public List<WMSFacility> getFacilities(Long warehouseId);
+
+    public void remove();
 }

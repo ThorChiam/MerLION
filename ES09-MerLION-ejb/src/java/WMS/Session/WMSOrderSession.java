@@ -6,20 +6,27 @@
 package WMS.Session;
 
 import CI.Entity.Account;
+import WMS.Entity.Employee;
 import WMS.Entity.Inventory;
 import WMS.Entity.Shipment_Notice;
 import WMS.Entity.StorageArea;
 import WMS.Entity.StorageArea_Inventory;
+import WMS.Entity.WMSFacility;
 import WMS.Entity.WMSOrder;
 import WMS.Entity.WMSOrder_Inventory;
+import WMS.Entity.WMSSchedule;
 import WMS.Entity.Warehouse;
 import WMS.Entity.Warehouse_Inventory;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Objects;
+import javax.ejb.Remove;
 import javax.persistence.Query;
 
 /**
@@ -32,6 +39,9 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     @PersistenceContext
     private EntityManager em;
     private Inventory inventory;
+    private WMSSchedule ws;
+    private Employee employee;
+    private WMSFacility facility;
 
     //list by timeLogged in frontend,pg-1
     @Override
@@ -54,18 +64,18 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     public List<Inventory> getAllInventories(String email) {
         Query q = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");
         q.setParameter("email", email);
-        Account a = (Account)q.getSingleResult();
+        Account a = (Account) q.getSingleResult();
         Long companyId = a.getCompany().getId();
         q = em.createQuery("SELECT whin FROM  Warehouse_Inventory whin WHERE whin.warehouse.Company.id=:companyId");
         q.setParameter("companyId", companyId);
         List<Warehouse_Inventory> whin = q.getResultList();
         List<Inventory> lin = new ArrayList<>();
-        for(Warehouse_Inventory wi:whin){
-            if(!lin.contains(wi.getInventory())){
+        for (Warehouse_Inventory wi : whin) {
+            if (!lin.contains(wi.getInventory())) {
                 lin.add(wi.getInventory());
             }
         }
-        
+
         return lin;
     }
 
@@ -255,10 +265,11 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         List<StorageArea_Inventory> sal = q.getResultList();
         return sal;
     }
+
     @Override
-    public List<StorageArea_Inventory> getAllSis(){
+    public List<StorageArea_Inventory> getAllSis() {
         Query q = em.createQuery("SELECT si FROM StorageArea_Inventory si");
-        return (List<StorageArea_Inventory>)q.getResultList();
+        return (List<StorageArea_Inventory>) q.getResultList();
     }
 //pg-extra
 //    public List<WMSFacility> getPack(Long warehouseId) {
@@ -434,10 +445,11 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
 //            Query q = em.createQuery("SELECT ")
 //        }
 //    }
-private void updateWarehouseCapacity(List<Warehouse_Inventory> wis){
-    
-}
+    private void updateWarehouseCapacity(List<Warehouse_Inventory> wis) {
+
+    }
 //currently not method for confirm failed case
+
     @Override
     public void putAway(List<StorageArea_Inventory> sais) {
         for (StorageArea_Inventory sai : sais) {
@@ -459,10 +471,66 @@ private void updateWarehouseCapacity(List<Warehouse_Inventory> wis){
     public List<Inventory> reportInventories(String email) {
         return this.getAllInventories(email);
     }
+
     @Override
-    public WMSOrder_Inventory gotRI(){
+    public WMSOrder_Inventory gotRI() {
         Query q = em.createQuery("SELECT ri FROM WMSOrder_Inventory ri");
         List<WMSOrder_Inventory> ris = q.getResultList();
         return ris.get(0);
+    }
+
+    //*********************************************************HR*******************************************
+    @Override
+    public void generateSchedule(Long employeeId, Long facilityId, String scheduleContent, long scheduleStart, long scheduleEnd) {
+
+        ws = new WMSSchedule();
+        ws.setScheduleContent(scheduleContent);
+        ws.setScheduleStart(scheduleStart);
+        ws.setScheduleEnd(scheduleEnd);
+
+        Date date = new Date(scheduleStart);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        String start = df.format(date);
+        date = new Date(scheduleEnd);
+        String end = df.format(date);
+        String schedulePeriod = start + " - " + end;
+
+        ws.setSchedulePeriod(schedulePeriod);
+
+        Query q = em
+                .createQuery("SELECT e FROM Employee e WHERE e.id=:employeeId");
+        q.setParameter("employeeId", employeeId);
+        employee = (Employee) q.getSingleResult();
+        q = em.createQuery("SELECT f FROM WMSFacility f WHERE f.id=:facilityId");
+        q.setParameter("facilityId", facilityId);
+        facility = (WMSFacility) q.getSingleResult();
+        employee.setStatus("busy");
+        facility.setStatus("used");
+        ws.setEmployee(employee);
+        ws.setFacility(facility);
+
+        em.persist(ws);
+        em.merge(employee);
+        em.merge(facility);
+    }
+
+    @Override
+    public List<Employee> getEmployees(Long warehouseId) {
+        Query q = em.createQuery("SELECT e FROM Employee e WHERE e.WMSWarehouse.id=:warehouseId");
+        q.setParameter("warehouseId", warehouseId);
+        return (List<Employee>) q.getResultList();
+    }
+
+    @Override
+    public List<WMSFacility> getFacilities(Long warehouseId) {
+        Query q = em.createQuery("SELECT f FROM WMSFacility f WHERE f.WMSWarehouse.id=:warehouseId");
+        q.setParameter("warehouseId", warehouseId);
+        return (List<WMSFacility>) q.getResultList();
+    }
+
+    @Override
+    @Remove
+    public void remove() {
+        System.out.println("wmsOrderSessionBean:remove()");
     }
 }

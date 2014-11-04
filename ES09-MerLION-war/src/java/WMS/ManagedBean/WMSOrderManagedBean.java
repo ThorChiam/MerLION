@@ -5,10 +5,12 @@
  */
 package WMS.ManagedBean;
 
+import WMS.Entity.Employee;
 import WMS.Entity.Inventory;
 import WMS.Entity.Shipment_Notice;
 import WMS.Entity.StorageArea;
 import WMS.Entity.StorageArea_Inventory;
+import WMS.Entity.WMSFacility;
 import WMS.Entity.WMSOrder;
 import WMS.Entity.WMSOrder_Inventory;
 import WMS.Entity.Warehouse;
@@ -16,9 +18,11 @@ import WMS.Entity.Warehouse_Inventory;
 import WMS.Session.WMSOrderSessionLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -39,7 +43,7 @@ public class WMSOrderManagedBean implements Serializable {
     private WMSOrderSessionLocal wosl;
     private String email;
     private Long orderId;
-    private Long warehouseId;
+    private Long warehouseId = (long)1;
     private Long inventoryId;
     private List<Warehouse> lw;
 
@@ -68,6 +72,15 @@ public class WMSOrderManagedBean implements Serializable {
 //    private List<AllocateWarehouse> aws;
 //    private List<allocateWarehouse> aws;
 //private List<String[]> wss; 
+    private Date scheduleStart;
+    private Date scheduleEnd;
+    private Date operationStart;
+    private Date operationEnd;
+    private Long employeeId = (long) -1;
+    private Long facilityId = (long) -1;
+    private String scheduleContent = "";
+    private List<Employee> employees;
+    private List<WMSFacility> facilities;
 
     public WMSOrderManagedBean() {
     }
@@ -355,7 +368,7 @@ public class WMSOrderManagedBean implements Serializable {
         inventoryId = ri.get(0).getInventory().getId();
         storageArea = new ArrayList<>();
         storageQty = new ArrayList<>();
-        for(StorageArea_Inventory si:allSis){
+        for (StorageArea_Inventory si : allSis) {
             storageArea.add(si.getSa());
             storageQty.add(si.getQty());
         }
@@ -377,6 +390,7 @@ public class WMSOrderManagedBean implements Serializable {
         wosl.replenish(ins);
 
     }
+
     public void replenishAll() {
         List<Inventory> ins = wosl.getAllInventories(email);
         for (int i = 0; i < ins.size(); i++) {
@@ -603,9 +617,104 @@ public class WMSOrderManagedBean implements Serializable {
 //            return wQty;
 //        }
 //    }
-    public void initOrderId(ActionEvent event) {
-        orderId = (Long) event.getComponent().getAttributes().get("oId");
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("orderId", orderId);
+//************************************************HR*************************************************
+    public Date getScheduleStart() {
+        return scheduleStart;
     }
-    
+
+    public void setScheduleStart(Date scheduleStart) {
+        this.scheduleStart = scheduleStart;
+    }
+
+    public Date getScheduleEnd() {
+        return scheduleEnd;
+    }
+
+    public void setScheduleEnd(Date scheduleEnd) {
+        this.scheduleEnd = scheduleEnd;
+    }
+
+    public Date getOperationStart() {
+        return operationStart;
+    }
+
+    public void setOperationStart(Date operationStart) {
+        this.operationStart = operationStart;
+    }
+
+    public Date getOperationEnd() {
+        return operationEnd;
+    }
+
+    public void setOperationEnd(Date operationEnd) {
+        this.operationEnd = operationEnd;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public Long getFacilityId() {
+        return facilityId;
+    }
+
+    public void setFacilityId(Long facilityId) {
+        this.facilityId = facilityId;
+    }
+
+    public String getScheduleContent() {
+        return scheduleContent;
+    }
+
+    public void setScheduleContent(String scheduleContent) {
+        this.scheduleContent = scheduleContent;
+    }
+
+    public List<Employee> getEmployees() {
+        employees = wosl.getEmployees(warehouseId);
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
+    public List<WMSFacility> getFacilities() {
+        facilities = wosl.getFacilities(warehouseId);
+        return facilities;
+    }
+
+    public void setFacilities(List<WMSFacility> facilities) {
+        this.facilities = facilities;
+    }
+
+    public void initWarehouseId(ActionEvent event) {
+        warehouseId = (Long) event.getComponent().getAttributes().get("warehouseId");
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("warehouseId", warehouseId);
+    }
+
+    private void initSchedule() {
+        employeeId = (long)-1;
+        facilityId = (long)-1;
+        scheduleContent = "";
+        wosl.remove();
+    }
+
+    public void generateSchedule(ActionEvent actionEvent) {
+
+        long scheduleS = scheduleStart.getTime();
+        long scheduleE = scheduleEnd.getTime();
+        wosl.generateSchedule(employeeId, facilityId, scheduleContent, scheduleS, scheduleE);
+        this.initSchedule();
+        this.addMessage("Schedule Created Result", "Successful");
+    }
+
+    public void addMessage(String title, String content) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(title, content));
+    }
 }
