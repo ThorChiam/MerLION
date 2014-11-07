@@ -540,8 +540,8 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         q = em.createQuery("SELECT f FROM WMSFacility f WHERE f.id=:facilityId");
         q.setParameter("facilityId", facilityId);
         facility = (WMSFacility) q.getSingleResult();
-        employee.setStatus("busy");
-        facility.setStatus("used");
+        employee.setStatus("available");
+        facility.setStatus("available");
         wo.setEmployee(employee);
         wo.setFacility(facility);
 
