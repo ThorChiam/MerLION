@@ -43,7 +43,7 @@ public class WMSOrderManagedBean implements Serializable {
     private WMSOrderSessionLocal wosl;
     private String email;
     private Long orderId;
-    private Long warehouseId = (long)1;
+    private Long warehouseId = (long) 1;
     private Long inventoryId;
     private List<Warehouse> lw;
 
@@ -79,6 +79,7 @@ public class WMSOrderManagedBean implements Serializable {
     private Long employeeId = (long) -1;
     private Long facilityId = (long) -1;
     private String scheduleContent = "";
+    private String operationContent = "";
     private List<Employee> employees;
     private List<WMSFacility> facilities;
 
@@ -674,6 +675,14 @@ public class WMSOrderManagedBean implements Serializable {
         this.scheduleContent = scheduleContent;
     }
 
+    public String getOperationContent() {
+        return operationContent;
+    }
+
+    public void setOperationContent(String operationContent) {
+        this.operationContent = operationContent;
+    }
+
     public List<Employee> getEmployees() {
         employees = wosl.getEmployees(warehouseId);
         return employees;
@@ -692,14 +701,19 @@ public class WMSOrderManagedBean implements Serializable {
         this.facilities = facilities;
     }
 
+    public void initOrderId(ActionEvent event) {
+        orderId = (Long) event.getComponent().getAttributes().get("oId");
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("orderId", orderId);
+    }
+
     public void initWarehouseId(ActionEvent event) {
-        warehouseId = (Long) event.getComponent().getAttributes().get("warehouseId");
+        warehouseId = (Long) event.getComponent().getAttributes().get("wId");
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("warehouseId", warehouseId);
     }
 
     private void initSchedule() {
-        employeeId = (long)-1;
-        facilityId = (long)-1;
+        employeeId = (long) -1;
+        facilityId = (long) -1;
         scheduleContent = "";
         wosl.remove();
     }
@@ -711,6 +725,22 @@ public class WMSOrderManagedBean implements Serializable {
         wosl.generateSchedule(employeeId, facilityId, scheduleContent, scheduleS, scheduleE);
         this.initSchedule();
         this.addMessage("Schedule Created Result", "Successful");
+    }
+
+    private void initOperation() {
+        employeeId = (long) -1;
+        facilityId = (long) -1;
+        operationContent = "";
+        wosl.remove();
+    }
+
+    public void recordOperation(ActionEvent actionEvent) {
+
+        long operationS = operationStart.getTime();
+        long operationE = operationEnd.getTime();
+        wosl.recordOperation(employeeId, facilityId, operationContent, operationS, operationE);
+        this.initOperation();
+        this.addMessage("Operation Recorded Result", "Successful");
     }
 
     public void addMessage(String title, String content) {

@@ -70,6 +70,8 @@ public interface WMSOrderSessionLocal {
 
     public void generateSchedule(Long employeeId, Long facilityId, String scheduleContent, long scheduleStart, long scheduleEnd);
 
+    public void recordOperation(Long employeeId, Long facilityId, String operationContent, long operationStart, long operationEnd);
+
     public List<Employee> getEmployees(Long warehouseId);
 
     public List<WMSFacility> getFacilities(Long warehouseId);

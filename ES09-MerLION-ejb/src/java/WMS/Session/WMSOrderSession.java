@@ -12,6 +12,7 @@ import WMS.Entity.Shipment_Notice;
 import WMS.Entity.StorageArea;
 import WMS.Entity.StorageArea_Inventory;
 import WMS.Entity.WMSFacility;
+import WMS.Entity.WMSOperation;
 import WMS.Entity.WMSOrder;
 import WMS.Entity.WMSOrder_Inventory;
 import WMS.Entity.WMSSchedule;
@@ -40,6 +41,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     private EntityManager em;
     private Inventory inventory;
     private WMSSchedule ws;
+    private WMSOperation wo;
     private Employee employee;
     private WMSFacility facility;
 
@@ -510,6 +512,40 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         ws.setFacility(facility);
 
         em.persist(ws);
+        em.merge(employee);
+        em.merge(facility);
+    }
+
+    @Override
+    public void recordOperation(Long employeeId, Long facilityId, String operationContent, long operationStart, long operationEnd) {
+
+        wo = new WMSOperation();
+        wo.setOperationContent(operationContent);
+        wo.setOperationStart(operationStart);
+        wo.setOperationEnd(operationEnd);
+
+        Date date = new Date(operationStart);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        String start = df.format(date);
+        date = new Date(operationEnd);
+        String end = df.format(date);
+        String operationPeriod = start + " - " + end;
+
+        wo.setOperationPeriod(operationPeriod);
+
+        Query q = em
+                .createQuery("SELECT e FROM Employee e WHERE e.id=:employeeId");
+        q.setParameter("employeeId", employeeId);
+        employee = (Employee) q.getSingleResult();
+        q = em.createQuery("SELECT f FROM WMSFacility f WHERE f.id=:facilityId");
+        q.setParameter("facilityId", facilityId);
+        facility = (WMSFacility) q.getSingleResult();
+        employee.setStatus("busy");
+        facility.setStatus("used");
+        wo.setEmployee(employee);
+        wo.setFacility(facility);
+
+        em.persist(wo);
         em.merge(employee);
         em.merge(facility);
     }
