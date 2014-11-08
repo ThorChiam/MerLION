@@ -37,7 +37,7 @@ public class AccountManagedBean implements Serializable {
     private String comp_contact_no;
     private String comp_address;
     private String accessright = "member";
-    private String status = "no";
+    private String status = "deactivated";
     private String security_question;
     private String security_answer;
     private String statusMessage;

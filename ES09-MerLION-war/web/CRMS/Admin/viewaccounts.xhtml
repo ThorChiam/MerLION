@@ -5,12 +5,11 @@
       xmlns:g="http://java.sun.com/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui">
-
-    
     <h:head>
-        <title>System User Accounts List</title>
+        <title>CRMS View User Accounts List</title>
+
         <meta name="author" content="The Author"></meta>
-        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/> 
 
     </h:head>
 
@@ -21,90 +20,49 @@
                     <h:form>  
                         <p:menubar styleClass="show-grid">
                             <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                            <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
-                            <p:submenu label="Account Setting">
-                                <p:submenu label="Account Management">
-                                    <p:menuitem value="View Account Infomation" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Edit Account Information" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>
-                                </p:submenu>
-                                <p:submenu label="Company Profile Management">
-                                    <p:menuitem value="View Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Edit Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
-                                </p:submenu>
-                            </p:submenu>
-
-                            <p:submenu label="Contract Management">
-                                <p:menuitem value="Add New Plan" url="/MRP/plan/addNewPlan.xhtml"/>
-                                <p:menuitem value="Display Plan" url="/MRP/plan/displayPlan.xhtml" />
-                            </p:submenu>
-
-                            <p:submenu label="Transaction Management">
-                                <p:menuitem value="View Service Transaction History" url="/MRP/demandManagement/DemandManagement.xhtml" />
-                                <p:menuitem value="View Ongoing Transaction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="View Transaction History" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Invoice" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                            </p:submenu>
-
-                            <p:submenu label="Internal Communication">
-                                <p:menuitem value="Message" url="/MRP/order/orderManagement.xhtml"/>
-                                <p:menuitem value="Notification" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Announcement" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                            </p:submenu>      
-
-                            <p:menuitem value="Log Out"/>
-
+                            <p:menuitem value="WMS Home" url="/CRMS/main.xhtml" />
+                            <p:menuitem value="Log Out" action="signIn.xhtml"  actionListener="#{accountManagedBean.logout}"/>
                         </p:menubar>
                     </h:form>
                 </p:column>
             </b:row>
-
         </b:container>
+
+
         <br/>
         <b:container>
             <b:row styleClass="show-grid">
-                <b:column col-xs="5" col-sm="5" col-md="3">
-
-                    <h:form>
-                        <p:growl autoUpdate="true"/>
-                        <p:menu style="width:250px">   
-                            <p:submenu label="Account Setting"/>
-                            <p:separator/>
-                            <p:submenu label="Account Management">
-                                <p:menuitem value="View Account Infomation" url="/MRP/BOM/addBOM.xhtml"/>
-                                <p:menuitem value="Edit Account Information" url="/MRP/BOM/addBOM.xhtml"/>
-                                <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>                
-                            </p:submenu>
-                            <p:submenu label="Company Profile Management">
-                                <p:menuitem value="View Company Profile" url="/CI/account/viewCompanyProfile.xhtml"/>
-                                <p:menuitem value="Edit Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
-                            </p:submenu>
-                        </p:menu>
-                    </h:form>
-
-                </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
-                    <p:panel header="View Company Profile">
-                        <p:panelGrid id="display" columns="2" columnClasses="label,value">
-                            <h:outputText value="Email: " />
-                            <h:outputText id="companyNameValue" value="#{accountManagedBean.email}" />
+<p:panel header="User Account List">
+                    <h:form>
+                        
+                        <p:dataTable var="all" value="#{AdminManagedBean.allAccounts}" id="msgs">
+                                <p:column headerText="Account Email">
+                                    <h:outputText value="#{all.email}"/>
+                                </p:column>
 
-                            <h:outputText value="Security Question: " />
-                            <h:outputText id="companyAddressValue" value="#{accountManagedBean.security_question}" />
+                                <p:column headerText="Company Name">
+                                    <h:outputText value="#{all.company.companyName}"/>
+                                </p:column>
 
-                            <h:outputText value="Security Answer: " />
-                            <h:outputText id="telValue" value="#{accountManagedBean.security_answer}"/>
+                                <p:column headerText="Account Status">
+                                    <h:outputText value="#{all.status}"/>
+                                </p:column>>
 
-                            <h:outputText value="Company Name: " />
-                            <h:outputText id="emailValue" value="#{accountManagedBean.comp_name}" />
+                                <p:column headerText="Activate/Deactivate">
 
-                            <h:outputText value="Company Address: " />
-                            <h:outputText id="ssnValue" value="#{accountManagedBean.comp_address}" />
+                                    <p:selectBooleanButton id="value" valueChangeListener="#{AdminManagedBean.updateStatus(all.email, all.status)}" value="#{!AdminManagedBean.statusToboolean(all.status)}" onLabel="activated" offLabel="deactivated" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:180px">
+                                        
+                                    </p:selectBooleanButton> 
 
-                            <h:outputText value="Contact Number: " />
-                            <h:outputText id="companyHistoryValue" value="#{accountManagedBean.comp_contact_no}" />
-                        </p:panelGrid>
-                    </p:panel>
+                                </p:column>                                                            
+                            </p:dataTable>
+                        <p:commandButton value="Refresh" update="msgs"/>
+
+
+                        
+                    </h:form>
+</p:panel>
                 </b:column>
             </b:row>
         </b:container>
@@ -122,13 +80,9 @@
                     <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
                     <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
                     <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
-
-
                 </div>
-
             </div>
-        </foot>
-
+        </foot>      
     </h:body>
 </html>
 

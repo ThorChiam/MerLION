@@ -51,20 +51,11 @@ public class AdminSession implements AdminSessionLocal{
     }
 
     @Override
-    public void activateAccount(String email) {
+    public void updateStatus(String email, String status) {
         Query q = em.createQuery("SELECT f FROM Account f WHERE f.email=:email");
         q.setParameter("email", email);
         Account tmp=(Account)q.getSingleResult();
-        tmp.setStatus("activated");
-        em.persist(tmp);
-    }
-
-    @Override
-    public void deactivateAccount(String email) {
-        Query q = em.createQuery("SELECT f FROM Account f WHERE f.email=:email");
-        q.setParameter("email", email);
-        Account tmp=(Account)q.getSingleResult();
-        tmp.setStatus("deactivated");
+        tmp.setStatus(status);
         em.persist(tmp);
     }
 }
