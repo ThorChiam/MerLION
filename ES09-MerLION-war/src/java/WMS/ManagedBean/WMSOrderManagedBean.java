@@ -82,6 +82,12 @@ public class WMSOrderManagedBean implements Serializable {
     private String operationContent = "";
     private List<Employee> employees;
     private List<WMSFacility> facilities;
+    private String serviceName = "";
+    private String serviceType = "";
+    private int servicePrice = 0;
+    private String serviceUnit = "";
+    private String facilityName = "";
+    private String facilityType = "";
 
     public WMSOrderManagedBean() {
     }
@@ -701,6 +707,54 @@ public class WMSOrderManagedBean implements Serializable {
         this.facilities = facilities;
     }
 
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public int getServicePrice() {
+        return servicePrice;
+    }
+
+    public void setServicePrice(int servicePrice) {
+        this.servicePrice = servicePrice;
+    }
+
+    public String getServiceUnit() {
+        return serviceUnit;
+    }
+
+    public void setServiceUnit(String serviceUnit) {
+        this.serviceUnit = serviceUnit;
+    }
+
+    public String getFacilityName() {
+        return facilityName;
+    }
+
+    public void setFacilityName(String facilityName) {
+        this.facilityName = facilityName;
+    }
+
+    public String getFacilityType() {
+        return facilityType;
+    }
+
+    public void setFacilityType(String facilityType) {
+        this.facilityType = facilityType;
+    }
+
     public void initOrderId(ActionEvent event) {
         orderId = (Long) event.getComponent().getAttributes().get("oId");
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("orderId", orderId);
@@ -741,6 +795,16 @@ public class WMSOrderManagedBean implements Serializable {
         wosl.recordOperation(employeeId, facilityId, operationContent, operationS, operationE);
         this.initOperation();
         this.addMessage("Operation Recorded Result", "Successful");
+    }
+
+    public void createService(ActionEvent actionEvent) {
+        wosl.createService(email, serviceName, serviceType, servicePrice, serviceUnit);
+        this.addMessage("Service Added Result", "Successful");
+    }
+
+    public void createFacility(ActionEvent actionEvent) {
+        wosl.createFacility(warehouseId, facilityName, facilityType);
+        this.addMessage("Facility Defined Result", "Successful");
     }
 
     public void addMessage(String title, String content) {

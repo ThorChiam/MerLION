@@ -24,7 +24,11 @@
                         <p:menubar styleClass="show-grid">
                             <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
                             <p:menuitem value="WMS Home" url="/WMS/index.xhtml" />
-                            <p:menuitem value="Delivery Order" url="/WMS/deliveryOrder/deliveryOrderList.xhtml"/>                    
+                            <p:menuitem value="Delivery Order" url="/WMS/deliveryOrder/deliveryOrderList.xhtml"/>
+                            <p:submenu label="Admin">
+                                <p:menuitem value="Define Facility" url="/WMS/Admin/WMSAdmin.xhtml"/>
+                                <p:menuitem value="Define Service Catalog" url="/WMS/Admin/defineService.xhtml" />
+                            </p:submenu>
                             <p:submenu label="Storage Management">
                                 <p:menuitem value="Reserve Storage" url="/WMS/storage/reserveStorage.xhtml"/>
                                 <p:menuitem value="Update Storage" url="/WMS/storge/updateStorage.xhtml" />
@@ -46,17 +50,17 @@
                         <p:menu style="width:250px">
                             <p:submenu label="Delivery Order">
                                 <p:menuitem value="View Order List" url="/WMS/deliveryOrder/deliveryOrderList.xhtml"/>
-                              
+
                             </p:submenu>
                             <p:submenu label="Replenish Inventory">
                                 <p:menuitem value="Replenish"  url="/WMS/deliveryOrder/replenishAll.xhtml"/>
                             </p:submenu>
-                            
+
                             <p:submenu label="Storage Management">
                                 <p:menuitem value="Reserve Storage" url="/WMS/storage/reserveStorage.xhtml"/>
-                              <p:menuitem value="Update Storage"  url="/WMS/storage/updateStorage.xhtml"/>
+                                <p:menuitem value="Update Storage"  url="/WMS/storage/updateStorage.xhtml"/>
                             </p:submenu>
-                         
+
                         </p:menu>
                     </h:form>
 

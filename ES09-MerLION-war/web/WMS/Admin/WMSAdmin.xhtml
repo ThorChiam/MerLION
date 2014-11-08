@@ -42,9 +42,9 @@ and open the template in the editor.
                             <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
                             <p:menuitem value="WMS Home" url="/WMS/index.xhtml" />
                             <p:menuitem value="Delivery Order" url="/WMS/deliveryOrder/deliveryOrderList.xhtml"/>                    
-                            <p:submenu label="XXXX">
-                                <p:menuitem value="Add New Plan" url="/MRP/plan/addNewPlan.xhtml"/>
-                                <p:menuitem value="Display Plan" url="/MRP/plan/displayPlan.xhtml" />
+                            <p:submenu label="Admin">
+                                <p:menuitem value="Define Facility" url="/WMS/Admin/WMSAdmin.xhtml"/>
+                                <p:menuitem value="Define Service Catalog" url="/WMS/Admin/defineService.xhtml" />
                             </p:submenu>
 
                             <p:submenu label="XXXX">
@@ -83,13 +83,7 @@ and open the template in the editor.
                                 </p:column>
 
                                 <p:column >
-                                    <h:commandButton value="Schedule" action="generateSchedule" actionListener="#{womb.initWarehouseId}">
-                                        <f:attribute name="wId" value="#{warehouse.id}" />
-                                        <f:setPropertyActionListener target="#{womb.warehouseId}" value="#{warehouse.id}" />
-                                    </h:commandButton>
-                                </p:column>
-                                <p:column >
-                                    <h:commandButton value="Record" action="recordOperation" actionListener="#{womb.initWarehouseId}">
+                                    <h:commandButton value="Define Facility" action="defineFacility" actionListener="#{womb.initWarehouseId}">
                                         <f:attribute name="wId" value="#{warehouse.id}" />
                                         <f:setPropertyActionListener target="#{womb.warehouseId}" value="#{warehouse.id}" />
                                     </h:commandButton>

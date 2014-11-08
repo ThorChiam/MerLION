@@ -6,6 +6,7 @@
 package WMS.Session;
 
 import CI.Entity.Account;
+import CRMS.Entity.Company;
 import WMS.Entity.Employee;
 import WMS.Entity.Inventory;
 import WMS.Entity.Shipment_Notice;
@@ -16,11 +17,11 @@ import WMS.Entity.WMSOperation;
 import WMS.Entity.WMSOrder;
 import WMS.Entity.WMSOrder_Inventory;
 import WMS.Entity.WMSSchedule;
+import WMS.Entity.WMSServiceCatalog;
 import WMS.Entity.Warehouse;
 import WMS.Entity.Warehouse_Inventory;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -44,6 +45,8 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     private WMSOperation wo;
     private Employee employee;
     private WMSFacility facility;
+    private WMSServiceCatalog service;
+    private Warehouse warehouse;
 
     //list by timeLogged in frontend,pg-1
     @Override
@@ -562,6 +565,33 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         Query q = em.createQuery("SELECT f FROM WMSFacility f WHERE f.WMSWarehouse.id=:warehouseId");
         q.setParameter("warehouseId", warehouseId);
         return (List<WMSFacility>) q.getResultList();
+    }
+
+    @Override
+    public void createService(String email, String serviceName, String serviceType, int servicePrice, String serviceUnit) {
+        service = new WMSServiceCatalog();
+        service.setServiceName(serviceName);
+        service.setServiceType(serviceType);
+        service.setServicePrice(servicePrice);
+        service.setServiceUnit(serviceUnit);
+        Query q = em.createQuery("SELECT a.Company FROM Account a WHERE a.email=:email");
+        q.setParameter("email", email);
+        Company c = (Company) q.getSingleResult();
+        service.setCompany(c);
+        em.persist(service);
+    }
+
+    @Override
+    public void createFacility(Long warehouseId, String name, String type) {
+        facility = new WMSFacility();
+        Query q = em.createQuery("SELECT w FROM Warehouse w WHERE w.id=:warehouseId");
+        q.setParameter("warehouseId", warehouseId);
+        warehouse = (Warehouse) q.getSingleResult();
+        facility.setName(name);
+        facility.setType(type);
+        facility.setStatus("available");
+        facility.setWMSWarehouse(warehouse);
+        em.persist(facility);
     }
 
     @Override
