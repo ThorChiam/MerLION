@@ -593,7 +593,17 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         facility.setWMSWarehouse(warehouse);
         em.persist(facility);
     }
+//**************Map************
 
+    @Override
+    public List<StorageArea> getStorageAreas(Long warehouseId) {
+        Query q = em.createQuery("SELECT w FROM Warehouse w WHERE w.id=:warehouseId");
+        q.setParameter("warehouseId", warehouseId);
+        Warehouse w = (Warehouse)q.getSingleResult();
+        return w.getStorageArea();
+    }
+
+    //*************Map**********End*********
     @Override
     @Remove
     public void remove() {

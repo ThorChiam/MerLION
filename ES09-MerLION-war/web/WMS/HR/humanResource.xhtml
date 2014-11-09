@@ -85,13 +85,11 @@ and open the template in the editor.
                                 <p:column >
                                     <h:commandButton value="Schedule" action="generateSchedule" actionListener="#{womb.initWarehouseId}">
                                         <f:attribute name="wId" value="#{warehouse.id}" />
-                                        <f:setPropertyActionListener target="#{womb.warehouseId}" value="#{warehouse.id}" />
                                     </h:commandButton>
                                 </p:column>
                                 <p:column >
                                     <h:commandButton value="Record" action="recordOperation" actionListener="#{womb.initWarehouseId}">
                                         <f:attribute name="wId" value="#{warehouse.id}" />
-                                        <f:setPropertyActionListener target="#{womb.warehouseId}" value="#{warehouse.id}" />
                                     </h:commandButton>
                                 </p:column>
 

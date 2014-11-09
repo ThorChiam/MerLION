@@ -70,30 +70,10 @@ and open the template in the editor.
             <b:row styleClass="show-grid">
 
                 <b:column col-xs="5" col-sm="5" col-md="9">
-                    <p:panel header="Warehouse List">
+                    <p:panel header="Warehouse Map">
                         <h:form>
                             <!-- value should be a LIST of delivery order -->
-                            <p:dataTable var="warehouse" value="#{womb.getAllWarehouse()}">
-                                <p:column headerText="Warehouse ID">
-                                    <h:outputText value="#{warehouse.id}" />
-                                </p:column>
-
-                                <p:column headerText="Warehouse Name">
-                                    <h:outputText value="#{warehouse.name}" />
-                                </p:column>
-
-                                <p:column >
-                                    <h:commandButton value="Define Facility" action="defineFacility" actionListener="#{womb.initWarehouseId}">
-                                        <f:attribute name="wId" value="#{warehouse.id}" />
-                                    </h:commandButton>
-                                </p:column>
-                                <p:column >
-                                    <h:commandButton value="View Map" action="mapGeneration" actionListener="#{womb.initWarehouseId}">
-                                        <f:attribute name="wId" value="#{warehouse.id}" />
-                                    </h:commandButton>
-                                </p:column>
-
-                            </p:dataTable>
+                            <p:chart type="bubble" model="#{womb.warehouseMap}" />
                         </h:form>
                     </p:panel>
                 </b:column>

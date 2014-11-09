@@ -27,6 +27,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BubbleChartModel;
+import org.primefaces.model.chart.BubbleChartSeries;
 
 /**
  *
@@ -88,7 +92,11 @@ public class WMSOrderManagedBean implements Serializable {
     private String serviceUnit = "";
     private String facilityName = "";
     private String facilityType = "";
+//**********Map Generation
+    private BubbleChartModel warehouseMap;
+    private List<StorageArea> storageAreas;
 
+    //**************
     public WMSOrderManagedBean() {
     }
 //    public ResultOfCheck getResultOfCheck() {
@@ -763,6 +771,7 @@ public class WMSOrderManagedBean implements Serializable {
     public void initWarehouseId(ActionEvent event) {
         warehouseId = (Long) event.getComponent().getAttributes().get("wId");
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("warehouseId", warehouseId);
+        this.createWarehouseMaps();
     }
 
     private void initSchedule() {
@@ -811,4 +820,38 @@ public class WMSOrderManagedBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(title, content));
     }
+    //**************************Map Generation*********************************************
+
+    public BubbleChartModel getWarehouseMap() {
+        return warehouseMap;
+    }
+
+    private void createWarehouseMaps() {
+        Warehouse w = wosl.getWarehouse(warehouseId);
+        warehouseMap = initWarehouseMap();
+        warehouseMap.setTitle("Warehouse " + w.getId() + ":" + w.getName() + "; Capacity:" + w.getCapacity());
+        warehouseMap.setShadow(false);
+        warehouseMap.setBubbleGradients(true);
+        warehouseMap.setBubbleAlpha(0.8);
+        warehouseMap.getAxis(AxisType.X).setTickAngle(-50);
+        Axis yAxis = warehouseMap.getAxis(AxisType.Y);
+        yAxis.setMin(0);
+        yAxis.setMax(250);
+        yAxis.setTickAngle(50);
+    }
+
+    private BubbleChartModel initWarehouseMap() {
+        BubbleChartModel model = new BubbleChartModel();
+        storageAreas = wosl.getStorageAreas(warehouseId);
+        for (StorageArea sArea : storageAreas) {
+            String name = sArea.getId() + "," + sArea.getTotalCapacity();
+            int x = sArea.getWarehouseMap().getxAxis();
+            int y = sArea.getWarehouseMap().getyAxis();
+            int r = sArea.getWarehouseMap().getRadius();
+            model.add(new BubbleChartSeries(name, x, y, r));
+        }
+
+        return model;
+    }
+    //*************************Map Generation End***************************************
 }

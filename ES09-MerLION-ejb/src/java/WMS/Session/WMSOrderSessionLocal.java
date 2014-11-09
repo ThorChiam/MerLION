@@ -76,9 +76,11 @@ public interface WMSOrderSessionLocal {
 
     public List<WMSFacility> getFacilities(Long warehouseId);
 
-    public void createService(String email,String serviceName, String serviceType, int servicePrice, String serviceUnit);
+    public void createService(String email, String serviceName, String serviceType, int servicePrice, String serviceUnit);
 
     public void createFacility(Long warehouseId, String name, String type);
+
+    public List<StorageArea> getStorageAreas(Long warehouseId);
 
     public void remove();
 }
