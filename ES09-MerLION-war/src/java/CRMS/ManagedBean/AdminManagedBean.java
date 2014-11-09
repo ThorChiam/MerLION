@@ -81,7 +81,7 @@ public class AdminManagedBean implements Serializable{
             status="activated";
         tmp.updateStatus(email, status);
         this.setAllAccounts(tmp.getAllAccount());
-        statusMessage = "A new enquiry is successfully created.";
+        statusMessage = "Status Updated.";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Status: " + statusMessage, ""));
     }
