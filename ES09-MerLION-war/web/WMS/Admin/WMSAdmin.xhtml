@@ -88,6 +88,11 @@ and open the template in the editor.
                                     </h:commandButton>
                                 </p:column>
                                 <p:column >
+                                    <h:commandButton value="Define Service" action="defineService" actionListener="#{womb.initWarehouseId}">
+                                        <f:attribute name="wId" value="#{warehouse.id}" />
+                                    </h:commandButton>
+                                </p:column>
+                                <p:column >
                                     <h:commandButton value="View Map" action="mapGeneration" actionListener="#{womb.initWarehouseId}">
                                         <f:attribute name="wId" value="#{warehouse.id}" />
                                     </h:commandButton>

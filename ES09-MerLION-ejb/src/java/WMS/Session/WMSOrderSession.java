@@ -568,7 +568,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     }
 
     @Override
-    public void createService(String email, String serviceName, String serviceType, int servicePrice, String serviceUnit) {
+    public void createService(String email, String serviceName, String serviceType, int servicePrice, String serviceUnit, List<Long> selectedSas) {
         service = new WMSServiceCatalog();
         service.setServiceName(serviceName);
         service.setServiceType(serviceType);
@@ -578,7 +578,32 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         q.setParameter("email", email);
         Company c = (Company) q.getSingleResult();
         service.setCompany(c);
+        List<WMSServiceCatalog> cws = c.getWMSservices();
+        cws.add(service);
+        c.setWMSservices(cws);
+        q = em.createQuery("SELECT sa FROM StorageArea sa WHERE sa.WMSWarehouse.Company.id=:companyId");
+        q.setParameter("companyId", c.getId());
+        List<StorageArea> serviceSas = new ArrayList<>();
+        int totalCapacity = 0;
+        List<StorageArea> results = q.getResultList();
+        for (StorageArea ssa : results) {
+            for (Long saId : selectedSas) {
+                if ((saId.compareTo(ssa.getId())) == 0) {
+                    serviceSas.add(ssa);
+                    ssa.setService(service);
+                    totalCapacity += ssa.getTotalCapacity();
+                } else {
+                }
+            }
+        }
+        service.setStorageAreas(serviceSas);
+        service.setServiceCapacity(totalCapacity);
+        service.setServiceAvailable(totalCapacity);
         em.persist(service);
+        for (StorageArea s1 : serviceSas) {
+            em.merge(s1);
+        }
+        em.merge(c);
     }
 
     @Override
@@ -599,7 +624,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     public List<StorageArea> getStorageAreas(Long warehouseId) {
         Query q = em.createQuery("SELECT w FROM Warehouse w WHERE w.id=:warehouseId");
         q.setParameter("warehouseId", warehouseId);
-        Warehouse w = (Warehouse)q.getSingleResult();
+        Warehouse w = (Warehouse) q.getSingleResult();
         return w.getStorageArea();
     }
 

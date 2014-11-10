@@ -7,11 +7,16 @@ package WMS.Entity;
 
 import CRMS.Entity.Company;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -28,8 +33,12 @@ public class WMSServiceCatalog implements Serializable {
     private String serviceType;
     private int servicePrice;
     private String serviceUnit;
+    private int serviceAvailable;
+    private int serviceCapacity;
     @ManyToOne
     private Company company;
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "service")
+    private List<StorageArea> storageAreas = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -71,12 +80,36 @@ public class WMSServiceCatalog implements Serializable {
         this.serviceUnit = serviceUnit;
     }
 
+    public List<StorageArea> getStorageAreas() {
+        return storageAreas;
+    }
+
+    public void setStorageAreas(List<StorageArea> storageAreas) {
+        this.storageAreas = storageAreas;
+    }
+
     public Company getCompany() {
         return company;
     }
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public int getServiceAvailable() {
+        return serviceAvailable;
+    }
+
+    public void setServiceAvailable(int serviceAvailable) {
+        this.serviceAvailable = serviceAvailable;
+    }
+
+    public int getServiceCapacity() {
+        return serviceCapacity;
+    }
+
+    public void setServiceCapacity(int serviceCapacity) {
+        this.serviceCapacity = serviceCapacity;
     }
 
     @Override

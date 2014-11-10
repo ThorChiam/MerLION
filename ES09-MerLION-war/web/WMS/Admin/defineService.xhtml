@@ -102,10 +102,14 @@
                                 <p:inputText id="serviceName" value="#{womb.serviceName}" style="width:100px"/>
                                 <p:outputLabel for="serviceType" value="Type:" />
                                 <p:inputText id="serviceType" value="#{womb.serviceType}" style="width:80px"/>
-                                <p:outputLabel for="servicePrice" value="Price:" />
+                                <p:outputLabel for="servicePrice" value="Price(Per Day):" />
                                 <p:inputText id="servicePrice" value="#{womb.servicePrice}" style="width:50px"/>
                                 <p:outputLabel for="serviceUnit" value="Unit:" />
                                 <p:inputText id="serviceUnit" value="#{womb.serviceUnit}" style="width:60px"/>
+                                <p:outputLabel for="serviceStorageArea" value="Storage Areas:"/>
+                                <p:selectManyButton id="serviceStorageArea" value="#{womb.selectedSasTmp}">
+                                    <f:selectItems value="#{womb.storageAreas}" var="storageArea" itemLabel="#{storageArea.id}" itemValue="#{storageArea.id}" />
+                                </p:selectManyButton>
                             </h:panelGrid>
 
                             <p:separator />

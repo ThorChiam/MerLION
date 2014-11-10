@@ -37,12 +37,14 @@ public class StorageArea implements Serializable {
     private List<StorageArea_Inventory> sa_inven = new ArrayList<>();
     @ManyToOne
     private Warehouse WMSWarehouse;
-
+    @ManyToOne
+    private WMSServiceCatalog service;
 //    @ManyToOne
 //    private Inventory Inventory;
 //    @ManyToMany(cascade = {CascadeType.PERSIST})
 //    @JoinTable(name = "StorageArea_Inventory")
 //    private Set<Inventory> Inventory = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -96,6 +98,14 @@ public class StorageArea implements Serializable {
 
     public void setWarehouseMap(WarehouseMap warehouseMap) {
         this.warehouseMap = warehouseMap;
+    }
+
+    public WMSServiceCatalog getService() {
+        return service;
+    }
+
+    public void setService(WMSServiceCatalog service) {
+        this.service = service;
     }
 
     @Override

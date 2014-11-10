@@ -55,8 +55,8 @@
                 </b:navbarLinks>
 
                 <h:form styleClass="navbar-form navbar-right">
-                    <b:commandButton action="signIn.xhtml" value="Sign in" look="success" iconAlign="right"/>
-                    
+                    <p:button value="Log In" outcome="signIn"/>
+
                     <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
                 </h:form> 
             </b:navBar>
@@ -125,7 +125,7 @@
                                             </p:row>
                                         </div>
                                     </p:panelGrid>
-                                    <p:captcha id="captcha" label="Captcha" />
+                                    <p:captcha id="captcha" label="Captcha" secure="true"/>
                                     <p:message for="captcha" />
 
                                     <p:commandButton id="btn" value="Login" update="panel" actionListener="#{accountManagedBean.loginin}" ajax="false" rendered="#{facesContext.externalContext.sessionMap['userId'] == null}" action="main"/>

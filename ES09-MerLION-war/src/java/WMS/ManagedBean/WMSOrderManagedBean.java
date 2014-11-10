@@ -18,6 +18,7 @@ import WMS.Entity.Warehouse_Inventory;
 import WMS.Session.WMSOrderSessionLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -76,6 +77,7 @@ public class WMSOrderManagedBean implements Serializable {
 //    private List<AllocateWarehouse> aws;
 //    private List<allocateWarehouse> aws;
 //private List<String[]> wss; 
+    //***************HR*************
     private Date scheduleStart;
     private Date scheduleEnd;
     private Date operationStart;
@@ -92,11 +94,15 @@ public class WMSOrderManagedBean implements Serializable {
     private String serviceUnit = "";
     private String facilityName = "";
     private String facilityType = "";
-//**********Map Generation
+    private List<Long> selectedSas;
+    private Long[] selectedSasTmp;
+//**********Map Generation***********
     private BubbleChartModel warehouseMap;
     private List<StorageArea> storageAreas;
 
-    //**************
+    //**************Search**********
+    private String address;
+
     public WMSOrderManagedBean() {
     }
 //    public ResultOfCheck getResultOfCheck() {
@@ -136,10 +142,12 @@ public class WMSOrderManagedBean implements Serializable {
     @PostConstruct
     private void init() {
         email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
-        allInventories = this.reportInventories();
-        allSis = wosl.getAllSis();
-        ri = new ArrayList<>();
-        ri.add(wosl.gotRI());
+        if (email != null) {
+            allInventories = this.reportInventories();
+            allSis = wosl.getAllSis();
+            ri = new ArrayList<>();
+            ri.add(wosl.gotRI());
+        }
     }
 
     public List<StorageArea_Inventory> getAllSis() {
@@ -299,6 +307,7 @@ public class WMSOrderManagedBean implements Serializable {
     }
 
     public List<Warehouse> getAllWarehouse() {
+        this.init();
         return wosl.getAllWarehouse(email);
     }
 
@@ -763,6 +772,30 @@ public class WMSOrderManagedBean implements Serializable {
         this.facilityType = facilityType;
     }
 
+    public List<StorageArea> getStorageAreas() {
+        return storageAreas;
+    }
+
+    public void setStorageAreas(List<StorageArea> storageAreas) {
+        this.storageAreas = storageAreas;
+    }
+
+    public List<Long> getSelectedSas() {
+        return selectedSas;
+    }
+
+    public void setSelectedSas(List<Long> selectedSas) {
+        this.selectedSas = selectedSas;
+    }
+
+    public Long[] getSelectedSasTmp() {
+        return selectedSasTmp;
+    }
+
+    public void setSelectedSasTmp(Long[] selectedSasTmp) {
+        this.selectedSasTmp = selectedSasTmp;
+    }
+
     public void initOrderId(ActionEvent event) {
         orderId = (Long) event.getComponent().getAttributes().get("oId");
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("orderId", orderId);
@@ -772,6 +805,8 @@ public class WMSOrderManagedBean implements Serializable {
         warehouseId = (Long) event.getComponent().getAttributes().get("wId");
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("warehouseId", warehouseId);
         this.createWarehouseMaps();
+        this.setStorageAreas(wosl.getStorageAreas(warehouseId));
+        selectedSas = new ArrayList<>();
     }
 
     private void initSchedule() {
@@ -807,7 +842,9 @@ public class WMSOrderManagedBean implements Serializable {
     }
 
     public void createService(ActionEvent actionEvent) {
-        wosl.createService(email, serviceName, serviceType, servicePrice, serviceUnit);
+        selectedSas = new ArrayList<>();
+        selectedSas.addAll(Arrays.asList(selectedSasTmp));
+        wosl.createService(email, serviceName, serviceType, servicePrice, serviceUnit, selectedSas);
         this.addMessage("Service Added Result", "Successful");
     }
 
@@ -853,5 +890,13 @@ public class WMSOrderManagedBean implements Serializable {
 
         return model;
     }
-    //*************************Map Generation End***************************************
+    //*************************Search***************************************
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

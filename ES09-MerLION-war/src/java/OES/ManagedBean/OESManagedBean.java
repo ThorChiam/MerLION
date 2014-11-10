@@ -39,6 +39,7 @@ public class OESManagedBean implements Serializable {
     @EJB
     private OESSessionLocal osbl;
 
+    private String email;
     //Product
     private String name;
     private String description;
@@ -89,16 +90,18 @@ public class OESManagedBean implements Serializable {
 
     private String statusMessage;
     private List<Product> productList;
-    
+
     private List<Product> allProducts;
 
     public OESManagedBean() {
     }
-    
+
     @PostConstruct
-    public void init()
-    {
-        allProducts = osbl.getAllProduct(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId").toString());
+    public void init() {
+        email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        if (email != null) {
+            allProducts = osbl.getAllProduct(email);
+        }
     }
 
     //********************Product********************************
@@ -117,16 +120,14 @@ public class OESManagedBean implements Serializable {
         }
     }
 
-    public void updateProduct(Long product_id,String name,double price,int quantity,String description) {
-       
+    public void updateProduct(Long product_id, String name, double price, int quantity, String description) {
+
         osbl.updateProduct(product_id, name, price, quantity, description);
     }
-   
-   
-     
+
     public void onCellEdit(CellEditEvent event) {
         System.err.println("Selected row: " + allProducts.get(event.getRowIndex()).getId());
-        updateProduct(allProducts.get(event.getRowIndex()).getId(),allProducts.get(event.getRowIndex()).getName(),allProducts.get(event.getRowIndex()).getPrice(),allProducts.get(event.getRowIndex()).getQuantity(),allProducts.get(event.getRowIndex()).getDescription());
+        updateProduct(allProducts.get(event.getRowIndex()).getId(), allProducts.get(event.getRowIndex()).getName(), allProducts.get(event.getRowIndex()).getPrice(), allProducts.get(event.getRowIndex()).getQuantity(), allProducts.get(event.getRowIndex()).getDescription());
         Object oldValue = event.getOldValue();
         Object newValue = event.getNewValue();
 
@@ -171,11 +172,10 @@ public class OESManagedBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Status: " + statusMessage, ""));
     }
-    
+
 //    public String getBuyName(String email){
 //        return osbl.getBuyName(email);
 //    }
-
     public Enquiry getEnquiry() {
         enquiry = osbl.getEnquiry(enquiry_id);
         return enquiry;
@@ -191,9 +191,9 @@ public class OESManagedBean implements Serializable {
 
     //********************Seller-Quotation***********************
     /*public List<String> ATPcheck(Enquiry enquiry) {
-        return osbl.ATPcheck(enquiry);
-    }
-*/
+     return osbl.ATPcheck(enquiry);
+     }
+     */
     public void createQuotation() {
         statusMessage = "A new quotation is successfully created.";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -267,12 +267,12 @@ public class OESManagedBean implements Serializable {
 
     //********************Buyer-Payment**************************
    /* public void createPayment() {
-        statusMessage = "Please finish your payment soon. Thanks!";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "Status: " + statusMessage, ""));
-        osbl.createPayment(paymentdate, paymenttype, status, purchaseorder);
-    }
-*/
+     statusMessage = "Please finish your payment soon. Thanks!";
+     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+     "Status: " + statusMessage, ""));
+     osbl.createPayment(paymentdate, paymenttype, status, purchaseorder);
+     }
+     */
     public void updatePaymentStatus() {
         osbl.updatePaymentStatus(payment_id, status);
     }
