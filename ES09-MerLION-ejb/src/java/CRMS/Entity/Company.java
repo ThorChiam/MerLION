@@ -77,8 +77,8 @@ public class Company implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "feedback_receiver")
     private List<Feedback> feedback_receiver = new ArrayList<>();
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
-    private List<ServiceCatalog_tobedeleted> servicecatalog = new ArrayList<>();
+//    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
+//    private List<ServiceCatalog_tobedeleted> servicecatalog = new ArrayList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<TMSFacility> TMSFacility = new ArrayList<>();
@@ -165,13 +165,13 @@ public class Company implements Serializable {
         this.TMSHumanResource = TMSHumanResource;
     }
 
-    public List<ServiceCatalog_tobedeleted> getServicecatalog() {
-        return servicecatalog;
-    }
-
-    public void setServicecatalog(List<ServiceCatalog_tobedeleted> servicecatalog) {
-        this.servicecatalog = servicecatalog;
-    }
+//    public List<ServiceCatalog_tobedeleted> getServicecatalog() {
+//        return servicecatalog;
+//    }
+//
+//    public void setServicecatalog(List<ServiceCatalog_tobedeleted> servicecatalog) {
+//        this.servicecatalog = servicecatalog;
+//    }
 
     public List<Feedback> getFeedback_sender() {
         return feedback_sender;

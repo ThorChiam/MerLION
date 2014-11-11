@@ -5,14 +5,13 @@
  */
 package CRMS.Session;
 
-import java.util.List;
-import CRMS.Session.SeviceCatalogSessionLocal;
+import CRMS.Entity.Company;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import WMS.Entity.WMSServiceCatalog;
+import java.util.List;
 import javax.persistence.Query;
-import CRMS.Entity.Company;
-import CRMS.Entity.ServiceCatalog_tobedeleted;
 
 /**
  *
@@ -23,64 +22,42 @@ public class SeviceCatalogSession implements SeviceCatalogSessionLocal {
 
     @PersistenceContext
     private EntityManager em;
+    private WMSServiceCatalog service;
 
-    private ServiceCatalog_tobedeleted serviceCatalog;
-
-    @Override
-    public Long addServiceCatalog(String email, String serviceType, String carrierType, String route, String availableScheduleFrom, String availableScheduleTo, long price, long maxVol, long availableVol) {
-        Query q = em.createQuery("SELECT a FROM Company a WHERE a.email=:email");
-        q.setParameter("email", email);
-        Company a = (Company) q.getSingleResult();
-        serviceCatalog = new ServiceCatalog_tobedeleted();
-        serviceCatalog.setCompany(a);
-        serviceCatalog.create(serviceType, carrierType, route, availableScheduleFrom, availableScheduleTo, price, maxVol, availableVol);
-        em.persist(serviceCatalog);
-        em.flush();
-
-        return serviceCatalog.getServiceId();
+    public SeviceCatalogSession() {
     }
 
     @Override
-    public List getAllServiceCatalog(String email) {
-        Query q = em.createQuery("SELECT e FROM ServiceCatalog e WHERE e.Company.email");
-        q.setParameter("email", email);
+    public List<WMSServiceCatalog> getAllServices() {
+        Query q = em.createQuery("SELECT ws FROM WMSServiceCatalog ws");
+        List<WMSServiceCatalog> services = q.getResultList();
+        return services;
+    }
+
+    @Override
+    public List<Company> getCompanies() {
+        Query q = em.createQuery("SELECT c FROM Company c");
         return q.getResultList();
     }
 
-    //individual user can delete their own service catalog info
-
     @Override
-    public void deleteServiceCatalog(String email, Long serviceId) {
-
-        Query query = em.createQuery("Delete FROM ServiceCatalog e where e.serviceId=?1 AND e.Company.email=?2");
-        query.setParameter(1, serviceId);
-        query.setParameter(2, email);
-        query.executeUpdate();
+    public List<String> getAllServiceTypes() {
+        Query q = em.createQuery("SELECT DISTINCT ws.serviceType FROM WMSServiceCatalog ws");
+        List<String> serviceTypes = q.getResultList();
+        return serviceTypes;
     }
 
     @Override
-    public void updateServiceCatalog(String email, Long serviceId, String serviceType, String carrierType, String route, long scheduleFrom, long scheduleTo, long price, long maxVol, long avaVol) {
-        Query query = em.createQuery("UPDATE ServiceCatalog s SET s.serviceType=?1,s.carrierType=?2, s.route=?3, s.availableScheduleFrom=?4,s.availableScheduleTo=?5,s.price=?6, s.maxVol=?7,s.availableVol=?8 WHERE s.serviceId=?9 AND s.Company.email=?10");
-        query.setParameter(1, serviceType);
-        query.setParameter(2, carrierType);
-        query.setParameter(3, route);
-        query.setParameter(4, scheduleFrom);
-        query.setParameter(5, scheduleTo);
-        query.setParameter(6, price);
-        query.setParameter(7, maxVol);
-        query.setParameter(8, avaVol);
-        query.setParameter(9, serviceId);
-        query.setParameter(10, email);
-
-        query.executeUpdate();
-        //return serviceId;
+    public List<WMSServiceCatalog> selectServices(String serviceType, int capacityRequired, int priceMin, int priceMax) {
+        Query q = em.createQuery("SELECT ws FROM WMSServiceCatalog ws WHERE ws.serviceType=:serviceType");
+        q.setParameter("serviceType", serviceType);
+        List<WMSServiceCatalog> services = q.getResultList();
+        for (WMSServiceCatalog s : services) {
+            if (!(s.getServiceAvailable() >= capacityRequired && s.getServicePrice() >= priceMin && s.getServicePrice() <= priceMax)) {
+                services.remove(s);
+            }
+        }
+        return services;
     }
 
-    @Override
-    public List getServiceCatalog(String email, Long serviceId) {
-        Query query = em.createQuery("SELECT e FROM ServiceCatalog e WHERE e.serviceId=?1 AND e.Company=?2");
-        query.setParameter(1, serviceId);
-        query.setParameter(2, email);
-        return query.getResultList();
-    }
 }
