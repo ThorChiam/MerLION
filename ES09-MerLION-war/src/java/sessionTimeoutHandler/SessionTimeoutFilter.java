@@ -70,7 +70,7 @@ public class SessionTimeoutFilter implements Filter {
 
     private boolean isSessionControlRequiredForThisResource(HttpServletRequest httpServletRequest) {
         String requestPath = httpServletRequest.getRequestURI();
-        if (requestPath.equals("/ES09-MerLION-war/") || requestPath.equals("/ES09-MerLION-war/main.xhtml") || requestPath.equals("/ES09-MerLION-war/signIn.xhtml")) {
+        if (requestPath.equals("/ES09-MerLION-war/") || requestPath.equals("/ES09-MerLION-war/main.xhtml") || requestPath.equals("/ES09-MerLION-war/signIn.xhtml")||requestPath.equals("/ES09-MerLION-war/signUp.xhtml")) {
             return false;
         }
         return true;
