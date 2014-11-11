@@ -17,6 +17,9 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import CI.Session.AccountSessionLocal;
 import CI.Entity.Account;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -55,7 +58,7 @@ public class AccountManagedBean implements Serializable {
     }
 
     public void signup() {
-        System.out.println("asbl:"+(asbl==null)+";email:"+(email==null)+";pw:"+(password==null));
+        System.out.println("asbl:" + (asbl == null) + ";email:" + (email == null) + ";pw:" + (password == null));
         email = asbl.createaccount(email, password, accessright, status, security_question, security_answer);
         statusMessage = "sign up successful!";
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("accountCreated", "true");
@@ -86,7 +89,6 @@ public class AccountManagedBean implements Serializable {
 //    public void fetchallAccounts() {
 //        accountList = asbl.getAccounts();
 //    }
-
     public Account getAccount() {
         return account;
     }
@@ -114,6 +116,14 @@ public class AccountManagedBean implements Serializable {
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Login in status: " + statusMessage, ""));
+        String serverName = FacesContext.getCurrentInstance().getExternalContext().getRequestServerName();
+        String serverPort = "8080";
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("http://" + serverName + ":" + serverPort + "/ES09-MerLION-war/main.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(AccountManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public void resetpassword() {
