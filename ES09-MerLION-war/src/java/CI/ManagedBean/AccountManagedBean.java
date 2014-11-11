@@ -17,13 +17,17 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import CI.Session.AccountSessionLocal;
 import CI.Entity.Account;
+import java.util.ArrayList;
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ViewScoped;
+import org.primefaces.event.CellEditEvent;
 
 /**
  *
  * @author ThorChiam
  */
 @ManagedBean(name = "accountManagedBean")
-@SessionScoped
+@ViewScoped
 public class AccountManagedBean implements Serializable {
 
     /**
@@ -31,13 +35,14 @@ public class AccountManagedBean implements Serializable {
      */
     @EJB
     private AccountSessionLocal asbl;
+    private String aemail;
     private String email;
     private String password;
     private String comp_name;
     private String comp_contact_no;
     private String comp_address;
     private String accessright = "member";
-    private String status = "deactivated";
+    private String status = "no";
     private String security_question;
     private String security_answer;
     private String statusMessage;
@@ -47,21 +52,46 @@ public class AccountManagedBean implements Serializable {
     private Boolean login = false;
     private String response;
     private HttpServletRequest req;
+    private List<Account> accountInfo;
+    
     @ManagedProperty("#{accountList}")
     private List<Account> accountList;
+    
 
     public AccountManagedBean() {
 //        asbl = new AccountSessionBean();
     }
 
+    @PostConstruct
+    public void init() {
+        email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        
+        if(email!=null){
+            accountInfo=this.viewAccount();
+        }
+       
+    }
+
     public void signup() {
-        System.out.println("asbl:"+(asbl==null)+";email:"+(email==null)+";pw:"+(password==null));
+        System.out.println("asbl:" + (asbl == null) + ";email:" + (email == null) + ";pw:" + (password == null));
         email = asbl.createaccount(email, password, accessright, status, security_question, security_answer);
         statusMessage = "sign up successful!";
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("accountCreated", "true");
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("email", email);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userId", email);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 statusMessage + " (Welcome " + comp_name + ")", ""));
+    }
+    
+    public String createMoreAccount(){
+        String tstatus="activated";
+        String tempemail=asbl.createMoreAccount(email,aemail, password, security_question, security_answer,tstatus);
+        
+        statusMessage="create successfully!";
+        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                statusMessage + " (Welcome " + tempemail + ")", ""));
+        
+        return "viewAccountInfo";
     }
 
     public void logout() {
@@ -82,10 +112,49 @@ public class AccountManagedBean implements Serializable {
                 statusMessage, ""));
     }
 
+    //view individual account info
+    public List<Account> viewAccount() {
+        accountInfo = new ArrayList();
+        accountInfo.add(asbl.getAccount(email));
+        
+        System.out.println("accountManaged bean:viewAccount() ");
+
+        return accountInfo;
+    }
+
+    //update account info
+    public void onCellEdit(CellEditEvent event) {
+        System.err.println("Selected row: " + accountInfo.get(event.getRowIndex()).getSecurity_question());
+        System.out.println("************");
+        System.out.println("");
+        System.out.println("************");
+        this.updateAccountInfo(accountInfo.get(event.getRowIndex()).getSecurity_question(), accountInfo.get(event.getRowIndex()).getSecurity_answer());
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+
+        if (newValue != null && !newValue.equals(oldValue)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "New value:" + newValue, " update successfully");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    }
+
+    public void updateAccountInfo(String qun, String ans) {
+
+        asbl.updateAccountInfo(email, qun, ans);
+    }
+
+    public List<Account> getAccountInfo() {
+
+        return accountInfo;
+    }
+
 //    @PostConstruct
 //    public void fetchallAccounts() {
 //        accountList = asbl.getAccounts();
 //    }
+    public void setAccountInfo(List<Account> accountInfo) {
+        this.accountInfo = accountInfo;
+    }
 
     public Account getAccount() {
         return account;
@@ -128,6 +197,16 @@ public class AccountManagedBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 statusMessage, ""));
     }
+
+    public String getAemail() {
+        return aemail;
+    }
+
+    public void setAemail(String aemail) {
+        this.aemail = aemail;
+    }
+    
+    
 
     public String getEmail() {
         return email;

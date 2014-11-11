@@ -27,8 +27,12 @@ public interface AccountSessionLocal {
     public void resetpassword(String email, String newpassword);
 
     public List<Account> getAccounts();
+    
+    public void updateAccountInfo(String cemail, String qun, String ans);
 
     public void deleteaccount(String email);
+    
+     public String createMoreAccount(String aemail, String email, String password, String qun, String ans, String status);
 
     public void remove();
 }

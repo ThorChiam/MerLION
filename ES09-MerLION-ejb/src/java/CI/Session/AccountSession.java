@@ -9,10 +9,10 @@ import java.security.MessageDigest;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import CI.Entity.Account;
+import CRMS.Entity.Company;
 
 /**
  *
@@ -23,36 +23,50 @@ public class AccountSession implements AccountSessionLocal {
 
     @PersistenceContext
     private EntityManager em;
+    private Account account;
 
     public AccountSession() {
     }
-    
+
+    //get individual account info
     @Override
     public Account getAccount(String email) {
         Query q = em.createQuery("SELECT s FROM Account s WHERE s.email=:email");
         q.setParameter("email", email);
-        Account systemUser = null;
-        try {
-            systemUser = (Account) q.getSingleResult();
-        } catch (NoResultException ex) {
-            ex.printStackTrace();
-        }
-        return systemUser;
+        System.out.println("$$$$$$ Account session: getAccount: " + email);
+
+//        Account systemUser = null;
+//        try {
+//            systemUser = (Account) q.getSingleResult();
+//        } catch (NoResultException ex) {
+//            ex.printStackTrace();
+//        }
+        return (Account) q.getSingleResult();
+    }
+
+    @Override
+    public void updateAccountInfo(String cemail, String qun, String ans) {
+        Query q = em.createQuery("SELECT a FROM Account a WHERE a.email=:cemail");
+        q.setParameter("cemail", cemail);
+        account = (Account) q.getSingleResult();
+        account.setSecurity_question(qun);
+        account.setSecurity_answer(ans);
+
+        em.merge(account);
     }
 
     @Override
     public String validate(String email, String password) {
         Account systemUser = getAccount(email);
-        
-        System.out.println("*****test accountSession: email"+systemUser.getEmail());
-        System.out.println("*****test accountSession: companyName"+systemUser.getCompany().getCompanyName());
+
+        System.out.println("*****test accountSession: email" + systemUser.getEmail());     
         if (systemUser == null) {
             return null;
         } else {
             if (systemUser.getPassword().equals(doMD5Hashing(password))) {
                 if (systemUser.getStatus().equals("activated")) {
                     return systemUser.getCompany().getCompanyName();
-                   
+
                 } else {
                     return "frozen";
                 }
@@ -60,7 +74,25 @@ public class AccountSession implements AccountSessionLocal {
                 return null;
             }
         }
-        
+
+    }
+
+    @Override
+    public String createMoreAccount(String aemail, String email, String password, String qun, String ans, String status) {
+        Account a = new Account();
+        a.setEmail(email);
+        a.setPassword(password);
+        a.setSecurity_question(qun);
+        a.setSecurity_answer(ans);
+        a.setStatus(status);
+
+        Query q = em.createQuery("SELECT a.Company FROM Account a WHERE a.email=:aemail");
+        q.setParameter("aemail", aemail);
+        a.setCompany((Company) q.getSingleResult());
+      
+
+        em.persist(a);
+        return a.getEmail();
     }
 
     @Override

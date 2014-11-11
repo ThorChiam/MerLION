@@ -5,6 +5,7 @@
  */
 package CRMS.Session;
 
+import CRMS.Entity.Company;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -18,6 +19,8 @@ public interface CompanyProfileSessionLocal {
     public void addCompanyProfile(String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision);
 
     public List getAllCompanyProfile(String email);
+    
+    public Company getCompamyProfile(String email);
 
     //admin can delete company profile
     public String deleteCompanyProfile(Long companyId);

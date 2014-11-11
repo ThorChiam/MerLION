@@ -6,8 +6,7 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
- 
-    
+
     <h:head>
         <title>Welcome to My Merlion</title>
 
@@ -18,49 +17,18 @@
 
     <h:body>
         <b:container>
-            <b:row>
-                <p:column colspan="3">
-                    <h:form>  
-                        <p:menubar styleClass="show-grid">
-                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                            <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
-                            <p:submenu label="Account Setting">
-                                <p:submenu label="Account Management">
-                                    <p:menuitem value="View Account Infomation" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Edit Account Information" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>
-                                </p:submenu>
-                                <p:submenu label="Company Profile Management">
-                                    <p:menuitem value="View Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Edit Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
-                                </p:submenu>
-                            </p:submenu>
-
-                            <p:submenu label="Contract Management">
-                                <p:menuitem value="Add New Plan" url="/MRP/plan/addNewPlan.xhtml"/>
-                                <p:menuitem value="Display Plan" url="/MRP/plan/displayPlan.xhtml" />
-                            </p:submenu>
-
-                            <p:submenu label="Transaction Management">
-                                <p:menuitem value="View Service Transaction History" url="/MRP/demandManagement/DemandManagement.xhtml" />
-                                <p:menuitem value="View Ongoing Transaction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="View Transaction History" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Invoice" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                            </p:submenu>
-
-                            <p:submenu label="Internal Communication">
-                                <p:menuitem value="Message" url="/MRP/order/orderManagement.xhtml"/>
-                                <p:menuitem value="Notification" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Announcement" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                            </p:submenu>      
-
-                            <p:menuitem value="Log Out"/>
-
-                        </p:menubar>
-                    </h:form>
-                </p:column>
-            </b:row>
-
+       <p:breadCrumb>
+                    <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                    <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
+                    <p:menuitem value="Account Management" url="/CI/account/viewAccountInfo.xhtml" />
+                    <p:menuitem value="Company Profile Management" url="/CI/account/viewCompanyProfile.xhtml" />
+                    <p:menuitem value="Contract Management" url="#" />
+                    <p:menuitem value="Internal Communication" url="#" />
+                   
+                </p:breadCrumb> 
+            <b:well>
+                <h3>My MerLION</h3> 
+            </b:well>
         </b:container>
         <br/>
         <b:container>
@@ -70,49 +38,49 @@
                     <h:form>
                         <p:growl autoUpdate="true"/>
                         <p:menu style="width:250px">   
-                            <p:submenu label="Account Setting"/>
-                            <p:separator/>
                             <p:submenu label="Account Management">
-                                <p:menuitem value="View Account Infomation" url="/MRP/BOM/addBOM.xhtml"/>
-                                <p:menuitem value="Edit Account Information" url="/MRP/BOM/addBOM.xhtml"/>
-                                <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>                
-                            </p:submenu>
-                            <p:submenu label="Company Profile Management">
                                 <p:menuitem value="View Company Profile" url="/CI/account/viewCompanyProfile.xhtml"/>
-                                <p:menuitem value="Edit Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
-                            </p:submenu>
+                                <p:menuitem value="Edit Company Profile" url="/CI/account/editCompanyProfile.xhtml" />
+                            </p:submenu>   
                         </p:menu>
                     </h:form>
 
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
                     <p:panel header="View Company Profile">
-                        <p:dataTable value="#{companyProfileManagedBean.getAllCompanyProfile(facesContext.externalContext.sessionMap['email'])}" var="c">
-                            <p:panelGrid id="display" columns="2" columnClasses="label,value">
-                                <h:outputText value="Company Name: " />
-                                <h:outputText id="companyNameValue" value="#{c.companyName}" />
+                        <p:dataTable var="c" value="#{companyProfileManagedBean.getCompanyProfile()}" >
 
-                                <h:outputText value="Company Address: " />
-                                <h:outputText id="companyAddressValue" value="#{c.companyAddress}" />
-
-                                <h:outputText value="Tel: " />
-                                <h:outputText id="telValue" value="#{c.tel}"/>
-
-                                <h:outputText value="Email: " />
-                                <h:outputText id="emailValue" value="#{c.email}" />
-
-                                <h:outputText value="Website: " />
-                                <h:outputText id="ssnValue" value="#{c.website}" />
-
-                                <h:outputText value="Company Histoty: " />
-                                <h:outputText id="companyHistoryValue" value="#{c.companyHistory}" />
-
-                                <h:outputText value="Service: " />
-                                <h:outputText id="serviceValue" value="#{c.service}" />
-
-                                <h:outputText value="Vision: " />
-                                <h:outputText id="visionValue" value="#{c.vision}" />
-                            </p:panelGrid>
+                            <p:column headerText="Company Name">
+                               <h:outputText value="#{c.companyName}" />
+                            </p:column>
+                            
+                            <p:column headerText="Company Address">
+                               <h:outputText value="#{c.companyAddress}" />
+                            </p:column>
+                            
+                            <p:column headerText="Tel">
+                               <h:outputText value="#{c.tel}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Email">
+                               <h:outputText value="#{c.email}" />
+                            </p:column>
+                            
+                            <p:column headerText="Website">
+                               <h:outputText value="#{c.website}" />
+                            </p:column>
+                            
+                            <p:column headerText="Company History">
+                               <h:outputText value="#{c.companyHistory}" />
+                            </p:column>
+                            
+                            <p:column headerText="Service">
+                               <h:outputText value="#{c.service}" />
+                            </p:column>
+                            
+                            <p:column headerText="Vision">
+                               <h:outputText value="#{c.vision}" />
+                            </p:column>
                         </p:dataTable>
                     </p:panel>
                 </b:column>
