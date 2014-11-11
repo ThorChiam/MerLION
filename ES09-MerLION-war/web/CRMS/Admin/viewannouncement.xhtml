@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:g="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>CRMS View User Accounts List</title>
+
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/> 
+
+    </h:head>
+
+    <h:body>
+        <b:container>
+            <b:row>
+                <p:column colspan="3">
+                    <h:form>  
+                        <p:menubar styleClass="show-grid">
+                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                            <p:menuitem value="WMS Home" url="/CRMS/main.xhtml" />
+                            <p:menuitem value="Log Out" action="signIn.xhtml"  actionListener="#{accountManagedBean.logout}"/>
+                        </p:menubar>
+                    </h:form>
+                </p:column>
+            </b:row>
+        </b:container>
+
+
+        <br/>
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="5" col-sm="5" col-md="10">
+                    <p:panel header="User Account List">
+                        <h:form >            
+                            <p:dataTable var="all" value="#{AdminManagedBean.allAnnouncements}" id="msgs">
+                                <p:column headerText="Announcement Id">
+                                    <h:outputText value="#{all.annId}"/>
+                                </p:column>
+
+                                <p:column headerText="Announcement Content">
+                                    <h:outputText value="#{all.content.split(':')[0]}:"/>
+                                    <br/>
+                                    <h:outputText value="#{all.content.split(':')[1]}"/>
+                                </p:column>    
+
+                                <p:column headerText="Announcement Poster Id">
+                                    <h:outputText value="#{all.merlionAdmin.id}"/>
+                                </p:column>
+
+                                <p:column headerText="Post Date">
+                                    <h:outputText value="#{all.releasedate}"/>
+                                </p:column>>
+
+                                <p:column headerText="Delete">                               
+                                    <p:commandButton value="Delete" actionListener="#{AdminManagedBean.deleteAnnouncement(all.annId)}" styleClass="ui-priority-primary" ajax="false"/>                             
+                                </p:column>
+
+                            </p:dataTable>
+                            <br/>
+                            <b:commandButton action="#{AdminManagedBean.setCheckadd(true)}" value="Add a new announcement" look="success" iconAlign="left"/>
+
+                            <p:growl id="panel" rendered="#{AdminManagedBean.checkadd}">
+                                <h:panelGrid>                                                                     
+                                    <div class="form-group">
+                                        <h:outputLabel for="title" value="Announcement Title : " />
+                                        <h:inputText id="title" value="#{AdminManagedBean.title}" required="true"
+                                                     requiredMessage="Please enter title of the announcement" class="form-control"/>
+                                        <h:message for="title" style="color: red;" />
+                                    </div>
+
+                                    <h:form>                                                     
+                                        <h:outputLabel for="content" value="Announcement Content : " />
+                                        <br/>
+                                        <p:inputTextarea id="content" value="#{AdminManagedBean.content}" rows="5" cols="30" counter="display" maxlength="200" counterTemplate="{0} characters remaining." autoResize="false" />
+                                        <h:outputText id="display" />
+                                    </h:form>
+                                    
+                                    <p:commandButton value="Save" update="msgs" actionListener="#{AdminManagedBean.createAnnouncement}" styleClass="ui-priority-primary" ajax="false"/>
+                                </h:panelGrid>
+                            </p:growl>
+
+
+
+                        </h:form>
+                    </p:panel>
+                </b:column>
+            </b:row>
+        </b:container>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+                </div>
+            </div>
+        </foot>      
+    </h:body>
+</html>
+
+
+
+
+
+

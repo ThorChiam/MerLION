@@ -6,26 +6,33 @@
 package CRMS.ManagedBean;
 
 import CI.Entity.Account;
+import CI.Entity.Announcement;
+import CI.Entity.Customer_Enquiry;
+import CRMS.Entity.Company;
 import CRMS.Session.AdminSessionLocal;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import org.primefaces.event.CellEditEvent;
 
 /**
  *
  * @author sunny
  */
 @ManagedBean(name = "AdminManagedBean")
-@SessionScoped
-public class AdminManagedBean implements Serializable{
+@ViewScoped
+public class AdminManagedBean implements Serializable {
+
     @EJB
     private AdminSessionLocal tmp;
-    
+
+    //Account
     private String email;
     private String passwrod;
     private String status;
@@ -35,35 +42,279 @@ public class AdminManagedBean implements Serializable{
     private String statusMessage;
     private List<Account> allAccounts;
 
- 
+    //Company
+    private List<Company> allCompanys;
 
-
-    //activate & deactivate
-
-    @PostConstruct
-    public void init(){
-        email = (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
-        allAccounts = tmp.getAllAccount();
-    }
-    public boolean statusToboolean(String msg){
-        if(msg.equals("activated"))
-            return true;
-        return false;
-    }
+    //Announcement
+    private List<Announcement> allAnnouncements;
+    private boolean checkadd;
+    private String title;
+    private String content;
     
+    //Enquiry
+    private String answer;
+    private List<Customer_Enquiry> allEnquirys;
+    private boolean checkreply;
+    private boolean checkdetail;
+    private long tmp_id;
+
+
+
+
+
     public AdminManagedBean() {
     }
-  
-    public void updateAccount(){
-        tmp.updateUserInfo(email, passwrod, accessright, status, security_question, security_answer);
+
+    //*********************************About Account********************************
+    //activate & deactivate
+    @PostConstruct
+    public void init() {
+        email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        allAccounts = tmp.getAllAccount();
+        allCompanys = tmp.getAllCompany();
+        allAnnouncements = tmp.getAllAnnoun();
+        allEnquirys = tmp.getAllEnquiry();
     }
-    
-    public Account getAccount(String email){
+
+    //update User Account Info
+    public void onCellEdit(CellEditEvent event) {
+        System.err.println("Selected row: " + allAccounts.get(event.getRowIndex()).getEmail());
+        System.out.println("************");
+        System.out.println("");
+        System.out.println("************");
+        this.updateAccount(allAccounts.get(event.getRowIndex()).getEmail(), allAccounts.get(event.getRowIndex()).getPassword(), allAccounts.get(event.getRowIndex()).getAccessRight(), allAccounts.get(event.getRowIndex()).getSecurity_question(), allAccounts.get(event.getRowIndex()).getSecurity_answer());
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+
+        if (newValue != null && !newValue.equals(oldValue)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "New value:" + newValue, " update successfully");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    }
+
+    public boolean statusToboolean(String msg) {
+        if (msg.equals("activated")) {
+            return true;
+        }
+        return false;
+    }
+
+    public void updateAccount(String email, String passwrod, String accessright, String security_question, String security_answer) {
+        tmp.updateUserInfo(email, passwrod, accessright, security_question, security_answer);
+    }
+
+    public Account getAccount(String email) {
         return tmp.getAccount(email);
     }
-    
-    public List<Account> getAllAccount(){
+
+    public List<Account> getAllAccount() {
         return tmp.getAllAccount();
+    }
+
+    public void updateStatus(String email, String status) {
+        if (status.equals("activated")) {
+            status = "deactivated";
+        } else {
+            status = "activated";
+        }
+        tmp.updateStatus(email, status);
+        this.setAllAccounts(tmp.getAllAccount());
+        statusMessage = "Status Updated.";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Status: " + statusMessage, ""));
+    }
+
+    public void deleteAccount(String email) {
+        for (int i = 0; i <= allAccounts.size(); i++) {
+            if (allAccounts.get(i).getEmail().equals(email)) {
+                allAccounts.remove(i);
+                break;
+            }
+        }
+        tmp.deleteAccount(email);
+    }
+
+    //***************************About Company*****************************   
+    //update User Account Info
+    public void onCellEdit_comp(CellEditEvent event) {
+        System.err.println("Selected row: " + allCompanys.get(event.getRowIndex()).getId());
+        System.out.println("************");
+        System.out.println("");
+        System.out.println("************");
+        this.updateCompany(allCompanys.get(event.getRowIndex()).getId(), allCompanys.get(event.getRowIndex()).getCompanyName(), allCompanys.get(event.getRowIndex()).getCompanyAddress(), allCompanys.get(event.getRowIndex()).getTel(), allCompanys.get(event.getRowIndex()).getEmail(), allCompanys.get(event.getRowIndex()).getWebsite(), allCompanys.get(event.getRowIndex()).getCompanyHistory(), allCompanys.get(event.getRowIndex()).getService(), allCompanys.get(event.getRowIndex()).getVision());
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+
+        if (newValue != null && !newValue.equals(oldValue)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "New value:" + newValue, " update successfully");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    }
+
+    public void getAllCompany() {
+        tmp.getAllCompany();
+    }
+
+    public void getCompany(long company_id) {
+        tmp.getCompany(company_id);
+    }
+
+    public void updateCompany(long id, String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision) {
+        tmp.updateCompanyInfo(id, companyName, companyAddress, tel, email, website, companyHistory, service, vision);
+    }
+
+    public void deleteCompany(long id) {
+        for (int i = 0; i < allCompanys.size(); i++) {
+            if (allCompanys.get(i).getId().equals(id)) {
+                allCompanys.remove(i);
+                break;
+            }
+        }
+        tmp.deleteCompany(id);
+    }
+
+    //*************************About Announcement*************************
+    public void createAnnouncement(ActionEvent event) {
+        tmp.createAnnoun((title + ":" + content), email);
+        allAnnouncements = tmp.getAllAnnoun();
+        checkadd=false;
+        title="";
+        content="";
+    }
+
+    public List<Announcement> getAllAnnouncement() {
+        return tmp.getAllAnnoun();
+    }
+
+    public Announcement getAnnouncement(long id) {
+        return tmp.getAnnoun(id);
+    }
+
+    public void deleteAnnouncement(long id) {
+        for (int i = 0; i < allAnnouncements.size(); i++) {
+            if (allAnnouncements.get(i).getAnnId() == id) {
+                allAnnouncements.remove(i);
+                break;
+            }
+        }
+        tmp.deleteAnnoun(id);
+    }
+    
+    
+    
+    
+    
+    //*****************************About Enquiry************************
+    public Customer_Enquiry getEnquiry(long id){
+        return tmp.getEnquiry(id);
+    }
+    
+    public List<Customer_Enquiry> getAllEnquiry(){
+        return tmp.getAllEnquiry();
+    }
+    
+    public void replyEnquiry(long id){
+        tmp.replyEnquiry(answer, id, email);
+        checkreply=false;
+        answer="";
+    }
+    
+    public boolean checkStatus(String status){
+        if(status.equals("unsolved"))
+            return false;
+        return true;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    //***************************Getter and Setter**********************
+    
+    public long getTmp_id() {
+        return tmp_id;
+    }
+
+    public void setTmp_id(long tmp_id) {
+        this.tmp_id = tmp_id;
+    }
+    
+    public boolean isCheckdetail() {
+        return checkdetail;
+    }
+
+    public void setCheckdetail(boolean checkdetail, long id) {
+        this.checkdetail = checkdetail;
+        this.tmp_id=id;     
+    }
+
+    public boolean isCheckreply() {
+        return checkreply;
+    }
+
+    public void setCheckreply(boolean checkreply) {
+        this.checkreply = checkreply;
+    }
+
+    public List<Customer_Enquiry> getAllEnquirys() {
+        return allEnquirys;
+    }
+
+    public void setAllEnquirys(List<Customer_Enquiry> allEnquirys) {
+        this.allEnquirys = allEnquirys;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+    
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public boolean isCheckadd() {
+        return checkadd;
+    }
+
+    public void setCheckadd(boolean checkadd) {
+        this.checkadd = checkadd;
+    }
+
+    public List<Announcement> getAllAnnouncements() {
+        return allAnnouncements;
+    }
+
+    public void setAllAnnouncements(List<Announcement> allAnnouncements) {
+        this.allAnnouncements = allAnnouncements;
+    }
+
+    public List<Company> getAllCompanys() {
+        return allCompanys;
+    }
+
+    public void setAllCompanys(List<Company> allCompanys) {
+        this.allCompanys = allCompanys;
     }
 
     public List<Account> getAllAccounts() {
@@ -73,20 +324,7 @@ public class AdminManagedBean implements Serializable{
     public void setAllAccounts(List<Account> allAccounts) {
         this.allAccounts = allAccounts;
     }
-   
-    public void updateStatus(String email, String status){
-        if(status.equals("activated"))
-            status="deactivated";
-        else
-            status="activated";
-        tmp.updateStatus(email, status);
-        this.setAllAccounts(tmp.getAllAccount());
-        statusMessage = "Status Updated.";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "Status: " + statusMessage, ""));
-    }
-    
-    
+
     public String getStatusMessage() {
         return statusMessage;
     }
@@ -94,7 +332,7 @@ public class AdminManagedBean implements Serializable{
     public void setStatusMessage(String statusMessage) {
         this.statusMessage = statusMessage;
     }
-    
+
     public AdminSessionLocal getTmp() {
         return tmp;
     }
@@ -150,5 +388,5 @@ public class AdminManagedBean implements Serializable{
     public void setSecurity_answer(String security_answer) {
         this.security_answer = security_answer;
     }
-    
+
 }

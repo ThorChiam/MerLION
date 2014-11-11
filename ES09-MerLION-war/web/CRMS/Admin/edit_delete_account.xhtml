@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:g="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Welcome to My Merlion</title>
+
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+
+    </h:head>
+
+    <h:body>
+        <b:container>
+            <b:row>
+                <p:column colspan="3">
+                    <h:form>  
+                        <p:menubar styleClass="show-grid">
+                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                            <p:menuitem value="WMS Home" url="/CRMS/main.xhtml" />
+                            <p:menuitem value="Log Out" action="signIn.xhtml"  actionListener="#{accountManagedBean.logout}"/>
+                        </p:menubar>
+                    </h:form>
+                </p:column>
+            </b:row>
+        </b:container>
+        <br/>
+        <b:container>
+            <b:row styleClass="show-grid">
+                   
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true"/>
+
+                        <p:contextMenu for="accountinfo" widgetVar="cMenu">   
+                            <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellCars').showCellEditor();
+                                    return false;"/>  
+                            <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+                        </p:contextMenu> 
+
+                        <p:dataTable id="accountinfo" var="c" value="#{AdminManagedBean.allAccounts}"  editable="true" editMode="cell" widgetVar="cellCars">
+                            <f:facet name="header">
+                                Edit Account Info
+                            </f:facet>
+
+                            <p:ajax event="cellEdit" listener="#{AdminManagedBean.onCellEdit}" update=":form:msgs" />
+                            <p:column headerText="Email">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.email}" /></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInput" value="#{c.email}" style="width:96%" label="Email"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Status">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.status}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.status}" style="width:96%" label="Status"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                            <p:column headerText="Accessright">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.accessRight}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.accessRight}" style="width:96%" label="Access Right"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                            <p:column headerText="Security Question">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.security_question}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.security_question}" style="width:96%" label="Security Question"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                            <p:column headerText="Security Answer">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.security_answer}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.security_answer}" style="width:96%" label="Security Answer"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                             <p:column headerText="Delete">                               
+                                 <p:commandButton value="Delete"  actionListener="#{AdminManagedBean.deleteAccount(c.email)}" styleClass="ui-priority-primary" ajax="false"/>                             
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form>
+                </b:column>
+            </b:row>
+        </b:container>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+
+    </h:body>
+</html>
+
+
+
+
+
+
+
