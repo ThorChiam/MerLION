@@ -6,8 +6,7 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
- 
-    
+
     <h:head>
         <title>Welcome to My Merlion</title>
 
@@ -18,49 +17,18 @@
 
     <h:body>
         <b:container>
-            <b:row>
-                <p:column colspan="3">
-                    <h:form>  
-                        <p:menubar styleClass="show-grid">
-                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                            <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
-                            <p:submenu label="Account Setting">
-                                <p:submenu label="Account Management">
-                                    <p:menuitem value="View Account Infomation" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Edit Account Information" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>
-                                </p:submenu>
-                                <p:submenu label="Company Profile Management">
-                                    <p:menuitem value="View Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Edit Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
-                                </p:submenu>
-                            </p:submenu>
-
-                            <p:submenu label="Contract Management">
-                                <p:menuitem value="Add New Plan" url="/MRP/plan/addNewPlan.xhtml"/>
-                                <p:menuitem value="Display Plan" url="/MRP/plan/displayPlan.xhtml" />
-                            </p:submenu>
-
-                            <p:submenu label="Transaction Management">
-                                <p:menuitem value="View Service Transaction History" url="/MRP/demandManagement/DemandManagement.xhtml" />
-                                <p:menuitem value="View Ongoing Transaction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="View Transaction History" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Invoice" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                            </p:submenu>
-
-                            <p:submenu label="Internal Communication">
-                                <p:menuitem value="Message" url="/MRP/order/orderManagement.xhtml"/>
-                                <p:menuitem value="Notification" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Announcement" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                            </p:submenu>      
-
-                            <p:menuitem value="Log Out"/>
-
-                        </p:menubar>
-                    </h:form>
-                </p:column>
-            </b:row>
-
+            <p:breadCrumb>
+                    <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                    <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
+                    <p:menuitem value="Account Management" url="/CI/account/viewAccountInfo.xhtml" />
+                    <p:menuitem value="Company Profile Management" url="/CI/account/viewCompanyProfile.xhtml" />
+                    <p:menuitem value="Contract Management" url="#" />
+                    <p:menuitem value="Internal Communication" url="#" />
+                   
+                </p:breadCrumb> 
+            <b:well>
+                <h3>My MerLION</h3> 
+            </b:well>
         </b:container>
         <br/>
         <b:container>
@@ -70,88 +38,89 @@
                     <h:form>
                         <p:growl autoUpdate="true"/>
                         <p:menu style="width:250px">   
-                            <p:submenu label="Account Setting"/>
-                            <p:separator/>
                             <p:submenu label="Account Management">
-                                <p:menuitem value="View Account Infomation" url="/MRP/BOM/addBOM.xhtml"/>
-                                <p:menuitem value="Edit Account Information" url="/MRP/BOM/addBOM.xhtml"/>
-                                <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>                
-                            </p:submenu>
-                            <p:submenu label="Company Profile Management">
                                 <p:menuitem value="View Company Profile" url="/CI/account/viewCompanyProfile.xhtml"/>
-                                <p:menuitem value="Edit Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
-                            </p:submenu>
+                                <p:menuitem value="Edit Company Profile" url="/CI/account/editCompanyProfile.xhtml" />
+                            </p:submenu>   
                         </p:menu>
                     </h:form>
 
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
-                    <font color="#585858">
-                        <p:panel header="Edit Company Profile">
-                        <div class="container">
+                    <!-- -->
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true"/>
 
-                            <h:form id="signupform">
-                                <!--change panel to growl&&&& datatable-->
-                                <p:growl id="panel">
-                                    <h:panelGrid>
-                                        <div class="form-group">
-                                            <h:outputLabel for="companyName" value="Company Name : "/>
-                                            <h:inputText id="companyName" value="#{companyProfileManagedBean.companyName}" required="true"
-                                                         requiredMessage="Please enter Company Name" class="form-control" />
-                                            <h:message for="companyName" style="color: red;" />
-                                        </div>
-                                        <div class="form-group">
-                                            <h:outputLabel for="companyAddress" value="Company Address : "/>
-                                            <h:inputText id="companyAddress" value="#{companyProfileManagedBean.companyAddress}" required="true"
-                                                         requiredMessage="Please enter Company Address" class="form-control" />
-                                            <h:message for="companyAddress" style="color: red;" />
-                                        </div>
-                                        <div class="form-group">
-                                            <h:outputLabel for="tel" value="Tel : " />
-                                            <h:inputText id="tel" value="#{companyProfileManagedBean.tel}" required="true"
-                                                         requiredMessage="Please enter Tel" class="form-control"/>
-                                            <h:message for="tel" style="color: red;" />
-                                        </div>
-                                        <div class="form-group">
-                                            <h:outputLabel for="email" value="Email : " />
-                                            <h:inputText id="email" value="#{companyProfileManagedBean.email}" required="true"
-                                                         requiredMessage="Please enter Email" class="form-control"/>
-                                            <h:message for="email" style="color: red;" />
-                                        </div>
-                                        <div class="form-group">
-                                            <h:outputLabel for="website" value="Website : " />
-                                            <h:inputText id="website" value="#{companyProfileManagedBean.website}" required="true"
-                                                         requiredMessage="Please enter Website, if you do not have, please enter none" class="form-control"/>
-                                            <h:message for="website" style="color: red;" />
-                                        </div>
-                                        <div class="form-group">
-                                            <h:outputLabel for="companyHistory" value="Company History : " />
-                                            <h:inputText id="companyHistory" value="#{companyProfileManagedBean.companyHistory}" required="true"
-                                                         requiredMessage="Please enter Company History" class="form-control"/>
-                                            <h:message for="companyHistory" style="color: red;" />
-                                        </div>
-                                        <div class="form-group">
-                                            <h:outputLabel for="service" value="Service : " />
-                                            <h:inputText id="service" value="#{companyProfileManagedBean.service}" required="true"
-                                                         requiredMessage="Please enter Service you provide" class="form-control"/>
-                                            <h:message for="service" style="color: red;" />
-                                        </div>
-                                        <div class="form-group">
-                                            <h:outputLabel for="vision" value="Vision : " />
-                                            <h:inputText id="vision" value="#{companyProfileManagedBean.vision}" required="true"
-                                                         requiredMessage="Please enter vision of your company" class="form-control"/>
-                                            <h:message for="vision" style="color: red;" />
-                                        </div>
-                                    </h:panelGrid>
-                                    <br/>
+                        <p:contextMenu for="profile" widgetVar="cMenu">   
+                            <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellCars').showCellEditor();
+                                    return false;"/>  
+                            <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+                        </p:contextMenu> 
 
-                                    <p:commandButton id="btn" value="Update Company Profile" update="panel" action="#{companyProfileManagedBean.updateCompanyProfile(facesContext.externalContext.sessionMap['email'])}" ajax="false" />
-                                    <p:message for="btn"/>
-                                </p:growl>
-                            </h:form>
-                        </div>
-                        </p:panel>
-                    </font>
+                        <p:dataTable id="profile" var="c" value="#{companyProfileManagedBean.CProfile}"  editable="true" editMode="cell" widgetVar="cellCars">
+                            <f:facet name="header">
+                                Edit Company Profile
+                            </f:facet>
+
+                            <p:ajax event="cellEdit" listener="#{companyProfileManagedBean.onCellEdit}" update=":form:msgs" />
+                            <p:column headerText="Company Name">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.companyName}" /></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInput" value="#{c.companyName}" style="width:96%" label="Company Name"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Company Address">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.companyAddress}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.companyAddress}" style="width:96%" label="Company Address"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Tel">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.tel}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.tel}" style="width:96%" label="Tel"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Email">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.email}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.email}" style="width:96%" label="Email"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Website">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.website}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.website}" style="width:96%" label="Website"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Company History">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.companyHistory}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.companyHistory}" style="width:96%" label="Description"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Service">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.service}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.service}" style="width:96%" label="Description"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Vision">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.vision}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.vision}" style="width:96%" label="Description"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form>
                 </b:column>
             </b:row>
         </b:container>

@@ -23,7 +23,7 @@
         <b:navBar brand="MerLION Logistics" brandHref="main.xhtml" inverse="false" fixed="top">
             <b:navbarLinks>
                 <b:navLink value="Sign Up" href="signUp.xhtml"></b:navLink>
-                <b:navLink value="My MerLION" href="myMerlion.xhtml"></b:navLink>
+                <b:navLink value="My MerLION" href="CI/myMerlion.xhtml" rendered="#{facesContext.externalContext.sessionMap['userId'] != null}"></b:navLink>
                 <b:navLink value="About us" href="aboutUs.xhtml"></b:navLink>
                 <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>               
                 <b:dropMenu value="Services">
@@ -291,8 +291,7 @@
             <p:menuitem value="MRP" icon="/image/MRP.png" url="#"/>
             <p:menuitem value="TMS" icon="/image/TMS.png" url="TMS/sub-home.xhtml"/>
             <p:menuitem value="WMS" icon="/image/WMS.png" url="WMS/index.xhtml"/>
-            <p:menuitem value="CRMS" icon="/image/CRMS.png" url="#"/>
-            <p:menuitem value="GRNS" icon="/image/GRNS.png" url="#"/>
+         
         </p:stack>
 
         <hr/>

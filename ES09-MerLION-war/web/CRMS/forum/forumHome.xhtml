@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+
+        <title>MerLION Logistics</title>
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+    </h:head>
+    <!-- Add 50px padding top to the body for the navbar -->
+    <h:body style="padding-top: 40px; padding-bottom: 20px;">
+        <b:container>
+
+            <p:breadCrumb>
+                <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
+                <p:menuitem value="Account Management" url="/CI/account/viewAccountInfo.xhtml" />
+                <p:menuitem value="Company Profile Management" url="/CI/account/viewCompanyProfile.xhtml" />
+                <p:menuitem value="Contract Management" url="#" />
+                <p:menuitem value="Internal Communication" url="#" />
+
+            </p:breadCrumb> 
+            <b:well>
+                <h3>My MerLION</h3> 
+            </b:well>
+        </b:container>
+
+        <b:container>
+            <font color="#585858">                    
+                <p:panel header="Forum">
+                    <h3>Welcome to MerLION Forum</h3>
+                    <h:form> 
+                        <p:dataTable var="t" value="#{fomb.allTitles}">
+                            <p:column headerText="Post Title" style="width: 900px">
+                                <h:outputText value="#{t.title}" />
+                            </p:column>
+
+                            <p:column headerText="View Detail">
+                                <p:button outcome="postDetail" value="View" icon="ui-icon-star">
+                                    <f:param name="enId" value="#{t.id}" />
+                                </p:button>
+                            </p:column>
+
+                        </p:dataTable>
+                        <br/>
+                        <p:button outcome="createPost" value="Create New Post" icon="ui-icon-star"/>
+
+                    </h:form> 
+                </p:panel>
+            </font>
+        </b:container>
+
+        <br/>
+        <br/>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+
+                </div>
+
+            </div>
+        </foot>
+        <script
+            src="/ES09-MerLION-war/js/bootstrap.min.js"
+        type="text/javascript"></script> <script
+            src="/ES09-MerLION-war/js/docs.min.js"
+        type="text/javascript"></script>
+        <!--  IE10 viewport hack for Surface/desktop Windows 8 bug --> <script
+            src="/ES09-MerLION-war/js/ie10-viewport-bug-workaround.js"
+        type="text/javascript"></script>
+
+    </h:body>
+</html>

@@ -48,6 +48,14 @@ public class CompanyProfileSession implements CompanyProfileSessionLocal {
         q.setParameter("email", email);
         return q.getResultList();
     }
+    
+    @Override
+    public Company getCompamyProfile(String email) {
+        System.out.println("**************session: email: "+email);
+        Query q = em.createQuery("SELECT a.Company FROM Account a WHERE a.email=:email");
+        q.setParameter("email", email);
+        return (Company) q.getSingleResult();
+    }
 
     //admin can delete company profile
     @Override
@@ -66,7 +74,8 @@ public class CompanyProfileSession implements CompanyProfileSessionLocal {
     //update company profile
     @Override
     public void updateCompanyProfile(String cemail, String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision) {
-        Query q = em.createQuery("SELECT c FROM Company c WHERE c.Account.email=:cemail");
+        Query q = em.createQuery("SELECT a.Company FROM Account a WHERE a.email=:cemail");
+        q.setParameter("cemail", cemail);
         company = (Company) q.getSingleResult();
         company.setCompanyName(companyName);
         company.setCompanyAddress(companyAddress);

@@ -33,7 +33,7 @@
         <br/>
         <b:container>
             <b:row styleClass="show-grid">
-                <b:column col-xs="5" col-sm="5" col-md="9">
+                <b:column col-xs="5" col-sm="5" col-md="10">
                     <p:panel header="User Account List">
                         <h:form >            
                             <p:dataTable var="all" value="#{AdminManagedBean.allAccounts}" id="msgs">
@@ -45,9 +45,13 @@
                                     <h:outputText value="#{all.company.companyName}"/>
                                 </p:column>    
                                 
-                                <p:column headerText="Details"/>
-                                    
-                                <p:column />
+                                <p:column headerText="Security Question">
+                                <h:outputText value="#{all.security_question}"/>
+                                </p:column>
+                                
+                                <p:column headerText="Security Answer">
+                                    <h:outputText value="#{all.security_answer}"/>
+                                </p:column>>
 
                                 <p:column headerText="Activate/Deactivate">                                        
                                     <p:selectBooleanButton id="value" valueChangeListener="#{AdminManagedBean.updateStatus(all.email, all.status)}" value="#{!AdminManagedBean.statusToboolean(all.status)}" onLabel="activated" offLabel="deactivated" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:180px">                                                            

@@ -129,7 +129,7 @@
                                         </div>
                                     </h:panelGrid>
                                     <br/>
-                                    <p:captcha id="captcha" label="Captcha" />
+                                    <p:captcha id="captcha" label="Captcha" secure="true"/>
                                     <p:message for="captcha" />
                                     <p:commandButton id="btn" value="sign up" update="panel" actionListener="#{accountManagedBean.signup}" ajax="false" />
                                     <p:message for="btn" />

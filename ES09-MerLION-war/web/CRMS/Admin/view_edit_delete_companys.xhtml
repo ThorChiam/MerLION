@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:g="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Welcome to My Merlion</title>
+
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+
+    </h:head>
+
+    <h:body>
+        <b:container>
+            <b:row>
+                <p:column colspan="3">
+                    <h:form>  
+                        <p:menubar styleClass="show-grid">
+                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                            <p:menuitem value="WMS Home" url="/CRMS/main.xhtml" />
+                            <p:menuitem value="Log Out" action="signIn.xhtml"  actionListener="#{accountManagedBean.logout}"/>
+                        </p:menubar>
+                    </h:form>
+                </p:column>
+            </b:row>
+        </b:container>
+        <br/>
+        <b:container>
+            <b:row styleClass="show-grid">
+                   
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true"/>
+
+                        <p:contextMenu for="companyinfo" widgetVar="cMenu">   
+                            <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellCars').showCellEditor();
+                                    return false;"/>  
+                            <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+                        </p:contextMenu> 
+
+                        <p:dataTable id="companyinfo" var="c" value="#{AdminManagedBean.allCompanys}"  editable="true" editMode="cell" widgetVar="cellCars">
+                            <f:facet name="header">
+                                Edit Company Info
+                            </f:facet>
+
+                            <p:ajax event="cellEdit" listener="#{AdminManagedBean.onCellEdit_comp}" update=":form:msgs" />
+                            <p:column headerText="Company Id">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.id}" /></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInput" value="#{c.id}" style="width:96%" label="Company Id"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Company Name">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.companyName}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.companyName}" style="width:96%" label="Company Name"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                            <p:column headerText="Company Address">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.companyAddress}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.companyAddress}" style="width:96%" label="Company Address"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                            <p:column headerText="Company Tel">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.tel}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.tel}" style="width:96%" label="Company Tel"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                            <p:column headerText="Company Email">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.website}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.website}" style="width:96%" label="Company Email"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                            <p:column headerText="Company History">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.companyHistory}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.companyHistory}" style="width:96%" label="Company History"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                            <p:column headerText="Company Service">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.service}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.service}" style="width:96%" label="Company Service"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                            <p:column headerText="Company Vision">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{c.vision}" /></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{c.vision}" style="width:96%" label="Company Vision"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            
+                            
+                             <p:column headerText="Delete">                               
+                                 <p:commandButton value="Delete"  actionListener="#{AdminManagedBean.deleteCompany(c.id)}" styleClass="ui-priority-primary" ajax="false"/>                             
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form>
+                </b:column>
+            </b:row>
+        </b:container>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+
+    </h:body>
+</html>
+
+
+
+
+
+
+

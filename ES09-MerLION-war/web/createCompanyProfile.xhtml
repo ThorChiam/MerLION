@@ -107,7 +107,7 @@
                                     </h:panelGrid>
                                     <br/>
 
-                                    <p:commandButton id="btn" value="Create Company Profile" update="panel" action="#{companyProfileManagedBean.addCompanyProfile(facesContext.externalContext.sessionMap['email'])}" ajax="false" />
+                                    <p:commandButton id="btn" value="Create Company Profile" update="panel" action="#{companyProfileManagedBean.addCompanyProfile(facesContext.externalContext.sessionMap['userId'])}" ajax="false" />
                                     <p:message for="btn"/>
                                 </p:growl>
                             </h:form>

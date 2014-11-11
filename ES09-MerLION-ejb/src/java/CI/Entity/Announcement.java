@@ -1,13 +1,10 @@
 package CI.Entity;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -31,6 +28,7 @@ public class Announcement implements Serializable {
     private MerlionAdmin admin;
 
     public Announcement() {
+        this.setAnnId(System.nanoTime());
     }
     
     public void add(Long announ_Id, String content) {

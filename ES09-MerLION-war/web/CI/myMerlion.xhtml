@@ -6,16 +6,30 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-
     <h:head>
         <title>Welcome to My Merlion</title>
 
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
-
     </h:head>
 
     <h:body>
+        <b:container>
+                  
+                <p:breadCrumb>
+                    <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                    <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
+                    <p:menuitem value="Account Management" url="/CI/account/viewAccountInfo.xhtml" />
+                    <p:menuitem value="Company Profile Management" url="/CI/account/viewCompanyProfile.xhtml" />
+                    <p:menuitem value="Contract Management" url="#" />
+                    <p:menuitem value="Internal Communication" url="#" />
+                   
+                </p:breadCrumb> 
+            <b:well>
+                <h3>My MerLION</h3> 
+            </b:well>
+        </b:container>
+        <!--
         <b:container>
             <b:row>
                 <p:column colspan="3">
@@ -25,8 +39,8 @@
                             <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
                             <p:submenu label="Account Setting">
                                 <p:submenu label="Account Management">
-                                    <p:menuitem value="View Account Infomation" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Edit Account Information" url="/MRP/BOM/addBOM.xhtml"/>
+                                    <p:menuitem value="View Account Infomation" url="/CI/account/viewAccountInfo.xhtml"/>
+                                    <p:menuitem value="Edit Account Information" url="/CI/account/editAccountInfo.xhtml" actionListener="#{accountManagedBean.viewAccount()}"/>
                                     <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>
                                 </p:submenu>
                                 <p:submenu label="Company Profile Management">
@@ -61,22 +75,25 @@
             </b:row>
 
         </b:container>
-        <br/>
+        <-->
         <b:container>
             <b:row styleClass="show-grid">
                 <b:column col-xs="5" col-sm="5" col-md="3">
                     <h:form>
-                        <p:growl autoUpdate="true"/>
+                        <p:growl id="msgs"/>
                         <p:menu style="width:250px">
-                            <p:submenu label="Account Setting">
-                            
-                                    <p:menuitem value="View Account Infomation" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Edit Account Information" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>
-                            
-                                    <p:menuitem value="View Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Edit Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
-                             
+                            <p:submenu label="Account Management">
+
+                                <p:menuitem value="View Account Infomation" url="/CI/account/viewAccountInfo.xhtml"/>
+                                <p:menuitem value="Edit Account Information" url="/CI/account/editAccountInfo.xhtml" />
+                                <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>
+
+                            </p:submenu>
+                            <p:submenu label="Company Profile Management">
+
+                                <p:menuitem value="View Company Profile" url="/CI/account/viewCompanyProfile.xhtml"/>
+                                <p:menuitem value="Edit Company Profile" url="/CI/account/editCompanyProfile.xhtml" />
+                 
                             </p:submenu>
                             <p:submenu label="Contract Management">
                                 <p:menuitem value="Add New Plan"  url="/MRP/plan/addNewPlan.xhtml"/>
@@ -90,7 +107,7 @@
                                 <p:menuitem value="Invoice Management" url="/MRP/demandManagement/saveProductionSchedule.xhtml"/>
                             </p:submenu>
                             <p:submenu label="Internal Communication" >
-                                <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml" />
+                                <p:menuitem value="Forum" url="/CRMS/forum/forumHome.xhtml" />
 
                             </p:submenu>
                         </p:menu>

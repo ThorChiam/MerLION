@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:g="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Welcome to My Merlion</title>
+
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+
+    </h:head>
+
+    <h:body>
+        <b:container>
+            <p:breadCrumb>
+                    <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                    <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
+                    <p:menuitem value="Account Management" url="/CI/account/viewAccountInfo.xhtml" />
+                    <p:menuitem value="Company Profile Management" url="/CI/account/viewCompanyProfile.xhtml" />
+                    <p:menuitem value="Contract Management" url="#" />
+                    <p:menuitem value="Internal Communication" url="#" />
+                   
+                </p:breadCrumb> 
+            <b:well>
+                <h3>My MerLION</h3> 
+            </b:well>
+        </b:container>
+        <br/>
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="5" col-sm="5" col-md="3">
+
+                    <h:form>
+                        <p:growl autoUpdate="true"/>
+                        <p:menu style="width:250px">
+                        <p:submenu label="Account Management">
+
+                                <p:menuitem value="View Account Infomation" url="/CI/account/viewAccountInfo.xhtml"/>
+                                <p:menuitem value="Edit Account Information" url="/CI/account/editAccountInfo.xhtml" />
+                                <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>
+                                <p:menuitem value="Create Account" url="/CI/account/createAccount.xhtml"/>
+
+                         </p:submenu>
+                        </p:menu>
+                    </h:form>
+
+                </b:column>                 
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                     <font color="#585858">                    
+                        <div class="container">
+
+                            <h:form id="signupform" >
+                                <!--change panel to growl-->
+                                <p:panel  header="Create Account" id="panel" style="width: 850px">
+                                    <h:panelGrid>
+                                        <div class="form-group">
+                                            <h:outputLabel for="email" value="Email : "/>
+                                            <h:inputText id="email" value="#{accountManagedBean.aemail}" required="true"
+                                                         requiredMessage="Please enter Email" class="form-control">
+                                            <f:validator validatorId="custom.emailValidator" />
+                                            </h:inputText>
+                                            <h:message for="email" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="password" value="Password : " />
+                                            <h:inputSecret id="password" value="#{accountManagedBean.password}" required="true"
+                                                           requiredMessage="Please enter password" class="form-control"/>
+                                            <h:message for="password" style="color: red;" />
+                                        </div>                                       
+                                        <div class="form-group">
+                                            <h:outputLabel for="security_question" value="security question : " />
+                                            <h:inputText id="security_question" value="#{accountManagedBean.security_question}" required="true"
+                                                         requiredMessage="Please enter your security question" class="form-control"/>
+                                            <h:message for="security_question" style="color: red;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h:outputLabel for="security_answer" value="security answer : " />
+                                            <h:inputText id="security_answer" value="#{accountManagedBean.security_answer}" required="true"
+                                                         requiredMessage="Please enter your security answer" class="form-control"/>
+                                            <h:message for="security_answer" style="color: red;" />
+                                        </div>
+                                    </h:panelGrid>
+                                    <br/>                                
+                                    <p:commandButton id="btn" value="sign up" update="panel" action="#{accountManagedBean.createMoreAccount}" ajax="false" />
+                                    <p:message for="btn" />
+                                </p:panel>
+                            </h:form>
+                        </div>
+                    </font>
+                </b:column>
+            </b:row>
+        </b:container>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+
+    </h:body>
+</html>
+
+
+
+
+
+

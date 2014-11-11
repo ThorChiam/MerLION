@@ -1,0 +1,117 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+
+      xmlns:h="http://java.sun.com/jsf/html" 
+
+      xmlns:f="http://java.sun.com/jsf/core" 
+
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:b="http://bootsfaces.net/ui">
+
+
+    <h:head><title>logistic tool</title> 
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="http://www.your-website.com/css/6_dark_orange/css/www_rate_calc_frame.css" rel="stylesheet" title="stylesheet" type="text/css" />
+    </h:head> 
+
+    <h:body style="padding-top: 40px; padding-bottom: 20px;">
+
+        <b:navBar brand="My MerLION" brandHref="main.xhtml" inverse="false" fixed="top">
+            <b:navbarLinks>
+                <b:navLink value="Sign Up" href="signUp.xhtml"></b:navLink>
+                <b:navLink value="About us" href="aboutUs.xhtml"></b:navLink>
+                <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>
+                <b:dropMenu value="Services">
+                    <b:navLink value="Action" href="#"></b:navLink>
+                    <b:navLink value="Another action" href="#"></b:navLink>
+                    <b:navLink value="Something else here" href="#"></b:navLink>
+                    <b:navLink></b:navLink>
+                    <b:navLink header="Nav header"></b:navLink>
+                    <b:navLink value="Separated link" href="#"></b:navLink>
+                    <b:navLink value="One more separated link" href="#"></b:navLink>
+                </b:dropMenu>
+            </b:navbarLinks>
+            <h:form styleClass="navbar-form navbar-right">
+                <b:commandButton action="signIn.xhtml" value="Sign in" look="success" iconAlign="right"/>
+                <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
+            </h:form> 
+        </b:navBar>
+        <br/>
+
+        <b:container>
+            <p:panel header="Logistic Tools">
+                <h3>Temperature Converter</h3>
+                <p:fieldset legend="Basics (and int Input)"> 
+                    <h:form> 
+                        &deg;F: 
+                        <p:spinner min="32" max="212" value="#{fBean.f}"/> 
+                        <p:commandButton value="Convert to C" ajax="false"/> 
+                        <h:outputText value="#{fBean.f}&deg;F = #{fBean.c}&deg;C "/> 
+
+                    </h:form> 
+                </p:fieldset> 
+
+                <hr/> 
+
+                <p:fieldset legend="stepFactor (and double Input)"> 
+
+                    <h:form> 
+                        &deg;C: 
+
+                        <p:spinner min="0" max="100" stepFactor="0.5" value="#{cBean.c}"/> 
+
+                        <p:commandButton value="Convert to F" ajax="false"/> 
+
+                        <h:outputText value="#{cBean.c}&deg;C = #{cBean.f}&deg;F "/> 
+
+                    </h:form> 
+
+
+                </p:fieldset> 
+                <hr/>
+                <p:fieldset legend="Currency Converter"> 
+
+                <h3>Currency Converter</h3>
+                <script src="http://www.transfermate.com/en/exchange_rates_api.asp" type="text/javascript"></script>
+                <noscript>
+                    <br/>
+                    <span style="color: red;">Please enable your javascript.</span>
+                </noscript> 
+                </p:fieldset>
+            </p:panel>
+        </b:container>
+
+        <br/>
+        <br/>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+
+                </div>
+
+            </div>
+        </foot>
+        <script
+            src="/ES09-MerLION-war/js/bootstrap.min.js"
+        type="text/javascript"></script> <script
+            src="/ES09-MerLION-war/js/docs.min.js"
+        type="text/javascript"></script>
+        <!--  IE10 viewport hack for Surface/desktop Windows 8 bug --> <script
+            src="/ES09-MerLION-war/js/ie10-viewport-bug-workaround.js"
+        type="text/javascript"></script>
+    </h:body>
+</html> 

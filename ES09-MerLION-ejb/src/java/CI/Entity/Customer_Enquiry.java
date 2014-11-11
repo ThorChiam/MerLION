@@ -27,7 +27,9 @@ public class Customer_Enquiry implements Serializable {
     private String question;
     private String status;
     private String answer;
-    private String rating;
+    private String sendtime;
+    private String answertime;
+
 
     @ManyToOne
     MerlionAdmin MerlionAdmin;
@@ -36,6 +38,22 @@ public class Customer_Enquiry implements Serializable {
         this.setId(System.nanoTime());
     }
 
+    public String getSendtime() {
+        return sendtime;
+    }
+
+    public void setSendtime(String sendtime) {
+        this.sendtime = sendtime;
+    }
+
+    public String getAnswertime() {
+        return answertime;
+    }
+
+    public void setAnswertime(String answertime) {
+        this.answertime = answertime;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -76,13 +94,14 @@ public class Customer_Enquiry implements Serializable {
         this.answer = answer;
     }
 
-    public String getRating() {
+  /*public String getRating() {
         return rating;
     }
 
     public void setRating(String rating) {
         this.rating = rating;
     }
+    */
 
     public MerlionAdmin getMerlionAdmin() {
         return MerlionAdmin;
