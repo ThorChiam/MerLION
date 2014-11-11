@@ -32,15 +32,12 @@ public class ServiceCatalogManagedBean implements Serializable {
      */
     @EJB
     private SeviceCatalogSessionLocal scsl;
-    private String serviceType;
-    private int capacityRequired;
-    private int priceMin;
-    private int priceMax;
     private List<WMSServiceCatalog> services;
     private List<WMSServiceCatalog> filteredServices;
     private List<WMSServiceCatalog> serviceDetail;
     private List<Company> companies;
-    private Long serviceId;
+    private Long serviceId = (long) 0;
+    private List<String> wmsLocations;
 
     public ServiceCatalogManagedBean() {
     }
@@ -57,38 +54,6 @@ public class ServiceCatalogManagedBean implements Serializable {
 
     public void setServiceId(Long serviceId) {
         this.serviceId = serviceId;
-    }
-
-    public String getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
-    }
-
-    public int getCapacityRequired() {
-        return capacityRequired;
-    }
-
-    public void setCapacityRequired(int capacityRequired) {
-        this.capacityRequired = capacityRequired;
-    }
-
-    public int getPriceMin() {
-        return priceMin;
-    }
-
-    public void setPriceMin(int priceMin) {
-        this.priceMin = priceMin;
-    }
-
-    public int getPriceMax() {
-        return priceMax;
-    }
-
-    public void setPriceMax(int priceMax) {
-        this.priceMax = priceMax;
     }
 
     public List<WMSServiceCatalog> getServices() {
@@ -111,6 +76,14 @@ public class ServiceCatalogManagedBean implements Serializable {
         this.companies = companies;
     }
 
+    public List<String> getWmsLocations() {
+        return wmsLocations;
+    }
+
+    public void setWmsLocations(List<String> wmsLocations) {
+        this.wmsLocations = wmsLocations;
+    }
+
     public void setFilteredServices(List<WMSServiceCatalog> filteredServices) {
         this.filteredServices = filteredServices;
     }
@@ -128,27 +101,24 @@ public class ServiceCatalogManagedBean implements Serializable {
         return ((Comparable) value).compareTo(Integer.valueOf(filterText)) > 0;
     }
 
-    public void initServiceId(ActionEvent event) {
-        serviceId = (Long) event.getComponent().getAttributes().get("sId");
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("serviceId", serviceId);
+    public void initServiceId(Long sId) {
+        serviceId = sId;
     }
 
     public List<WMSServiceCatalog> getServiceDetail() {
         serviceDetail = new ArrayList<>();
         List<WMSServiceCatalog> tmp = scsl.getAllServices();
         for (WMSServiceCatalog s : tmp) {
+            System.out.println("s.getId:" + s.getId() + ";serviceId:" + serviceId);
             if (s.getId().compareTo(serviceId) == 0) {
                 serviceDetail.add(s);
             }
         }
+        wmsLocations = scsl.getAllServiceLocations(serviceId);
         return serviceDetail;
     }
 
     public void setServiceDetail(List<WMSServiceCatalog> serviceDetail) {
         this.serviceDetail = serviceDetail;
-    }
-
-    public void selectServices(ActionEvent event) {
-        services = scsl.selectServices(serviceType, capacityRequired, priceMin, priceMax);
     }
 }

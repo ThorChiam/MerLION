@@ -35,6 +35,7 @@ public class WMSServiceCatalog implements Serializable {
     private String serviceUnit;
     private int serviceAvailable;
     private int serviceCapacity;
+    private String location;
     @ManyToOne
     private Company company;
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "service")
@@ -110,6 +111,14 @@ public class WMSServiceCatalog implements Serializable {
 
     public void setServiceCapacity(int serviceCapacity) {
         this.serviceCapacity = serviceCapacity;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     @Override

@@ -596,6 +596,8 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
                 }
             }
         }
+        String location = serviceSas.get(0).getWMSWarehouse().getAddress();
+        service.setLocation(location);
         service.setStorageAreas(serviceSas);
         service.setServiceCapacity(totalCapacity);
         service.setServiceAvailable(totalCapacity);

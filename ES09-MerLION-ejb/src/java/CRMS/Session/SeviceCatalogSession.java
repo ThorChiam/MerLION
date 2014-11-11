@@ -46,18 +46,12 @@ public class SeviceCatalogSession implements SeviceCatalogSessionLocal {
         List<String> serviceTypes = q.getResultList();
         return serviceTypes;
     }
-
     @Override
-    public List<WMSServiceCatalog> selectServices(String serviceType, int capacityRequired, int priceMin, int priceMax) {
-        Query q = em.createQuery("SELECT ws FROM WMSServiceCatalog ws WHERE ws.serviceType=:serviceType");
-        q.setParameter("serviceType", serviceType);
-        List<WMSServiceCatalog> services = q.getResultList();
-        for (WMSServiceCatalog s : services) {
-            if (!(s.getServiceAvailable() >= capacityRequired && s.getServicePrice() >= priceMin && s.getServicePrice() <= priceMax)) {
-                services.remove(s);
-            }
-        }
-        return services;
+    public List<String> getAllServiceLocations(Long serviceId) {
+        Query q = em.createQuery("SELECT DISTINCT sa.WMSWarehouse.address FROM StorageArea sa WHERE sa.service.id=:serviceId");
+        q.setParameter("serviceId", serviceId);
+        List<String> serviceLocations = q.getResultList();
+        return serviceLocations;
     }
 
 }

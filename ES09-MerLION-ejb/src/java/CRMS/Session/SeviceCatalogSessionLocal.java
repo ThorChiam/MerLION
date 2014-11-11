@@ -23,5 +23,5 @@ public interface SeviceCatalogSessionLocal {
 
     public List<String> getAllServiceTypes();
 
-    public List<WMSServiceCatalog> selectServices(String serviceType, int capacityRequired, int priceMin, int priceMax);
+    public List<String> getAllServiceLocations(Long serviceId);
 }

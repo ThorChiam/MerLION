@@ -96,8 +96,11 @@ and open the template in the editor.
                                 <p:column headerText="Unit">
                                     <h:outputText value="#{s.serviceUnit}" />
                                 </p:column>
-
+                                <p:column>
+                                    <p:commandButton value="Select" actionListener="#"/> 
+                                </p:column>
                             </p:dataTable>
+                            <p:button value="Back" outcome="selectWMSServices"/>
                         </h:form>
                     </p:panel>
                 </b:column>

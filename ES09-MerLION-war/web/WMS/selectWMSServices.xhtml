@@ -92,7 +92,7 @@
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
 
-                    <h:form>
+                    <h:form id="form">
                         <p:dataTable var="service" value="#{scmb.services}" widgetVar="servicesTable"
                                      emptyMessage="No services found with given criteria" filteredValue="#{scmb.filteredServices}">
 
@@ -103,14 +103,16 @@
                                 </p:outputPanel>
                             </f:facet>
 
-                            <p:column filterBy="#{service.serviceName}" headerText="Name" footerText="contains" filterMatchMode="contains">
+                            <p:column filterBy="#{service.serviceName}" headerText="Name" footerText="" filterMatchMode="contains">
                                 <h:outputText value="#{service.serviceName}" />
                             </p:column>
-                            <p:column filterBy="#{service.serviceType}" headerText="Type" footerText="contains" filterMatchMode="contains">
+                            <p:column filterBy="#{service.serviceType}" headerText="Type" footerText="" filterMatchMode="contains">
                                 <h:outputText value="#{service.serviceType}" />
                             </p:column>
-
-                            <p:column filterBy="#{service.servicePrice}" headerText="Price" footerText="Max" filterMatchMode="lte">
+                            <p:column filterBy="#{service.location}" headerText="Location" footerText="" filterMatchMode="contains">
+                                <h:outputText value="#{service.location}" />
+                            </p:column>
+                            <p:column filterBy="#{service.servicePrice}" headerText="Price(Max)" footerText="" filterMatchMode="lte">
                                 <f:facet name="filter">
                                     <p:spinner onchange="PF('servicesTable').filter()" styleClass="spinner">
                                         <f:converter converterId="javax.faces.Integer" />
@@ -119,7 +121,7 @@
                                 <h:outputText value="#{service.servicePrice}" />
                             </p:column>
 
-                            <p:column filterBy="#{service.company}" headerText="Company" footerText="Include" filterMatchMode="in">
+                            <p:column filterBy="#{service.company}" headerText="Company" footerText="" filterMatchMode="in">
                                 <f:facet name="filter">
                                     <p:selectCheckboxMenu label="Companies" onchange="PF('servicesTable').filter()" panelStyle="width:125px" scrollHeight="150">
                                         <f:selectItems value="#{scmb.companies}" var="company" itemLabel="#{company.companyName}" itemValue="#{company}"/>
@@ -129,14 +131,42 @@
                             </p:column>
 
 
-                            <p:column filterBy="#{service.serviceAvailable}" headerText="Capacity" footerText="Min" filterFunction="#{scmb.filterByAvailable}">
+                            <p:column filterBy="#{service.serviceAvailable}" headerText="Capacity" footerText="" filterFunction="#{scmb.filterByAvailable}">
                                 <h:outputText value="#{service.serviceAvailable}">
                                 </h:outputText>
                             </p:column>
                             <p:column >
-                                <h:commandButton value="View Detail" action="wServiceDetail" actionListener="#{scmb.initServiceId}">
-                                    <f:attribute name="sId" value="#{service.id}" />
-                                </h:commandButton>
+                                <p:commandButton value="Show Details" update=":form:Details" actionListener="#{scmb.initServiceId(service.id)}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:dataTable id="Details" var="s" value="#{scmb.serviceDetail}">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{s.id}" />
+                            </p:column>
+
+                            <p:column headerText="Name">
+                                <h:outputText value="#{s.serviceName}" />
+                            </p:column>
+                            <p:column headerText="Company">
+                                <h:outputText value="#{s.company.companyName}" />
+                            </p:column>
+                            <p:column headerText="Type">
+                                <h:outputText value="#{s.serviceType}" />
+                            </p:column>
+                            <p:column headerText="Spare Capacity">
+                                <h:outputText value="#{s.serviceAvailable}" />
+                            </p:column>
+                            <p:column headerText="Price">
+                                <h:outputText value="#{s.servicePrice}" />
+                            </p:column>
+                            <p:column headerText="Unit">
+                                <h:outputText value="#{s.serviceUnit}" />
+                            </p:column>
+                            <p:column headerText="Location">
+                                <h:outputText value="#{s.location}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton value="Select" actionListener="#"/> 
                             </p:column>
                         </p:dataTable>
                     </h:form>
