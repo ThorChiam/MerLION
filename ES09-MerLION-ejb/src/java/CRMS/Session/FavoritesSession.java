@@ -6,7 +6,6 @@
 package CRMS.Session;
 
 import java.util.List;
-import CRMS.Session.FavoritesSessionLocal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,8 +27,13 @@ public class FavoritesSession implements FavoritesSessionLocal {
     private Favorite fav;
     @Override
     public List<Favorite> getFavoriteList(String email){
-        Query q = em.createQuery("SELECT f FROM Favorite f WHERE f.Account.email=:email");
-        q.setParameter("email", email);
+        Query p = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");
+        p.setParameter("email",email);
+        Account account=(Account)p.getSingleResult();
+        long tmp=account.getCompany().getId();        
+        
+        Query q = em.createQuery("SELECT f FROM Favorite f WHERE f.favoritor.id=:id");
+        q.setParameter("id", tmp);
         return q.getResultList();
     }
     @Override

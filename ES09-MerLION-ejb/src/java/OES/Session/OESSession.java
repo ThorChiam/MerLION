@@ -127,6 +127,17 @@ public class OESSession implements OESSessionLocal {
         tmp.setCreatedate(createdate);
         em.persist(tmp);
     }
+    
+    @Override
+    public String getBuyName(String email){
+           
+        Query q = em.createQuery("SELECT m.Company.companyName FROM Account m WHERE m.email=:email");
+          
+          q.setParameter("email", email);
+          return (String) q.getSingleResult();
+         
+    }
+    
 
     @Override
     public Enquiry getEnquiry(long enquiry_id) {

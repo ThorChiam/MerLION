@@ -40,6 +40,7 @@ public interface OESSessionLocal {
     public Enquiry getEnquiry(long enquiry_id);
     public List<Enquiry> getAllEnquiry(String email);//两边都能拿？？？？？
     public void deleteEnquiry(long enquiry_id, String email);
+    public String getBuyName(String email);
     
     
     

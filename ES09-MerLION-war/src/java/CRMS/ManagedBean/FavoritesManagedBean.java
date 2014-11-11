@@ -21,9 +21,7 @@ import CRMS.Entity.Favorite;
 @SessionScoped
 public class FavoritesManagedBean implements Serializable {
 
-    /**
-     * Creates a new instance of FavoritesManagedBean
-     */
+  
     @EJB
     private FavoritesSessionLocal fsbl;
     private Long companyId;

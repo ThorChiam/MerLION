@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:g="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>CRMS View User Accounts List</title>
+
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/> 
+
+    </h:head>
+
+    <h:body>
+        <b:container>
+            <b:row>
+                <p:column colspan="3">
+                    <h:form>  
+                        <p:menubar styleClass="show-grid">
+                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                            <p:menuitem value="WMS Home" url="/CRMS/main.xhtml" />
+                            <p:menuitem value="Log Out" action="signIn.xhtml"  actionListener="#{accountManagedBean.logout}"/>
+                        </p:menubar>
+                    </h:form>
+                </p:column>
+            </b:row>
+        </b:container>
+
+
+        <br/>
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                    <p:panel header="User Account List">
+                        <h:form >            
+                            <p:dataTable var="all" value="#{AdminManagedBean.allAccounts}" id="msgs">
+                                <p:column headerText="Account Email">
+                                    <h:outputText value="#{all.email}"/>
+                                </p:column>
+
+                                <p:column headerText="Company Name">
+                                    <h:outputText value="#{all.company.companyName}"/>
+                                </p:column>    
+                                
+                                <p:column headerText="Details"/>
+                                    
+                                <p:column />
+
+                                <p:column headerText="Activate/Deactivate">                                        
+                                    <p:selectBooleanButton id="value" valueChangeListener="#{AdminManagedBean.updateStatus(all.email, all.status)}" value="#{!AdminManagedBean.statusToboolean(all.status)}" onLabel="activated" offLabel="deactivated" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:180px">                                                            
+                                        <p:ajax update="msgs"/>                                       
+                                    </p:selectBooleanButton> 
+                                </p:column>      
+
+                            </p:dataTable>
+
+
+
+
+                        </h:form>
+                    </p:panel>
+                </b:column>
+            </b:row>
+        </b:container>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+                </div>
+            </div>
+        </foot>      
+    </h:body>
+</html>
+
+
+
+
+
+
