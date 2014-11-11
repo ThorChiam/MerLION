@@ -38,7 +38,7 @@
             </b:navbarLinks>
 
             <h:form styleClass="navbar-form navbar-right">
-                <b:commandButton action="signIn.xhtml" value="Sign in" look="success" iconAlign="right"/>
+                <p:button value="Log In" outcome="signIn"/>
                 &nbsp;
                 <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
             </h:form> 
@@ -187,7 +187,7 @@
 
 
                             <p:outputLabel for="location" value="Location:" />
-                            <p:inputText id="location" value="#{CalendarView.text2}" />
+                            <p:inputText id="location" value="#" />
 
 
                             <p:outputLabel for="button" value="From:" />

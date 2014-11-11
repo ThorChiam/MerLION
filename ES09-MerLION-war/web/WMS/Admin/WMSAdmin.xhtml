@@ -1,5 +1,10 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:g="http://java.sun.com/jsf/html"
@@ -7,12 +12,24 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-
     <h:head>
         <title>Welcome to WMS System</title>
 
         <meta name="author" content="The Author"></meta>
-        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/> 
+
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times: 5}, 100);
+                }
+                else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+                }
+            }
+        </script>
+
 
     </h:head>
 
@@ -43,44 +60,41 @@
         <br/>
         <b:container>
             <b:row styleClass="show-grid">
-                <b:column col-xs="5" col-sm="5" col-md="3">
-                    <h:form>
-                        <p:growl autoUpdate="true"/>
-                        <p:menu style="width:250px">
-                            <p:submenu label="Delivery Order">
-                                <p:menuitem value="View Order List" url="/WMS/deliveryOrder/deliveryOrderList.xhtml"/>
 
-                            </p:submenu>
-                            <p:submenu label="Replenish Inventory">
-                                <p:menuitem value="Replenish"  url="/WMS/deliveryOrder/replenishAll.xhtml"/>
-                            </p:submenu>
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                    <p:panel header="Warehouse List">
+                        <h:form>
+                            <!-- value should be a LIST of delivery order -->
+                            <p:dataTable var="warehouse" value="#{womb.getAllWarehouse()}">
+                                <p:column headerText="Warehouse ID">
+                                    <h:outputText value="#{warehouse.id}" />
+                                </p:column>
 
-                            <p:submenu label="Storage Management">
-                                <p:menuitem value="Reserve Storage" url="/WMS/storage/reserveStorage.xhtml"/>
-                                <p:menuitem value="Update Storage"  url="/WMS/storage/updateStorage.xhtml"/>
-                            </p:submenu>
+                                <p:column headerText="Warehouse Name">
+                                    <h:outputText value="#{warehouse.name}" />
+                                </p:column>
 
-                        </p:menu>
-                    </h:form>
+                                <p:column >
+                                    <h:commandButton value="Define Facility" action="defineFacility" actionListener="#{womb.initWarehouseId}">
+                                        <f:attribute name="wId" value="#{warehouse.id}" />
+                                    </h:commandButton>
+                                </p:column>
+                                <p:column >
+                                    <h:commandButton value="Define Service" action="defineService" actionListener="#{womb.initWarehouseId}">
+                                        <f:attribute name="wId" value="#{warehouse.id}" />
+                                    </h:commandButton>
+                                </p:column>
+                                <p:column >
+                                    <h:commandButton value="View Map" action="mapGeneration" actionListener="#{womb.initWarehouseId}">
+                                        <f:attribute name="wId" value="#{warehouse.id}" />
+                                    </h:commandButton>
+                                </p:column>
 
-                </b:column>                 
-                <b:column col-xs="5" col-sm="5" col-md="6">
-                    <p:panel header="WMS System - Home">
-                        <img src="warehouse.png" weight="600" width="500"/>
+                            </p:dataTable>
+                        </h:form>
                     </p:panel>
                 </b:column>
 
-                <b:column col-xs="5" col-sm="5" col-md="3">
-
-                    <h:form id="form">
-                        <p:growl id="msgs" showDetail="true" />
-                        <h:panelGrid style="width: 100%;">
-                            <p:calendar id="inline" mode="inline" />
-                        </h:panelGrid>
-                    </h:form>
-
-
-                </b:column>
 
             </b:row>
         </b:container>
@@ -107,9 +121,3 @@
 
     </h:body>
 </html>
-
-
-
-
-
-

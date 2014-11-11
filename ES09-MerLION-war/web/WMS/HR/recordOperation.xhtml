@@ -36,23 +36,15 @@
                         <p:menubar styleClass="show-grid">
                             <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
                             <p:menuitem value="WMS Home" url="/WMS/index.xhtml" />
-                            <p:menuitem value="Delivery Order" url="/WMS/deliveryOrder/deliveryOrderList.xhtml"/>                    
-                            <p:submenu label="XXXX">
-                                <p:menuitem value="Add New Plan" url="/MRP/plan/addNewPlan.xhtml"/>
-                                <p:menuitem value="Display Plan" url="/MRP/plan/displayPlan.xhtml" />
+                            <p:menuitem value="Delivery Order" url="/WMS/deliveryOrder/deliveryOrderList.xhtml"/>
+                            <p:menuitem value="Human Resource Management" url="/WMS/HR/humanResource.xhtml"/>
+                            <p:menuitem value="Search Service" url="/WMS/selectWMSServices.xhtml"/>
+                            <p:menuitem value="Admin" url="/WMS/Admin/WMSAdmin.xhtml"/>
+                            <p:submenu label="Storage Management">
+                                <p:menuitem value="Reserve Storage" url="/WMS/storage/reserveStorage.xhtml"/>
+                                <p:menuitem value="Update Storage" url="/WMS/storge/updateStorage.xhtml" />
                             </p:submenu>
-
-                            <p:submenu label="XXXX">
-                                <p:menuitem value="Display Demand" url="/MRP/demandManagement/DemandManagement.xhtml" />
-                                <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                            </p:submenu>
-
-                            <p:submenu label="XXXX">
-                                <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml"/>
-                            </p:submenu>      
-
-                            <p:menuitem value="Log Out"/>
+                            <p:menuitem value="Log Out" action="signIn.xhtml"  actionListener="#{accountManagedBean.logout}"/>
 
                         </p:menubar>
                     </h:form>
@@ -91,44 +83,50 @@
 
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
-                    <p:panel header="Generate Schedule">
-                        <h:form>
-                            <!-- value should be a LIST-->
-                            <p:dataTable var="woin" value="#">
-                                <p:column headerText="Inventory ID">
-                                    <h:outputText value="#"/>
-                                </p:column>
-                                <p:column headerText="Inventory Name">
-                                    <h:outputText value="#"/>
-                                </p:column>
-                                <p:column headerText="Qty">
-                                    <h:outputText value="#"/>
-                                </p:column>
-                            </p:dataTable>
-                            <p:dataTable var="whin" value="#">
-                                <p:column headerText="Inventory ID">
-                                    <h:outputText value="#"/>
-                                </p:column>
-                                <p:column headerText="Warehouse ID">
-                                    <h:outputText value="#"/>
-                                </p:column>
-                                <p:column headerText="Qty">
-                                    <h:outputText value="#"/>
-                                    
-                                        <h:commandLink actionListener="#{womb.putStain}">
-                                        <p:graphicImage name="WMS/deliveryOrder/view.png" />
-                                        <f:attribute name="whId" value="#{whin.warehouse.id}" />
-                                        <f:attribute name="inId" value="#{whin.inventory.id}" />
-                                        <f:attribute name="whName" value="#{whin.warehouse.name}" />
-                                        <f:attribute name="inName" value="#{whin.inventory.name}" />
-                                    </h:commandLink>
-                                    
+                    <h:form>
+                        <p:growl id="growl" showDetail="true" />
+                        <p:panel header="Record Operation" style="margin-bottom:10px;">
 
-                                    <p:growl id="growl" sticky="true" showDetail="true" life="300000" />
-                                </p:column>
-                            </p:dataTable>
-                        </h:form>
-                    </p:panel>
+                            <h:panelGrid columns="2" cellpadding="5">
+
+                                <p:outputLabel for="employee" value="Employee: " />
+                                <p:selectOneMenu id="employee" value="#{womb.employeeId}"
+                                                 style="width:155px">
+                                    <f:selectItem itemLabel="Select Employee" itemValue="#{-1}"
+                                                  noSelectionOption="true" />
+                                    <f:selectItems value="#{womb.employees}" var="employee"
+                                                   itemLabel="#{employee.name}"
+                                                   itemValue="#{employee.id}" />
+                                </p:selectOneMenu>
+
+
+                                <p:outputLabel for="facility" value="Facility: " />
+                                <p:selectOneMenu id="facility" value="#{womb.facilityId}"
+                                                 style="width:165px">
+                                    <f:selectItem itemLabel="Select Facility" itemValue="#{-1}"
+                                                  noSelectionOption="true" />
+                                    <f:selectItems value="#{womb.facilities}" var="facility"
+                                                   itemLabel="#{facility.name}"
+                                                   itemValue="#{facility.id}" />
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="operationStart" value="Start:" />
+                                <p:calendar id="operationStart" value="#{womb.operationStart}" pattern="MM/dd/yyyy HH:mm"/>
+                                <p:outputLabel for="operationEnd" value="End:" />
+                                <p:calendar id="operationEnd" value="#{womb.operationEnd}" pattern="MM/dd/yyyy HH:mm"/>
+
+                                <p:outputLabel for="operationContent" value="Content: " />
+                                <p:inputText id="operationContent" value="#{womb.operationContent}"
+                                             style="width:170px" />
+
+                            </h:panelGrid>
+
+                            <p:separator />
+
+                            <p:commandButton value="Record" actionListener="#{womb.recordOperation}"
+                                             icon="ui-icon-check" update="growl" />
+                        </p:panel>
+                    </h:form>
                 </b:column>
 
             </b:row>

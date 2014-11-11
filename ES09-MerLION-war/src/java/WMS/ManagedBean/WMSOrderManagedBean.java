@@ -18,6 +18,7 @@ import WMS.Entity.Warehouse_Inventory;
 import WMS.Session.WMSOrderSessionLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -27,6 +28,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BubbleChartModel;
+import org.primefaces.model.chart.BubbleChartSeries;
 
 /**
  *
@@ -43,7 +48,7 @@ public class WMSOrderManagedBean implements Serializable {
     private WMSOrderSessionLocal wosl;
     private String email;
     private Long orderId;
-    private Long warehouseId = (long)1;
+    private Long warehouseId = (long) 1;
     private Long inventoryId;
     private List<Warehouse> lw;
 
@@ -72,6 +77,7 @@ public class WMSOrderManagedBean implements Serializable {
 //    private List<AllocateWarehouse> aws;
 //    private List<allocateWarehouse> aws;
 //private List<String[]> wss; 
+    //***************HR*************
     private Date scheduleStart;
     private Date scheduleEnd;
     private Date operationStart;
@@ -79,8 +85,23 @@ public class WMSOrderManagedBean implements Serializable {
     private Long employeeId = (long) -1;
     private Long facilityId = (long) -1;
     private String scheduleContent = "";
+    private String operationContent = "";
     private List<Employee> employees;
     private List<WMSFacility> facilities;
+    private String serviceName = "";
+    private String serviceType = "";
+    private int servicePrice = 0;
+    private String serviceUnit = "";
+    private String facilityName = "";
+    private String facilityType = "";
+    private List<Long> selectedSas;
+    private Long[] selectedSasTmp;
+//**********Map Generation***********
+    private BubbleChartModel warehouseMap;
+    private List<StorageArea> storageAreas;
+
+    //**************Search**********
+    private String address;
 
     public WMSOrderManagedBean() {
     }
@@ -121,10 +142,12 @@ public class WMSOrderManagedBean implements Serializable {
     @PostConstruct
     private void init() {
         email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
-        allInventories = this.reportInventories();
-        allSis = wosl.getAllSis();
-        ri = new ArrayList<>();
-        ri.add(wosl.gotRI());
+        if (email != null) {
+            allInventories = this.reportInventories();
+            allSis = wosl.getAllSis();
+            ri = new ArrayList<>();
+            ri.add(wosl.gotRI());
+        }
     }
 
     public List<StorageArea_Inventory> getAllSis() {
@@ -284,6 +307,7 @@ public class WMSOrderManagedBean implements Serializable {
     }
 
     public List<Warehouse> getAllWarehouse() {
+        this.init();
         return wosl.getAllWarehouse(email);
     }
 
@@ -674,6 +698,14 @@ public class WMSOrderManagedBean implements Serializable {
         this.scheduleContent = scheduleContent;
     }
 
+    public String getOperationContent() {
+        return operationContent;
+    }
+
+    public void setOperationContent(String operationContent) {
+        this.operationContent = operationContent;
+    }
+
     public List<Employee> getEmployees() {
         employees = wosl.getEmployees(warehouseId);
         return employees;
@@ -692,14 +724,94 @@ public class WMSOrderManagedBean implements Serializable {
         this.facilities = facilities;
     }
 
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public int getServicePrice() {
+        return servicePrice;
+    }
+
+    public void setServicePrice(int servicePrice) {
+        this.servicePrice = servicePrice;
+    }
+
+    public String getServiceUnit() {
+        return serviceUnit;
+    }
+
+    public void setServiceUnit(String serviceUnit) {
+        this.serviceUnit = serviceUnit;
+    }
+
+    public String getFacilityName() {
+        return facilityName;
+    }
+
+    public void setFacilityName(String facilityName) {
+        this.facilityName = facilityName;
+    }
+
+    public String getFacilityType() {
+        return facilityType;
+    }
+
+    public void setFacilityType(String facilityType) {
+        this.facilityType = facilityType;
+    }
+
+    public List<StorageArea> getStorageAreas() {
+        return storageAreas;
+    }
+
+    public void setStorageAreas(List<StorageArea> storageAreas) {
+        this.storageAreas = storageAreas;
+    }
+
+    public List<Long> getSelectedSas() {
+        return selectedSas;
+    }
+
+    public void setSelectedSas(List<Long> selectedSas) {
+        this.selectedSas = selectedSas;
+    }
+
+    public Long[] getSelectedSasTmp() {
+        return selectedSasTmp;
+    }
+
+    public void setSelectedSasTmp(Long[] selectedSasTmp) {
+        this.selectedSasTmp = selectedSasTmp;
+    }
+
+    public void initOrderId(ActionEvent event) {
+        orderId = (Long) event.getComponent().getAttributes().get("oId");
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("orderId", orderId);
+    }
+
     public void initWarehouseId(ActionEvent event) {
-        warehouseId = (Long) event.getComponent().getAttributes().get("warehouseId");
+        warehouseId = (Long) event.getComponent().getAttributes().get("wId");
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("warehouseId", warehouseId);
+        this.createWarehouseMaps();
+        this.setStorageAreas(wosl.getStorageAreas(warehouseId));
+        selectedSas = new ArrayList<>();
     }
 
     private void initSchedule() {
-        employeeId = (long)-1;
-        facilityId = (long)-1;
+        employeeId = (long) -1;
+        facilityId = (long) -1;
         scheduleContent = "";
         wosl.remove();
     }
@@ -713,8 +825,78 @@ public class WMSOrderManagedBean implements Serializable {
         this.addMessage("Schedule Created Result", "Successful");
     }
 
+    private void initOperation() {
+        employeeId = (long) -1;
+        facilityId = (long) -1;
+        operationContent = "";
+        wosl.remove();
+    }
+
+    public void recordOperation(ActionEvent actionEvent) {
+
+        long operationS = operationStart.getTime();
+        long operationE = operationEnd.getTime();
+        wosl.recordOperation(employeeId, facilityId, operationContent, operationS, operationE);
+        this.initOperation();
+        this.addMessage("Operation Recorded Result", "Successful");
+    }
+
+    public void createService(ActionEvent actionEvent) {
+        selectedSas = new ArrayList<>();
+        selectedSas.addAll(Arrays.asList(selectedSasTmp));
+        wosl.createService(email, serviceName, serviceType, servicePrice, serviceUnit, selectedSas);
+        this.addMessage("Service Added Result", "Successful");
+    }
+
+    public void createFacility(ActionEvent actionEvent) {
+        wosl.createFacility(warehouseId, facilityName, facilityType);
+        this.addMessage("Facility Defined Result", "Successful");
+    }
+
     public void addMessage(String title, String content) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(title, content));
+    }
+    //**************************Map Generation*********************************************
+
+    public BubbleChartModel getWarehouseMap() {
+        return warehouseMap;
+    }
+
+    private void createWarehouseMaps() {
+        Warehouse w = wosl.getWarehouse(warehouseId);
+        warehouseMap = initWarehouseMap();
+        warehouseMap.setTitle("Warehouse " + w.getId() + ":" + w.getName() + "; Capacity:" + w.getCapacity());
+        warehouseMap.setShadow(false);
+        warehouseMap.setBubbleGradients(true);
+        warehouseMap.setBubbleAlpha(0.8);
+        warehouseMap.getAxis(AxisType.X).setTickAngle(-50);
+        Axis yAxis = warehouseMap.getAxis(AxisType.Y);
+        yAxis.setMin(0);
+        yAxis.setMax(250);
+        yAxis.setTickAngle(50);
+    }
+
+    private BubbleChartModel initWarehouseMap() {
+        BubbleChartModel model = new BubbleChartModel();
+        storageAreas = wosl.getStorageAreas(warehouseId);
+        for (StorageArea sArea : storageAreas) {
+            String name = sArea.getId() + "," + sArea.getTotalCapacity();
+            int x = sArea.getWarehouseMap().getxAxis();
+            int y = sArea.getWarehouseMap().getyAxis();
+            int r = sArea.getWarehouseMap().getRadius();
+            model.add(new BubbleChartSeries(name, x, y, r));
+        }
+
+        return model;
+    }
+    //*************************Search***************************************
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

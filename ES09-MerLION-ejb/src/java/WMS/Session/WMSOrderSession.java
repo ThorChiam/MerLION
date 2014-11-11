@@ -6,20 +6,22 @@
 package WMS.Session;
 
 import CI.Entity.Account;
+import CRMS.Entity.Company;
 import WMS.Entity.Employee;
 import WMS.Entity.Inventory;
 import WMS.Entity.Shipment_Notice;
 import WMS.Entity.StorageArea;
 import WMS.Entity.StorageArea_Inventory;
 import WMS.Entity.WMSFacility;
+import WMS.Entity.WMSOperation;
 import WMS.Entity.WMSOrder;
 import WMS.Entity.WMSOrder_Inventory;
 import WMS.Entity.WMSSchedule;
+import WMS.Entity.WMSServiceCatalog;
 import WMS.Entity.Warehouse;
 import WMS.Entity.Warehouse_Inventory;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -40,8 +42,11 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     private EntityManager em;
     private Inventory inventory;
     private WMSSchedule ws;
+    private WMSOperation wo;
     private Employee employee;
     private WMSFacility facility;
+    private WMSServiceCatalog service;
+    private Warehouse warehouse;
 
     //list by timeLogged in frontend,pg-1
     @Override
@@ -515,6 +520,40 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     }
 
     @Override
+    public void recordOperation(Long employeeId, Long facilityId, String operationContent, long operationStart, long operationEnd) {
+
+        wo = new WMSOperation();
+        wo.setOperationContent(operationContent);
+        wo.setOperationStart(operationStart);
+        wo.setOperationEnd(operationEnd);
+
+        Date date = new Date(operationStart);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        String start = df.format(date);
+        date = new Date(operationEnd);
+        String end = df.format(date);
+        String operationPeriod = start + " - " + end;
+
+        wo.setOperationPeriod(operationPeriod);
+
+        Query q = em
+                .createQuery("SELECT e FROM Employee e WHERE e.id=:employeeId");
+        q.setParameter("employeeId", employeeId);
+        employee = (Employee) q.getSingleResult();
+        q = em.createQuery("SELECT f FROM WMSFacility f WHERE f.id=:facilityId");
+        q.setParameter("facilityId", facilityId);
+        facility = (WMSFacility) q.getSingleResult();
+        employee.setStatus("available");
+        facility.setStatus("available");
+        wo.setEmployee(employee);
+        wo.setFacility(facility);
+
+        em.persist(wo);
+        em.merge(employee);
+        em.merge(facility);
+    }
+
+    @Override
     public List<Employee> getEmployees(Long warehouseId) {
         Query q = em.createQuery("SELECT e FROM Employee e WHERE e.WMSWarehouse.id=:warehouseId");
         q.setParameter("warehouseId", warehouseId);
@@ -528,6 +567,70 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         return (List<WMSFacility>) q.getResultList();
     }
 
+    @Override
+    public void createService(String email, String serviceName, String serviceType, int servicePrice, String serviceUnit, List<Long> selectedSas) {
+        service = new WMSServiceCatalog();
+        service.setServiceName(serviceName);
+        service.setServiceType(serviceType);
+        service.setServicePrice(servicePrice);
+        service.setServiceUnit(serviceUnit);
+        Query q = em.createQuery("SELECT a.Company FROM Account a WHERE a.email=:email");
+        q.setParameter("email", email);
+        Company c = (Company) q.getSingleResult();
+        service.setCompany(c);
+        List<WMSServiceCatalog> cws = c.getWMSservices();
+        cws.add(service);
+        c.setWMSservices(cws);
+        q = em.createQuery("SELECT sa FROM StorageArea sa WHERE sa.WMSWarehouse.Company.id=:companyId");
+        q.setParameter("companyId", c.getId());
+        List<StorageArea> serviceSas = new ArrayList<>();
+        int totalCapacity = 0;
+        List<StorageArea> results = q.getResultList();
+        for (StorageArea ssa : results) {
+            for (Long saId : selectedSas) {
+                if ((saId.compareTo(ssa.getId())) == 0) {
+                    serviceSas.add(ssa);
+                    ssa.setService(service);
+                    totalCapacity += ssa.getTotalCapacity();
+                } else {
+                }
+            }
+        }
+        String location = serviceSas.get(0).getWMSWarehouse().getAddress();
+        service.setLocation(location);
+        service.setStorageAreas(serviceSas);
+        service.setServiceCapacity(totalCapacity);
+        service.setServiceAvailable(totalCapacity);
+        em.persist(service);
+        for (StorageArea s1 : serviceSas) {
+            em.merge(s1);
+        }
+        em.merge(c);
+    }
+
+    @Override
+    public void createFacility(Long warehouseId, String name, String type) {
+        facility = new WMSFacility();
+        Query q = em.createQuery("SELECT w FROM Warehouse w WHERE w.id=:warehouseId");
+        q.setParameter("warehouseId", warehouseId);
+        warehouse = (Warehouse) q.getSingleResult();
+        facility.setName(name);
+        facility.setType(type);
+        facility.setStatus("available");
+        facility.setWMSWarehouse(warehouse);
+        em.persist(facility);
+    }
+//**************Map************
+
+    @Override
+    public List<StorageArea> getStorageAreas(Long warehouseId) {
+        Query q = em.createQuery("SELECT w FROM Warehouse w WHERE w.id=:warehouseId");
+        q.setParameter("warehouseId", warehouseId);
+        Warehouse w = (Warehouse) q.getSingleResult();
+        return w.getStorageArea();
+    }
+
+    //*************Map**********End*********
     @Override
     @Remove
     public void remove() {

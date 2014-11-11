@@ -83,51 +83,85 @@
 
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
-                   
-                        <h:form>
-                            <p:growl id="growl" showDetail="true" />
-                            <p:panel header="Generate Schedule" style="margin-bottom:10px;">
 
-                                <h:panelGrid columns="2" cellpadding="5">
+                    <h:form id="form">
+                        <p:dataTable var="service" value="#{scmb.services}" widgetVar="servicesTable"
+                                     emptyMessage="No services found with given criteria" filteredValue="#{scmb.filteredServices}">
 
-                                    <p:outputLabel for="employee" value="Employee: " />
-                                    <p:selectOneMenu id="employee" value="#{womb.employeeId}"
-                                                     style="width:155px">
-                                        <f:selectItem itemLabel="Select Employee" itemValue="#{-1}"
-                                                      noSelectionOption="true" />
-                                        <f:selectItems value="#{womb.employees}" var="employee"
-                                                       itemLabel="#{employee.name}"
-                                                       itemValue="#{employee.id}" />
-                                    </p:selectOneMenu>
+                            <f:facet name="header">
+                                <p:outputPanel>
+                                    <h:outputText value="Search all fields:" />
+                                    <p:inputText id="globalFilter" onkeyup="PF('servicesTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                                </p:outputPanel>
+                            </f:facet>
+
+                            <p:column filterBy="#{service.serviceName}" headerText="Name" footerText="" filterMatchMode="contains">
+                                <h:outputText value="#{service.serviceName}" />
+                            </p:column>
+                            <p:column filterBy="#{service.serviceType}" headerText="Type" footerText="" filterMatchMode="contains">
+                                <h:outputText value="#{service.serviceType}" />
+                            </p:column>
+                            <p:column filterBy="#{service.location}" headerText="Location" footerText="" filterMatchMode="contains">
+                                <h:outputText value="#{service.location}" />
+                            </p:column>
+                            <p:column filterBy="#{service.servicePrice}" headerText="Price(Max)" footerText="" filterMatchMode="lte">
+                                <f:facet name="filter">
+                                    <p:spinner onchange="PF('servicesTable').filter()" styleClass="spinner">
+                                        <f:converter converterId="javax.faces.Integer" />
+                                    </p:spinner>
+                                </f:facet>
+                                <h:outputText value="#{service.servicePrice}" />
+                            </p:column>
+
+                            <p:column filterBy="#{service.company}" headerText="Company" footerText="" filterMatchMode="in">
+                                <f:facet name="filter">
+                                    <p:selectCheckboxMenu label="Companies" onchange="PF('servicesTable').filter()" panelStyle="width:125px" scrollHeight="150">
+                                        <f:selectItems value="#{scmb.companies}" var="company" itemLabel="#{company.companyName}" itemValue="#{company}"/>
+                                    </p:selectCheckboxMenu>
+                                </f:facet>
+                                <h:outputText value="#{service.company.companyName}" />
+                            </p:column>
 
 
-                                    <p:outputLabel for="facility" value="Facility: " />
-                                    <p:selectOneMenu id="facility" value="#{womb.facilityId}"
-                                                     style="width:165px">
-                                        <f:selectItem itemLabel="Select Facility" itemValue="#{-1}"
-                                                      noSelectionOption="true" />
-                                        <f:selectItems value="#{womb.facilities}" var="facility"
-                                                       itemLabel="#{facility.name}"
-                                                       itemValue="#{facility.id}" />
-                                    </p:selectOneMenu>
+                            <p:column filterBy="#{service.serviceAvailable}" headerText="Capacity" footerText="" filterFunction="#{scmb.filterByAvailable}">
+                                <h:outputText value="#{service.serviceAvailable}">
+                                </h:outputText>
+                            </p:column>
+                            <p:column >
+                                <p:commandButton value="Show Details" update=":form:Details" actionListener="#{scmb.initServiceId(service.id)}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:dataTable id="Details" var="s" value="#{scmb.serviceDetail}">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{s.id}" />
+                            </p:column>
 
-                                    <p:outputLabel for="scheduleStart" value="Start:" />
-                                    <p:calendar id="scheduleStart" value="#{womb.scheduleStart}" pattern="MM/dd/yyyy HH:mm"/>
-                                    <p:outputLabel for="scheduleEnd" value="End:" />
-                                    <p:calendar id="scheduleEnd" value="#{womb.scheduleEnd}" pattern="MM/dd/yyyy HH:mm"/>
-
-                                    <p:outputLabel for="scheduleContent" value="Content: " />
-                                    <p:inputText id="scheduleContent" value="#{womb.scheduleContent}"
-                                                 style="width:170px" />
-
-                                </h:panelGrid>
-
-                                <p:separator />
-
-                                <p:commandButton value="Generate" actionListener="#{womb.generateSchedule}"
-                                                 icon="ui-icon-check" update="growl" />
-                            </p:panel>
-                        </h:form>
+                            <p:column headerText="Name">
+                                <h:outputText value="#{s.serviceName}" />
+                            </p:column>
+                            <p:column headerText="Company">
+                                <h:outputText value="#{s.company.companyName}" />
+                            </p:column>
+                            <p:column headerText="Type">
+                                <h:outputText value="#{s.serviceType}" />
+                            </p:column>
+                            <p:column headerText="Spare Capacity">
+                                <h:outputText value="#{s.serviceAvailable}" />
+                            </p:column>
+                            <p:column headerText="Price">
+                                <h:outputText value="#{s.servicePrice}" />
+                            </p:column>
+                            <p:column headerText="Unit">
+                                <h:outputText value="#{s.serviceUnit}" />
+                            </p:column>
+                            <p:column headerText="Location">
+                                <h:outputText value="#{s.location}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton value="Select" actionListener="#"/> 
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
 
                 </b:column>
 

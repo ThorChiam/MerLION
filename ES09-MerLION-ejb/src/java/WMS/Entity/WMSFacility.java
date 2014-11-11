@@ -30,14 +30,6 @@ public class WMSFacility implements Serializable {
     @ManyToOne
     private Warehouse WMSWarehouse;
 
-    public Warehouse getWarehouse() {
-        return WMSWarehouse;
-    }
-
-    public void setWarehouse(Warehouse warehouse) {
-        this.WMSWarehouse = warehouse;
-    }
-
     public Long getId() {
         return id;
     }

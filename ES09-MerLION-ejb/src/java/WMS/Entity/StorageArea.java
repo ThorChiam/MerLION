@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -30,17 +31,20 @@ public class StorageArea implements Serializable {
     private Long id;
     private String status;
     private int totalCapacity;
-
+    @OneToOne
+    private WarehouseMap warehouseMap;
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "sa")
     private List<StorageArea_Inventory> sa_inven = new ArrayList<>();
     @ManyToOne
     private Warehouse WMSWarehouse;
-
+    @ManyToOne
+    private WMSServiceCatalog service;
 //    @ManyToOne
 //    private Inventory Inventory;
 //    @ManyToMany(cascade = {CascadeType.PERSIST})
 //    @JoinTable(name = "StorageArea_Inventory")
 //    private Set<Inventory> Inventory = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -86,6 +90,22 @@ public class StorageArea implements Serializable {
 
     public void setTotalCapacity(int totalCapacity) {
         this.totalCapacity = totalCapacity;
+    }
+
+    public WarehouseMap getWarehouseMap() {
+        return warehouseMap;
+    }
+
+    public void setWarehouseMap(WarehouseMap warehouseMap) {
+        this.warehouseMap = warehouseMap;
+    }
+
+    public WMSServiceCatalog getService() {
+        return service;
+    }
+
+    public void setService(WMSServiceCatalog service) {
+        this.service = service;
     }
 
     @Override

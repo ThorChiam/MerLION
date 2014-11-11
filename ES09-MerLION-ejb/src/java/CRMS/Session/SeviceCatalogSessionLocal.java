@@ -5,6 +5,8 @@
  */
 package CRMS.Session;
 
+import CRMS.Entity.Company;
+import WMS.Entity.WMSServiceCatalog;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,16 +17,11 @@ import javax.ejb.Local;
 @Local
 public interface SeviceCatalogSessionLocal {
 
-    //individual user can delete their own service catalog info
+    public List<WMSServiceCatalog> getAllServices();
 
-    public void deleteServiceCatalog(String email, Long serviceId);
+    public List<Company> getCompanies();
 
-    public void updateServiceCatalog(String email, Long serviceId, String serviceType, String carrierType, String route, long scheduleFrom, long scheduleTo, long price, long maxVol, long avaVol);
+    public List<String> getAllServiceTypes();
 
-    public List getServiceCatalog(String email, Long serviceId);
-
-    public List getAllServiceCatalog(String email);
-
-    public Long addServiceCatalog(String email, String serviceType, String carrierType, String route, String availableScheduleFrom, String availableScheduleTo, long price, long maxVol, long availableVol);
-
+    public List<String> getAllServiceLocations(Long serviceId);
 }
