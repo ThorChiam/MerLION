@@ -36,7 +36,7 @@
     <h:body style="padding-top: 40px; padding-bottom: 20px;">
 
 
-       <b:navBar brand="MerLION Logistics" brandHref="main.xhtml" inverse="false" fixed="top">
+        <b:navBar brand="MerLION Logistics" brandHref="main.xhtml" inverse="false" fixed="top">
             <b:navbarLinks>
                 <b:navLink value="Sign Up" href="signUp.xhtml"></b:navLink>
                 <b:navLink value="My MerLION" href="CI/myMerlion.xhtml" rendered="#{facesContext.externalContext.sessionMap['userId'] != null}"></b:navLink>
@@ -48,29 +48,12 @@
 
             <h:form styleClass="navbar-form navbar-right">
                 <p:button value="Log In" outcome="signIn"/>
-                &nbsp;
+
                 <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
             </h:form> 
         </b:navBar>
-
-            <h:form styleClass="navbar-form navbar-right">
-                <div class="form-group">
-                    <b:inputText placeholder="Email" fieldSize="sm"/>
-
-                </div>
-                <div class="form-group">
-                    <b:inputText placeholder="Password" fieldSize="sm"/>
-                </div> 
-                #{' '}
-                <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
-            </h:form>
-        </b:navBar>
-
-        <br/>
-
-
-
-        <b:container>
+     <br/>
+    <b:container>
             <b:row>
 
                 <div style="border-left:thin darkgrey solid; position:absolute; left:600px; height:700px;"/> 
