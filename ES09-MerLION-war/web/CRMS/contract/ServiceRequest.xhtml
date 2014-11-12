@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:g="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Welcome to WMS System</title>
+
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/> 
+
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times: 5}, 100);
+                }
+                else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+                }
+            }
+        </script>
+
+
+    </h:head>
+
+    <h:body>
+        <b:container>
+            <b:row>
+                <p:column colspan="3">
+                    <h:form>  
+                        <p:menubar styleClass="show-grid">
+                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                            <p:menuitem value="WMS Home" url="/WMS/index.xhtml" />
+                            <p:menuitem value="Delivery Order" url="/WMS/deliveryOrder/deliveryOrderList.xhtml"/>
+                            <p:menuitem value="Human Resource Management" url="/WMS/HR/humanResource.xhtml"/>
+                            <p:menuitem value="Search Service" url="/WMS/selectWMSServices.xhtml"/>
+                            <p:menuitem value="Admin" url="/WMS/Admin/WMSAdmin.xhtml"/>
+                            <p:submenu label="Storage Management">
+                                <p:menuitem value="Reserve Storage" url="/WMS/storage/reserveStorage.xhtml"/>
+                                <p:menuitem value="Update Storage" url="/WMS/storge/updateStorage.xhtml" />
+                            </p:submenu>
+                            <p:menuitem value="Log Out" action="signIn.xhtml"  actionListener="#{accountManagedBean.logout}"/>
+
+                        </p:menubar>
+                    </h:form>
+                </p:column>
+            </b:row>
+
+        </b:container>
+        <br/>
+        <b:container>
+            <b:row styleClass="show-grid">
+
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                    <p:panel header="Warehouse List">
+                        <h:form>
+                            <!-- value should be a LIST of delivery order -->
+                            <p:dataTable var="warehouse" value="#{womb.getAllWarehouse()}">
+                                <p:column headerText="Warehouse ID">
+                                    <h:outputText value="#{warehouse.id}" />
+                                </p:column>
+
+                                <p:column headerText="Warehouse Name">
+                                    <h:outputText value="#{warehouse.name}" />
+                                </p:column>
+
+                                <p:column >
+                                    <h:commandButton value="Define Facility" action="defineFacility" actionListener="#{womb.initWarehouseId}">
+                                        <f:attribute name="wId" value="#{warehouse.id}" />
+                                    </h:commandButton>
+                                </p:column>
+                                <p:column >
+                                    <h:commandButton value="Define Service" action="defineService" actionListener="#{womb.initWarehouseId}">
+                                        <f:attribute name="wId" value="#{warehouse.id}" />
+                                    </h:commandButton>
+                                </p:column>
+                                <p:column >
+                                    <h:commandButton value="View Map" action="mapGeneration" actionListener="#{womb.initWarehouseId}">
+                                        <f:attribute name="wId" value="#{warehouse.id}" />
+                                    </h:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+                        </h:form>
+                    </p:panel>
+                </b:column>
+
+
+            </b:row>
+        </b:container>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+
+    </h:body>
+</html>
