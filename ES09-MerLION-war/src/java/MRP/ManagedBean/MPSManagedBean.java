@@ -6,16 +6,21 @@
 
 package MRP.ManagedBean;
 
+import MRP.Entity.Demand;
+import MRP.Entity.Item;
+import MRP.Session.BOMSessionBean;
+import MRP.Session.DemandSessionBean;
+import MRP.Session.MPSSessionBean;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.event.ActionEvent;
-import MRP.Session.DemandSessionBean;
-import MRP.Session.MPSSessionBean;
-import MRP.Entity.Demand;
-import Exception.DemandException;
+import merlion_exception.DemandException;
 /**
  *
  * @author Zeng Xunhao
@@ -31,6 +36,8 @@ public class MPSManagedBean implements Serializable {
     private MPSSessionBean MPSSessionBean;
     @EJB
     private DemandSessionBean DemandSessionBean;
+    @EJB
+    private BOMSessionBean bs;
     private int first;
     private int second;
     private int third;
@@ -39,9 +46,13 @@ public class MPSManagedBean implements Serializable {
     private int sixth;
     private Long itemId;
     private Long mpsId;
+    private Date date;
     private String demandType;
     private String statusMessage;
     private List<Demand> demand;
+     @ManagedProperty("#{userId}")
+    private List<Item> itemList; 
+    private String userId;
     private int[] past=new int[6];
     private int[] prediction=new int[6];
     
@@ -49,15 +60,27 @@ public class MPSManagedBean implements Serializable {
     
     public MPSManagedBean() {
     }
-
+    public List<Item> getAllitems() {
+        itemList = bs.getAllItems(userId);
+        return itemList;
+    }
     public int getFirst() {
         return first;
+    }
+    @PostConstruct
+    public void getlogin(){
+        //userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        userId="email";
+        getAllitems();
     }
 
     public void setFirst(int first) {
         this.first = first;
     }
-
+    public String getUserId() {
+        //userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        return userId;
+    }
     public String getDemandType() {
         return demandType;
     }
@@ -68,6 +91,14 @@ public class MPSManagedBean implements Serializable {
 
     public List<Demand> getDemand() {
         return demand;
+    }
+
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(List<Item> itemList) {
+        this.itemList = itemList;
     }
 
     public void setDemand(List<Demand> demand) {
@@ -156,7 +187,7 @@ public class MPSManagedBean implements Serializable {
     }
     public void addNewMPS(ActionEvent event){
         try{
-        mpsId = MPSSessionBean.addNewMPS(itemId, first, second, third, fourth, fifth, sixth);
+        mpsId = MPSSessionBean.addNewMPS(userId, itemId, first, second, third, fourth, fifth, sixth);
         statusMessage = "New MPS Saved Successfully";
         }
         catch(Exception ex){
@@ -166,7 +197,7 @@ public class MPSManagedBean implements Serializable {
     }
     public void showDemand()throws DemandException{
         try{
-        setDemand(DemandSessionBean.getItemDemand(itemId));
+        setDemand(DemandSessionBean.getItemDemand(userId, itemId));
         int l=demand.size();
         int j=0;
         for(int i=l-6;i<l;i++){
@@ -182,7 +213,7 @@ public class MPSManagedBean implements Serializable {
     }
     public void PredictDemand()throws DemandException{
         try{
-            prediction=DemandSessionBean.predictItemDemand(itemId);
+            prediction=DemandSessionBean.predictItemDemand(userId,itemId);
         }catch(DemandException e){
             e.printStackTrace();
         }

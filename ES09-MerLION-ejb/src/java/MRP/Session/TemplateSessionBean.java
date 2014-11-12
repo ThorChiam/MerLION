@@ -5,14 +5,17 @@
  */
 package MRP.Session;
 
+import CI.Entity.Account;
+import MRP.Entity.Item;
+import MRP.Entity.Template;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import MRP.Entity.Item;
-import MRP.Entity.Template;
 
 
 @Stateless
@@ -27,36 +30,47 @@ public class TemplateSessionBean {
         Item item = entityManager.find(Item.class, itemId);
         return item;
     }
-
-    public List<Template> getItemPlan(Long itemId) {
-        Item item = getItem(itemId);
-        Query query = entityManager.createQuery("SELECT e FROM Template e WHERE e.item = :item");
-        query.setParameter("item", item);
-        return query.getResultList();
+    public Account getAccount(String userId){
+        Account account=entityManager.find(Account.class,userId);
+        return account;
     }
 
-    private Boolean checkTemplateConflict(Long itemId) {
+    public List<Template> getItemPlan(String userId,Long itemId) {
+        Item item = getItem(itemId);
+        Account account=getAccount(userId);
+        Query query = entityManager.createQuery("SELECT e FROM Template e WHERE e.item = :item and e.item.account=:account");
+        query.setParameter("item", item);
+        query.setParameter("account",account);
+        return query.getResultList();
+    }
+    
+    private Boolean checkTemplateConflict(String userId,Long itemId) {
         
-        List resultList = getItemPlan(itemId);
-        if (resultList.size()<5) {
+        List resultList = getItemPlan(userId,itemId);
+        if (resultList.size()<6) {
             return false;
         } else {
             return true;
         }
     }
-    private void DeleteTemplate(Long itemId){
+    private void DeleteTemplate(String userId,Long itemId){
         Item item= getItem(itemId);
-         Query query = entityManager.createQuery("DELETE FROM Template e WHERE e.item = :item");
+        Account account=getAccount(userId);
+         Query query = entityManager.createQuery("DELETE FROM Template e WHERE e.item = :item and e.item.account=:account");
          query.setParameter("item", item);
+         query.setParameter("account",account);
          query.executeUpdate();
     }
 
-    public Long addNewTemplate(Long itemId, String name,
+    public Long addNewTemplate(String userId,Long itemId, String name,
             int first, int second, int third, int fourth, int fifth,int sixth,int seventh){
-        if (checkTemplateConflict(itemId)) {
-            DeleteTemplate(itemId);
-        }         
+        if (checkTemplateConflict(userId,itemId)) {
+            DeleteTemplate(userId,itemId);
+        }    
+        
             Item item = getItem(itemId);
+             Account account=getAccount(userId); 
+         if(account.getItems().contains(item)){
             Template template = new Template();   
             template.setName(name);
             template.setFirstweek(first);
@@ -67,12 +81,17 @@ public class TemplateSessionBean {
             template.setFifthweek(fifth);
             template.setSixthweek(sixth);
             template.setSeventhweek(seventh);
+            Timestamp stamp = new Timestamp(System.currentTimeMillis());
+            Date date = new Date(stamp.getTime());
+            template.setStartdate(date);
             
             entityManager.persist(template);
             entityManager.flush();
             item.getTemplates().add(template);
             entityManager.merge(item);
-            return template.getTemplateId();
+            return template.getTemplateId();}else{
+             return -1L;
+         }
         } 
             
         

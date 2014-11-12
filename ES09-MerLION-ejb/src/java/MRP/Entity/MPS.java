@@ -31,6 +31,8 @@ public class MPS implements Serializable {
     private int fourthmonth;
     private int fifthmonth;
     private int sixthmonth;
+    private int startmonth;
+    private int startyear;
    
     
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, optional = false)
@@ -58,6 +60,22 @@ public class MPS implements Serializable {
 
     public void setSecondmonth(int secondmonth) {
         this.secondmonth = secondmonth;
+    }
+
+    public int getStartmonth() {
+        return startmonth;
+    }
+
+    public void setStartmonth(int startmonth) {
+        this.startmonth = startmonth;
+    }
+
+    public int getStartyear() {
+        return startyear;
+    }
+
+    public void setStartyear(int startyear) {
+        this.startyear = startyear;
     }
 
     public int getThirdmonth() {
