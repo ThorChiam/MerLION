@@ -6,7 +6,6 @@
 package CI.Session;
 
 import java.util.List;
-import CI.Session.InternalCommunicationSessionLocal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -38,13 +37,13 @@ public class InternalCommunicationSession implements InternalCommunicationSessio
     }
 
     @Override
-    public void createnoti(String email, Long noti_Id, String n_title, String content, Long release_time, String target) {
+    public void createnoti(String email, Long noti_Id, String n_title, String content, Long release_time) {
         Query q = em.createQuery("SELECT a FROM Company a WHERE a.email=:email");
         q.setParameter("email", email);
         Company a = (Company) q.getSingleResult();
         Notification noti = new Notification();
         noti.setCompany(a);
-        noti.add(n_title, content, release_time, target);
+        noti.add(n_title, content, release_time);
         em.persist(noti);
     }
 //user will view all annoucements

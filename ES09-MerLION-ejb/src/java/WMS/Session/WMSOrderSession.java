@@ -7,6 +7,7 @@ package WMS.Session;
 
 import CI.Entity.Account;
 import CRMS.Entity.Company;
+import OES.Entity.OrderList;
 import WMS.Entity.Employee;
 import WMS.Entity.Inventory;
 import WMS.Entity.Shipment_Notice;
@@ -110,6 +111,23 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
             checkI.add(ir.getInventory().getQuantity() - ir.getQty());
         }
         return checkI;
+    }
+
+    @Override
+    public List<OrderList> ATPcheck(List<OrderList> orderItems) {
+        //assume orderList ID is exactly same as the corresponding inventory ID
+        String tEmail = orderItems.get(0).getPorder().getReceiver().getEmail();
+        List<Inventory> invens = this.getAllInventories(tEmail);
+        for (Inventory i : invens) {
+            for (OrderList item : orderItems) {
+                if (Objects.equals(i.getId(), item.getId())) {
+                    int checkResult = this.updateSingelInventory(i).getQuantity() - Integer.parseInt(item.getQuantity());
+                    item.setCheckResult(checkResult);
+                    em.merge(item);
+                }
+            }
+        }
+        return orderItems;
     }
 
     @Override
@@ -288,8 +306,8 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         Shipment_Notice sn = new Shipment_Notice();
         Query q = em.createQuery("SELECT wo FROM WMSOrder wo WHERE wo.id=:orderId");
         q.setParameter("orderId", orderId);
-        WMSOrder wo = (WMSOrder) q.getSingleResult();
-        sn.setOrder(wo);
+        WMSOrder woo = (WMSOrder) q.getSingleResult();
+        sn.setOrder(woo);
         sn.setOrderdate(orderDate);
         em.persist(sn);
         return sn;
@@ -334,6 +352,13 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         }
     }
 
+    private Inventory updateSingelInventory(Inventory inven) {
+        int qty = this.countInventoryQty(inven);
+        inven.setQuantity(qty);
+        em.merge(inven);
+        return inven;
+    }
+
     private List<Inventory> convertInventory(List<WMSOrder_Inventory> lwi) {
         List<Inventory> lin = new ArrayList();
         for (WMSOrder_Inventory lwi1 : lwi) {
@@ -346,8 +371,8 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     public List<Inventory> getInventories(Long orderId) {
         Query q = em.createQuery("SELECT wo FROM WMSOrder wo WHERE wo.id=:orderId");
         q.setParameter("orderId", orderId);
-        WMSOrder wo = (WMSOrder) q.getSingleResult();
-        List<Inventory> li = this.convertInventory(wo.getWo_inven());
+        WMSOrder woo = (WMSOrder) q.getSingleResult();
+        List<Inventory> li = this.convertInventory(woo.getWo_inven());
         return li;
     }
 
@@ -355,11 +380,11 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
     public List<Inventory> report(Long orderId) {
         Query q = em.createQuery("SELECT wo FROM WMSOrder wo WHERE wo.id=:orderId");
         q.setParameter("orderId", orderId);
-        WMSOrder wo = (WMSOrder) q.getSingleResult();
-        List<Inventory> li = this.convertInventory(wo.getWo_inven());
+        WMSOrder woo = (WMSOrder) q.getSingleResult();
+        List<Inventory> li = this.convertInventory(woo.getWo_inven());
         this.updateInventory(li);
-        wo.setStatus("allocated");
-        em.merge(wo);
+        woo.setStatus("allocated");
+        em.merge(woo);
         return li;
     }
 

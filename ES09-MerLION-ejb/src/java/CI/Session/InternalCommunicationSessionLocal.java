@@ -19,7 +19,7 @@ public interface InternalCommunicationSessionLocal {
 
     public void createannou(Long id, Long announ_Id, String content);
 
-    public void createnoti(String email, Long noti_Id, String n_title, String content, Long release_time, String target);
+    public void createnoti(String email, Long noti_Id, String n_title, String content, Long release_time);
 //user will view all annoucements
 
     public List getAnnou();

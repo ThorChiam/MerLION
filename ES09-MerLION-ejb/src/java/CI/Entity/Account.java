@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import CRMS.Entity.Company;
 import MRP.Entity.Item;
 import CRMS.Entity.Post;
-import CRMS.Entity.ServiceOrder;
 import OES.Entity.Enquiry;
 import OES.Entity.PurchaseOrder;
 import WMS.Entity.WMSOrder;
@@ -51,12 +50,6 @@ public class Account implements Serializable {
 
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="requester")
     private List<WMSOrder> request_wmsorder = new ArrayList<>();
-    
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="service_requester")
-    private List<ServiceOrder> request_service = new ArrayList<>();
-    
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="service_provider")
-    private List<ServiceOrder> provide_service = new ArrayList<>();
      
     @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="provider")
     private List<WMSOrder> provide_wmsorder = new ArrayList<>();
@@ -91,22 +84,6 @@ public class Account implements Serializable {
 
     public void setSeller_enquiry(List<Enquiry> seller_enquiry) {
         this.seller_enquiry = seller_enquiry;
-    }
-    
-    public List<ServiceOrder> getRequest_service() {
-        return request_service;
-    }
-
-    public void setRequest_service(List<ServiceOrder> request_service) {
-        this.request_service = request_service;
-    }
-
-    public List<ServiceOrder> getProvide_service() {
-        return provide_service;
-    }
-
-    public void setProvide_service(List<ServiceOrder> provide_service) {
-        this.provide_service = provide_service;
     }
    
     public List<WMSOrder> getRequest_wmsorder() {

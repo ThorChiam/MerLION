@@ -19,36 +19,35 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class OrderList implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String quantity;
-    
+    private int checkResult;
+
     @OneToOne
     private Product product;
-    
+
     @ManyToOne
     private Enquiry enquiry;
-    
+
     @ManyToOne
     private PurchaseOrder porder;
-    
-    
-    public OrderList () {
+
+    public OrderList() {
         setId(System.nanoTime());
     }
-    
-   
 
-   public Long getId() {
+    public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public String getQuantity() {
         return quantity;
     }
@@ -81,8 +80,13 @@ public class OrderList implements Serializable {
         this.porder = porder;
     }
 
-   
-    
+    public int getCheckResult() {
+        return checkResult;
+    }
+
+    public void setCheckResult(int checkResult) {
+        this.checkResult = checkResult;
+    }
 
     @Override
     public int hashCode() {
@@ -108,5 +112,5 @@ public class OrderList implements Serializable {
     public String toString() {
         return "OES.Entity.OrderList[ id=" + id + " ]";
     }
-    
+
 }

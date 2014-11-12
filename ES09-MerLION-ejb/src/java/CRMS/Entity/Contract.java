@@ -6,17 +6,11 @@
 package CRMS.Entity;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import MRP.Entity.Template;
 
 /**
  *
@@ -24,6 +18,7 @@ import MRP.Entity.Template;
  */
 @Entity
 public class Contract implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,30 +27,13 @@ public class Contract implements Serializable {
     private String contract_status;
     private String total_price;
 
-        
-    @ManyToMany(cascade={CascadeType.PERSIST})
-    @JoinTable(name="CONTRACT_TEMPLATE")
-    private Set<Template> template=new HashSet<>();
- 
     @OneToOne
     private Payment Payment;
-    
-    @OneToOne(mappedBy="Contract")
-    private ServiceOrder serviceorder;
 
-    public ServiceOrder getServiceorder() {
-        return serviceorder;
-    }
-
-    public void setServiceorder(ServiceOrder serviceorder) {
-        this.serviceorder = serviceorder;
-    }
-
-    public Contract(){
+    public Contract() {
         setId(System.nanoTime());
     }
-  
-    
+
     public String getTotal_price() {
         return total_price;
     }
@@ -63,7 +41,7 @@ public class Contract implements Serializable {
     public void setTotal_price(String total_price) {
         this.total_price = total_price;
     }
-    
+
     public String getContract_status() {
         return contract_status;
     }
@@ -71,15 +49,15 @@ public class Contract implements Serializable {
     public void setContract_status(String contract_status) {
         this.contract_status = contract_status;
     }
-    
+
     public Long getId() {
         return id;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public String getSign_date() {
         return sign_date;
     }
@@ -87,21 +65,13 @@ public class Contract implements Serializable {
     public void setSign_date(String sign_date) {
         this.sign_date = sign_date;
     }
-    
+
     public Payment getPayment() {
         return Payment;
     }
 
     public void setPayment(Payment Payment) {
         this.Payment = Payment;
-    }
-
-    public Set<Template> getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(Set<Template> template) {
-        this.template = template;
     }
 
     @Override
@@ -128,5 +98,5 @@ public class Contract implements Serializable {
     public String toString() {
         return "merlion_new_enetity.Contract[ id=" + id + " ]";
     }
-    
+
 }
