@@ -21,7 +21,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import org.primefaces.event.CellEditEvent;
-
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import org.primefaces.context.RequestContext;
 /**
  *
  * @author sunny
@@ -51,7 +53,7 @@ public class AdminManagedBean implements Serializable {
     private boolean checkadd;
     private String title;
     private String content;
-    
+
     //Enquiry
     private String answer;
     private List<Customer_Enquiry> allEnquirys;
@@ -59,14 +61,11 @@ public class AdminManagedBean implements Serializable {
     private boolean checkdetail;
     private long tmp_id;
     private long tmp_id_another;
-    
+
     //Post
     private List<Post> allPosts;
     private boolean postdetail;
     private long post_tmp_id;
-
-
-
 
     public AdminManagedBean() {
     }
@@ -126,9 +125,8 @@ public class AdminManagedBean implements Serializable {
         }
         tmp.updateStatus(email, status);
         this.setAllAccounts(tmp.getAllAccount());
-        statusMessage = "Status Updated.";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "Status: " + statusMessage, ""));
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, " ", "Status set successfully!");
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
 
     public void deleteAccount(String email) {
@@ -184,9 +182,9 @@ public class AdminManagedBean implements Serializable {
     public void createAnnouncement(ActionEvent event) {
         tmp.createAnnoun((title + ":" + content), email);
         allAnnouncements = tmp.getAllAnnoun();
-        checkadd=false;
-        title="";
-        content="";
+        checkadd = false;
+        title = "";
+        content = "";
     }
 
     public List<Announcement> getAllAnnouncement() {
@@ -206,55 +204,49 @@ public class AdminManagedBean implements Serializable {
         }
         tmp.deleteAnnoun(id);
     }
-    
-    
-    
-    
-    
+
     //*****************************About Enquiry************************
-    public Customer_Enquiry getEnquiry(){
+    public Customer_Enquiry getEnquiry() {
         return tmp.getEnquiry(tmp_id);
     }
-    
-    public List<Customer_Enquiry> getAllEnquiry(){
+
+    public List<Customer_Enquiry> getAllEnquiry() {
         return tmp.getAllEnquiry();
     }
-    
-    public void replyEnquiry(){
+
+    public void replyEnquiry() {
         tmp.replyEnquiry(answer, email, tmp_id_another);
-        allEnquirys=tmp.getAllEnquiry();
-        checkreply=false;
-        tmp_id_another=0;
-        answer="";
+        allEnquirys = tmp.getAllEnquiry();
+        checkreply = false;
+        tmp_id_another = 0;
+        answer = "";
     }
-    
-    public boolean checkStatus(String status){
-        if(status.equals("unsolved"))
+
+    public boolean checkStatus(String status) {
+        if (status.equals("unsolved")) {
             return false;
+        }
         return true;
     }
-    
-    public boolean checkStatus_reverse(String status){
-        if(status.equals("solved"))
+
+    public boolean checkStatus_reverse(String status) {
+        if (status.equals("solved")) {
             return false;
+        }
         return true;
     }
-    
-    
-    
-    
-    
+
     //**************************About Post*********************
-    public Post getPost(){
+    public Post getPost() {
         return tmp.getPost(post_tmp_id);
     }
-    
-    public List<Post> getAllPost(){
+
+    public List<Post> getAllPost() {
         return tmp.getAllPost();
     }
-    
-    public void deletePost(long id){
-         for (int i = 0; i < allPosts.size(); i++) {
+
+    public void deletePost(long id) {
+        for (int i = 0; i < allPosts.size(); i++) {
             if (allPosts.get(i).getId().equals(id)) {
                 allPosts.remove(i);
                 break;
@@ -262,24 +254,15 @@ public class AdminManagedBean implements Serializable {
         }
         tmp.deletePost(id);
     }
-    
-    
-    
-    
-    
-    
-    
-    
 
     //***************************Getter and Setter**********************
-    
     public boolean isPostdetail() {
         return postdetail;
     }
 
-    public void setPostdetail(boolean postdetail,long id) {
+    public void setPostdetail(boolean postdetail, long id) {
         this.postdetail = postdetail;
-        this.post_tmp_id=id;
+        this.post_tmp_id = id;
     }
 
     public List<Post> getAllPosts() {
@@ -305,14 +288,14 @@ public class AdminManagedBean implements Serializable {
     public void setTmp_id(long tmp_id) {
         this.tmp_id = tmp_id;
     }
-    
+
     public boolean isCheckdetail() {
         return checkdetail;
     }
 
     public void setCheckdetail(boolean checkdetail, long id) {
         this.checkdetail = checkdetail;
-        this.setTmp_id(id);    
+        this.setTmp_id(id);
     }
 
     public boolean isCheckreply() {
@@ -339,7 +322,7 @@ public class AdminManagedBean implements Serializable {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
-    
+
     public String getTitle() {
         return title;
     }

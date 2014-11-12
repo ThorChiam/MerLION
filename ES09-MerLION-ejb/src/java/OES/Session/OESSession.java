@@ -261,7 +261,7 @@ public class OESSession implements OESSessionLocal {
    @Override
    public List<Enquiry> viewUpcomingEnquire(String email){
        
-         Query q = em.createQuery("SELECT a FROM  Enquiry a WHERE a.seller.email=:email");
+         Query q = em.createQuery("SELECT a FROM  Enquiry a WHERE a.seller.email=:email AND a.quotation IS NULL");
          q.setParameter("email",email); 
          
          return  q.getResultList();

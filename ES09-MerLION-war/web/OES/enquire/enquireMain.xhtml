@@ -8,7 +8,7 @@
     <h:head>
         <title>Welcome to Order Entry System</title>
     </h:head>
-    
+
     <h:body>
         <b:container>
 
@@ -16,9 +16,12 @@
                 <p:menuitem value="Home" url="/main.xhtml" />
                 <p:menuitem value="Home" url="/main.xhtml" />
                 <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
-                <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
-                <p:menuitem value="Sales Order" url="/OES/salesOrder/createOrder.xhtml" />
                 <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
+
+                <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
+                <p:menuitem value="Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml" />
+                <p:menuitem value="Sales Order" url="/OES/salesOrder/createSalesOrder.xhtml" />
+
                 <p:menuitem value="Payment" url="#" />
 
             </p:breadCrumb>
@@ -37,7 +40,7 @@
 
                                 <b:navLink href="enquireMain.xhtml" value="Create New Enquire"
                                            />
-                                <b:navLink href="enquireALL.xhtml" value="View Enquire"
+                                <b:navLink href="enquireALL.xhtml" value="View ALL Enquire"
                                            />
                             </b:listLinks>
                         </p:panel>
@@ -101,11 +104,11 @@
                                             <p:column headerText="Product Name">
                                                 <h:outputText value="#{sp}" />
                                             </p:column>
-                                            
+
                                             <p:column headerText="Description">
                                                 <h:outputText value="#{eb.desc}" />
                                             </p:column>
-                                            
+
                                             <f:facet name="footer">
                                                 You have selected #{eb.psize} Products.
                                             </f:facet>
@@ -127,10 +130,13 @@
                                     <p>
                                     </p> 
 
-                                    <h:outputLabel value="Quantities/Split by(,):" style="font-weight:bold" />
-                                    <p:inputText id="dd" value="#{eb.quantitiesEntered}" label="Quantity">
+                                    <h:outputLabel for="dd" value="Quantities/Split by(,):" style="font-weight:bold" />
+                                    <p:inputText id="dd" value="#{eb.quantitiesEntered}" label="Quantity" >
+             
+                                       
                                     </p:inputText>
-
+                                   
+                                    
 
                                     <p>
                                     </p>
