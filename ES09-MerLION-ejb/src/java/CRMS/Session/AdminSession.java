@@ -10,6 +10,7 @@ import CI.Entity.Announcement;
 import CI.Entity.Customer_Enquiry;
 import CI.Entity.MerlionAdmin;
 import CRMS.Entity.Company;
+import CRMS.Entity.Post;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -177,18 +178,49 @@ public class AdminSession implements AdminSessionLocal{
     }
     
     @Override
-    public void replyEnquiry(String answer, long id, String email){
-        Query p = em.createQuery("SELECT a FROM Customer_Enquiry a where a.id=:id");
+    public void replyEnquiry(String answer, String email, long id){
+        Query p = em.createQuery("SELECT a FROM Customer_Enquiry a WHERE a.id=:id");
         p.setParameter("id", id);
         Customer_Enquiry tmp = (Customer_Enquiry)p.getSingleResult();
         
-        Query q = em.createQuery("SELECT a FROM MerlionAdmin a where a.Account.email=:email");
-        p.setParameter("email", email);
-        MerlionAdmin admin = (MerlionAdmin)p.getSingleResult();
+        Query q = em.createQuery("SELECT b FROM MerlionAdmin b WHERE b.Account.email=:theemail");
+        q.setParameter("theemail",email);
+        MerlionAdmin admin = (MerlionAdmin)q.getSingleResult();
         
-        tmp.setStatus("Handled");
+        
+        Date date = new java.util.Date();
+        Timestamp time = new Timestamp(date.getTime());
+        String createdate = time.toString();
+        
+        tmp.setStatus("solved");
         tmp.setAnswer(answer);
         tmp.setMerlionAdmin(admin);
+        tmp.setAnswertime(createdate);
         em.persist(tmp);
+    }
+    
+    
+    
+    
+    
+    //****************************About Post**************************
+    @Override
+    public Post getPost(long id){
+        Query p = em.createQuery("SELECT a FROM Post a WHERE a.id=:id");
+        p.setParameter("id", id);
+        return (Post)p.getSingleResult();
+    }
+    
+    @Override
+    public List<Post> getAllPost(){
+        Query p = em.createQuery("SELECT a FROM Post a");
+        return p.getResultList();
+    }
+    
+    @Override 
+    public void deletePost(long id){
+        Query p = em.createQuery("Delete FROM Post a WHERE a.id=:id");
+        p.setParameter("id", id);
+        p.executeUpdate();
     }
 }

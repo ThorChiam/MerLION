@@ -53,11 +53,11 @@
                                 </p:column>
 
                                 <p:column headerText="Reply" >                                        
-                                    <p:commandButton value="Reply" actionListener="#{AdminManagedBean.setCheckreply(true)}" styleClass="ui-priority-primary" ajax="false"/>
+                                    <p:commandButton value="Reply" actionListener="#{AdminManagedBean.setCheckreply(true,all.id)}" styleClass="ui-priority-primary" ajax="false" rendered="#{AdminManagedBean.checkStatus_reverse(all.status)}"/>
                                 </p:column>   
 
                                 <p:column headerText="Details" >                                  
-                                    <p:commandButton value="Detail" actionListener="#{setCheckdetail(true,all.id)}" styleClass="ui-priority-primary" ajax="false" rendered="#{AdminManagedBean.checkStatus(all.status)}"/>
+                                    <p:commandButton value="Detail" actionListener="#{AdminManagedBean.setCheckdetail(true,all.id)}" styleClass="ui-priority-primary" ajax="false" rendered="#{AdminManagedBean.checkStatus(all.status)}"/>
                                 </p:column>
 
 
@@ -71,39 +71,41 @@
                                           </p:panel>
                                 -->
                                 <p:panel id="Question" header="Question">
-                                    <h:outputText value="#{all.question}" />
+                                    <h:outputText value="#{AdminManagedBean.getEnquiry().question}" />
                                 </p:panel>
 
                                 <p:panel id="Email" header="Contact Email">
-                                    <h:outputText value="#{all.contact_email}" />
+                                    <h:outputText value="#{AdminManagedBean.getEnquiry().contact_email}" />
                                 </p:panel>
 
                                 <p:panel id="Answer" header="Answer">
-                                    <h:outputText value="#{all.answer}" />
+                                    <h:outputText value="#{AdminManagedBean.getEnquiry().answer}" />
                                 </p:panel>
 
                                 <p:panel id="Solver" header="Replier Id">
-                                    <h:outputText value="#{all.merlionAdmin.id}" />
+                                    <h:outputText value="#{AdminManagedBean.getEnquiry().merlionAdmin.id}" />
                                 </p:panel>
 
                                 <!--       <p:panel id="Reply Date" header="Reply Date">
                                            <h:outputText value="#{all.answertime}" />
                                        </p:panel>
                                 -->     
-                                <p:commandButton value="Back" update="tmp" actionListener="#{AdminManagedBean.setCheckdetail(false)}" styleClass="ui-priority-primary" ajax="false"/>
+                                <p:commandButton value="Back" update="tmp" actionListener="#{AdminManagedBean.setCheckdetail(false,0)}" styleClass="ui-priority-primary" ajax="false"/>
                             </h:form>
 
 
 
-                            <p:growl id="panel" rendered="#{AdminManagedBean.checkreply}">
+                            <p:growl id="reply" rendered="#{AdminManagedBean.checkreply}">
                                 <h:panelGrid>                                                                                                        
-                                    <h:form>                                                     
+                                     <h:form styleClass="navbar-form navbar-left">                                                   
                                         <h:outputLabel for="content" value="Reply Content : " />
                                         <br/>
-                                        <p:inputTextarea id="content" value="#{AdminManagedBean.answer}" rows="6" cols="33" />
+                                        <p:inputTextarea id="content" value="#{AdminManagedBean.answer}" rows="6" cols="33" />                                                                     
+                                        <br/>
+                                        <p:commandButton value="Save" update="msgs" actionListener="#{AdminManagedBean.replyEnquiry()}" styleClass="ui-priority-primary" ajax="false"/>
+                                        &nbsp;
+                                        <p:commandButton value="Back" update="msgs" actionListener="#{AdminManagedBean.setCheckreply(false,0)}" styleClass="ui-priority-primary" ajax="false"/>
                                     </h:form>
-
-                                    <p:commandButton value="Save" update="msgs" actionListener="#{AdminManagedBean.replyEnquiry(all.idvien)}" styleClass="ui-priority-primary" ajax="false"/>
                                 </h:panelGrid>
                             </p:growl>
 

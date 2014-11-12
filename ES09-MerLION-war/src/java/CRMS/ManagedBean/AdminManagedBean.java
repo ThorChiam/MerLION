@@ -9,6 +9,7 @@ import CI.Entity.Account;
 import CI.Entity.Announcement;
 import CI.Entity.Customer_Enquiry;
 import CRMS.Entity.Company;
+import CRMS.Entity.Post;
 import CRMS.Session.AdminSessionLocal;
 import java.io.Serializable;
 import java.util.List;
@@ -57,7 +58,12 @@ public class AdminManagedBean implements Serializable {
     private boolean checkreply;
     private boolean checkdetail;
     private long tmp_id;
-
+    private long tmp_id_another;
+    
+    //Post
+    private List<Post> allPosts;
+    private boolean postdetail;
+    private long post_tmp_id;
 
 
 
@@ -74,6 +80,7 @@ public class AdminManagedBean implements Serializable {
         allCompanys = tmp.getAllCompany();
         allAnnouncements = tmp.getAllAnnoun();
         allEnquirys = tmp.getAllEnquiry();
+        allPosts = tmp.getAllPost();
     }
 
     //update User Account Info
@@ -205,17 +212,19 @@ public class AdminManagedBean implements Serializable {
     
     
     //*****************************About Enquiry************************
-    public Customer_Enquiry getEnquiry(long id){
-        return tmp.getEnquiry(id);
+    public Customer_Enquiry getEnquiry(){
+        return tmp.getEnquiry(tmp_id);
     }
     
     public List<Customer_Enquiry> getAllEnquiry(){
         return tmp.getAllEnquiry();
     }
     
-    public void replyEnquiry(long id){
-        tmp.replyEnquiry(answer, id, email);
+    public void replyEnquiry(){
+        tmp.replyEnquiry(answer, email, tmp_id_another);
+        allEnquirys=tmp.getAllEnquiry();
         checkreply=false;
+        tmp_id_another=0;
         answer="";
     }
     
@@ -225,6 +234,34 @@ public class AdminManagedBean implements Serializable {
         return true;
     }
     
+    public boolean checkStatus_reverse(String status){
+        if(status.equals("solved"))
+            return false;
+        return true;
+    }
+    
+    
+    
+    
+    
+    //**************************About Post*********************
+    public Post getPost(){
+        return tmp.getPost(post_tmp_id);
+    }
+    
+    public List<Post> getAllPost(){
+        return tmp.getAllPost();
+    }
+    
+    public void deletePost(long id){
+         for (int i = 0; i < allPosts.size(); i++) {
+            if (allPosts.get(i).getId().equals(id)) {
+                allPosts.remove(i);
+                break;
+            }
+        }
+        tmp.deletePost(id);
+    }
     
     
     
@@ -236,6 +273,31 @@ public class AdminManagedBean implements Serializable {
 
     //***************************Getter and Setter**********************
     
+    public boolean isPostdetail() {
+        return postdetail;
+    }
+
+    public void setPostdetail(boolean postdetail,long id) {
+        this.postdetail = postdetail;
+        this.post_tmp_id=id;
+    }
+
+    public List<Post> getAllPosts() {
+        return allPosts;
+    }
+
+    public void setAllPosts(List<Post> allPosts) {
+        this.allPosts = allPosts;
+    }
+
+    public long getTmp_id_another() {
+        return tmp_id_another;
+    }
+
+    public void setTmp_id_another(long tmp_id_another) {
+        this.tmp_id_another = tmp_id_another;
+    }
+
     public long getTmp_id() {
         return tmp_id;
     }
@@ -250,15 +312,16 @@ public class AdminManagedBean implements Serializable {
 
     public void setCheckdetail(boolean checkdetail, long id) {
         this.checkdetail = checkdetail;
-        this.tmp_id=id;     
+        this.setTmp_id(id);    
     }
 
     public boolean isCheckreply() {
         return checkreply;
     }
 
-    public void setCheckreply(boolean checkreply) {
+    public void setCheckreply(boolean checkreply, long id) {
         this.checkreply = checkreply;
+        this.setTmp_id_another(id);
     }
 
     public List<Customer_Enquiry> getAllEnquirys() {

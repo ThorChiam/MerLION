@@ -9,6 +9,7 @@ import CI.Entity.Account;
 import CI.Entity.Announcement;
 import CI.Entity.Customer_Enquiry;
 import CRMS.Entity.Company;
+import CRMS.Entity.Post;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -40,5 +41,10 @@ public interface AdminSessionLocal {
     //About Enquiry
     public Customer_Enquiry getEnquiry(long id);
     public List<Customer_Enquiry> getAllEnquiry();
-    public void replyEnquiry(String answer,long id, String email);
+    public void replyEnquiry(String answer,String email, long id);
+    
+    //About Post
+    public Post getPost(long id);
+    public List<Post> getAllPost();
+    public void deletePost(long id);
 }

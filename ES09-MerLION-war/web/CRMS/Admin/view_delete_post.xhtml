@@ -33,33 +33,42 @@
         <b:container>
             <b:row styleClass="show-grid">
                 <b:column col-xs="5" col-sm="5" col-md="10">
-                    <p:panel header="User Account List">
+                    <p:panel header="Post List">
                         <h:form >            
-                            <p:dataTable var="all" value="#{AdminManagedBean.allAccounts}" id="msgs">
-                                <p:column headerText="Account Email">
-                                    <h:outputText value="#{all.email}"/>
+                            <p:dataTable var="all" value="#{AdminManagedBean.allPosts}" id="msgs">
+                                <p:column headerText="Post Id">
+                                    <h:outputText value="#{all.id}"/>
                                 </p:column>
 
-                                <p:column headerText="Company Name">
-                                    <h:outputText value="#{all.company.companyName}"/>
-                                </p:column>    
-                                
-                                <p:column headerText="Security Question">
-                                <h:outputText value="#{all.security_question}"/>
-                                </p:column>
-                                
-                                <p:column headerText="Security Answer">
-                                    <h:outputText value="#{all.security_answer}"/>
-                                </p:column>>
+                                <p:column headerText="Post Title">
+                                    <h:outputText value="#{all.title}"/>
+                                </p:column>       
 
-                                <p:column headerText="Activate/Deactivate">                                        
-                                    <p:selectBooleanButton id="value" valueChangeListener="#{AdminManagedBean.updateStatus(all.email, all.status)}" value="#{!AdminManagedBean.statusToboolean(all.status)}" onLabel="activated" offLabel="deactivated" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:180px">                                                            
-                                        <p:ajax update="msgs"/>                                       
-                                    </p:selectBooleanButton> 
-                                </p:column>      
+                                <p:column headerText="Details" >                                  
+                                    <p:commandButton value="Detail" actionListener="#{AdminManagedBean.setPostdetail(true, all.id)}" styleClass="ui-priority-primary" ajax="false" />
+                                </p:column>
+
+                                <p:column headerText="Delete">                               
+                                    <p:commandButton value="Delete"  actionListener="#{AdminManagedBean.deletePost(all.id)}" styleClass="ui-priority-primary" ajax="false"/>                             
+                                </p:column>
+
 
                             </p:dataTable>
 
+
+                            <h:form rendered="#{AdminManagedBean.postdetail}">
+                                <p:growl id="tmp" showDetail="true" />                                       
+
+                                <p:panel id="Post Date" header="Post Date">
+                                    <h:outputText value="#{AdminManagedBean.getPost().post_date}" />
+                                </p:panel>
+
+                                <p:panel id="Post Content" header="Post Content">
+                                    <h:outputText value="#{AdminManagedBean.getPost().content}" />
+                                </p:panel>
+
+                                <p:commandButton value="Back" update="tmp" actionListener="#{AdminManagedBean.setPostdetail(false,0)}" styleClass="ui-priority-primary" ajax="false"/>
+                            </h:form>                    
 
 
 
