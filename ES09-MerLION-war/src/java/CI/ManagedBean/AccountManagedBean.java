@@ -63,6 +63,16 @@ public class AccountManagedBean implements Serializable {
 //        asbl = new AccountSessionBean();
     }
 
+    //Admin 
+    public String checkAdmin() {
+        if (asbl.getAccount(email).getAccessRight().equals("Admin")) {
+            return "AdminMain";
+        } else {
+            return "main";
+    
+        }
+    }
+
     @PostConstruct
     public void init() {
         email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");

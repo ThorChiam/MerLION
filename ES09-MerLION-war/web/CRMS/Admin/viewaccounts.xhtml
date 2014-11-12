@@ -16,7 +16,7 @@
         <b:container>               
             <p:breadCrumb>
                 <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                <p:menuitem value="Home" url="/CRMS/Admin/AdminMain.xhtml" />
+                <p:menuitem value="Home" url="/AdminMain.xhtml" />
                 <p:menuitem value="User Account" url="/CRMS/Admin/viewaccounts.xhtml" />
                 <p:menuitem value="Company Profile" url="/CRMS/Admin/view_edit_delete_companys.xhtml" />
                 <p:menuitem value="Announcement" url="/CRMS/Admin/viewannouncement.xhtml" />
@@ -64,8 +64,9 @@
 
                                 <p:column headerText="Set Status">                                        
                                     <p:selectBooleanButton id="value" valueChangeListener="#{AdminManagedBean.updateStatus(all.email, all.status)}" value="#{!AdminManagedBean.statusToboolean(all.status)}" onLabel="activated" offLabel="deactivated" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:160px">                                                            
-                                        <p:ajax update="msgs"/>                                       
+                                        <p:ajax update="msgs"/>  
                                     </p:selectBooleanButton> 
+                                    
                                 </p:column>      
 
                             </p:dataTable>
