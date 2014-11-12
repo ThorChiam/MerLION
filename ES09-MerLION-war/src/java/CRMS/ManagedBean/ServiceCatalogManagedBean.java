@@ -6,7 +6,6 @@
 package CRMS.ManagedBean;
 
 import CRMS.Entity.Company;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -25,7 +25,7 @@ import javax.faces.event.ActionEvent;
  * @author ThorChiam
  */
 @ManagedBean(name = "scmb")
-@SessionScoped
+@ViewScoped
 public class ServiceCatalogManagedBean implements Serializable {
 
     /**
@@ -40,12 +40,14 @@ public class ServiceCatalogManagedBean implements Serializable {
     private Long serviceId = (long) 0;
     private List<String> wmsLocations;
     private int requiredCapacity;
+    private String email;
 
     public ServiceCatalogManagedBean() {
     }
 
     @PostConstruct
     public void init() {
+        email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
         services = scsl.getAllServices();
         companies = scsl.getCompanies();
     }
@@ -134,8 +136,9 @@ public class ServiceCatalogManagedBean implements Serializable {
 
     public void selectProvider(ActionEvent event) {
         WMSServiceCatalog rService = serviceDetail.get(0);
-        String content = "ServiceID: " + rService.getId() + " Required: " + requiredCapacity;
-        scsl.selectProvider(content, rService.getCompany());
+        String content = "ServiceID: " + rService.getId() + " Required: " + requiredCapacity + " From: " + email;
+        Long companyId = rService.getCompany().getId();
+        scsl.selectProvider(content, companyId);
         this.addMessage("Notification To Selected Provider:", "Sent Successfully!");
     }
 

@@ -20,8 +20,7 @@ import javax.faces.bean.ViewScoped;
  *
  * @author sunny
  */
-@ManagedBean(name = "omb")
-@SessionScoped
+@ManagedBean(name = "contractmb")
 @ViewScoped
 public class ContractManagedBean implements Serializable {
 
@@ -34,7 +33,8 @@ public class ContractManagedBean implements Serializable {
     public ContractManagedBean() {
     }
 
-    public void createCrontract() {
+    public void createCrontract(String content) {
+//        "ServiceID: " + rService.getId() + " Required: " + requiredCapacity + " From: " + email
         Date date = new java.util.Date();
         Timestamp tmp = new Timestamp(date.getTime());
         String sign_date = tmp.toString();

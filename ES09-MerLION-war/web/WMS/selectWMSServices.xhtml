@@ -131,7 +131,7 @@
                                 <p:commandButton value="Show Details" update=":form:Details" actionListener="#{scmb.initServiceId(service.id)}"/>
                             </p:column>
                         </p:dataTable>
-                        </h:form>
+                    </h:form>
                     <h:form id="form">
                         <p:dataTable id="Details" var="s" value="#{scmb.serviceDetail}">        
                             <p:column headerText="ID">
@@ -163,7 +163,7 @@
                                 <h:inputText value="#{scmb.requiredCapacity}" />
                             </p:column>
                             <p:column>
-                                <p:commandButton value="Select" actionListener="#{scmb.selectProvider}"/>
+                                <p:commandButton value="Select" action="serviceRequest" actionListener="#{scmb.selectProvider}"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>

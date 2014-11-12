@@ -34,5 +34,7 @@ public interface InternalCommunicationSessionLocal {
 
     public void deletenotification(String email, Long noti_Id);
 
+    public List<Notification> getServiceRequest(String email);
+
     public void remove();
 }

@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import CRMS.Entity.Company;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 @Table(name = "Notification")
@@ -68,7 +70,10 @@ public class Notification implements Serializable {
     }
 
     public void setRelease_time(Long release_time) {
-        this.release_time = release_time;
+        Date date = new Date(release_time);
+        SimpleDateFormat df2 = new SimpleDateFormat("yyyyMMdd");
+        String dateText = df2.format(date);
+        this.release_time = Long.valueOf(dateText);
     }
 
     public String getContent() {
