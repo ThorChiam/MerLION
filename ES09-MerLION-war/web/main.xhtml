@@ -26,19 +26,19 @@
                 <b:navLink value="My MerLION" href="CI/myMerlion.xhtml" rendered="#{facesContext.externalContext.sessionMap['userId'] != null}"></b:navLink>
                 <b:navLink value="About us" href="aboutUs.xhtml"></b:navLink>
                 <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>               
-                <b:dropMenu value="Services">
+               <!-- <b:dropMenu value="Services">
                     <b:navLink value="OES" href="/OES/main.xhtml"></b:navLink>
                     <b:navLink value="MRP" href="#"></b:navLink>
                     <b:navLink value="TMS" href="/TMS/sub-home.xhtml"></b:navLink>
                     <b:navLink value="Separated link" href="#"></b:navLink>
                     <b:navLink value="One more separated link" href="#"></b:navLink>
-                </b:dropMenu>
-                <b:navLink value="Help Desk" href="helpDesk.xhtml"></b:navLink>
+                </b:dropMenu> -->
+                <b:navLink value="Help Desk" href="CRMS/customerEnquire/makeEnquire.xhtml"></b:navLink>
 
             </b:navbarLinks>
 
             <h:form styleClass="navbar-form navbar-right">
-                <p:button value="Log In" outcome="signIn"/>
+                <b:button value="Log In" outcome="signIn"/>
                 &nbsp;
                 <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
             </h:form> 
@@ -66,7 +66,7 @@
                                     your business
                                 </p>
                                 <p>
-                                    <a class="btn btn-lg btn-primary" href="#">Sign up today</a>
+                                    <a class="btn btn-lg btn-primary" href="signUp.xhtml">Sign up today</a>
                                 </p>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                                     Know more details about Merlion Logistic
                                 </p>
                                 <p>
-                                    <a class="btn btn-lg btn-primary" href="#">Learn more</a>
+                                    <a class="btn btn-lg btn-primary" href="aboutUs.xhtml">Learn more</a>
                                 </p>
                             </div>
                         </div>
@@ -96,13 +96,13 @@
                         <div class="container">
                             <div class="carousel-caption">
                                 <h1>
-                                    Find Potential Business Partners
+                                    Sign In To Start Your Business
                                 </h1>
                                 <p>
                                     Grab business opportunities by looking up potential business partners
                                 </p>
                                 <p>
-                                    <a class="btn btn-lg btn-primary" href="#">View Company Profile List</a>
+                                    <a class="btn btn-lg btn-primary" href="signIn.xhtml">Sign In</a>
                                 </p>
                             </div>
                         </div>

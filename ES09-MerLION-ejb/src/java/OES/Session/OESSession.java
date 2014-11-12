@@ -13,13 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import CI.Entity.Account;
 import CRMS.Entity.Company;
-import OES.Entity.Enquiry;
-import OES.Entity.OES_Invoice;
-import OES.Entity.OES_Payment;
-import OES.Entity.Product;
-import OES.Entity.PurchaseOrder;
-import OES.Entity.Quotation;
-import OES.Entity.SalesOrder;
+import OES.Entity.*;
 import java.util.ArrayList;
 
 /**
@@ -27,7 +21,6 @@ import java.util.ArrayList;
  * @author sunny
  */
 @Stateless
-
 public class OESSession implements OESSessionLocal {
 
     @PersistenceContext
@@ -55,14 +48,14 @@ public class OESSession implements OESSessionLocal {
         Query q = em.createQuery("SELECT a FROM Product a WHERE a.id=:id");
         System.out.println("****************Product Name:"+name);
         q.setParameter("id", product_id);
-//        Product product = (Product) q.getSingleResult();
-//        product.setDescription(description);
-//        product.setName(name);
-//        product.setPrice(price);
-//        product.setQuantity(quantity);
-//        em.merge(product);
+       Product product = (Product) q.getSingleResult();
+       product.setDescription(description);
+       product.setName(name);
+       product.setPrice(price);
+       product.setQuantity(quantity);
+       em.merge(product);
     }
-
+   
     @Override
     public Product getProduct(long product_id) {
         Query q = em.createQuery("SELECT f FROM Product f WHERE f.id=:id");
@@ -116,36 +109,114 @@ public class OESSession implements OESSessionLocal {
         return false;
     }
 
-    //************************Enquiry***************************
+    //************************Enquiry****************************************************************************
+    
     @Override
-    public void createEnquiry(Account seller, Account buyer, Set<Product> products, List<Integer> quantity, String createdate) {
-        Enquiry tmp = new Enquiry();
-        tmp.setBuyer(buyer);
-        tmp.setSeller(seller);
-        tmp.setProduct(products);
-        tmp.setQuantity(quantity);
+    public void createEnquiry(Account seller, Account buyer,List<OrderList> orders,String createdate) {
+        System.out.println("createNew Enquire-Account:*****************************************************" + buyer);
+        System.out.println("createNew Enquire-Creation date:*****************************************************" + createdate);
+        System.out.println("createNew Enquire-OrderList:*****************************************************" + orders);
+        
+        Enquiry tmp = new Enquiry();        
         tmp.setCreatedate(createdate);
         em.persist(tmp);
+        
+        Account sellerAccount = em.find(Account.class, seller.getEmail());
+        Account buyerAccount = em.find(Account.class, buyer.getEmail());
+        tmp.setBuyer(buyerAccount);
+        tmp.setSeller(sellerAccount);
+        
+        for(OrderList orderList:orders)
+        {
+            OrderList ol = em.find(OrderList.class, orderList.getId());
+            tmp.getOrder().add(ol);
+            ol.setEnquiry(tmp);
+        }
+    }
+    
+    @Override
+    public OrderList createNewOrder(String qty,String name){
+        OrderList order=new OrderList();
+        
+        System.out.println("createNewOrder-Quantity:*****************************************************" + qty);
+        System.out.println("createNewOrder-Name:*****************************************************" + name);
+        
+        
+        Query p = em.createQuery("SELECT a FROM Product a WHERE a.name=:name");
+        p.setParameter("name",name);
+        Product pro=new Product();
+        pro=(Product)p.getSingleResult();
+        
+        order.setQuantity(qty);
+        order.setProduct(pro);
+        em.persist(order);
+        return order;
+    }
+  
+    
+    @Override
+    public Account getBuyerAccount(String email){
+       Query p = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");
+       p.setParameter("email", email);
+           return (Account) p.getSingleResult();
     }
     
     @Override
     public String getBuyName(String email){
-           
-        Query q = em.createQuery("SELECT m.Company.companyName FROM Account m WHERE m.email=:email");
-          
-          q.setParameter("email", email);
-          return (String) q.getSingleResult();
-         
+       Query p = em.createQuery("SELECT m.Company.companyName FROM Account m WHERE m.email=:email");
+       p.setParameter("email", email);
+       return (String) p.getSingleResult();
+       
     }
     
-
     @Override
-    public Enquiry getEnquiry(long enquiry_id) {
-        Query q = em.createQuery("SELECT f FROM Enquiry f WHERE f.id=:id");
-        q.setParameter("id", enquiry_id);
-        return (Enquiry) q.getSingleResult();
+    public List<Product> getSellerProducts(Long id){
+        Query p=em.createQuery("SELECT m FROM Product m WHERE m.company.id=:id");
+        p.setParameter("id",id);
+       return p.getResultList();
     }
+    
+    @Override
+    public List<String> getSellerProductsName(Long id){
+        Query p=em.createQuery("SELECT m.name FROM Product m WHERE m.company.id=:id");
+        p.setParameter("id",id);
+       return p.getResultList();
+    }
+    @Override
+    public Account getSellerAccount(String name){
+        Query p = em.createQuery("SELECT m.email FROM Company m WHERE m.companyName=:name");
+        p.setParameter("name", name);
+        String email=(String)p.getSingleResult();
+         System.out.println("sellerEmail:*****************************************************" + email);
+       
+        Query q = em.createQuery("SELECT m FROM Account m WHERE m.email=:email");
+        q.setParameter("email",email);
+        
+        return (Account) q.getSingleResult();
+    }
+    
+    @Override
+    public Product getProductByName(String name){
+        Query p=em.createQuery("SELECT m FROM Product m WHERE m.name=:name");
+        p.setParameter("name",name);
+        return (Product) p.getSingleResult();
+    }
+    
+    @Override
+    public List<String> getALLcompany(String email){
+       Query p = em.createQuery("SELECT m.Company.companyName FROM Account m WHERE m.email<>:email ");
+       p.setParameter("email", email);
+       return p.getResultList();
+    }
+    
+   @Override
+   public List<OrderList> getOrderList(){
+       Query p=em.createQuery("SELECT m FROM OrderList m ");
+       return  p.getResultList();
+       
+   }
 
+    /*
     //Both seller/buyer can see enquiries
     @Override
     public List<Enquiry> getAllEnquiry(String email) {
@@ -156,34 +227,113 @@ public class OESSession implements OESSessionLocal {
         q.setParameter("b", 3);
         return q.getResultList();
     }
-
+//*************************************************Enquiry History******************************************************
+   */
     @Override
-    public void deleteEnquiry(long enquiry_id, String email) {
-        Query q = em.createQuery("SELECT f FROM Enquiry f Where f.id=:id");
-        q.setParameter("id", enquiry_id);
-        Enquiry tmp = (Enquiry) q.getSingleResult();
-
-        if (tmp.getDelete_status() == 1 || tmp.getDelete_status() == 3) {
-            Query p = em.createQuery("DELETE FROM Enquiry f WHERE f.id=:id");
-            p.setParameter("id", enquiry_id);
-            p.executeUpdate();
-        }
-        else if(email.equals(tmp.getBuyer().getEmail())) tmp.setDelete_status(1);
-        else tmp.setDelete_status(3);    
+    public List<Enquiry> getAllEnquiry(String email){
+        Query q = em.createQuery("SELECT a FROM  Enquiry a WHERE a.buyer.email=:email");
+        q.setParameter("email",email); 
+        return  q.getResultList();
     }
-
     
-    
-    
-    //***************************Quotation*******************
     @Override
-    public void createQuotation(Enquiry enquiry, List<String> delivery_date, String createdate) {
-        Quotation tmp = new Quotation();
-        tmp.setDeliver_date(delivery_date);
-        tmp.getCreatedate();
-        tmp.setEnquiry(enquiry);
-        em.persist(tmp);
+     public Enquiry getSingleEnquiry(Long id){
+         System.out.println("getSingleEnquiry:*****************************************************" + id);
+         Query q = em.createQuery("SELECT a FROM  Enquiry a WHERE a.id=:id");
+         q.setParameter("id",id); 
+        return  (Enquiry)q.getSingleResult();
+        
+     }
+     @Override
+     public void deleteEnquire(Long id){
+          Query p = em.createQuery("DELETE FROM  OrderList a WHERE a.enquiry.id=:id");
+          p.setParameter("id",id);
+          p.executeUpdate();
+         
+         Query q = em.createQuery("DELETE FROM  Enquiry a WHERE a.id=:id");
+          q.setParameter("id",id); 
+          q.executeUpdate();
+         
+     }
+    
+    //***************************Quotation*****************************************************************************************
+     //**************************View-upcoming Enquiry***************************************************************************************
+   @Override
+   public List<Enquiry> viewUpcomingEnquire(String email){
+       
+         Query q = em.createQuery("SELECT a FROM  Enquiry a WHERE a.seller.email=:email");
+         q.setParameter("email",email); 
+         
+         return  q.getResultList();
+        
+   }
+    //**************************Create New Quotation***************************************************************************************
+   
+   @Override
+   public OES.Entity.Enquiry viewEnquireDetails(Long id){
+       Query q = em.createQuery("SELECT a FROM  Enquiry a WHERE a.id=:id");
+       q.setParameter("id",id); 
+       return (OES.Entity.Enquiry)q.getSingleResult();
+   }
+   
+   
+   @Override
+   public List<OrderList> getOrderDetails(Long id){
+       Query q = em.createQuery("SELECT a FROM OrderList a WHERE a.enquiry.id=:id ");
+       q.setParameter("id",id); 
+       return q.getResultList();
+   }
+   
+   @Override
+   public List<OrderListSub> createSubOrderList(Long id){
+     
+       Enquiry en=new Enquiry();
+       List<OrderListSub> olistsubs=new ArrayList();
+       List<OrderList> olists=new ArrayList();
+       
+       Query q = em.createQuery("SELECT e FROM Enquiry e WHERE e.id=:id ");
+       q.setParameter("id",id); 
+       en=(Enquiry) q.getSingleResult();
+       
+       Query p = em.createQuery("SELECT e FROM OrderList e WHERE e.enquiry.id=:id ");
+       p.setParameter("id",id); 
+       olists=p.getResultList();
+       
+       for(int i=0;i<olists.size();i++){
+           OrderListSub sub=new OrderListSub();
+           sub.setEnquiry(en);
+           sub.setOrder(olists.get(i));
+           double unitprice=olists.get(i).getProduct().getPrice();
+           sub.setUnitprice(unitprice);
+           double subtotal=unitprice*Integer.parseInt(olists.get(i).getQuantity());
+           sub.setSubtotal(subtotal);
+           em.persist(sub);
+           
+           olistsubs.add(sub);
+           
+       }
+       return olistsubs;
+   }
+       
+     //***********************************************Create New Quotation***********************************************8
+   @Override
+    public void createNewQuotation(Long id,double total,String date){
+       
+       Enquiry en=new Enquiry();
+      
+       Query q = em.createQuery("SELECT e FROM Enquiry e WHERE e.id=:id ");
+       q.setParameter("id",id); 
+       en=(Enquiry) q.getSingleResult();
+       Quotation quo=new Quotation();
+       quo.setEnquiry(en);
+       quo.setQdate(date);
+       quo.setTotal(total);
+       
+       em.persist(quo);
+       en.setQuotation(quo);
+    
     }
+   
 
     @Override
     public Quotation getQuotation(long quotation_id) {
@@ -191,38 +341,156 @@ public class OESSession implements OESSessionLocal {
         q.setParameter("id", quotation_id);
         return (Quotation) q.getSingleResult();
     }
-
+    
     @Override
-    public List<Quotation> getAllQuotation(String email) {
-        Query q = em.createQuery("SELECT f FROM Quotation f WHERE (f.enquiry.buyer.email=:email AND f.delete_status<>:a) OR (f.enquiry.seller.email=:emails AND f.delete_status<>:b)");
-        q.setParameter("email", email);
-        q.setParameter("emails", email);
-        q.setParameter("a", 1);
-        q.setParameter("b", 3);
-        return q.getResultList();
+    public List<Quotation> viewQuotaionHistory(String email){
+        Query q = em.createQuery("SELECT f.quotation FROM Enquiry f WHERE f.seller.email=:email AND f.quotation IS NOT NULL");
+        q.setParameter("email",email);
+        //q.setParameter("a", null);
+        System.out.println("viewQuotaionHistory:*****************************************************" + q);
+        return q.getResultList();  
     }
-
+    
     @Override
-    public void deleteQuotation(long quotation_id, String email) {
-        Query q = em.createQuery("SELECT f FROM Quotation f Where f.id=:id");
-        q.setParameter("id", quotation_id);
-        Quotation tmp = (Quotation) q.getSingleResult();
-
-        if (tmp.getDelete_status() == 1 || tmp.getDelete_status() == 3) {
-            Query p = em.createQuery("DELETE FROM Quotation f WHERE f.id=:id");
-            p.setParameter("id", quotation_id);
-            p.executeUpdate();
+    public List<OrderListSub> displayQuotationDetails(long id){
+        Query q = em.createQuery("SELECT f FROM Quotation f WHERE f.id=:id");
+        q.setParameter("id",id);
+        Quotation quo=new Quotation();
+        quo=(Quotation)q.getSingleResult();
+        System.out.println("dispalyQuotaionDetails-session bean:*****************************************************" + quo);
+        System.out.println("dispalyOrderListSub-session bean:*****************************************************" + quo.getEnquiry().getOrdersub());
+        //List<OrderListSub> sublist=new ArrayList();
+       return quo.getEnquiry().getOrdersub();
+            
         }
-        else if(email.equals(tmp.getEnquiry().getBuyer().getEmail())) tmp.setDelete_status(1);
-        else tmp.setDelete_status(3);   
-    }
-
     
-    
-    
+   @Override
+   public void deleteQuotation(long id){
+       
+          Query q = em.createQuery("DELETE FROM  OrderListSub a WHERE a.enquiry.quotation.id=:id");
+          q.setParameter("id",id); 
+          q.executeUpdate();
+         
+        
+          Query p = em.createQuery("DELETE FROM  OrderList b WHERE b.enquiry.quotation.id=:id");
+          p.setParameter("id",id);
+          p.executeUpdate();
+          
+         
+          
+          Query pf = em.createQuery("DELETE FROM  Enquiry c WHERE c.quotation.id=:id");
+          pf.setParameter("id",id);
+          pf.executeUpdate();
+         
+         
+          Query qp = em.createQuery("DELETE FROM Quotation d WHERE d.id=:id");
+          qp.setParameter("id",id); 
+          qp.executeUpdate();
+   }
     
     
     //*********************PurchaseOrder*********************
+   
+   @Override
+   public String getSenderName(String email){
+       Query q=em.createQuery("SELECT a.Company.companyName FROM Account a WHERE a.email=:email");
+       q.setParameter("email",email);
+       return (String)q.getSingleResult();
+   }
+   
+   @Override 
+   public void createPurchaseOrder(Account sender,Account receiver,List<OrderList> orders,String createdate){
+       
+        System.out.println("createPurchaseOrder-Account:*****************************************************" + sender);
+        System.out.println("creatPurchaseOrderCreation date:*****************************************************" + createdate);
+        System.out.println("createPurchaseOrder-OrderList:*****************************************************" + orders);
+        
+        PurchaseOrder po=new PurchaseOrder();
+        po.setCreatedate(createdate);
+        em.persist(po);
+        
+        Account sellerAccount = em.find(Account.class,receiver.getEmail());
+        Account buyerAccount = em.find(Account.class, sender.getEmail());
+        po.setSender(buyerAccount);
+        po.setReceiver(sellerAccount);
+        
+      
+        for(OrderList orderList:orders)
+        {
+            OrderList ol = em.find(OrderList.class, orderList.getId());
+            po.getOrder().add(ol);
+            ol.setPorder(po);
+        }
+    }
+   
+   @Override
+   public List<PurchaseOrder> getAllPurchaseOrder(String email){
+       
+        Query q = em.createQuery("SELECT a FROM PurchaseOrder a WHERE a.sender.email=:email");
+        q.setParameter("email",email); 
+        return  q.getResultList();
+   }
+   @Override
+   public void deletePurchaseOrder(long id){
+       
+          Query p = em.createQuery("DELETE FROM  OrderList a WHERE a.porder.id=:id");
+          p.setParameter("id",id);
+          p.executeUpdate();
+         
+         Query q = em.createQuery("DELETE FROM PurchaseOrder b WHERE b.id=:id");
+          q.setParameter("id",id); 
+          q.executeUpdate();
+         
+     }
+      
+   @Override
+   public PurchaseOrder getSinglePurchaseOrder(long id){
+       
+        System.out.println("getPurchaseOrder:*****************************************************" + id);
+         Query q = em.createQuery("SELECT a FROM PurchaseOrder a WHERE a.id=:id");
+         q.setParameter("id",id); 
+        return  (PurchaseOrder )q.getSingleResult();
+       
+       
+   }
+   
+   //***********************************Sales Order*******************************************************************
+   @Override
+   public List<PurchaseOrder> viewIncmoingPorder(String email){
+         Query q = em.createQuery("SELECT a FROM PurchaseOrder a WHERE a.receiver.email=:email");
+         System.out.println("getPurchaseOrder-Email:*****************************************************" + email);
+         q.setParameter("email",email); 
+         return q.getResultList();
+       
+   }
+   
+   @Override
+   public List<OrderList> viewPurchaseOrderDetails(long id){
+        Query q = em.createQuery("SELECT a FROM OrderList a WHERE a.porder.id=:id");
+        System.out.println("viewPurchaseOrderDetails:*****************************************************" + id);
+        q.setParameter("id",id); 
+        return q.getResultList();
+       
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+       
+   }
+   
+   
+   
+   
+   
+   /*
     @Override
     public void createPurchaseOrder(Account buyer, Account seller, double taxrate, List<Integer> quantity, Set<Product> product, String createdate, String deliverydate) {
         PurchaseOrder tmp = new PurchaseOrder();
@@ -305,8 +573,7 @@ public class OESSession implements OESSessionLocal {
         q.executeUpdate();
     }
 
-    
-    
+   
     
     //***************************Payment************************
     @Override
@@ -336,6 +603,7 @@ public class OESSession implements OESSessionLocal {
         return (OES_Payment) q.getSingleResult();
     }
 
+    
     @Override
     public List<OES_Payment> getAllPayment(String email) {
         Query q = em.createQuery("SELECT f FROM OES_Payment f WHERE (f.purchase.sender.email=:email AND f.delete_status<>:a) OR (f.purchase.receiver.email=:emails AND f.delete_status<>:b)");
@@ -428,7 +696,7 @@ public class OESSession implements OESSessionLocal {
         }
         
         return tmp;
-        */
+       
         return null;
     }
     
@@ -460,5 +728,7 @@ public class OESSession implements OESSessionLocal {
         List<Product> result = tmp.getProducts();  
         return result;
     }
+*/
 
-}
+
+

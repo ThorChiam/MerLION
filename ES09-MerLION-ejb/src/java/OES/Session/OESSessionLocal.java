@@ -11,12 +11,14 @@ import javax.ejb.Local;
 import CI.Entity.Account;
 import CRMS.Entity.Company;
 import OES.Entity.Enquiry;
-import OES.Entity.OES_Invoice;
-import OES.Entity.OES_Payment;
+//import OES.Entity.OES_Invoice;
+//import OES.Entity.OES_Payment;
+import OES.Entity.OrderList;
+import OES.Entity.OrderListSub;
 import OES.Entity.Product;
 import OES.Entity.PurchaseOrder;
 import OES.Entity.Quotation;
-import OES.Entity.SalesOrder;
+//import OES.Entity.SalesOrder;
 
 /**
  *
@@ -36,30 +38,68 @@ public interface OESSessionLocal {
    
     
     //********************Buyer-Enquiry**************************
-    public void createEnquiry(Account seller, Account buyer, Set<Product> products, List<Integer> quantity, String createdate);
-    public Enquiry getEnquiry(long enquiry_id);
-    public List<Enquiry> getAllEnquiry(String email);//两边都能拿？？？？？
-    public void deleteEnquiry(long enquiry_id, String email);
+    public void createEnquiry(Account seller, Account buyer,List<OrderList> orders,String createdate);
+   
+    //public void deleteEnquiry(long enquiry_id, String email);
     public String getBuyName(String email);
+    public List<String> getALLcompany(String email);
+    public Account getBuyerAccount(String email);
+    public Account getSellerAccount(String name);
+    public List<Product> getSellerProducts(Long id);
+    public List<String> getSellerProductsName(Long id);
+    public Product getProductByName(String name);
+    public OrderList createNewOrder(String qty,String name);
+    public List<OrderList> getOrderList();
+    //***************Enquiry History******************************************************88
+    public List<Enquiry> getAllEnquiry(String email);//两边都能拿？？？？？
+    public Enquiry getSingleEnquiry(Long id);
+    public void deleteEnquire(Long id);
+  
     
     
     
     //********************Seller-Quotation***********************
-    public void createQuotation(Enquiry enquiry, List<String> delivery_date, String createdate);
+    //public void createQuotation(Enquiry enquiry, List<String> delivery_date, String createdate);
     public Quotation getQuotation(long quotation_id);
-    public List<Quotation> getAllQuotation(String email);//两边都能拿？？？？
-    public void deleteQuotation(long quotation_id, String email);//只能buyer删
     
+    //public void deleteQuotation(long quotation_id, String email);//只能buyer删
     
-    
+    public List<Enquiry> viewUpcomingEnquire(String email);
+    public OES.Entity.Enquiry viewEnquireDetails(Long id);
+    public List<OrderList> getOrderDetails(Long id);
+   
+     public List<OrderListSub> createSubOrderList(Long id);
+     public void createNewQuotation(Long id,double total,String date);
+     public List<Quotation> viewQuotaionHistory(String email);
+    public List<OrderListSub> displayQuotationDetails(long id);
+    public void deleteQuotation(long id);
+     
+     
+     
+     
+
     //********************Buyer-Purchase Order*******************
-    public void createPurchaseOrder(Account buyer, Account seller, double taxrate, List<Integer> quantity, Set<Product> product, String createdate, String deliverydate);
-    public PurchaseOrder getPurchaseOrder(long purchase_id);
-    public List<PurchaseOrder> getAllPurchaseOrder(String email);//两边都能拿？？？？
-    public void deletePurchaseOrder(long purchase_id, String email);//只能buyer删
+    //public void createPurchaseOrder(Account buyer, Account seller, double taxrate, List<Integer> quantity, Set<Product> product, String createdate, String deliverydate);
+   // public PurchaseOrder getPurchaseOrder(long purchase_id);
+   //public List<PurchaseOrder> getAllPurchaseOrder(String email);//两边都能拿？？？？
+    //public void deletePurchaseOrder(long purchase_id, String email);//只能buyer删
+     
+    //*************************************New-Purchase Order******************************
+    public String getSenderName(String email);
+    public void createPurchaseOrder(Account sender,Account receiver,List<OrderList> orders,String createdate);
+     public List<PurchaseOrder> getAllPurchaseOrder(String email);
+     public void deletePurchaseOrder(long id);
+     public PurchaseOrder getSinglePurchaseOrder(long id);
+    
+   
+    //****************************************Sales Order*************************************
+     
+     public List<PurchaseOrder> viewIncmoingPorder(String email);
+     public List<OrderList> viewPurchaseOrderDetails(long id);
     
     
     
+    /*
     //********************Seller-Sales Order*********************
     public void createSalesOrder(PurchaseOrder purchaseorder, String createdate);
     public SalesOrder getSalesOrder(long sales_id);
@@ -89,4 +129,6 @@ public interface OESSessionLocal {
     public Company getTheCompany(long company_id);
     public List<Company> getTheCompanies();
     public List<Product> getTheProducts(long company_id);
+    
+    */
 }

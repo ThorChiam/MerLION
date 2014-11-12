@@ -52,45 +52,41 @@
                 <b:column col-xs="6" col-sm="6" col-md="10">
 
                     <h:form id="form">
-                        <p:dataTable var="en" value="#{quo.viewQuotaionHistory()}">
+                        <p:dataTable var="en" value="#{quo.viewUpcomingEnquire()}">
                                                       
                         
                             
                              <f:facet name="header">
-                               Quotation History
+                               Upcoming Enquiries
                             </f:facet>
 
-                            <p:column headerText="Quotation ID">
+                            <p:column headerText="Enquiry ID">
                                 <h:outputText value="#{en.id}" />
                             </p:column>
 
-                            <p:column headerText="Quotation Date:">
-                                <h:outputText value="#{en.qdate}" />
+                            <p:column headerText="From Buyer:">
+                                <h:outputText value="#{en.buyer.company.companyName}" />
                             </p:column>
 
-                            <p:column headerText="Total Amount">
-                                <h:outputText value="#{en.total}" />
+                            <p:column headerText="To Seller">
+                                <h:outputText value="#{en.seller.company.companyName}" />
                             </p:column>
 
+                            <p:column headerText="Enquiry Date">
+                                <h:outputText value="#{en.createdate}" />
+                            </p:column>
                             
                             <p:column headerText="Details">
                                 
-                                <p:button outcome="viewquotationDetail" value="View" icon="ui-icon-star">
-                                    <f:param name="quoId" value="#{en.id}" />
+                                <p:button outcome="viewenquireDetail" value="View" icon="ui-icon-star">
+                                    <f:param name="enId" value="#{en.id}" />
                                 </p:button>
 
-                            </p:column>
-                            
-                            
-                            <p:column headerText="Delete">
-
-                                <p:commandButton value="Delete" actionListener="#{quo.deleteQuotation(en.id)}" styleClass="ui-priority-primary" ajax="false"/>
-                                
                             </p:column>
 
                            
                             <f:facet name="footer">
-                                You have made total #{quo.quoSize} quotations.
+                                You have made total #{quo.enSize} Enquiries.
                             </f:facet>
 
                         </p:dataTable>

@@ -13,25 +13,21 @@ import java.util.Set;
 import javax.ejb.EJB;
 import OES.Session.OESSessionLocal;
 import CI.Entity.Account;
-import OES.Entity.Enquiry;
-import OES.Entity.OES_Invoice;
-import OES.Entity.OES_Payment;
-import OES.Entity.Product;
-import OES.Entity.PurchaseOrder;
-import OES.Entity.Quotation;
-import OES.Entity.SalesOrder;
+import OES.Entity.*;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import org.primefaces.event.CellEditEvent;
 
 /**
  *
  * @author sunny
  */
+
 @ManagedBean(name = "omb")
 @ViewScoped
 public class OESManagedBean implements Serializable {
@@ -39,7 +35,6 @@ public class OESManagedBean implements Serializable {
     @EJB
     private OESSessionLocal osbl;
 
-    private String email;
     //Product
     private String name;
     private String description;
@@ -47,14 +42,30 @@ public class OESManagedBean implements Serializable {
     private int quantity;
     private long product_id;
     private Product product;
+    private int proSize;
 
     //Enquiry
     private Account seller;
     private Account buyer;
-    private Set<Product> products;
-    private List<Integer> quantitys = new ArrayList();
+    private List<Product> products;
+    private List<String> selectedNames;
+    private Set<Product> selectedProducts;
+    private List<String> productsN;
+    private List<String> quantities = new ArrayList();
+    private List<String> quantitiesEntered = new ArrayList();
+    private String today;
+    private String qty;
+    
+    private List<OrderList> orders=new ArrayList();
+    private OrderList order;
+
     private long enquiry_id;
     private String delete_status_enquiry;
+    private List<Account> sellers;
+    private List<String> sellerName;
+    private String buyerName;
+    private String sellerSelected;
+    private int n=0;
 
     //Quotation
     private Enquiry enquiry;
@@ -62,6 +73,7 @@ public class OESManagedBean implements Serializable {
     private long quotation_id;
     private String delete_status_quotation;
     private Quotation quotation;
+    private Date edate;
 
     //PurchaseOrder
     private double taxrate;
@@ -69,24 +81,7 @@ public class OESManagedBean implements Serializable {
     private String deliverydate;
     private String delete_status_purchase;
 
-    //SalesOrder
-    private PurchaseOrder purchaseorder;
-    private long sales_id;
-    private SalesOrder salesorder;
-
-    //Payment
-    private String paymentdate;
-    private String paymenttype;
-    private String status;
-    private long payment_id;
-    private String delete_status_payment;
-
-    //Invoice
-    private OES_Payment payment;
-    private long invoice_id;
-    private String notes;
-    private String delete_status_invoice;
-    private OES_Invoice invoice;
+  
 
     private String statusMessage;
     private List<Product> productList;
@@ -95,15 +90,16 @@ public class OESManagedBean implements Serializable {
 
     public OESManagedBean() {
     }
-
+    
     @PostConstruct
     public void init() {
-        email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
-        if (email != null) {
-            allProducts = osbl.getAllProduct(email);
-        }
+        allProducts = osbl.getAllProduct(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId").toString());
+        proSize=allProducts.size();
     }
-
+      
+  
+    
+    
     //********************Product********************************
     public void createProduct(String email) {
 
@@ -135,18 +131,14 @@ public class OESManagedBean implements Serializable {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
+    
     }
+    
+
 
     public Product getProduct() {
         product = osbl.getProduct(product_id);
         return product;
-    }
-
-    public List<Product> getProductList(Long id) {
-        System.out.println("********test product id:" + id);
-
-        productList = osbl.testProduct(id);
-        return productList;
     }
 
     public void passValue(Long value) {
@@ -158,24 +150,88 @@ public class OESManagedBean implements Serializable {
     }
 
     public void deleteProduct(Long id) {
+        
+        for(int i = 0; i <= allProducts.size(); i++)
+        {
+            if(allProducts.get(i).getId().equals(id))
+            {
+                allProducts.remove(i);
+                break;
+            }
+        }
+            
         osbl.deleteProduct(id);
         System.out.println("THIS IS PRODUCT ID: " + id);
     }
 
     //********************Buyer-Enquiry**************************
-    public void createEnquiry() {
-        Date date = new java.util.Date();
-        Timestamp tmp = new Timestamp(date.getTime());
+    public String getBuyName(String email) {
+        buyerName = osbl.getBuyName(email);
+
+        java.util.Date date = new java.util.Date();
+        edate = new Timestamp(date.getTime());
+        sellerName = osbl.getALLcompany(email);
+
+        /* String name=getSellerSelected();
+         seller = osbl.getSellerAccount(sellerSelected);
+         products = osbl.getSellerProducts(seller);
+         */
+        return buyerName;
+    }
+
+    public void displaySellerProducts() {
+        seller = osbl.getSellerAccount(sellerSelected);
+        System.out.println("sellerName:*****************************************************" + sellerSelected);
+
+        Long id = seller.getCompany().getId();
+        products = osbl.getSellerProducts(id);
+        productsN = osbl.getSellerProductsName(id);
+        System.out.println("Selected Products:*****************************************************" + selectedNames);
+        
+        int size=selectedNames.size();
+        //quantities.add(qty);
+        for(int i=0;i<size;i++){
+            orders.add(osbl.createNewOrder("0",selectedNames.get(i)));
+        }
+        
+        
+    }
+
+    public void addToQuantities(ActionEvent event) {
+       
+        System.out.println("Selected Products Quantities 1:*****************************************************" + qty);
+        OrderList ol=new OrderList();
+        Product p=new Product();
+        //p=osbl.getProductByName(selectedNames.get(n));
+        System.out.println("Selected Products Names*****************************************************" + selectedNames.get(n));
+        
+       
+       
+        System.out.println("Selected Products Quantities 2:*****************************************************" + qty);
+        
+    }
+
+    public void createEnquiry(String email) {
+        //edate = new java.util.Date();
+        Timestamp tmp = new Timestamp(edate.getTime());
+        buyerName = osbl.getBuyName(email);
+        sellerName = osbl.getALLcompany(email);
+        System.out.println("sellerName:*****************************************************" + sellerName);
         String createdate = tmp.toString();
-        osbl.createEnquiry(seller, buyer, products, quantitys, createdate);
+        buyer = osbl.getBuyerAccount(email);
+        seller = osbl.getSellerAccount(sellerSelected);
+        
+        products = osbl.getSellerProducts(seller.getCompany().getId());
+        
+        
+        
+        //osbl.createEnquiry(seller, buyer, selectedProducts, quantities, createdate);
         statusMessage = "A new enquiry is successfully created.";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Status: " + statusMessage, ""));
-    }
 
-//    public String getBuyName(String email){
-//        return osbl.getBuyName(email);
-//    }
+    }
+  /*
     public Enquiry getEnquiry() {
         enquiry = osbl.getEnquiry(enquiry_id);
         return enquiry;
@@ -184,16 +240,17 @@ public class OESManagedBean implements Serializable {
     public List<Enquiry> getAllEnquiry(String email) {
         return osbl.getAllEnquiry(email);
     }
+   
 
     public void deleteEnquiry(String email) {
         osbl.deleteEnquiry(enquiry_id, email);
     }
-
+*/
     //********************Seller-Quotation***********************
     /*public List<String> ATPcheck(Enquiry enquiry) {
      return osbl.ATPcheck(enquiry);
      }
-     */
+     
     public void createQuotation() {
         statusMessage = "A new quotation is successfully created.";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -203,31 +260,26 @@ public class OESManagedBean implements Serializable {
         String createdate = tmp.toString();
         osbl.createQuotation(enquiry, delivery_date, createdate);
     }
+    
 
     public Quotation getQuotation() {
         quotation = osbl.getQuotation(quotation_id);
         return quotation;
     }
 
-    public List<Quotation> getAllQuotation(String email) {//两边都能拿？？？？
-        return osbl.getAllQuotation(email);
-    }
-
-    public void deleteQuotation(String email) {//只能buyer删?
-        osbl.deleteQuotation(product_id, email);
-    }
 
     //********************Buyer-Purchase Order*******************
-    public void createPurchaseOrder() {
-        statusMessage = "A new purchase order is successfully created.";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "Status: " + statusMessage, ""));
-        Date date = new java.util.Date();
-        Timestamp tmp = new Timestamp(date.getTime());
-        String createdate = tmp.toString();
-        osbl.createPurchaseOrder(buyer, seller, taxrate, quantitys, products, createdate, deliverydate);
-    }
-
+   
+     public void createPurchaseOrder() {
+     statusMessage = "A new purchase order is successfully created.";
+     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+     "Status: " + statusMessage, ""));
+     Date date = new java.util.Date();
+     Timestamp tmp = new Timestamp(date.getTime());
+     String createdate = tmp.toString();
+     osbl.createPurchaseOrder(buyer, seller, taxrate, quantitys, products, createdate, deliverydate);
+     }
+     
     public PurchaseOrder getPurchaseOrder() {
         purchaseorder = osbl.getPurchaseOrder(purchase_id);
         return purchaseorder;
@@ -266,13 +318,13 @@ public class OESManagedBean implements Serializable {
     }
 
     //********************Buyer-Payment**************************
-   /* public void createPayment() {
+    public void createPayment() {
      statusMessage = "Please finish your payment soon. Thanks!";
      FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
      "Status: " + statusMessage, ""));
      osbl.createPayment(paymentdate, paymenttype, status, purchaseorder);
      }
-     */
+     
     public void updatePaymentStatus() {
         osbl.updatePaymentStatus(payment_id, status);
     }
@@ -313,7 +365,7 @@ public class OESManagedBean implements Serializable {
     public void deleteInvoice(String email) {
         osbl.deleteInvoice(invoice_id, email);
     }
-
+*/
     //******************GETTER AND SETTER***************************
     public OESSessionLocal getOsbl() {
         return osbl;
@@ -354,6 +406,7 @@ public class OESManagedBean implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+        //quantityList.add();
     }
 
     public long getProduct_id() {
@@ -381,20 +434,28 @@ public class OESManagedBean implements Serializable {
         this.buyer = buyer;
     }
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 
-    public List<Integer> getQuantitys() {
-        return quantitys;
+    public List<String> getQuantities() {
+        return quantities;
     }
 
-    public void setQuantitys(List<Integer> quantitys) {
-        this.quantitys = quantitys;
+    public void setQuantities(List<String> quantities) {
+        this.quantities = quantities;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 
     public long getEnquiry_id() {
@@ -437,69 +498,8 @@ public class OESManagedBean implements Serializable {
         this.purchase_id = purchase_id;
     }
 
-    public PurchaseOrder getPurchaseorder() {
-        return purchaseorder;
-    }
 
-    public void setPurchaseorder(PurchaseOrder purchaseorder) {
-        this.purchaseorder = purchaseorder;
-    }
-
-    public long getSales_id() {
-        return sales_id;
-    }
-
-    public void setSales_id(long sales_id) {
-        this.sales_id = sales_id;
-    }
-
-    public String getPaymentdate() {
-        return paymentdate;
-    }
-
-    public void setPaymentdate(String paymentdate) {
-        this.paymentdate = paymentdate;
-    }
-
-    public String getPaymenttype() {
-        return paymenttype;
-    }
-
-    public void setPaymenttype(String paymenttype) {
-        this.paymenttype = paymenttype;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public long getPayment_id() {
-        return payment_id;
-    }
-
-    public void setPayment_id(long payment_id) {
-        this.payment_id = payment_id;
-    }
-
-    public long getInvoice_id() {
-        return invoice_id;
-    }
-
-    public void setInvoice_id(long invoice_id) {
-        this.invoice_id = invoice_id;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
+    
 
     public String getDelete_status_enquiry() {
         return delete_status_enquiry;
@@ -525,21 +525,7 @@ public class OESManagedBean implements Serializable {
         this.delete_status_purchase = delete_status_purchase;
     }
 
-    public String getDelete_status_payment() {
-        return delete_status_payment;
-    }
-
-    public void setDelete_status_payment(String delete_status_payment) {
-        this.delete_status_payment = delete_status_payment;
-    }
-
-    public String getDelete_status_invoice() {
-        return delete_status_invoice;
-    }
-
-    public void setDelete_status_invoice(String delete_status_invoice) {
-        this.delete_status_invoice = delete_status_invoice;
-    }
+   
 
     public List<Product> getAllProducts() {
         return allProducts;
@@ -547,6 +533,186 @@ public class OESManagedBean implements Serializable {
 
     public void setAllProducts(List<Product> allProducts) {
         this.allProducts = allProducts;
+    }
+
+    public List<Account> getSellers() {
+        return sellers;
+    }
+
+    public void setSellers(List<Account> sellers) {
+        this.sellers = sellers;
+    }
+
+    public Date getEdate() {
+        return edate;
+    }
+
+    public void setEdate(Date edate) {
+        this.edate = edate;
+    }
+
+    public List<String> getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(List<String> sellerName) {
+        this.sellerName = sellerName;
+    }
+
+    public String getBuyerName() {
+        return buyerName;
+    }
+
+    public void setBuyerName(String buyerName) {
+        this.buyerName = buyerName;
+    }
+
+    public String getSellerSelected() {
+        return sellerSelected;
+    }
+
+    public void setSellerSelected(String sellerSelected) {
+        this.sellerSelected = sellerSelected;
+    }
+
+    public List<String> getProductsN() {
+        return productsN;
+    }
+
+    public void setProductsN(List<String> productsN) {
+        this.productsN = productsN;
+    }
+
+    public Set<Product> getSelectedProducts() {
+        return selectedProducts;
+    }
+
+    public void setSelectedProducts(Set<Product> selectedProducts) {
+        this.selectedProducts = selectedProducts;
+    }
+
+    public static class prod {
+
+        String name;
+        Integer quantity;
+
+        public prod(String name, Integer quantity) {
+            this.name = name;
+            this.quantity = quantity;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(Integer quantity) {
+            this.quantity = quantity;
+        }
+
+    }
+
+    public String getToday() {
+        return today;
+    }
+
+    public void setToday(String today) {
+        this.today = today;
+    }
+
+    public List<String> getSelectedNames() {
+        return selectedNames;
+    }
+
+    public void setSelectedNames(List<String> selectedNames) {
+        this.selectedNames = selectedNames;
+    }
+
+    public List<String> getQuantitiesEntered() {
+        return quantitiesEntered;
+    }
+
+    public void setQuantitiesEntered(List<String> quantitiesEntered) {
+        this.quantitiesEntered = quantitiesEntered;
+    }
+
+    public String getQty() {
+        return qty;
+    }
+
+    public void setQty(String qty) {
+        this.qty = qty;
+    }
+
+    public List<OrderList> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderList> orders) {
+        this.orders = orders;
+    }
+
+    public int getProSize() {
+        return proSize;
+    }
+
+    public void setProSize(int proSize) {
+        this.proSize = proSize;
+    }
+
+    public OrderList getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderList order) {
+        this.order = order;
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public void setN(int n) {
+        this.n = n;
+    }
+
+    public OES.ManagedBean.Enquiry getEnquiry() {
+        return enquiry;
+    }
+
+    public void setEnquiry(OES.ManagedBean.Enquiry enquiry) {
+        this.enquiry = enquiry;
+    }
+
+    public Quotation getQuotation() {
+        return quotation;
+    }
+
+    public void setQuotation(Quotation quotation) {
+        this.quotation = quotation;
+    }
+
+    public String getDeliverydate() {
+        return deliverydate;
+    }
+
+    public void setDeliverydate(String deliverydate) {
+        this.deliverydate = deliverydate;
+    }
+
+    public String getStatusMessage() {
+        return statusMessage;
+    }
+
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
     }
 
 }

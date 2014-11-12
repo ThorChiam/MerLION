@@ -6,14 +6,16 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Welcome to My Merlion</title>
+        <title>CRMS View User Accounts List</title>
 
         <meta name="author" content="The Author"></meta>
-        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/> 
+
     </h:head>
 
     <h:body>
-        <b:container>               
+        <b:container>
+
             <p:breadCrumb>
                 <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
                 <p:menuitem value="Home" url="/CRMS/Admin/AdminMain.xhtml" />
@@ -27,48 +29,61 @@
                 <h3>My MerLION (Admin)</h3> 
             </b:well>
         </b:container>
+
         <b:container>
             <b:row styleClass="show-grid">
                 <b:column col-xs="5" col-sm="5" col-md="3">
                     <h:form>
                         <p:growl id="msgs"/>
-                        <p:menu style="width:250px">
-                            <p:submenu label="User Account Management">
-                                <p:menuitem value="Activate/Deactivate Account" url="/CRMS/Admin/viewaccounts.xhtml"/>
-                                <p:menuitem value="Edit Account Information" url="/CRMS/Admin/edit_delete_account.xhtml" />      
-                            </p:submenu>                          
+                        <p:menu style="width:250px">                         
+                            <p:submenu label="Forume Post Management" >                                
+                                <p:menuitem value="View Posts/Delete Posts" url="/CRMS/Admin/view_delete_post.xhtml"/>
+                            </p:submenu>
 
                         </p:menu>
                     </h:form>
-                </b:column>                                        
 
+                </b:column>    
                 <b:column col-xs="5" col-sm="5" col-md="9">
-                    <p:panel header="User Account List">
+                    <p:panel header="Post List">
                         <h:form >            
-                            <p:dataTable var="all" value="#{AdminManagedBean.allAccounts}" id="msgs">
-                                <p:column headerText="Account Email">
-                                    <h:outputText value="#{all.email}"/>
+                            <p:dataTable var="all" value="#{AdminManagedBean.allPosts}" id="msgs">
+                                <p:column headerText="Post Id">
+                                    <h:outputText value="#{all.id}"/>
                                 </p:column>
 
-                                <p:column headerText="Company Name">
-                                    <h:outputText value="#{all.company.companyName}"/>
-                                </p:column>    
+                                <p:column headerText="Post Title">
+                                    <h:outputText value="#{all.title}"/>
+                                </p:column>       
 
-                                <p:column headerText="Security Question">
-                                    <h:outputText value="#{all.security_question}"/>
+                                <p:column headerText="Details" >                                  
+                                    <p:commandButton value="Detail" actionListener="#{AdminManagedBean.setPostdetail(true, all.id)}" styleClass="ui-priority-primary" ajax="false" />
                                 </p:column>
 
-                                <p:column headerText="Security Answer">
-                                    <h:outputText value="#{all.security_answer}"/>
-                                </p:column>>
+                                <p:column headerText="Delete">                               
+                                    <p:commandButton value="Delete"  actionListener="#{AdminManagedBean.deletePost(all.id)}" styleClass="ui-priority-primary" ajax="false"/>                             
+                                </p:column>
 
-                                <p:column headerText="Set Status">                                        
-                                    <p:selectBooleanButton id="value" valueChangeListener="#{AdminManagedBean.updateStatus(all.email, all.status)}" value="#{!AdminManagedBean.statusToboolean(all.status)}" onLabel="activated" offLabel="deactivated" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:160px">                                                            
-                                        <p:ajax update="msgs"/>                                       
-                                    </p:selectBooleanButton> 
-                                </p:column>      
 
                             </p:dataTable>
+
+
+                            <h:form rendered="#{AdminManagedBean.postdetail}">
+                                <p:growl id="tmp" showDetail="true" />                                       
+
+                                <p:panel id="Date" header="Post Date">
+                                    <h:outputText value="#{AdminManagedBean.getPost().post_date}" />
+                                </p:panel>
+
+                                <p:panel id="Content" header="Post Content">
+                                    <h:outputText value="#{AdminManagedBean.getPost().content}" />
+                                </p:panel>
+
+                                <p:commandButton value="Back" update="tmp" actionListener="#{AdminManagedBean.setPostdetail(false,0)}" styleClass="ui-priority-primary" ajax="false"/>
+                            </h:form>                    
+
+
+
                         </h:form>
                     </p:panel>
                 </b:column>

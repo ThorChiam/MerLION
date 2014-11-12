@@ -10,55 +10,79 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
  *
- * @author sunny
+ * @author Tomato
  */
 @Entity
-public class SalesOrder implements Serializable {
+public class OrderList implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String createdate;
-    private double tax;
-    private double discount;
-    private double total;
-    private String shipdate;
-
-    @OneToOne(mappedBy="salesorder")
-    PurchaseOrder purchaseorder;
+    private String quantity;
     
-
-    public SalesOrder(){
+    @OneToOne
+    private Product product;
+    
+    @ManyToOne
+    private Enquiry enquiry;
+    
+    @ManyToOne
+    private PurchaseOrder porder;
+    
+    
+    public OrderList () {
         setId(System.nanoTime());
     }
     
-     public String getCreatedate() {
-        return createdate;
-    }
+   
 
-    public void setCreatedate(String createdate) {
-        this.createdate = createdate;
-    }
-
-    public PurchaseOrder getPurchaseorder() {
-        return purchaseorder;
-    }
-
-    public void setPurchaseorder(PurchaseOrder purchaseorder) {
-        this.purchaseorder = purchaseorder;
-    }
-    
-    public Long getId() {
+   public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Enquiry getEnquiry() {
+        return enquiry;
+    }
+
+    public void setEnquiry(Enquiry enquiry) {
+        this.enquiry = enquiry;
+    }
+
+    public PurchaseOrder getPorder() {
+        return porder;
+    }
+
+    public void setPorder(PurchaseOrder porder) {
+        this.porder = porder;
+    }
+
+   
+    
 
     @Override
     public int hashCode() {
@@ -70,10 +94,10 @@ public class SalesOrder implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SalesOrder)) {
+        if (!(object instanceof OrderList)) {
             return false;
         }
-        SalesOrder other = (SalesOrder) object;
+        OrderList other = (OrderList) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -82,7 +106,7 @@ public class SalesOrder implements Serializable {
 
     @Override
     public String toString() {
-        return "OES.entity.OES_SalesOrder[ id=" + id + " ]";
+        return "OES.Entity.OrderList[ id=" + id + " ]";
     }
     
 }

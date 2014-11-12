@@ -6,6 +6,8 @@
 package CRMS.Session;
 
 import CI.Entity.Customer_Enquiry;
+import java.sql.Timestamp;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,14 +20,17 @@ import javax.persistence.PersistenceContext;
 public class EnquireSession implements EnquireSessionLocal {
 @PersistenceContext
     private EntityManager em;
-    private Customer_Enquiry customer_Enquiry;
     
     @Override
     public void createEnquiry(String email, String qun){
+        Date date = new java.util.Date();
+        Timestamp tmp = new Timestamp(date.getTime());
+        String createdate = tmp.toString();
+        
         Customer_Enquiry c=new Customer_Enquiry();
         c.setContact_email(email);
         c.setQuestion(qun);
-        
+        c.setSendtime(createdate);
         em.persist(c);
     }
 }

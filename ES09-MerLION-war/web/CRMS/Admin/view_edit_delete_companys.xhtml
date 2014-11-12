@@ -17,22 +17,35 @@
 
     <h:body>
         <b:container>
-            <b:row>
-                <p:column colspan="3">
-                    <h:form>  
-                        <p:menubar styleClass="show-grid">
-                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                            <p:menuitem value="WMS Home" url="/CRMS/main.xhtml" />
-                            <p:menuitem value="Log Out" action="signIn.xhtml"  actionListener="#{accountManagedBean.logout}"/>
-                        </p:menubar>
-                    </h:form>
-                </p:column>
-            </b:row>
+
+            <p:breadCrumb>
+                <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                <p:menuitem value="Home" url="/CRMS/Admin/AdminMain.xhtml" />
+                <p:menuitem value="User Account" url="/CRMS/Admin/viewaccounts.xhtml" />
+                <p:menuitem value="Company Profile" url="/CRMS/Admin/view_edit_delete_companys.xhtml" />
+                <p:menuitem value="Announcement" url="/CRMS/Admin/viewannouncement.xhtml" />
+                <p:menuitem value="Customer Enquiry" url="/CRMS/Admin/view_reply_enquiry.xhtml" />
+                <p:menuitem value="Forume Post" url="/CRMS/Admin/view_delete_post.xhtml" />                 
+            </p:breadCrumb> 
+            <b:well>
+                <h3>My MerLION (Admin)</h3> 
+            </b:well>
         </b:container>
-        <br/>
+
         <b:container>
             <b:row styleClass="show-grid">
-                   
+                <b:column col-xs="5" col-sm="5" col-md="3">
+                    <h:form>
+                        <p:growl id="msgs"/>
+                        <p:menu style="width:250px">                          
+                            <p:submenu label="Company Profile Management">
+                                <p:menuitem value="Edit Company Profile" url="/CRMS/Admin/view_edit_delete_companys.xhtml" />               
+                            </p:submenu>                          
+                        </p:menu>
+                    </h:form>
+
+                </b:column>  
+
                 <b:column col-xs="5" col-sm="5" col-md="9">
                     <h:form id="form">
                         <p:growl id="msgs" showDetail="true"/>
@@ -62,52 +75,52 @@
                                     <f:facet name="input"><p:inputText value="#{c.companyName}" style="width:96%" label="Company Name"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            
+
                             <p:column headerText="Company Address">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{c.companyAddress}" /></f:facet>
                                     <f:facet name="input"><p:inputText value="#{c.companyAddress}" style="width:96%" label="Company Address"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            
+
                             <p:column headerText="Company Tel">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{c.tel}" /></f:facet>
                                     <f:facet name="input"><p:inputText value="#{c.tel}" style="width:96%" label="Company Tel"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            
+
                             <p:column headerText="Company Email">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{c.website}" /></f:facet>
                                     <f:facet name="input"><p:inputText value="#{c.website}" style="width:96%" label="Company Email"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            
+
                             <p:column headerText="Company History">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{c.companyHistory}" /></f:facet>
                                     <f:facet name="input"><p:inputText value="#{c.companyHistory}" style="width:96%" label="Company History"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            
+
                             <p:column headerText="Company Service">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{c.service}" /></f:facet>
                                     <f:facet name="input"><p:inputText value="#{c.service}" style="width:96%" label="Company Service"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            
+
                             <p:column headerText="Company Vision">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{c.vision}" /></f:facet>
                                     <f:facet name="input"><p:inputText value="#{c.vision}" style="width:96%" label="Company Vision"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            
-                            
-                             <p:column headerText="Delete">                               
-                                 <p:commandButton value="Delete"  actionListener="#{AdminManagedBean.deleteCompany(c.id)}" styleClass="ui-priority-primary" ajax="false"/>                             
+
+
+                            <p:column headerText="Delete">                               
+                                <p:commandButton value="Delete"  actionListener="#{AdminManagedBean.deleteCompany(c.id)}" styleClass="ui-priority-primary" ajax="false"/>                             
                             </p:column>
 
                         </p:dataTable>

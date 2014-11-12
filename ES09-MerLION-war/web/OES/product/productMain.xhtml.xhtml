@@ -24,46 +24,15 @@
 
     <h:body>
 
-
-        <b:navBar brand="MerLION Logistics" brandHref="#">
-
-            <b:navbarLinks>
-                <b:navLink value="SignUp" href="#"></b:navLink>
-                <b:navLink value="About us" href="#"></b:navLink>
-                <b:navLink value="My MerLION" href="#"></b:navLink>
-                <b:dropMenu value="Services">
-                    <b:navLink value="OES" href="/OES/main.xhtml"></b:navLink>
-                    <b:navLink value="Another action" href="#"></b:navLink>
-                    <b:navLink value="Something else here" href="#"></b:navLink>
-                    <b:navLink></b:navLink>
-                    <b:navLink header="Nav header"></b:navLink>
-                    <b:navLink value="Separated link" href="#"></b:navLink>
-                    <b:navLink value="One more separated link" href="#"></b:navLink>
-                </b:dropMenu>
-            </b:navbarLinks>
-
-            <h:form styleClass="navbar-form navbar-right">
-                <div class="form-group">
-
-                    <b:commandButton action="a" value="Logout" look="success" icon="ui-icon-extlink" iconAlign="right"/>
-                </div>
-            </h:form>
-        </b:navBar>
-
-
-        <b:container>
-
-
-        </b:container>
         <b:container>
 
            <p:breadCrumb>
                     <p:menuitem value="Home" url="/main.xhtml" />
-                    <p:menuitem value="Dashboard" url="" />
+                    <p:menuitem value="Home" url="/main.xhtml" />
                     <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
                     <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
                     <p:menuitem value="Sales Order" url="#" />
-                    <p:menuitem value="Enquire" url="/OES/enquire/createEnquire.xhtml" />
+                    <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />
                  
                     <p:menuitem value="Payment" url="#" />
 
@@ -89,8 +58,7 @@
 
                                 <b:navLink href="productALL.xhtml" value="ALL Products"
                                            />
-                                <b:navLink href="supplier.xhtml" value="Supplier"
-                                           />
+                               
                                 <b:navLink>
 
                                 </b:navLink>
