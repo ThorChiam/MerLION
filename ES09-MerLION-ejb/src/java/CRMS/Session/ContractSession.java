@@ -5,7 +5,9 @@
  */
 package CRMS.Session;
 
+import CI.Entity.Account;
 import CRMS.Entity.Contract;
+import WMS.Entity.WMSServiceCatalog;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -49,11 +51,27 @@ public class ContractSession implements ContractSessionLocal {
     }
 
     @Override
-    public void createCrontract(String sign_date, String total_price, String contract_status) {
+    public void createCrontract(String sign_date, int total_price, Long serviceId, Long email, Long requestorId) {
         Contract contract = new Contract();
+        contract.setSign_date(sign_date);
+        contract.setContract_status("pending");
+        contract.setTotal_price(total_price);
+        Query q = em.createQuery("SELECT s FROM WMSServiceCatalog s WHERE s.id=:serviceId");
+        q.setParameter("serviceId", serviceId);
+        WMSServiceCatalog wService = (WMSServiceCatalog) q.getSingleResult();
+        contract.setwService(wService);
+        q = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");
+        q.setParameter("email", email);
+        Account provider = (Account) q.getSingleResult();
+        contract.setProvider(provider);
+        q = em.createQuery("SELECT a FROM Account a WHERE a.email=:requestorId");
+        q.setParameter("requestorId", requestorId);
+        Account requestor = (Account) q.getSingleResult();
+        contract.setRequestor(requestor);
         contract.setContract_status("pending");
         contract.setTotal_price(total_price);
         contract.setSign_date(sign_date);
+        em.persist(contract);
     }
 
     @Override

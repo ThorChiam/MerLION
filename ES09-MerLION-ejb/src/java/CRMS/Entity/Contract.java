@@ -5,11 +5,14 @@
  */
 package CRMS.Entity;
 
+import CI.Entity.Account;
+import WMS.Entity.WMSServiceCatalog;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -25,20 +28,25 @@ public class Contract implements Serializable {
     private Long id;
     private String sign_date;
     private String contract_status;
-    private String total_price;
-
+    private int total_price;
+    @ManyToOne
+    private WMSServiceCatalog wService;
     @OneToOne
+    private Account provider;
+    @ManyToOne
+    private Account requestor;
+    @ManyToOne
     private Payment Payment;
 
     public Contract() {
         setId(System.nanoTime());
     }
 
-    public String getTotal_price() {
+    public int getTotal_price() {
         return total_price;
     }
 
-    public void setTotal_price(String total_price) {
+    public void setTotal_price(int total_price) {
         this.total_price = total_price;
     }
 
@@ -66,12 +74,36 @@ public class Contract implements Serializable {
         this.sign_date = sign_date;
     }
 
+    public WMSServiceCatalog getwService() {
+        return wService;
+    }
+
+    public void setwService(WMSServiceCatalog wService) {
+        this.wService = wService;
+    }
+
     public Payment getPayment() {
         return Payment;
     }
 
     public void setPayment(Payment Payment) {
         this.Payment = Payment;
+    }
+
+    public Account getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Account provider) {
+        this.provider = provider;
+    }
+
+    public Account getRequestor() {
+        return requestor;
+    }
+
+    public void setRequestor(Account requestor) {
+        this.requestor = requestor;
     }
 
     @Override

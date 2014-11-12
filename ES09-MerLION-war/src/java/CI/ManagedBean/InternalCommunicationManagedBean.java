@@ -13,6 +13,8 @@ import javax.faces.bean.ManagedBean;
 import CI.Session.InternalCommunicationSessionLocal;
 import CI.Entity.Announcement;
 import CI.Entity.Notification;
+import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -31,9 +33,26 @@ public class InternalCommunicationManagedBean implements Serializable {
     private String n_title;
     private String content;
     private Long release_time;
-    private String target;
+    private String email;
+    private List<Notification> serviceRequest;
 
     public InternalCommunicationManagedBean() {
+    }
+
+    @PostConstruct
+    public void init() {
+        email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        if (email != null) {
+            this.serviceRequest = icsbl.getServiceRequest(email);
+        }
+    }
+
+    public List<Notification> getServiceRequest() {
+        return serviceRequest;
+    }
+
+    public void setServiceRequest(List<Notification> serviceRequest) {
+        this.serviceRequest = serviceRequest;
     }
 
     public void createannou(Long id) {

@@ -58,7 +58,10 @@ public class SeviceCatalogSession implements SeviceCatalogSessionLocal {
     }
 
     @Override
-    public void selectProvider(String content, Company company) {
+    public void selectProvider(String content, Long companyId) {
+        Query q = em.createQuery("SELECT c FROM Company c WHERE c.id=:companyId");
+        q.setParameter("companyId", companyId);
+        Company company = (Company) q.getSingleResult();
         Notification n = new Notification();
         n.setCompany(company);
         n.add("Service Request", content, Calendar.getInstance().getTimeInMillis());

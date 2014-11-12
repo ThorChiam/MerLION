@@ -25,5 +25,5 @@ public interface SeviceCatalogSessionLocal {
 
     public List<String> getAllServiceLocations(Long serviceId);
 
-    public void selectProvider(String content, Company company);
+    public void selectProvider(String content, Long companyId);
 }

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface ContractSessionLocal {
 
-    public void createCrontract(String sign_date, String total_price, String contract_status);
+    public void createCrontract(String sign_date, int total_price, Long serviceId, Long email, Long requestorId);
 
     public Contract getContract(long contract_id);
 

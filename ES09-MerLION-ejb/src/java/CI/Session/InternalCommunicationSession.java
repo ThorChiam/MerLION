@@ -91,6 +91,18 @@ public class InternalCommunicationSession implements InternalCommunicationSessio
     }
 
     @Override
+    public List<Notification> getServiceRequest(String email) {
+        Query q = em.createQuery("SELECT a.Company FROM Account a WHERE a.email=:email");
+        q.setParameter("email", email);
+        Company c = (Company) q.getSingleResult();
+        q = em.createQuery("SELECT n FROM Notification n WHERE n.company.id=:companyId AND n.n_title=:titile");
+        q.setParameter("companyId", c.getId());
+        q.setParameter("titile", "Service Request");
+        List<Notification> notis = q.getResultList();
+        return notis;
+    }
+
+    @Override
     public void remove() {
         System.out.println("Intercomm:remove()");
     }

@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import CRMS.Entity.Company;
+import CRMS.Entity.Contract;
 import MRP.Entity.Item;
 import CRMS.Entity.Post;
 import OES.Entity.Enquiry;
@@ -20,55 +21,54 @@ import WMS.Entity.WMSOrder;
 
 @Entity
 @Table(name = "Account")
-public class Account implements Serializable { 
+public class Account implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    private String email; 
+    private String email;
     private String password;
     private String accessright;//区分用哪些系统
     private String status;
     private String security_question;
     private String security_answer;
-  
-     
+
     //Added by QT
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Account")
     private List<Item> items = new ArrayList<>();
 
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="Account")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Account")
     private List<Post> post = new ArrayList<>();
-    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "provider")
+    private List<Contract> pContracts = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "requestor")
+    private List<Contract> rContracts = new ArrayList<>();
     @ManyToOne
     private Company Company;
-    
+
     @OneToOne
     private MerlionAdmin admin;
 
     //@ManyToMany(cascade={CascadeType.PERSIST})
     //@JoinTable(name="ACCOUNT_ANNOUNCEMENT")
     //private Set<Announcement> announcements=new HashSet<>();  
-
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="requester")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "requester")
     private List<WMSOrder> request_wmsorder = new ArrayList<>();
-     
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="provider")
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "provider")
     private List<WMSOrder> provide_wmsorder = new ArrayList<>();
 
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="sender")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "sender")
     private List<PurchaseOrder> send_purchaseorder = new ArrayList<>();
-    
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="receiver")
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "receiver")
     private List<PurchaseOrder> receive_purchaseorder = new ArrayList<>();
 
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="buyer")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "buyer")
     private List<Enquiry> buyer_enquiry = new ArrayList<>();
-    
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="seller")
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "seller")
     private List<Enquiry> seller_enquiry = new ArrayList<>();
 
-   
-    
-    
     //Added by QT  
     public List<Enquiry> getBuyer_enquiry() {
         return buyer_enquiry;
@@ -85,7 +85,7 @@ public class Account implements Serializable {
     public void setSeller_enquiry(List<Enquiry> seller_enquiry) {
         this.seller_enquiry = seller_enquiry;
     }
-   
+
     public List<WMSOrder> getRequest_wmsorder() {
         return request_wmsorder;
     }
@@ -101,7 +101,7 @@ public class Account implements Serializable {
     public void setProvide_wmsorder(List<WMSOrder> provide_wmsorder) {
         this.provide_wmsorder = provide_wmsorder;
     }
-    
+
     public MerlionAdmin getMerlionAdmin() {
         return admin;
     }
@@ -117,7 +117,7 @@ public class Account implements Serializable {
     public void setPost(List<Post> post) {
         this.post = post;
     }
-    
+
     public Company getCompany() {
         return Company;
     }
@@ -125,7 +125,7 @@ public class Account implements Serializable {
     public void setCompany(Company company) {
         this.Company = company;
     }
-  
+
     public List<Item> getItems() {
         return items;
     }
@@ -150,31 +150,41 @@ public class Account implements Serializable {
         this.receive_purchaseorder = receive_purchaseorder;
     }
 
+    public List<Contract> getpContracts() {
+        return pContracts;
+    }
 
+    public void setpContracts(List<Contract> pContracts) {
+        this.pContracts = pContracts;
+    }
 
+    public List<Contract> getrContracts() {
+        return rContracts;
+    }
 
+    public void setrContracts(List<Contract> rContracts) {
+        this.rContracts = rContracts;
+    }
 
-
-    public void create(String email, String password, String comp_name, String comp_address, String comp_contact_no, 
-                       String accessright, String status,String security_question,String security_answer){
-        this.email=email;
-        this.password=password;
-        this.accessright=accessright;
-        this.status=status;
-        this.security_question=security_question;
-        this.security_answer=security_answer;
-    }  
+    public void create(String email, String password, String comp_name, String comp_address, String comp_contact_no,
+            String accessright, String status, String security_question, String security_answer) {
+        this.email = email;
+        this.password = password;
+        this.accessright = accessright;
+        this.status = status;
+        this.security_question = security_question;
+        this.security_answer = security_answer;
+    }
 
     /*
-    public Set<Announcement> getAnnouncements() {
-        return announcements;
-    }
+     public Set<Announcement> getAnnouncements() {
+     return announcements;
+     }
     
-    public void setAnnouncements(Set<Announcement> announcements) {
-        this.announcements = announcements;
-    }
-    */
-  
+     public void setAnnouncements(Set<Announcement> announcements) {
+     this.announcements = announcements;
+     }
+     */
     public String getPassword() {
         return password;
     }
@@ -222,8 +232,7 @@ public class Account implements Serializable {
     public void setSecurity_answer(String security_answer) {
         this.security_answer = security_answer;
     }
-    
-    
+
     @Override
     public int hashCode() {
         int hash = 0;

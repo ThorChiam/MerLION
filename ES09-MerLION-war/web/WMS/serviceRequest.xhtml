@@ -65,31 +65,22 @@ and open the template in the editor.
                     <p:panel header="Warehouse List">
                         <h:form>
                             <!-- value should be a LIST of delivery order -->
-                            <p:dataTable var="warehouse" value="#{womb.getAllWarehouse()}">
-                                <p:column headerText="Warehouse ID">
-                                    <h:outputText value="#{warehouse.id}" />
+                            <p:dataTable var="sRequest" value="#{internalCommunicationManagedBean.serviceRequest}">
+                                <p:column headerText="Request ID">
+                                    <h:outputText value="#{sRequest.notiId}" />
                                 </p:column>
 
-                                <p:column headerText="Warehouse Name">
-                                    <h:outputText value="#{warehouse.name}" />
+                                <p:column headerText="Request Content">
+                                    <h:outputText value="#{sRequest.content}" />
                                 </p:column>
 
-                                <p:column >
-                                    <h:commandButton value="Define Facility" action="defineFacility" actionListener="#{womb.initWarehouseId}">
-                                        <f:attribute name="wId" value="#{warehouse.id}" />
-                                    </h:commandButton>
+                                <p:column headerText="Request Time">
+                                    <h:outputText value="#{sRequest.release_time}" />
                                 </p:column>
-                                <p:column >
-                                    <h:commandButton value="Define Service" action="defineService" actionListener="#{womb.initWarehouseId}">
-                                        <f:attribute name="wId" value="#{warehouse.id}" />
-                                    </h:commandButton>
+                                
+                                <p:column headerText="Contract">
+                                    <p:commandButton value="Create" action="#{contractmb.createCrontract(sRequest.content)}"/>
                                 </p:column>
-                                <p:column >
-                                    <h:commandButton value="View Map" action="mapGeneration" actionListener="#{womb.initWarehouseId}">
-                                        <f:attribute name="wId" value="#{warehouse.id}" />
-                                    </h:commandButton>
-                                </p:column>
-
                             </p:dataTable>
                         </h:form>
                     </p:panel>

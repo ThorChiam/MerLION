@@ -6,6 +6,7 @@
 package WMS.Entity;
 
 import CRMS.Entity.Company;
+import CRMS.Entity.Contract;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,8 @@ public class WMSServiceCatalog implements Serializable {
     private Company company;
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "service")
     private List<StorageArea> storageAreas = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "wService")
+    private List<Contract> contacts = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -119,6 +122,14 @@ public class WMSServiceCatalog implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public List<Contract> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contract> contacts) {
+        this.contacts = contacts;
     }
 
     @Override
