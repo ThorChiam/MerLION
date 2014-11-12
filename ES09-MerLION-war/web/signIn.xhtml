@@ -128,7 +128,7 @@
                                     <p:captcha id="captcha" label="Captcha" secure="true"/>
                                     <p:message for="captcha" />
 
-                                    <p:commandButton id="btn" value="Login" update="panel" actionListener="#{accountManagedBean.loginin}" ajax="false" rendered="#{facesContext.externalContext.sessionMap['userId'] == null}"/>
+                                    <p:commandButton id="btn" value="Login" update="panel" actionListener="#{accountManagedBean.loginin}" ajax="false" rendered="#{facesContext.externalContext.sessionMap['userId'] == null}" action="main"/>
                                 </p:growl>
                             </h:form>
                         </div>

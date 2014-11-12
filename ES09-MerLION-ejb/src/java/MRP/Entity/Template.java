@@ -24,8 +24,6 @@ public class Template implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long templateId;
-    @ManyToMany(cascade={CascadeType.ALL},mappedBy="Template")
-    private Set<Contract> contract=new HashSet<>();
 
     private String name;
     private int firstweek;
@@ -35,18 +33,9 @@ public class Template implements Serializable {
     private int fifthweek;
     private int sixthweek;
     private int seventhweek;
-    
+
     @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, optional = false)
     private Item item;
-    
-    
-    public Set<Contract> getContract() {
-        return contract;
-    }
-
-    public void setContract(Set<Contract> contract) {
-        this.contract = contract;
-    }
 
     public Item getItem() {
         return item;
@@ -127,10 +116,6 @@ public class Template implements Serializable {
     public void setSeventhweek(int seventhweek) {
         this.seventhweek = seventhweek;
     }
-
-    
-
-
 
     @Override
     public int hashCode() {

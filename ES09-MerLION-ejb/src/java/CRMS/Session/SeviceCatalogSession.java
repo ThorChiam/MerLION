@@ -5,11 +5,13 @@
  */
 package CRMS.Session;
 
+import CI.Entity.Notification;
 import CRMS.Entity.Company;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import WMS.Entity.WMSServiceCatalog;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Query;
 
@@ -46,12 +48,21 @@ public class SeviceCatalogSession implements SeviceCatalogSessionLocal {
         List<String> serviceTypes = q.getResultList();
         return serviceTypes;
     }
+
     @Override
     public List<String> getAllServiceLocations(Long serviceId) {
         Query q = em.createQuery("SELECT DISTINCT sa.WMSWarehouse.address FROM StorageArea sa WHERE sa.service.id=:serviceId");
         q.setParameter("serviceId", serviceId);
         List<String> serviceLocations = q.getResultList();
         return serviceLocations;
+    }
+
+    @Override
+    public void selectProvider(String content, Company company) {
+        Notification n = new Notification();
+        n.setCompany(company);
+        n.add("Service Request", content, Calendar.getInstance().getTimeInMillis());
+        em.persist(n);
     }
 
 }

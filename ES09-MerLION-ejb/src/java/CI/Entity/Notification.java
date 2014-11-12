@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package CI.Entity;
 
 import java.io.Serializable;
@@ -19,29 +18,27 @@ import CRMS.Entity.Company;
 @Table(name = "Notification")
 
 public class Notification implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    @Id 
+    @Id
     private Long notiId;
-    private String n_title;  
+    private String n_title;//Service Request;Contract;Payment;Invoice;MemberType
     private String content;
-    private String target;   
     private Long release_time;
 
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private Company company;
 
     public Notification() {
-        this.notiId=System.nanoTime();
+        this.setNotiId(System.nanoTime());
     }
 
-    public void add(String n_title, String content,Long release_time, String target) {
-        this.n_title=n_title;
-        this.content=content;
-        this.release_time=release_time;
-        this.target=target;
+    public void add(String n_title, String content, Long release_time) {
+        this.setN_title(n_title);
+        this.setContent(content);
+        this.setRelease_time(release_time);
     }
-    
-    
+
     public Company getCompany() {
         return company;
     }
@@ -49,8 +46,8 @@ public class Notification implements Serializable {
     public void setCompany(Company company) {
         this.company = company;
     }
-   
-     public Long getNotiId() {
+
+    public Long getNotiId() {
         return notiId;
     }
 
@@ -73,7 +70,7 @@ public class Notification implements Serializable {
     public void setRelease_time(Long release_time) {
         this.release_time = release_time;
     }
-   
+
     public String getContent() {
         return content;
     }
@@ -82,14 +79,6 @@ public class Notification implements Serializable {
         this.content = content;
     }
 
-    public String getTarget() {
-        return target;
-    }
-
-    public void setTarget(String target) {
-        this.target = target;
-    }
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -111,5 +100,5 @@ public class Notification implements Serializable {
     public String toString() {
         return "merlion_ejb.Notification[ notiId=" + notiId + " ]";
     }
-    
+
 }
