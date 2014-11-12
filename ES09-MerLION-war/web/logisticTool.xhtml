@@ -11,8 +11,6 @@
 
       xmlns:p="http://primefaces.org/ui" 
       xmlns:b="http://bootsfaces.net/ui">
-
-
     <h:head><title>logistic tool</title> 
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -21,23 +19,19 @@
 
     <h:body style="padding-top: 40px; padding-bottom: 20px;">
 
-        <b:navBar brand="My MerLION" brandHref="main.xhtml" inverse="false" fixed="top">
+       <b:navBar brand="MerLION Logistics" brandHref="main.xhtml" inverse="false" fixed="top">
             <b:navbarLinks>
                 <b:navLink value="Sign Up" href="signUp.xhtml"></b:navLink>
+                <b:navLink value="My MerLION" href="CI/myMerlion.xhtml" rendered="#{facesContext.externalContext.sessionMap['userId'] != null}"></b:navLink>
                 <b:navLink value="About us" href="aboutUs.xhtml"></b:navLink>
-                <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>
-                <b:dropMenu value="Services">
-                    <b:navLink value="Action" href="#"></b:navLink>
-                    <b:navLink value="Another action" href="#"></b:navLink>
-                    <b:navLink value="Something else here" href="#"></b:navLink>
-                    <b:navLink></b:navLink>
-                    <b:navLink header="Nav header"></b:navLink>
-                    <b:navLink value="Separated link" href="#"></b:navLink>
-                    <b:navLink value="One more separated link" href="#"></b:navLink>
-                </b:dropMenu>
+                <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>                          
+                <b:navLink value="Help Desk" href="CRMS/customerEnquire/makeEnquire.xhtml"></b:navLink>
+
             </b:navbarLinks>
+
             <h:form styleClass="navbar-form navbar-right">
-                <b:commandButton action="signIn.xhtml" value="Sign in" look="success" iconAlign="right"/>
+                <p:button value="Log In" outcome="signIn"/>
+               
                 <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
             </h:form> 
         </b:navBar>

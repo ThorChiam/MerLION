@@ -36,49 +36,24 @@
     <h:body style="padding-top: 40px; padding-bottom: 20px;">
 
 
-        <b:navBar brand="My MerLION" brandHref="main.xhtml" inverse="false" fixed="top">
-            <b:navBar brand="MerLION Logistics" brandHref="main.xhtml" inverse="false" fixed="top">
-                <b:navbarLinks>
-                    <b:navLink value="Sign Up" href="signUp.xhtml"></b:navLink>
-                    <b:navLink value="My MerLION" href="myMerlion.xhtml"></b:navLink>
-                    <b:navLink value="About us" href="aboutUs.xhtml"></b:navLink>
-                    <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>               
-                    <b:dropMenu value="Services">
-                        <b:navLink value="OES" href="/OES/main.xhtml"></b:navLink>
-                        <b:navLink value="MRP" href="#"></b:navLink>
-                        <b:navLink value="TMS" href="/TMS/sub-home.xhtml"></b:navLink>
-                        <b:navLink value="Separated link" href="#"></b:navLink>
-                        <b:navLink value="One more separated link" href="#"></b:navLink>
-                    </b:dropMenu>
-                    <b:navLink value="Help Desk" href="helpDesk.xhtml"></b:navLink>
+        <b:navBar brand="MerLION Logistics" brandHref="main.xhtml" inverse="false" fixed="top">
+            <b:navbarLinks>
+                <b:navLink value="Sign Up" href="signUp.xhtml"></b:navLink>
+                <b:navLink value="My MerLION" href="CI/myMerlion.xhtml" rendered="#{facesContext.externalContext.sessionMap['userId'] != null}"></b:navLink>
+                <b:navLink value="About us" href="aboutUs.xhtml"></b:navLink>
+                <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>                          
+                <b:navLink value="Help Desk" href="CRMS/customerEnquire/makeEnquire.xhtml"></b:navLink>
 
-                </b:navbarLinks>
-
-                <h:form styleClass="navbar-form navbar-right">
-                    <p:button value="Log In" outcome="signIn"/>
-
-                    <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
-                </h:form> 
-            </b:navBar>
+            </b:navbarLinks>
 
             <h:form styleClass="navbar-form navbar-right">
-                <div class="form-group">
-                    <b:inputText placeholder="Email" fieldSize="sm"/>
+                <p:button value="Log In" outcome="signIn"/>
 
-                </div>
-                <div class="form-group">
-                    <b:inputText placeholder="Password" fieldSize="sm"/>
-                </div> 
-                #{' '}
-                <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
-            </h:form>
+                <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
+            </h:form> 
         </b:navBar>
-
-        <br/>
-
-
-
-        <b:container>
+     <br/>
+    <b:container>
             <b:row>
 
                 <div style="border-left:thin darkgrey solid; position:absolute; left:600px; height:700px;"/> 
