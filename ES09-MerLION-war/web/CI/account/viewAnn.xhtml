@@ -50,29 +50,27 @@
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
                     <font color="#585858">                    
-                        <h:form> 
-                            <f:metadata>
-                                <f:viewParam name="enId" value="#{fomb.id}" />
-                            </f:metadata>
-                            <p:panel header="Forum">
-                                <h3>View Post Detail</h3>
-                                <p:dataTable var="p" value="#{fomb.viewPostDetail(fomb.id)}">
-                                    <p:column headerText="Title" style="width: 300px">
-                                        <h:outputText value="#{p.title}" />
-                                    </p:column>
-                                    <p:column headerText="Content">
-                                        <h:outputText value="#{p.content}" />
-                                    </p:column>
+                        <h:form >            
+                            <p:dataTable var="all" value="#{AdminManagedBean.allAnnouncements}" id="msgs">
+                                <p:column headerText="Announcement Id">
+                                    <h:outputText value="#{all.annId}"/>
+                                </p:column>
 
-                                    <p:column headerText="Posted By" style="width: 300px">
-                                        <h:outputText value="#{p.account.company.companyName}" />
-                                    </p:column>
-                                </p:dataTable>
+                                <p:column headerText="Announcement Content">
+                                    <h:outputText value="#{all.content.split(':')[0]}:"/>
+                                    <br/>
+                                    <h:outputText value="#{all.content.split(':')[1]}"/>
+                                </p:column>    
 
-                                <br/>
-                                <p:button outcome="forumHome" value="Back to forum" icon="ui-icon-star"/>
-                            </p:panel>
-                        </h:form> 
+                                <p:column headerText="Announcement Poster Id">
+                                    <h:outputText value="#{all.merlionAdmin.id}"/>
+                                </p:column>
+
+                                <p:column headerText="Post Date">
+                                    <h:outputText value="#{all.releasedate}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
 
                     </font>
                 </b:column>

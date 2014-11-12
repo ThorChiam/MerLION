@@ -30,28 +30,48 @@
         </b:container>
 
         <b:container>
-            <font color="#585858">                    
-                <p:panel header="Forum">
-                    <h3>Welcome to MerLION Forum</h3>
-                    <h:form> 
-                        <p:dataTable var="t" value="#{fomb.allTitles}">
-                            <p:column headerText="Post Title" style="width: 900px">
-                                <h:outputText value="#{t.title}" />
-                            </p:column>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="5" col-sm="5" col-md="3">
 
-                            <p:column headerText="View Detail">
-                                <p:button outcome="postDetail" value="View" icon="ui-icon-star">
-                                    <f:param name="enId" value="#{t.id}" />
-                                </p:button>
-                            </p:column>
+                    <h:form>
+                        <p:growl autoUpdate="true"/>
+                        <p:menu style="width:250px">
+                            <p:submenu label="Internal Communication">
 
-                        </p:dataTable>
-                        <br/>
-                        <p:button outcome="createPost" value="Create New Post" icon="ui-icon-star"/>
+                                <p:menuitem value="Forum" url="/CRMS/forum/forumHome.xhtml" />
+                                <p:menuitem value="View Announcement" url="/CI/account/viewAnn.xhtml" />
+                                <p:menuitem value="View Notification" url="#" />
 
-                    </h:form> 
-                </p:panel>
-            </font>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+
+                </b:column>                 
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                    <font color="#585858">                    
+                        <p:panel header="Forum">
+                            <h3>Welcome to MerLION Forum</h3>
+                            <h:form> 
+                                <p:dataTable var="t" value="#{fomb.allTitles}">
+                                    <p:column headerText="Post Title" style="width: 650px">
+                                        <h:outputText value="#{t.title}" />
+                                    </p:column>
+
+                                    <p:column headerText="View Detail">
+                                        <p:button outcome="postDetail" value="View" icon="ui-icon-star">
+                                            <f:param name="enId" value="#{t.id}" />
+                                        </p:button>
+                                    </p:column>
+
+                                </p:dataTable>
+                                <br/>
+                                <p:button outcome="createPost" value="Create New Post" icon="ui-icon-star"/>
+
+                            </h:form> 
+                        </p:panel>
+                    </font>
+                </b:column>
+            </b:row>
         </b:container>
 
         <br/>

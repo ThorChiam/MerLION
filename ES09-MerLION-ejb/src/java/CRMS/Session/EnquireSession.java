@@ -23,6 +23,7 @@ public class EnquireSession implements EnquireSessionLocal {
     
     @Override
     public void createEnquiry(String email, String qun){
+        String status="unsolved";
         Date date = new java.util.Date();
         Timestamp tmp = new Timestamp(date.getTime());
         String createdate = tmp.toString();
@@ -31,6 +32,7 @@ public class EnquireSession implements EnquireSessionLocal {
         c.setContact_email(email);
         c.setQuestion(qun);
         c.setSendtime(createdate);
+        c.setStatus(status);
         em.persist(c);
     }
 }

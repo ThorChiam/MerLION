@@ -52,8 +52,8 @@
                 <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
             </h:form> 
         </b:navBar>
-     <br/>
-    <b:container>
+        <br/>
+        <b:container>
             <b:row>
 
                 <div style="border-left:thin darkgrey solid; position:absolute; left:600px; height:700px;"/> 
@@ -61,53 +61,75 @@
                 <b:column col-md="5">
 
                     <font color="#585858">
-                        <h4 color="grey">Sign In</h4>
+                        <h4 color="grey">Reset Password</h4>
                         <br/>
                         <div class="container">
                             <h:form id="formMain">
-                                <p:growl id="panel">
-                                    <p:panelGrid>
-                                        <f:facet name="header">
-                                            <p:messages id="msgs" />
+                                <p:panel id="panel" header="Reset Password" style="width: 500px;">
+                                    <p:ajaxStatus style="width:16px;height:16px;">
+                                        <f:facet name="start">
+                                            <h:graphicImage value="/images/spinner.gif" />
                                         </f:facet>
+                                        <f:facet name="complete">
+                                            <h:outputText value="" />
+                                        </f:facet>
+                                    </p:ajaxStatus>
+                                    <p:messages />
 
-                                        <div class="form-group">
-                                            <p:row>
-                                                <p:column>
-                                                    <p:outputLabel for="Email" style="font-weight: bold" value="Email: " />
-                                                </p:column>
-                                                <p:column>
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel for="Email" style="font-weight: bold" value="Email: " />
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText required="true" label="Email" requiredMessage="Email is required." id="Email" value="#{accountManagedBean.email}">
+                                                    <f:validator validatorId="custom.emailValidator" />
+                                                </p:inputText>
+                                                <p:message for="Email" />
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:commandButton id="btnn" value="confirm email" update="panel" actionListener="#{accountManagedBean.getQuestion}" ajax="true" />
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel style="font-weight: bold" value="Security Question: " />
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText id="panel1" value="#{accountManagedBean.security_question}" />
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel style="font-weight: bold" value="Security Answer: " />
+                                            </p:column>
+                                            <p:column>
+                                                <h:inputText  value="#{accountManagedBean.security_answer}" />
+                                            </p:column>
+                                        </p:row>
 
-                                                    <p:inputText required="true" label="Email" requiredMessage="Email is required." id="Email" value="#{accountManagedBean.email}">                                    
-                                                        <f:validator validatorId="custom.emailValidator" />
-                                                    </p:inputText>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel for="password" style="font-weight: bold" value="new password: " />
+                                            </p:column>
+                                            <p:column>
+                                                <h:inputSecret required="false" label="password" requiredMessage="new password is required." id="password" value="#{accountManagedBean.newpassword}">
 
-                                                    <!--     <p:message for="Email"/>  -->
-                                                </p:column>
-                                            </p:row>
-                                        </div>
-                                        <div class="form-group">
-                                            <p:row>
-                                                <p:column>
-                                                    <p:outputLabel for="password" style="font-weight: bold" value="Password: " />
-                                                </p:column>
-                                                <p:column>
-                                                    <h:inputSecret required="true" label="password" requiredMessage="Password is required." id="password" value="#{accountManagedBean.password}">
-                                                        <f:validateLength minimum="1" maximum="16" />
-                                                    </h:inputSecret>          
-                                                    <p:message for="password" />
-                                                </p:column>
-                                            </p:row>
-                                        </div>
+                                                </h:inputSecret>
+
+                                                <p:message for="password" />
+                                            </p:column>
+                                        </p:row>
                                     </p:panelGrid>
-                                    <p:captcha id="captcha" label="Captcha" secure="true"/>
-                                    <p:message for="captcha" />
+                                    <br/>
+                                    <p:commandButton id="btn" value="confirm" update="panel" actionListener="#{accountManagedBean.resetpassword}" ajax="true" />
 
-                                    <p:commandButton id="btn" value="Login" update="panel" actionListener="#{accountManagedBean.loginin}" ajax="false" rendered="#{facesContext.externalContext.sessionMap['userId'] == null}" action="main"/>
-                                </p:growl>
+                                </p:panel>
                             </h:form>
                         </div>
-                        <a href ="resetPwd.xhtml"> forget your password?</a>
+                      
                     </font>
 
                 </b:column>

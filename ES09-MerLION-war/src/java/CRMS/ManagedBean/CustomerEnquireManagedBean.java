@@ -12,6 +12,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -31,12 +34,13 @@ public class CustomerEnquireManagedBean implements Serializable{
     
     public String createEnquiry(){
         esl.createEnquiry(email, qun);
-        statusMessage="Enquiry send successfully!";
+       
         
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                statusMessage, ""));
+       FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, " ", "Enquiry send successfully!");
          
-         return "makeEnquire";
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
+         
+         return "main";
     }
 
     public String getEmail() {
