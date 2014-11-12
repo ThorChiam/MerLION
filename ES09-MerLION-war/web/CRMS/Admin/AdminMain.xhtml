@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:g="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Welcome to My Merlion</title>
+
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+    </h:head>
+
+    <h:body>
+        <b:container>
+                  
+                 <p:breadCrumb>
+                    <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                    <p:menuitem value="Home" url="/CRMS/Admin/AdminMain.xhtml" />
+                    <p:menuitem value="User Account" url="/CRMS/Admin/viewaccounts.xhtml" />
+                    <p:menuitem value="Company Profile" url="/CRMS/Admin/view_edit_delete_companys.xhtml" />
+                    <p:menuitem value="Announcement" url="/CRMS/Admin/viewannouncement.xhtml" />
+                    <p:menuitem value="Customer Enquiry" url="/CRMS/Admin/view_reply_enquiry.xhtml" />
+                    <p:menuitem value="Forume Post" url="/CRMS/Admin/view_delete_post.xhtml" />                 
+                </p:breadCrumb> 
+            <b:well>
+                <h3>My MerLION (Admin)</h3> 
+            </b:well>
+        </b:container>
+        
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="5" col-sm="5" col-md="3">
+                    <h:form>
+                        <p:growl id="msgs"/>
+                        <p:menu style="width:250px">
+                            <p:submenu label="User Account Management">
+                                <p:menuitem value="Activate/Deactivate Account" url="/CRMS/Admin/viewaccounts.xhtml"/>
+                                <p:menuitem value="Edit Account Information" url="/CRMS/Admin/edit_delete_account.xhtml" />      
+                            </p:submenu>
+                            <p:submenu label="Company Profile Management">
+                                <p:menuitem value="Edit Company Profile" url="/CRMS/Admin/view_edit_delete_companys.xhtml" />               
+                            </p:submenu>
+                            <p:submenu label="Announcement Management">                            
+                                <p:menuitem value="View Announcement/Add New Announcement"  url="/CRMS/Admin/viewannouncement.xhtml"/>
+                            </p:submenu>
+                            <p:separator />
+                            <p:submenu label="Customer Enquiry Management" >                                
+                                <p:menuitem value="View Enquirys/Reply Enquirys" url="/CRMS/Admin/view_reply_enquiry.xhtml"/>
+                            </p:submenu>
+                            <p:submenu label="Forume Post Management" >                                
+                                <p:menuitem value="View Posts/Delete Posts" url="/CRMS/Admin/view_delete_post.xhtml"/>
+                            </p:submenu>
+                            
+                        </p:menu>
+                    </h:form>
+
+                </b:column>                 
+                <b:column col-xs="5" col-sm="5" col-md="6">
+                    <p:panel header="My MerLION - Home">
+                        <img src="images.jpg" weight="600" width="500"/>
+                    </p:panel>
+                </b:column>
+
+                <b:column col-xs="5" col-sm="5" col-md="3">
+
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true" />
+                        <h:panelGrid style="width: 100%;">
+                            <p:calendar id="inline" mode="inline" />
+                        </h:panelGrid>
+                    </h:form>
+
+
+                </b:column>
+
+            </b:row>
+        </b:container>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+
+    </h:body>
+</html>
+
+
+
+
+
+

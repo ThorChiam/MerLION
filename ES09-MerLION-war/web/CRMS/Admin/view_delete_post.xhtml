@@ -15,24 +15,36 @@
 
     <h:body>
         <b:container>
-            <b:row>
-                <p:column colspan="3">
-                    <h:form>  
-                        <p:menubar styleClass="show-grid">
-                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                            <p:menuitem value="WMS Home" url="/CRMS/main.xhtml" />
-                            <p:menuitem value="Log Out" action="signIn.xhtml"  actionListener="#{accountManagedBean.logout}"/>
-                        </p:menubar>
-                    </h:form>
-                </p:column>
-            </b:row>
+
+            <p:breadCrumb>
+                <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                <p:menuitem value="Home" url="/CRMS/Admin/AdminMain.xhtml" />
+                <p:menuitem value="User Account" url="/CRMS/Admin/viewaccounts.xhtml" />
+                <p:menuitem value="Company Profile" url="/CRMS/Admin/view_edit_delete_companys.xhtml" />
+                <p:menuitem value="Announcement" url="/CRMS/Admin/viewannouncement.xhtml" />
+                <p:menuitem value="Customer Enquiry" url="/CRMS/Admin/view_reply_enquiry.xhtml" />
+                <p:menuitem value="Forume Post" url="/CRMS/Admin/view_delete_post.xhtml" />                 
+            </p:breadCrumb> 
+            <b:well>
+                <h3>My MerLION (Admin)</h3> 
+            </b:well>
         </b:container>
 
-
-        <br/>
         <b:container>
             <b:row styleClass="show-grid">
-                <b:column col-xs="5" col-sm="5" col-md="10">
+                <b:column col-xs="5" col-sm="5" col-md="3">
+                    <h:form>
+                        <p:growl id="msgs"/>
+                        <p:menu style="width:250px">                         
+                            <p:submenu label="Forume Post Management" >                                
+                                <p:menuitem value="View Posts/Delete Posts" url="/CRMS/Admin/view_delete_post.xhtml"/>
+                            </p:submenu>
+
+                        </p:menu>
+                    </h:form>
+
+                </b:column>    
+                <b:column col-xs="5" col-sm="5" col-md="9">
                     <p:panel header="Post List">
                         <h:form >            
                             <p:dataTable var="all" value="#{AdminManagedBean.allPosts}" id="msgs">
@@ -59,11 +71,11 @@
                             <h:form rendered="#{AdminManagedBean.postdetail}">
                                 <p:growl id="tmp" showDetail="true" />                                       
 
-                                <p:panel id="Post Date" header="Post Date">
+                                <p:panel id="Date" header="Post Date">
                                     <h:outputText value="#{AdminManagedBean.getPost().post_date}" />
                                 </p:panel>
 
-                                <p:panel id="Post Content" header="Post Content">
+                                <p:panel id="Content" header="Post Content">
                                     <h:outputText value="#{AdminManagedBean.getPost().content}" />
                                 </p:panel>
 

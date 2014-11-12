@@ -4,7 +4,6 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:g="http://java.sun.com/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Welcome to My Merlion</title>
@@ -29,53 +28,7 @@
                 <h3>My MerLION</h3> 
             </b:well>
         </b:container>
-        <!--
-        <b:container>
-            <b:row>
-                <p:column colspan="3">
-                    <h:form>  
-                        <p:menubar styleClass="show-grid">
-                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                            <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
-                            <p:submenu label="Account Setting">
-                                <p:submenu label="Account Management">
-                                    <p:menuitem value="View Account Infomation" url="/CI/account/viewAccountInfo.xhtml"/>
-                                    <p:menuitem value="Edit Account Information" url="/CI/account/editAccountInfo.xhtml" actionListener="#{accountManagedBean.viewAccount()}"/>
-                                    <p:menuitem value="Reset Password" url="/CI/account/resetPassword.xhtml"/>
-                                </p:submenu>
-                                <p:submenu label="Company Profile Management">
-                                    <p:menuitem value="View Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
-                                    <p:menuitem value="Edit Company Profile" url="/MRP/BOM/addBOM.xhtml"/>
-                                </p:submenu>
-                            </p:submenu>
-
-                            <p:submenu label="Contract Management">
-                                <p:menuitem value="Add New Plan" url="/MRP/plan/addNewPlan.xhtml"/>
-                                <p:menuitem value="Display Plan" url="/MRP/plan/displayPlan.xhtml" />
-                            </p:submenu>
-
-                            <p:submenu label="Transaction Management">
-                                <p:menuitem value="View Service Transaction History" url="/MRP/demandManagement/DemandManagement.xhtml" />
-                                <p:menuitem value="View Ongoing Transaction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="View Transaction History" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Invoice" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                            </p:submenu>
-
-                            <p:submenu label="Internal Communication">
-                                <p:menuitem value="Message" url="/MRP/order/orderManagement.xhtml"/>
-                                <p:menuitem value="Notification" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Announcement" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                            </p:submenu>      
-
-                            <p:menuitem value="Log Out"/>
-
-                        </p:menubar>
-                    </h:form>
-                </p:column>
-            </b:row>
-
-        </b:container>
-        <-->
+        
         <b:container>
             <b:row styleClass="show-grid">
                 <b:column col-xs="5" col-sm="5" col-md="3">

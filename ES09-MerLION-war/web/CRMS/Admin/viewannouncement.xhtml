@@ -15,24 +15,37 @@
 
     <h:body>
         <b:container>
-            <b:row>
-                <p:column colspan="3">
-                    <h:form>  
-                        <p:menubar styleClass="show-grid">
-                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                            <p:menuitem value="WMS Home" url="/CRMS/main.xhtml" />
-                            <p:menuitem value="Log Out" action="signIn.xhtml"  actionListener="#{accountManagedBean.logout}"/>
-                        </p:menubar>
-                    </h:form>
-                </p:column>
-            </b:row>
+
+            <p:breadCrumb>
+                <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                <p:menuitem value="Home" url="/CRMS/Admin/AdminMain.xhtml" />
+                <p:menuitem value="User Account" url="/CRMS/Admin/viewaccounts.xhtml" />
+                <p:menuitem value="Company Profile" url="/CRMS/Admin/view_edit_delete_companys.xhtml" />
+                <p:menuitem value="Announcement" url="/CRMS/Admin/viewannouncement.xhtml" />
+                <p:menuitem value="Customer Enquiry" url="/CRMS/Admin/view_reply_enquiry.xhtml" />
+                <p:menuitem value="Forume Post" url="/CRMS/Admin/view_delete_post.xhtml" />                 
+            </p:breadCrumb> 
+            <b:well>
+                <h3>My MerLION (Admin)</h3> 
+            </b:well>
         </b:container>
 
-
-        <br/>
         <b:container>
             <b:row styleClass="show-grid">
-                <b:column col-xs="5" col-sm="5" col-md="10">
+                <b:column col-xs="5" col-sm="5" col-md="3">
+                    <h:form>
+                        <p:growl id="msgs"/>
+                        <p:menu style="width:250px">                          
+                            <p:submenu label="Announcement Management">                            
+                                <p:menuitem value="View Announcement/Add New Announcement"  url="/CRMS/Admin/viewannouncement.xhtml"/>
+                            </p:submenu>
+                            <p:separator />                          
+                        </p:menu>
+                    </h:form>
+
+                </b:column>             
+
+                <b:column col-xs="5" col-sm="5" col-md="9">
                     <p:panel header="User Account List">
                         <h:form >            
                             <p:dataTable var="all" value="#{AdminManagedBean.allAnnouncements}" id="msgs">
@@ -63,7 +76,8 @@
                             <b:commandButton action="#{AdminManagedBean.setCheckadd(true)}" value="Add a new announcement" look="success" iconAlign="left"/>
 
                             <p:growl id="panel" rendered="#{AdminManagedBean.checkadd}">
-                                <h:panelGrid>                                                                     
+                                <h:panelGrid>  
+                                    <h:form styleClass="navbar-form navbar-left"> 
                                     <div class="form-group">
                                         <h:outputLabel for="title" value="Announcement Title : " />
                                         <h:inputText id="title" value="#{AdminManagedBean.title}" required="true"
@@ -77,8 +91,11 @@
                                         <p:inputTextarea id="content" value="#{AdminManagedBean.content}" rows="5" cols="30" counter="display" maxlength="200" counterTemplate="{0} characters remaining." autoResize="false" />
                                         <h:outputText id="display" />
                                     </h:form>
-                                    
-                                    <p:commandButton value="Save" update="msgs" actionListener="#{AdminManagedBean.createAnnouncement}" styleClass="ui-priority-primary" ajax="false"/>
+                                    <br/>
+                                        <p:commandButton value="Save" update="msgs" actionListener="#{AdminManagedBean.createAnnouncement}" styleClass="ui-priority-primary" ajax="false"/>
+                                        &nbsp;
+                                        <p:commandButton value="Back" update="msgs" actionListener="#{AdminManagedBean.setCheckadd(false)}" styleClass="ui-priority-primary" ajax="false"/>
+                                    </h:form>
                                 </h:panelGrid>
                             </p:growl>
 
@@ -89,6 +106,7 @@
                 </b:column>
             </b:row>
         </b:container>
+
         <br/>
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">

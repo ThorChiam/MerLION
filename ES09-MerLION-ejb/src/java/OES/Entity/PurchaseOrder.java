@@ -7,18 +7,17 @@ package OES.Entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import CI.Entity.Account;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -30,64 +29,39 @@ public class PurchaseOrder implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;   
-    private double taxrate;
-    private List<Integer> quantity = new ArrayList();
+    //private double taxrate;
+    
     private String createdate;
-    private String deliverydate;
-    private int delete_status;
-
+    //private String deliverydate;
+    //private int delete_status;
+   /*
     @OneToOne
     SalesOrder salesorder;
     
-    @ManyToMany(cascade={CascadeType.ALL},mappedBy="purchaseorder")
-    private Set<Product> product=new HashSet<>();
+   */
     
+    @OneToOne
+    SalesOrder salesorder;
+      
     @ManyToOne
     private Account sender;
     
     @ManyToOne
     private Account receiver;
     
-    @OneToOne
-    private OES_Payment payment;
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "porder")
+    private List<OrderList> order=new ArrayList();
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "porder")
+    private List<OrderListSub> ordersub=new ArrayList();
 
 
     public PurchaseOrder(){
         setId(System.nanoTime());
     }
     
-    public OES_Payment getPayment() {
-        return payment;
-    }
-
-    public int getDelete_status() {
-        return delete_status;
-    }
-
-    public void setDelete_status(int delete_status) {
-        this.delete_status = delete_status;
-    }
-
-    public void setPayment(OES_Payment payment) {
-        this.payment = payment;
-    }
-    
-    public String getDeliverydate() {
-        return deliverydate;
-    }
-
-    public void setDeliverydate(String deliverydate) {
-        this.deliverydate = deliverydate;
-    }
-    
-    public Set<Product> getProduct() {
-        return product;
-    }
-
-    public void setProduct(Set<Product> product) {
-        this.product = product;
-    }
-    
+   
     public String getCreatedate() {
         return createdate;
     }
@@ -103,23 +77,7 @@ public class PurchaseOrder implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-  
-    public double getTaxrate() {
-        return taxrate;
-    }
-
-    public void setTaxrate(double taxrate) {
-        this.taxrate = taxrate;
-    }
-
-    public List<Integer> getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(List<Integer> quantity) {
-        this.quantity = quantity;
-    }
-
+/*
     public SalesOrder getSalesorder() {
         return salesorder;
     }
@@ -127,7 +85,8 @@ public class PurchaseOrder implements Serializable {
     public void setSalesorder(SalesOrder salesorder) {
         this.salesorder = salesorder;
     }
-   
+*/
+
     public Account getSender() {
         return sender;
     }
@@ -143,6 +102,27 @@ public class PurchaseOrder implements Serializable {
     public void setReceiver(Account receiver) {
         this.receiver = receiver;
     }
+    
+
+    
+    public List<OrderList> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<OrderList> order) {
+        this.order = order;
+    }
+
+    public List<OrderListSub> getOrdersub() {
+        return ordersub;
+    }
+
+    public void setOrdersub(List<OrderListSub> ordersub) {
+        this.ordersub = ordersub;
+    }
+  
+  
+
 
 
     @Override

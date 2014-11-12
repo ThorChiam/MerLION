@@ -17,11 +17,14 @@
                 <p:menuitem value="Home" url="/main.xhtml" />
                 <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
                 <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
-                <p:menuitem value="Sales Order" url="/OES/salesOrder/createOrder.xhtml" />
+                <p:menuitem value="Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml" />
+                <p:menuitem value="Sales Order" url="/OES/salesOrder/createSalesOrder.xhtml" />
                 <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
                 <p:menuitem value="Payment" url="#" />
 
             </p:breadCrumb>
+            
+            
             <b:well>
                 <h2>Order Entry System</h2>   
             </b:well>
@@ -35,13 +38,14 @@
 
                             <b:listLinks>
 
-                                <b:navLink href="viewEnquire.xhtml" value="View Upcoming Enquire"
+                               <b:navLink href="viewIncomingPurchaseOrder.xhtml" value="View Incoming Purchase Order"
                                            />
-                                <b:navLink href="createQuotation.xhtml" value="Create NEW Quotation"
+                                <b:navLink href="createSalesOrder.xhtml" value="Create NEW Sales Ordder"
                                            />
-
-                                <b:navLink href="viewQuotation.xhtml" value="View Quotation History"
+                                
+                                <b:navLink href="viewSalesOrderALL.xhtml" value="View Sales Order History"
                                            />
+                                
                             </b:listLinks>
                         </p:panel>
                     </h:form>
@@ -50,11 +54,11 @@
 
                 <b:column col-xs="6" col-sm="6" col-md="10">
                     <h:form>
-                        <p:panel  header="Create NEW Quotation">
+                        <p:panel  header="Sales Order">
 
 
 
-                            <p:outputLabel for="company" value="Enquire ID: " />
+                            <p:outputLabel for="company" value="Sales Order ID: " />
                             &nbsp;
                             <p:selectOneMenu id="company" value="#{quo.selectedEID}" style="width:150px">
                                 <f:selectItem itemLabel="Select Enquire ID to Reply" itemValue="" noSelectionOption="true" />

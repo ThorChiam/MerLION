@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
@@ -12,7 +13,7 @@
     <h:body>
         <b:container>
 
-            <p:breadCrumb>
+          <p:breadCrumb>
                 <p:menuitem value="Home" url="/main.xhtml" />
                 <p:menuitem value="Home" url="/main.xhtml" />
                 <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
@@ -26,14 +27,13 @@
                 <h2>Order Entry System</h2>   
             </b:well>
         </b:container>
-
         <b:container>
             <b:row styleClass="show-grid">
                 <b:column col-xs="12" col-sm="6" col-md="2">
                     <h:form>
-                        <p:panel header="Quotation Management">
+                        <p:panel header="Enquiry Management">
 
-                            <b:listLinks>
+                           <b:listLinks>
 
                                 <b:navLink href="viewEnquire.xhtml" value="View Upcoming Enquire"
                                            />
@@ -51,53 +51,50 @@
 
                 <b:column col-xs="6" col-sm="6" col-md="10">
 
-                    <h:form id="form">
-                        <p:dataTable var="en" value="#{quo.viewQuotaionHistory()}">
-                                                      
+                    <p:panel style="border: none">
+
+                        <f:metadata>
+                            <f:viewParam name="enId" value="#{quo.enId}" />
+                        </f:metadata>
                         
+                        <h:outputLabel for="qid" value="Enquiry ID:" style="font-weight:bold" />
+                        <h:outputText value="#{quo.enId}" />
+                        <p>
                             
-                             <f:facet name="header">
-                               Quotation History
+                        </p>
+                        <p:dataTable  var="sp" value="#{quo.viewEnquireDetails(quo.enId)}" >
+                            <f:facet name="header">
+                                Order List
+                            </f:facet>
+                            
+                            <p:column headerText="Order: Products">
+                                <h:outputText value="#{sp.product.name}" />
+                            </p:column>
+                            
+                            <p:column headerText="Order: Quantities">
+                                <h:outputText value="#{sp.quantity}" />
+                            </p:column>
+                            
+                              <f:facet name="footer">
+                                  There are total #{quo.orderSize} Orders.
                             </f:facet>
 
-                            <p:column headerText="Quotation ID">
-                                <h:outputText value="#{en.id}" />
-                            </p:column>
-
-                            <p:column headerText="Quotation Date:">
-                                <h:outputText value="#{en.qdate}" />
-                            </p:column>
-
-                            <p:column headerText="Total Amount">
-                                <h:outputText value="#{en.total}" />
-                            </p:column>
-
+                    </p:dataTable>
+                        <p>
                             
-                            <p:column headerText="Details">
-                                
-                                <p:button outcome="viewquotationDetail" value="View" icon="ui-icon-star">
-                                    <f:param name="quoId" value="#{en.id}" />
-                                </p:button>
-
-                            </p:column>
-                            
-                            
-                            <p:column headerText="Delete">
-
-                                <p:commandButton value="Delete" actionListener="#{quo.deleteQuotation(en.id)}" styleClass="ui-priority-primary" ajax="false"/>
-                                
-                            </p:column>
-
-                           
-                            <f:facet name="footer">
-                                You have made total #{quo.quoSize} quotations.
-                            </f:facet>
-
-                        </p:dataTable>
-                    </h:form>
-
+                        </p>
+                      
+                     <p:button outcome="createQuotation" value="Reply Enquire" icon="ui-icon-star">
+                    </p:button>
+                     
+                    <p:button outcome="viewEnquire" value="Back" icon="ui-icon-star">
+                    </p:button>
+                      
+                    </p:panel>
+                    
                 </b:column>
-
+                
+              
             </b:row>
 
         </b:container>
@@ -122,3 +119,12 @@
         </foot>
     </h:body>
 </html>
+
+
+
+
+
+
+
+
+

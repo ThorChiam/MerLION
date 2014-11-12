@@ -24,9 +24,11 @@ public class Quotation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private List<String> deliver_date=new ArrayList();
-    private String createdate;
-    private int delete_status;
+    private double total;
+    private String qdate;
+    //private String paymentTerm;
+    //private String quotationdate;
+    //private int delete_status;
 
 
     @OneToOne(mappedBy="quotation")
@@ -37,6 +39,7 @@ public class Quotation implements Serializable {
         setId(System.nanoTime());
     }
    
+    /*
     public int getDelete_status() {
         return delete_status;
     }
@@ -44,23 +47,31 @@ public class Quotation implements Serializable {
     public void setDelete_status(int delete_status) {
         this.delete_status = delete_status;
     }
-    
-    public String getCreatedate() {
-        return createdate;
+    */
+   
+   
+
+    public double getTotal() {
+        return total;
     }
 
-    public void setCreatedate(String createdate) {
-        this.createdate = createdate;
-    }
-    
-    public List<String> getDeliver_date() {
-        return deliver_date;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
-    public void setDeliver_date(List<String> deliver_date) {
-        this.deliver_date = deliver_date;
+ 
+
+    public String getQdate() {
+        return qdate;
     }
+
+    public void setQdate(String qdate) {
+        this.qdate = qdate;
+    }
+
     
+
+
     public Enquiry getEnquiry() {
         return enquiry;
     }
@@ -68,6 +79,10 @@ public class Quotation implements Serializable {
     public void setEnquiry(Enquiry enquiry) {
         this.enquiry = enquiry;
     }
+  
+    
+   
+
     
     public Long getId() {
         return id;
