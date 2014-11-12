@@ -58,7 +58,6 @@ public class SessionTimeoutFilter implements Filter {
                 }
             }
         }
-        System.out.println("Request:" + request.getLocalAddr());
         filterChain.doFilter(request, response);
     }
     /*
