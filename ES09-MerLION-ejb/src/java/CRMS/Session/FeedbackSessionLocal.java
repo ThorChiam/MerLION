@@ -8,11 +8,13 @@ package CRMS.Session;
 import CRMS.Entity.Company;
 import CRMS.Entity.Feedback;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
  *
  * @author sunny
  */
+@Local
 public interface FeedbackSessionLocal {
     public void createFeedback(double rating, String feedback_content, String feedback_date, Company sender, Company receiver);
     public Feedback getFeedback(long feedback_id);
