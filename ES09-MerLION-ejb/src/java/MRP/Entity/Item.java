@@ -37,41 +37,24 @@ public class Item implements Serializable {
     private int on_hand;
     private int lead_time;
     private double cost;
-
-    //Added by QT
-    @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Account Account;
-
-
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Item")
-    private List<Demand> demand = new ArrayList<>();
+    private List<Demand> demand = new ArrayList<Demand>();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Item")
-    private List<Template> templates = new ArrayList<>();
+    private List<Template> templates = new ArrayList<Template>();
     
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Item")
     private MPS mps;
     
-    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Item")
-    private BOM bom;
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Item")
+    private List<BOM> bom;
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Item")
     private List<MRPOrders> order = new ArrayList(); 
-
-    //Added by QT
-    public Account getAccount() {
-        return Account;
-    }
-
-    public void setAccount(Account Account) {
-        this.Account = Account;
-    }
-
-
-
-
-
+    
+    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    private Account account;
     
     public Long getItemId() {
         return itemId;
@@ -81,12 +64,22 @@ public class Item implements Serializable {
         this.itemId = systemUserId;
     }
 
-    public BOM getBom() {
+    public List<BOM> getBom() {
         return bom;
     }
 
-    public void setBom(BOM bom) {
+    public void setBom(List<BOM> bom) {
         this.bom = bom;
+    }
+
+   
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public List<MRPOrders> getOrder() {

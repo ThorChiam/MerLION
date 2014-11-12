@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
 import CRMS.Entity.Company;
+import javax.persistence.OneToOne;
 
 
 @Entity
@@ -29,28 +30,21 @@ public class Product implements Serializable {
     private String description;
     
 
-    @ManyToMany(cascade={CascadeType.PERSIST})
-    @JoinTable(name="OES_PRODUCT_OES_ENQUIRY")
-    private Set<Enquiry> enquiry=new HashSet<>();
-    
     @ManyToOne
     private Company company;
     
     @ManyToMany(cascade={CascadeType.PERSIST})
     @JoinTable(name="OES_PRODUCT_OES_PURCHASEORDER")
     private Set<PurchaseOrder> purchaseorder=new HashSet<>();
+    
+    @OneToOne(mappedBy="product")
+     private OrderList order;
 
     public Product() {
         setId(System.nanoTime());
     }
     
-    public Set<Enquiry> getEnquiry() {
-        return enquiry;
-    }
-
-    public void setEnquiry(Set<Enquiry> enquiry) {
-        this.enquiry = enquiry;
-    }
+  
 
     public Set<PurchaseOrder> getPurchaseorder() {
         return purchaseorder;
@@ -105,6 +99,14 @@ public class Product implements Serializable {
     }
     public void setQuantity(int quantity){
         this.quantity=quantity;
+    }
+
+    public OrderList getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderList order) {
+        this.order = order;
     }
    
     @Override

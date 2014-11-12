@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        Bill of material(BOM)
+    </ui:define>
+
+    <ui:define name="content">
+        <h2><h:outputLabel value="BOM management" /></h2>
+
+        <h:form>        
+            <p:outputLabel for="showBOM" value="Select item Id:" />
+            <p:selectOneMenu id="showBOM" required="true" requiredMessage="Please select a itemId"  value="#{BOMManagerBean.itemId}">
+                <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                <f:selectItems value="#{BOMManagerBean.itemList}" var="i" itemLabel="#{i.itemId}" itemValue="#{i.itemId}" />
+            </p:selectOneMenu> 
+
+            <p:commandButton value="show component" update="bom" action="#{BOMManagerBean.getItemBOM()}" ajax="true" />
+
+            <p:panel id="bom" header="Item Components">
+               
+                <p:dataTable value="#{BOMManagerBean.BOMList}" var="p" >
+                    <p:column headerText ="id">                           
+                        <h:outputText value="#{p.id}" />
+                    </p:column>
+
+                    <p:column headerText ="component">                           
+                        <h:outputText value="#{p.component}" />
+                    </p:column>
+
+                    <p:column headerText ="quantity">
+
+                        <h:outputText value="#{p.quantity}"  />
+
+                    </p:column>    
+
+                    <p:column>
+                        <f:facet name="header">Action</f:facet>
+
+                        <p:commandButton value="Delete" actionListener="#{BOMManagerBean.deleteBom(p)}" ajax="false">
+                          
+                        </p:commandButton>
+
+                    </p:column> 
+
+                </p:dataTable>
+            </p:panel>
+            <p:messages autoUpdate="false"/>
+
+            <p:panel  header="Add New Component">        
+                
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="component" style="font-weight: bold" value="Component ID: " />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="component" value="#{BOMManagerBean.compId}">
+                                <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{BOMManagerBean.itemList}" var="i" itemLabel="#{i.itemId}" itemValue="#{i.itemId}" />
+                            </p:selectOneMenu> 
+                        </p:column>
+                        <p:column>
+                            <p:message for="component" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="quantity" style="font-weight: bold" value="quantity: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText label="quantity"  id="quantity" value="#{BOMManagerBean.quantity}">
+
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="quantity" />
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+                <p:commandButton id="btn" value="Add New Component"  ajax="false" action="#{BOMManagerBean.addNewBOM()}" />  
+
+            </p:panel>
+
+        </h:form>  
+
+    </ui:define>
+
+</ui:composition>

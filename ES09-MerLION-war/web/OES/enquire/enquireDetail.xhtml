@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Welcome to Order Entry System</title>
+    </h:head>
+
+    <h:body>
+        <b:container>
+
+            <p:breadCrumb>
+                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
+                <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
+                <p:menuitem value="Sales Order" url="#" />
+                <p:menuitem value="Enquire" url="/OES/enquire/createEnquire.xhtml" />
+
+                <p:menuitem value="Payment" url="#" />
+
+            </p:breadCrumb>
+            <b:well>
+                <h2>Order Entry System</h2>   
+            </b:well>
+        </b:container>
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="12" col-sm="6" col-md="2">
+                    <h:form>
+                        <p:panel header="Enquiry Management">
+
+                            <b:listLinks>
+
+                                <b:navLink href="enquireMain.xhtml" value="Create New Enquire"
+                                           />
+                                <b:navLink href="enquireALL.xhtml" value="View Enquire"
+                                           />
+                            </b:listLinks>
+                        </p:panel>
+                    </h:form>
+
+                </b:column>
+
+
+                <b:column col-xs="6" col-sm="6" col-md="10">
+
+                    <p:panel style="border: none">
+
+                        <f:metadata>
+                            <f:viewParam name="enId" value="#{eb.enId}" />
+                        </f:metadata>
+                        
+                        <h:outputLabel for="qid" value="Enquiry ID:" style="font-weight:bold" />
+                        <h:outputText value="#{eb.enId}" />
+                        <p>
+                            
+                        </p>
+                        <p:dataTable  var="sp" value="#{eb.getSingleEnquiry(eb.enId)}" >
+                            <f:facet name="header">
+                                Enquire History 
+                            </f:facet>
+
+                            <p:column headerText="From" >
+                                <h:outputText value="#{eb.enBuyer}" />
+                            </p:column>
+                            
+                             <p:column headerText="To">
+                                 <h:outputText value="#{eb.enSeller}" />
+                            </p:column>
+                            
+                            <p:column headerText="Order: Products">
+                                <h:outputText value="#{eb.enProducts}" />
+                            </p:column>
+                            
+                            <p:column headerText="Order: Quantities">
+                                <h:outputText value="#{eb.enQuat}" />
+                            </p:column>
+
+                    </p:dataTable>
+                        <p>
+                            
+                        </p>
+                        
+                     <p:button outcome="enquireALL" value="Back" icon="ui-icon-star">
+                    </p:button>
+                    </p:panel>
+                    
+                </b:column>
+                
+              
+            </b:row>
+
+        </b:container>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+    </h:body>
+</html>
+
+
+
+
+
+
+
+
+

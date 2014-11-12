@@ -54,7 +54,8 @@ public class AdminSession implements AdminSessionLocal{
 
     @Override
     public List<Account> getAllAccount() {
-        Query query = em.createQuery("SELECT v FROM Account v");
+        Query query = em.createQuery("SELECT v FROM Account v WHERE v.accessright<>:type");
+        query.setParameter("type", "Admin");
         return query.getResultList();
     }
 
@@ -81,7 +82,8 @@ public class AdminSession implements AdminSessionLocal{
     //*************************About Company*************************
     @Override
     public List<Company> getAllCompany(){
-        Query q = em.createQuery("SELECT e FROM Company e");
+        Query q = em.createQuery("SELECT e FROM Company e WHERE e.companyName<>:merlion");
+        q.setParameter("merlion", "Merlion Logistic");
         return q.getResultList();
     }
     
@@ -108,7 +110,8 @@ public class AdminSession implements AdminSessionLocal{
     
     @Override
     public void updateCompanyInfo(long company_id, String companyName, String companyAddress, String tel, String email, String website, String companyHistory, String service, String vision){
-        Query q = em.createQuery("SELECT c FROM Company c WHERE c.id=:id");
+        Query q = em.createQuery("SELECT c FROM Company c WHERE c.id=:id AND c.companyName<>:merlion");
+        q.setParameter("merlion", "Merlion Logistic");
         q.setParameter("id", company_id);
         Company company = (Company) q.getSingleResult();
         company.setCompanyName(companyName);

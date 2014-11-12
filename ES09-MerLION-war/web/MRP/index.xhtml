@@ -1,135 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:g="http://java.sun.com/jsf/html"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./template/DefaultTemplate.xhtml">
 
+    <ui:define name="left">
+        You are now at Material Resources Planning home page
+    </ui:define>
 
+    <ui:define name="content">
+        <h2>Welcome to Merlion Material Resources Planning System</h2>
+    </ui:define>
 
-    <h:head>
-        <title>Welcome to MRP System</title>
-
-        <meta name="author" content="The Author"></meta>
-        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
-
-    </h:head>
-
-    <h:body>
-        <b:container>
-            <b:row>
-                <p:column colspan="3">
-                    <h:form>  
-                        <p:menubar styleClass="show-grid">
-                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                            <p:menuitem value="MRP Home" url="/MRP/index.xhtml" />
-                            <p:submenu label="Bill of Material">                    
-                                <p:menuitem value="Add New BOM" url="/MRP/BOM/addBOM.xhtml" />
-                                <p:menuitem value="Delete BOM" url="/MRP/BOM/deleteBOM.xhtml" />
-                                <p:menuitem value="Display/Update BOM" url="/MRP/BOM/displayBOM.xhtml" />
-                            </p:submenu>
-
-                            <p:submenu label="Material Requirement Plan">
-                                <p:menuitem value="Add New Plan" url="/MRP/plan/addNewPlan.xhtml"/>
-                                <p:menuitem value="Display Plan" url="/MRP/plan/displayPlan.xhtml" />
-                            </p:submenu>
-
-                            <p:submenu label="Demand Management">
-                                <p:menuitem value="Display Demand" url="/MRP/demandManagement/DemandManagement.xhtml" />
-                                <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                            </p:submenu>
-
-                            <p:submenu label="Order Management">
-                                <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml"/>
-                            </p:submenu>      
-
-                            <p:menuitem value="Log Out"/>
-
-                        </p:menubar>
-                    </h:form>
-                </p:column>
-            </b:row>
-
-        </b:container>
-        <br/>
-        <b:container>
-            <b:row styleClass="show-grid">
-                <b:column col-xs="5" col-sm="5" col-md="3">
-                    <h:form>
-                        <p:growl autoUpdate="true"/>
-                        <p:menu style="width:250px">
-                            <p:submenu label="Bill of Marerial Management">
-                                <p:menuitem value="Add New BOM" url="/MRP/BOM/addBOM.xhtml"/>
-                                <p:menuitem value="Delete BOM" url="/MRP/BOM/deleteBOM.xhtml"/>
-                                <p:menuitem value="Display/Update BOM" url="/MRP/BOM/displayBOM.xhtml"/>
-                            </p:submenu>
-                            <p:submenu label="Material Requirement Plan Management">
-                                <p:menuitem value="Add New Plan"  url="/MRP/plan/addNewPlan.xhtml"/>
-                                <p:menuitem value="Display Plan"  url="/MRP/plan/displayPlan.xhtml"/>
-                            </p:submenu>
-                            <p:separator />
-                            <p:submenu label="Demand Management" >
-                                <p:menuitem value="Display 6 Months Demand" url="/MRP/demandManagement/DemandManagement.xhtml"/>
-                                <p:menuitem value="Demand Prediction" url="/MRP/demandManagement/demandPrediction.xhtml"/>
-                                <p:menuitem value="Save Master Production Schedule" url="/MRP/demandManagement/saveProductionSchedule.xhtml"/>
-                            </p:submenu>
-                            <p:submenu label="Order Management" >
-                                <p:menuitem value="Save New Order" url="/MRP/order/orderManagement.xhtml" />
-
-                            </p:submenu>
-                        </p:menu>
-                    </h:form>
-
-                </b:column>                 
-                <b:column col-xs="5" col-sm="5" col-md="6">
-                    <p:panel header="MRP System - Home">
-                        <img src="news.jpg" weight="600" width="500"/>
-                    </p:panel>
-                </b:column>
-
-                <b:column col-xs="5" col-sm="5" col-md="3">
-
-                    <h:form id="form">
-                        <p:growl id="msgs" showDetail="true" />
-                        <h:panelGrid style="width: 100%;">
-                            <p:calendar id="inline" mode="inline" />
-                        </h:panelGrid>
-                    </h:form>
-
-
-                </b:column>
-
-            </b:row>
-        </b:container>
-        <br/>
-        <foot>
-            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-
-                <div class="navbar-text pull-left">
-                    <p>2014 MerLION Logistics.</p>
-                </div>
-
-                <div class="navbar-text pull-right">
-                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
-                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
-                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
-                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
-                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
-
-
-                </div>
-
-            </div>
-        </foot>
-
-    </h:body>
-</html>
-
-
-
-
-
-
+</ui:composition>

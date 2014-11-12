@@ -84,7 +84,7 @@
                 </b:column>                 
                 <b:column col-xs="5" col-sm="5" col-md="9">
 
-                    <h:form id="form">
+                    <h:form>
                         <p:dataTable var="service" value="#{scmb.services}" widgetVar="servicesTable"
                                      emptyMessage="No services found with given criteria" filteredValue="#{scmb.filteredServices}">
 
@@ -131,7 +131,9 @@
                                 <p:commandButton value="Show Details" update=":form:Details" actionListener="#{scmb.initServiceId(service.id)}"/>
                             </p:column>
                         </p:dataTable>
-                        <p:dataTable id="Details" var="s" value="#{scmb.serviceDetail}">
+                    </h:form>
+                    <h:form id="form">
+                        <p:dataTable id="Details" var="s" value="#{scmb.serviceDetail}">        
                             <p:column headerText="ID">
                                 <h:outputText value="#{s.id}" />
                             </p:column>
@@ -157,8 +159,11 @@
                             <p:column headerText="Location">
                                 <h:outputText value="#{s.location}" />
                             </p:column>
+                            <p:column headerText="Required:">
+                                <h:inputText value="#{scmb.requiredCapacity}" />
+                            </p:column>
                             <p:column>
-                                <p:commandButton value="Select" actionListener="#"/> 
+                                <p:commandButton value="Select" action="serviceRequest" actionListener="#{scmb.selectProvider}"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>

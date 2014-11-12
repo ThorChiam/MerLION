@@ -5,8 +5,9 @@
  */
 package CRMS.Session;
 
+import CI.Entity.Account;
 import CRMS.Entity.Contract;
-import CRMS.Entity.ServiceOrder;
+import WMS.Entity.WMSServiceCatalog;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -20,10 +21,11 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class ContractSession implements ContractSessionLocal{
+public class ContractSession implements ContractSessionLocal {
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Override
     public List<Contract> getAllContract(String email) {
         Query q = em.createQuery("SELECT f FROM Contract f WHERE (f.serviceorder.service_provider.email=:email) OR (f.serviceorder.service_requester.email=:emails)");
@@ -43,18 +45,33 @@ public class ContractSession implements ContractSessionLocal{
     public void terminateContract(long contract_id) {
         Query q = em.createQuery("SELECT a FROM Contract a WHERE a.id=:id");
         q.setParameter("id", contract_id);
-        Contract contract=(Contract)q.getSingleResult();
+        Contract contract = (Contract) q.getSingleResult();
         contract.setContract_status("terminated");
         em.merge(contract);
     }
 
     @Override
-    public void createCrontract(String sign_date, String total_price, String contract_status, ServiceOrder serviceorder) {
-        Contract contract=new Contract();
+    public void createCrontract(String sign_date, int total_price, Long serviceId, Long email, Long requestorId) {
+        Contract contract = new Contract();
+        contract.setSign_date(sign_date);
         contract.setContract_status("pending");
-        contract.setServiceorder(serviceorder);
+        contract.setTotal_price(total_price);
+        Query q = em.createQuery("SELECT s FROM WMSServiceCatalog s WHERE s.id=:serviceId");
+        q.setParameter("serviceId", serviceId);
+        WMSServiceCatalog wService = (WMSServiceCatalog) q.getSingleResult();
+        contract.setwService(wService);
+        q = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");
+        q.setParameter("email", email);
+        Account provider = (Account) q.getSingleResult();
+        contract.setProvider(provider);
+        q = em.createQuery("SELECT a FROM Account a WHERE a.email=:requestorId");
+        q.setParameter("requestorId", requestorId);
+        Account requestor = (Account) q.getSingleResult();
+        contract.setRequestor(requestor);
+        contract.setContract_status("pending");
         contract.setTotal_price(total_price);
         contract.setSign_date(sign_date);
+        em.persist(contract);
     }
 
     @Override
@@ -63,12 +80,5 @@ public class ContractSession implements ContractSessionLocal{
         q.setParameter("id", contract_id);
         return (Contract) q.getSingleResult();
     }
-    
-    @Override
-    public ServiceOrder getServiceOrder(long service_id){
-        Query q = em.createQuery("SELECT f FROM ServiceOrder f WHERE f.id=:id");
-        q.setParameter("id", service_id);
-        return (ServiceOrder) q.getSingleResult();
-    }
-    
+
 }

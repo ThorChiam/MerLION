@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Welcome to Order Entry System</title>
+    </h:head>
+
+    <h:body>
+        <b:container>
+
+            <p:breadCrumb>
+                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
+                 <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
+                
+                <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
+                <p:menuitem value="Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml" />
+                <p:menuitem value="Sales Order" url="/OES/salesOrder/createSalesOrder.xhtml" />
+               
+                <p:menuitem value="Payment" url="#" />
+
+            </p:breadCrumb>
+            <b:well>
+                <h2>Order Entry System</h2>   
+            </b:well>
+        </b:container>
+
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="12" col-sm="6" col-md="2">
+                    <h:form>
+                        <p:panel header="Purchase Order Management">
+
+                            <b:listLinks>
+
+                                <b:navLink href="createPurchaseOrder.xhtml" value="Create New Purchase Order"
+                                           />
+                                 <b:navLink href="viewPurchaseOrder.xhtml" value="Purchase Order History(Outgoing)"
+                                           />
+                              
+                            </b:listLinks>
+                        </p:panel>
+                    </h:form>
+
+                </b:column>
+
+
+                <b:column col-xs="6" col-sm="6" col-md="10">
+                    <h:form>
+                        <p:panel  header="Create Purchase Order">
+
+                      
+                            <p:dataTable var="buyer" value="#{pur.displaySenderName()}" style="font-weight:bold" >
+
+                                <p:column headerText="New Purchase Order">
+                                    <h:outputLabel value="Enquirer:" style="font-weight:bold" />
+                                    &nbsp;
+                                    <h:outputText value="#{buyer}" />
+
+                                    <p>
+                                        <h:outputLabel value="Date:" style="font-weight:bold" />
+                                        &nbsp;
+                                        <h:outputText value="#{pur.edate}" />   
+                                    </p>
+
+                                    <p></p>
+                                    <p:outputLabel for="company" value="Select Seller: " />
+                                    <p:selectOneMenu id="company" value="#{pur.receiverName}" style="width:150px">
+                                        <f:selectItem itemLabel="Select Company" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{pur.receiverNames}" />
+                                    </p:selectOneMenu>
+                                    <p>
+                                    </p>
+                                    <p:commandButton value="Display Products" ajax="false" icon="ui-icon-check" actionListener="#{pur.displaySellerProducts()}" validateClient="true" style="margin-right:10px"/>
+                                    <p>
+                                    </p>
+
+                                    <p:outputLabel for="basic" value="Product Name:" />
+
+                                    <p:selectManyMenu id="basic" value="#{pur.selectedNames}">
+                                        <f:selectItems value="#{pur.productsN}" />
+                                    </p:selectManyMenu>
+                                    <p>
+                                    </p>
+
+                                    <p:commandButton value="View Selected Product" ajax="false" icon="ui-icon-check" actionListener="#{pur.displaySellerProducts()}" validateClient="true" style="margin-right:10px"/>
+                                    <p>
+                                    </p>
+
+                                    <p>
+
+                                        <p:dataTable var="sp" value="#{pur.selectedNames}">
+                                            <f:facet name="header">
+                                                List of Selected Products
+                                            </f:facet>
+
+                                            <p:column headerText="Product Name">
+                                                <h:outputText value="#{sp}" />
+                                            </p:column>
+                                            
+                                            <p:column headerText="Description">
+                                                <h:outputText value="#{pur.desc}" />
+                                            </p:column>
+                                            
+                                            <f:facet name="footer">
+                                                You have selected #{pur.psize} Products.
+                                            </f:facet>
+
+                                        </p:dataTable>
+
+                                    </p>
+
+                                    <p:commandButton value="Enter Quantities" ajax="false" icon="ui-icon-check" actionListener="#{pur.displaySellerProducts()}" validateClient="true" style="margin-right:10px"/>
+
+                                    <p>
+                                    </p>
+
+
+                                    <h:outputLabel value="Enter Correponding Quantities:" style="font-weight:bold" />
+                                    &nbsp;
+                                    <h:outputText value="#{pur.arrayToString}" />
+
+                                    <p>
+                                    </p> 
+
+                                    <h:outputLabel value="Quantities/Split by(,):" style="font-weight:bold" />
+                                    <p:inputText id="dd" value="#{pur.quantitiesEntered}" label="Quantity">
+                                    </p:inputText>
+
+
+                                    <p>
+                                    </p>
+                                    <p:commandButton value="Create Purchase Order" ajax="false" icon="ui-icon-check" actionListener="#{pur.createPurchaseOrder((facesContext.externalContext.sessionMap['userId']))}" validateClient="true" style="margin-right:10px"/>
+
+
+
+                                </p:column>
+                            </p:dataTable>           
+
+
+                        </p:panel>
+                    </h:form>
+
+
+                </b:column>
+
+            </b:row>
+
+        </b:container>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+    </h:body>
+</html>
+
+
+
+
+
+

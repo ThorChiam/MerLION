@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>CRMS View User Accounts List</title>
-
+        
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/> 
 
@@ -15,24 +15,37 @@
 
     <h:body>
         <b:container>
-            <b:row>
-                <p:column colspan="3">
-                    <h:form>  
-                        <p:menubar styleClass="show-grid">
-                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                            <p:menuitem value="WMS Home" url="/CRMS/main.xhtml" />
-                            <p:menuitem value="Log Out" action="signIn.xhtml"  actionListener="#{accountManagedBean.logout}"/>
-                        </p:menubar>
-                    </h:form>
-                </p:column>
-            </b:row>
+
+            <p:breadCrumb>
+                 <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                <p:menuitem value="Home" url="/AdminMain.xhtml" />
+                <p:menuitem value="User Account" url="/CRMS/Admin/viewaccounts.xhtml" />
+                <p:menuitem value="Company Profile" url="/CRMS/Admin/view_edit_delete_companys.xhtml" />
+                <p:menuitem value="Announcement" url="/CRMS/Admin/viewannouncement.xhtml" />
+                <p:menuitem value="Customer Enquiry" url="/CRMS/Admin/view_reply_enquiry.xhtml" />
+                <p:menuitem value="Forume Post" url="/CRMS/Admin/view_delete_post.xhtml" />                                 
+            </p:breadCrumb> 
+            <b:well>
+                <h3>My MerLION (Admin)</h3> 
+            </b:well>
         </b:container>
 
-
-        <br/>
         <b:container>
             <b:row styleClass="show-grid">
-                <b:column col-xs="5" col-sm="5" col-md="10">
+                <b:column col-xs="5" col-sm="5" col-md="3">
+                    <h:form>
+                        <p:growl id="msgs"/>
+                        <p:menu style="width:250px">
+                            
+                            <p:submenu label="Customer Enquiry Management" >                                
+                                <p:menuitem value="View Enquirys/Reply Enquirys" url="/CRMS/Admin/view_reply_enquiry.xhtml"/>
+                            </p:submenu>                          
+
+                        </p:menu>
+                    </h:form>
+
+                </b:column> 
+                <b:column col-xs="5" col-sm="5" col-md="9">
                     <p:panel header="Customer Enquiry List">
                         <h:form >            
                             <p:dataTable var="all" value="#{AdminManagedBean.allEnquiry}" id="msgs">
@@ -97,7 +110,7 @@
 
                             <p:growl id="reply" rendered="#{AdminManagedBean.checkreply}">
                                 <h:panelGrid>                                                                                                        
-                                     <h:form styleClass="navbar-form navbar-left">                                                   
+                                    <h:form styleClass="navbar-form navbar-left">                                                   
                                         <h:outputLabel for="content" value="Reply Content : " />
                                         <br/>
                                         <p:inputTextarea id="content" value="#{AdminManagedBean.answer}" rows="6" cols="33" />                                                                     

@@ -23,6 +23,10 @@ public class SalesOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String createdate;
+    private double tax;
+    private double discount;
+    private double total;
+    private String shipdate;
 
     @OneToOne(mappedBy="salesorder")
     PurchaseOrder purchaseorder;

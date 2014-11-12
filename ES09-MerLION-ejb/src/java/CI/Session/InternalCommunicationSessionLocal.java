@@ -19,7 +19,7 @@ public interface InternalCommunicationSessionLocal {
 
     public void createannou(Long id, Long announ_Id, String content);
 
-    public void createnoti(String email, Long noti_Id, String n_title, String content, Long release_time, String target);
+    public void createnoti(String email, Long noti_Id, String n_title, String content, Long release_time);
 //user will view all annoucements
 
     public List getAnnou();
@@ -33,6 +33,8 @@ public interface InternalCommunicationSessionLocal {
     public void deleteannouncement(Long announ_Id);
 
     public void deletenotification(String email, Long noti_Id);
+
+    public List<Notification> getServiceRequest(String email);
 
     public void remove();
 }

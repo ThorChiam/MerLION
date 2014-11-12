@@ -2,151 +2,159 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:g="http://java.sun.com/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-
     <h:head>
         <title>Welcome to Order Entry System</title>
-
-        <meta name="author" content="The Author"></meta>
-        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
-
-        <link href="/MFront-war/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="css/custom.css" rel="stylesheet"/>
-        <script src="/MFront-war/js/ie-emulation-modes-warning.js"
-        type="text/javascript"></script>
-
-        <link href="/MFront-war/css/carousel.css" rel="stylesheet" />
     </h:head>
 
     <h:body>
-
-
-        <b:navBar brand="MerLION Logistics" brandHref="#">
-
-            <b:navbarLinks>
-                <b:navLink value="SignUp" href="#"></b:navLink>
-                <b:navLink value="About us" href="#"></b:navLink>
-                <b:navLink value="My MerLION" href="#"></b:navLink>
-                <b:dropMenu value="Services">
-                    <b:navLink value="OES" href="/OES/main.xhtml"></b:navLink>
-                    <b:navLink value="Another action" href="#"></b:navLink>
-                    <b:navLink value="Something else here" href="#"></b:navLink>
-                    <b:navLink></b:navLink>
-                    <b:navLink header="Nav header"></b:navLink>
-                    <b:navLink value="Separated link" href="#"></b:navLink>
-                    <b:navLink value="One more separated link" href="#"></b:navLink>
-                </b:dropMenu>
-            </b:navbarLinks>
-
-            <h:form styleClass="navbar-form navbar-right">
-                <div class="form-group">
-
-                    <b:commandButton action="a" value="Logout" look="success" icon="ui-icon-extlink" iconAlign="right"/>
-                </div>
-            </h:form>
-        </b:navBar>
-
-
         <b:container>
 
+            <p:breadCrumb>
+                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
+                <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
 
-        </b:container>
-        <b:container>
+                <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
+                <p:menuitem value="Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml" />
+                <p:menuitem value="Sales Order" url="/OES/salesOrder/createSalesOrder.xhtml" />
 
-           <p:breadCrumb>
-                    <p:menuitem value="Home" url="/main.xhtml" />
-                    <p:menuitem value="Dashboard" url="" />
-                    <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
-                    <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
-                    <p:menuitem value="Sales Order" url="#" />
-                    <p:menuitem value="Enquire" url="/OES/enquire/createEnquire.xhtml" />
-                 
-                    <p:menuitem value="Payment" url="#" />
+                <p:menuitem value="Payment" url="#" />
 
-                </p:breadCrumb>
+            </p:breadCrumb>
             <b:well>
                 <h2>Order Entry System</h2>   
             </b:well>
         </b:container>
 
-
         <b:container>
             <b:row styleClass="show-grid">
-                <b:column col-xs="6" col-sm="6" col-md="2">
+                <b:column col-xs="12" col-sm="6" col-md="2">
                     <h:form>
-                        <p:panel header="Enquire">
+                        <p:panel header="Enquiry Management">
 
                             <b:listLinks>
+
                                 <b:navLink href="enquireMain.xhtml" value="Create New Enquire"
                                            />
-                                <b:navLink href="viewEnquire.xhtml" value="View Enquire"
+                                <b:navLink href="enquireALL.xhtml" value="View ALL Enquire"
                                            />
-
-                                <b:navLink>
-
-                                </b:navLink>
-
-
                             </b:listLinks>
                         </p:panel>
                     </h:form>
 
                 </b:column>
 
+
                 <b:column col-xs="6" col-sm="6" col-md="10">
                     <h:form>
-                        <p:panel header="NEW Enquire">
-                            <h:outputLabel for="buyer" value="From Buyer:" style="font-weight:bold" />
-                            <p:inputText id="buyer" value="#{omb.getBuyName(facesContext.externalContext.sessionMap['userId'])}" required="true" label="buyer">
-                                
-                            </p:inputText>
-                         
-                            <br/>
+                        <p:panel id="panelCreateNewEnquiries" header="Create NEW Enquiry">
 
-                            <p:outputLabel for="seller" value="To Seller:" style="font-weight:bold"/>
-                            <p:selectOneMenu id="seller" value="#{omb.sellerName}" style="width:150px">
-                                <f:selectItem itemLabel="Select Seller" itemValue="#{omb.companyName}" noSelectionOption="true" />
-                                <f:selectItems value="#"  var="tc" itemLabel="#{tc}" itemValue="#{tc}" />
-                            </p:selectOneMenu>
-                             <br/>
-                             
-                            <p:outputLabel for="date" value="Quotation Date:" style="font-weight:bold" />
-                            <p:calendar id="date" value="#{omb.createdate}" showOn="button" />
-                              
-                            <br/>
-                            <br/>
-                          
-                            <p:outputLabel for="products" value="Select Product" style="font-weight:bold" />
-                            <h:selectOneMenu id="products" value="#{omb.product_id}" style="width:150px">
-                                <f:selectItem itemLabel="Select Product" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{omb.produtList}" var="ps" itemLabel="#{ps}" itemValue="#{ps}"/>
+                            <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+                                <p:printer target="panelCreateNewEnquiries" />
+                            </p:commandButton>
 
-                            </h:selectOneMenu>
-                          
-                            
-                            <h:outputLabel for="quantity" value="Quantity:" style="font-weight:bold" />
-                            <p:inputText id="quantity" value="#{omb.pqty}" required="true" label="quantity">
+                            <p:dataTable var="buyer" value="#{eb.getBuyName((facesContext.externalContext.sessionMap['userId']))}" style="font-weight:bold" >
 
-                            </p:inputText>
-                     
-                        
-                            <br/>
-                            <br/>
-                            
-                            <p:commandButton value="Create Enquire" ajax="false" icon="ui-icon-check" actionListener="#{omb.createEnquiry(facesContext.externalContext.sessionMap['userId'])}" validateClient="true" style="margin-right:10px"/>
+                                <p:column headerText="New Enquire">
+                                    <h:outputLabel value="Enquirer:" style="font-weight:bold" />
+                                    &nbsp;
+                                    <h:outputText value="#{eb.buyerName}" />
+
+                                    <p>
+                                        <h:outputLabel value="Date:" style="font-weight:bold" />
+                                        &nbsp;
+                                        <h:outputText value="#{eb.edate}" />   
+                                    </p>
+
+                                    <p></p>
+                                    <p:outputLabel for="company" value="Select Seller: " />
+                                    <p:selectOneMenu id="company" value="#{eb.sellerSelected}" style="width:150px">
+                                        <f:selectItem itemLabel="Select Company" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{eb.sellerName}" />
+                                    </p:selectOneMenu>
+                                    <p>
+                                    </p>
+                                    <p:commandButton value="Display Products" ajax="false" icon="ui-icon-check" actionListener="#{eb.displaySellerProducts()}" validateClient="true" style="margin-right:10px"/>
+                                    <p>
+                                    </p>
+
+                                    <p:outputLabel for="basic" value="Product Name:" />
+
+                                    <p:selectManyMenu id="basic" value="#{eb.selectedNames}">
+                                        <f:selectItems value="#{eb.productsN}" />
+                                    </p:selectManyMenu>
+                                    <p>
+                                    </p>
+
+                                    <p:commandButton value="View Selected Product" ajax="false" icon="ui-icon-check" actionListener="#{eb.displaySellerProducts()}" validateClient="true" style="margin-right:10px"/>
+                                    <p>
+                                    </p>
+
+                                    <p>
+
+                                        <p:dataTable var="sp" value="#{eb.selectedNames}">
+                                            <f:facet name="header">
+                                                List of Selected Products
+                                            </f:facet>
+
+                                            <p:column headerText="Product Name">
+                                                <h:outputText value="#{sp}" />
+                                            </p:column>
+
+                                            <p:column headerText="Description">
+                                                <h:outputText value="#{eb.desc}" />
+                                            </p:column>
+
+                                            <f:facet name="footer">
+                                                You have selected #{eb.psize} Products.
+                                            </f:facet>
+
+                                        </p:dataTable>
+
+                                    </p>
+
+                                    <p:commandButton value="Enter Quantities" ajax="false" icon="ui-icon-check" actionListener="#{eb.displaySellerProducts()}" validateClient="true" style="margin-right:10px"/>
+
+                                    <p>
+                                    </p>
+
+
+                                    <h:outputLabel value="Enter Correponding Quantities:" style="font-weight:bold" />
+                                    &nbsp;
+                                    <h:outputText value="#{eb.arrayToString}" />
+
+                                    <p>
+                                    </p> 
+
+                                    <h:outputLabel for="dd" value="Quantities/Split by(,):" style="font-weight:bold" />
+                                    <p:inputText id="dd" value="#{eb.quantitiesEntered}" label="Quantity" >
+             
+                                       
+                                    </p:inputText>
+                                   
+                                    
+
+                                    <p>
+                                    </p>
+                                    <p:commandButton value="Create Enquiry" ajax="false" icon="ui-icon-check" actionListener="#{eb.createEnquiry((facesContext.externalContext.sessionMap['userId']))}" validateClient="true" style="margin-right:10px"/>
+
+                                </p:column>
+                            </p:dataTable>           
+
 
                         </p:panel>
                     </h:form>
 
+
                 </b:column>
+
             </b:row>
 
-
         </b:container>
-
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 
@@ -168,6 +176,7 @@
         </foot>
     </h:body>
 </html>
+
 
 
 

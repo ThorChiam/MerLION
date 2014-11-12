@@ -6,15 +6,16 @@
 
 package MRP.Session;
 
+import CI.Entity.Account;
+import MRP.Entity.Demand;
+import com.sun.mail.imap.protocol.Item;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import MRP.Entity.Demand;
-import MRP.Entity.Item;
-import Exception.DemandException;
+import merlion_exception.DemandException;
 
 
 /**
@@ -32,12 +33,19 @@ public class DemandSessionBean {
         Item item = entityManager.find(Item.class, itemId);
         return item;
     }
+     public Account getAccount(String userId){
+        Account account=entityManager.find(Account.class,userId);
+        return account;
+    }
     
-    public List<Demand> getItemDemand(Long itemId)throws DemandException{
+    public List<Demand> getItemDemand(String userId, Long itemId)throws DemandException{
         Item item = getItem(itemId);
         List result;
-        Query query = entityManager.createQuery("SELECT d FROM Demand d WHERE d.item = :item");
+        Account account=getAccount(userId);
+        Query query = entityManager.createQuery("SELECT d FROM Demand d WHERE d.item = :item and d.item.account=:account");
         query.setParameter("item", item);
+        query.setParameter("account",account);
+      
         result=query.getResultList();
         if(!result.isEmpty()){
             return result;}
@@ -46,11 +54,14 @@ public class DemandSessionBean {
         }       
     }
     
-    public int[] predictItemDemand(Long itemId) throws DemandException{
-        List<Demand> demand = getItemDemand(itemId);
+    public int[] predictItemDemand(String userId, Long itemId) throws DemandException{
+        List<Demand> demand = getItemDemand(userId, itemId);
         int[] past = new int[100];
          int[] prediction = new int[6];
         int length=demand.size();
+        if(length<4){
+            return null;
+        }
         for(int i=0;i<length;i++){
             past[i] =demand.get(i).getQuantity();
         }

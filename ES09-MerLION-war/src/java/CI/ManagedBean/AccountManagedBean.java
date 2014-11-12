@@ -5,7 +5,6 @@
  */
 package CI.ManagedBean;
 
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
@@ -17,7 +16,10 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import CI.Session.AccountSessionLocal;
 import CI.Entity.Account;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.event.CellEditEvent;
@@ -53,23 +55,32 @@ public class AccountManagedBean implements Serializable {
     private String response;
     private HttpServletRequest req;
     private List<Account> accountInfo;
-    
+
     @ManagedProperty("#{accountList}")
     private List<Account> accountList;
-    
 
     public AccountManagedBean() {
 //        asbl = new AccountSessionBean();
     }
 
+    //Admin 
+    public String checkAdmin() {
+        if (asbl.getAccount(email).getAccessRight().equals("Admin")) {
+            return "AdminMain";
+        } else {
+            return "main";
+    
+        }
+    }
+
     @PostConstruct
     public void init() {
         email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
-        
-        if(email!=null){
-            accountInfo=this.viewAccount();
+
+        if (email != null) {
+            accountInfo = this.viewAccount();
         }
-       
+
     }
 
     public void signup() {
@@ -81,16 +92,16 @@ public class AccountManagedBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 statusMessage + " (Welcome " + comp_name + ")", ""));
     }
-    
-    public String createMoreAccount(){
-        String tstatus="activated";
-        String tempemail=asbl.createMoreAccount(email,aemail, password, security_question, security_answer,tstatus);
-        
-        statusMessage="create successfully!";
-        
+
+    public String createMoreAccount() {
+        String tstatus = "activated";
+        String tempemail = asbl.createMoreAccount(email, aemail, password, security_question, security_answer, tstatus);
+
+        statusMessage = "create successfully!";
+
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 statusMessage + " (Welcome " + tempemail + ")", ""));
-        
+
         return "viewAccountInfo";
     }
 
@@ -116,7 +127,7 @@ public class AccountManagedBean implements Serializable {
     public List<Account> viewAccount() {
         accountInfo = new ArrayList();
         accountInfo.add(asbl.getAccount(email));
-        
+
         System.out.println("accountManaged bean:viewAccount() ");
 
         return accountInfo;
@@ -205,8 +216,6 @@ public class AccountManagedBean implements Serializable {
     public void setAemail(String aemail) {
         this.aemail = aemail;
     }
-    
-    
 
     public String getEmail() {
         return email;

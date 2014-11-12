@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Welcome to Order Entry System</title>
+    </h:head>
+
+    <h:body>
+        <b:container>
+
+            <p:breadCrumb>
+                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
+                <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
+                <p:menuitem value="Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml" />
+                <p:menuitem value="Sales Order" url="/OES/salesOrder/createSalesOrder.xhtml" />
+                <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
+                <p:menuitem value="Payment" url="#" />
+
+            </p:breadCrumb>
+            <b:well>
+                <h2>Order Entry System</h2>   
+            </b:well>
+        </b:container>
+
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="12" col-sm="6" col-md="2">
+                    <h:form>
+                        <p:panel header="Quotation Management">
+
+                            <b:listLinks>
+
+                                <b:navLink href="viewIncomingPurchaseOrder.xhtml" value="View Incoming Purchase Order"
+                                           />
+                                <b:navLink href="createSalesOrder.xhtml" value="Create NEW Sales Ordder"
+                                           />
+                                
+                                <b:navLink href="viewSalesOrderALL.xhtml" value="View Sales Order History"
+                                           />
+                            </b:listLinks>
+                        </p:panel>
+                    </h:form>
+
+                </b:column>
+
+
+                <b:column col-xs="6" col-sm="6" col-md="10">
+
+                    <h:form id="form">
+                        <p:dataTable var="en" value="#{sob.viewIncmoingPorder((facesContext.externalContext.sessionMap['userId']))}">
+                                                      
+                        
+                            
+                             <f:facet name="header">
+                               Incoming Purchase Order
+                            </f:facet>
+
+                            <p:column headerText="Purchase Order ID">
+                                <h:outputText value="#{en.id}" />
+                            </p:column>
+
+                            <p:column headerText="From Buyer">
+                                <h:outputText value="#{en.sender.company.companyName}" />
+                            </p:column>
+
+                            <p:column headerText="To Seller">
+                                <h:outputText value="#{en.receiver.company.companyName}" />
+                            </p:column>
+
+                            <p:column headerText="Purchase Order Date">
+                                <h:outputText value="#{en.createdate}" />
+                            </p:column>
+                            
+                            <p:column headerText="Details">
+                                
+                                <p:button outcome="viewIncomingpoDetails" value="View" icon="ui-icon-star">
+                                    <f:param name="sobId" value="#{en.id}" />
+                                </p:button>
+
+                            </p:column>
+                            <f:facet name="footer">
+                               Total: #{sob.soSize} Orders.
+                            </f:facet>
+
+                        </p:dataTable>
+                    </h:form>
+
+                </b:column>
+
+            </b:row>
+
+        </b:container>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+    </h:body>
+</html>

@@ -5,6 +5,7 @@
  */
 package WMS.Session;
 
+import OES.Entity.OrderList;
 import WMS.Entity.Employee;
 import WMS.Entity.Inventory;
 import WMS.Entity.Shipment_Notice;
@@ -30,6 +31,8 @@ public interface WMSOrderSessionLocal {
     public WMSOrder getOrder(Long orderId);
 
     public List<Integer> checkInventoryLevel(Long orderId);
+
+    public List<OrderList> ATPcheck(List<OrderList> orderItems);
 
     public List<WMSOrder> getAllocatedOrders(String email);
 

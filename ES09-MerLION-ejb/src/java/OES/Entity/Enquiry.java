@@ -19,6 +19,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import CI.Entity.Account;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -32,8 +34,7 @@ public class Enquiry implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String createdate;
-    private int delete_status;
-
+  
     
     @ManyToOne 
     private Account seller;
@@ -44,31 +45,18 @@ public class Enquiry implements Serializable {
     @OneToOne 
     private Quotation quotation;
     
-    @ManyToMany(cascade={CascadeType.ALL},mappedBy="enquiry")
-    private Set<Product> product=new HashSet<>(); 
-
-    private List<Integer> quantity = new ArrayList();
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "enquiry")
+    private List<OrderList> order=new ArrayList();
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "enquiry")
+    private List<OrderListSub> ordersub=new ArrayList();
+    
 
     public Enquiry(){
         setId(System.nanoTime());
     }
      
-    
-    public int getDelete_status() {
-        return delete_status;
-    }
-
-    public void setDelete_status(int delete_status) {
-        this.delete_status = delete_status;
-    }
-    
-    public Set<Product> getProduct() {
-        return product;
-    }
-
-    public void setProduct(Set<Product> product) {
-        this.product = product;
-    }
+   
     
     public String getCreatedate() {
         return createdate;
@@ -102,14 +90,7 @@ public class Enquiry implements Serializable {
         this.quotation = quotation;
     }
     
-    public List<Integer> getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(List<Integer> quantity) {
-        this.quantity = quantity;
-    }
-    
+  
     public Long getId() {
         return id;
     }
@@ -117,6 +98,25 @@ public class Enquiry implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public List<OrderList> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<OrderList> order) {
+        this.order = order;
+    }
+
+    public List<OrderListSub> getOrdersub() {
+        return ordersub;
+    }
+
+    public void setOrdersub(List<OrderListSub> ordersub) {
+        this.ordersub = ordersub;
+    }
+    
+    
+    
 
     @Override
     public int hashCode() {

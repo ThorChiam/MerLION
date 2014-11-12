@@ -6,17 +6,14 @@
 package MRP.Entity;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import CRMS.Entity.Contract;
 
 @Entity
 public class Template implements Serializable {
@@ -24,9 +21,7 @@ public class Template implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long templateId;
-    @ManyToMany(cascade={CascadeType.ALL},mappedBy="Template")
-    private Set<Contract> contract=new HashSet<>();
-
+    
     private String name;
     private int firstweek;
     private int secondweek;
@@ -35,18 +30,11 @@ public class Template implements Serializable {
     private int fifthweek;
     private int sixthweek;
     private int seventhweek;
+    private Date startdate;
     
     @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, optional = false)
     private Item item;
     
-    
-    public Set<Contract> getContract() {
-        return contract;
-    }
-
-    public void setContract(Set<Contract> contract) {
-        this.contract = contract;
-    }
 
     public Item getItem() {
         return item;
@@ -128,10 +116,15 @@ public class Template implements Serializable {
         this.seventhweek = seventhweek;
     }
 
+    public Date getStartdate() {
+        return startdate;
+    }
+
+    public void setStartdate(Date startdate) {
+        this.startdate = startdate;
+    }
+
     
-
-
-
     @Override
     public int hashCode() {
         int hash = 0;

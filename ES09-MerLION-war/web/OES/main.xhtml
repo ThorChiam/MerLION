@@ -4,107 +4,103 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:g="http://java.sun.com/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-
-
     <h:head>
-        <title>Welcome to Order Entry System</title>
+        <title>Welcome to My Merlion</title>
 
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
-
-        <link href="/MFront-war/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="css/custom.css" rel="stylesheet"/>
-        <script src="/MFront-war/js/ie-emulation-modes-warning.js"
-        type="text/javascript"></script>
-
-        <link href="/MFront-war/css/carousel.css" rel="stylesheet" />
     </h:head>
 
     <h:body>
-
-
-        <b:navBar brand="MerLION Logistics" brandHref="#">
-
-            <b:navbarLinks>
-                <b:navLink value="SignUp" href="#"></b:navLink>
-                <b:navLink value="About us" href="#"></b:navLink>
-                <b:navLink value="My MerLION" href="#"></b:navLink>
-                <b:dropMenu value="Services">
-                    <b:navLink value="OES" href="/OES/main.xhtml"></b:navLink>
-                    <b:navLink value="Another action" href="#"></b:navLink>
-                    <b:navLink value="Something else here" href="#"></b:navLink>
-                    <b:navLink></b:navLink>
-                    <b:navLink header="Nav header"></b:navLink>
-                    <b:navLink value="Separated link" href="#"></b:navLink>
-                    <b:navLink value="One more separated link" href="#"></b:navLink>
-                </b:dropMenu>
-            </b:navbarLinks>
-
-            <h:form styleClass="navbar-form navbar-right">
-                <div class="form-group">
-
-                    <b:commandButton action="a" value="Logout" look="success" icon="ui-icon-extlink" iconAlign="right"/>
-                </div>
-            </h:form>
-        </b:navBar>
-
-
-        <b:container>
-
-
-        </b:container>
         <b:container>
 
             <p:breadCrumb>
                 <p:menuitem value="Home" url="/main.xhtml" />
-                <p:menuitem value="Dashboard" url="/OES/product/productDashboard.xhtml" />
+                <p:menuitem value="Home" url="/main.xhtml" />
                 <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
-                <p:menuitem value="Quotation" url="#" />
-                <p:menuitem value="Sales Order" url="#" />
-                <p:menuitem value="Customer" url="/OES/customerMain.xhtml" />
-                <p:menuitem value="Supplier" url="#" />
+                 <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
+                
+                <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
+                <p:menuitem value="Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml" />
+                <p:menuitem value="Sales Order" url="/OES/salesOrder/createSalesOrder.xhtml" />
+               
                 <p:menuitem value="Payment" url="#" />
 
-
             </p:breadCrumb>
+            
+            
             <b:well>
-
-                <h2>Order Entry System</h2>
-
-
-
+                <h2>Order Entry System</h2>   
             </b:well>
         </b:container>
+
         <b:container>
-            <h:form id="form">
+            <b:row styleClass="show-grid">
+                <b:column col-xs="5" col-sm="5" col-md="3">
+                    <h:form>
+                        <p:growl id="msgs"/>
+                        <p:menu style="width:250px">
+                            <p:submenu label="Product Management">
 
-                <p:tabView orientation="left">
-                    <p:tab title="Product Management">
-                        <h:panelGrid columns="2" cellpadding="10">
-                          
-                            
-                            
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="Order Management">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                            <h:outputText value="Francis Ford Coppola's legendary..." />
-                        </h:panelGrid>
-                    </p:tab>
-                    <p:tab title="Customer/Supplier Management">
-                        <h:panelGrid columns="2" cellpadding="10">
-                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                            <h:outputText value="After a break of more than 15 years..." />
-                        </h:panelGrid>
-                    </p:tab>
-                </p:tabView>
-            </h:form>
+                                <p:menuitem value="Create NEW Product" url="/OES/product/productMain.xhtml"/>
+                                <p:menuitem value="View ALL Products" url="/OES/product/productALL.xhtml" />
+                                
 
+                            </p:submenu>
+                            <p:submenu label="Enquire Management">
+
+                                <p:menuitem value="Create New Enquire" url="/OES/enquire/enquireMain.xhtml"/>
+                                <p:menuitem value="View ALL Enquire" url="/OES/enquire/enquireALL.xhtml"/>
+
+                            </p:submenu>
+                            <p:submenu label="Quotation Management">
+                                <p:menuitem value="View Upcoming Enquire"  url="/OES/quotation/viewEnquire.xhtml"/>
+                                <p:menuitem value="Create NEW Quotation"  url="/OES/quotation/createQuotation.xhtml"/>
+                                <p:menuitem value="View Quotation History"  url="/OES/quotation/viewQuotation.xhtml"/>
+                            </p:submenu>
+                            <p:separator />
+                            <p:submenu label="Purchase Order Management">
+                                <p:menuitem value="Create New Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml"/>
+                                <p:menuitem value="Purchase Order History" url="/OES/purchaseOrder/viewPurchaseOrder.xhtml"/>
+                               
+                            </p:submenu>
+                            
+                           <p:submenu label="Sales Order Management" >
+                                <p:menuitem value="View Incoming Purchase Order" url="/OES/salesOrder/viewIncomingPurchaseOrder.xhtml" />
+                                 <p:menuitem value="Create NEW Sales Ordder" url="/OES/salesOrder/createSalesOrder.xhtml" />
+                                 <p:menuitem value="View Sales Order History" url="/OES/salesOrder/viewSalesOrderALL.xhtml" />
+                                 
+                            </p:submenu>
+                             <p:submenu label="Payment Management" >
+                                <p:menuitem value="View Service Transaction History" url="/OES/Payment/"/>
+                                <p:menuitem value="View Service Transaction History" url="/OES/Payment/"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+
+                </b:column>                 
+                <b:column col-xs="5" col-sm="5" col-md="6">
+                    <p:panel header="Order Entry System - Home">
+                        <img src="order.jpg" weight="600" width="500"/>
+                    </p:panel>
+                </b:column>
+
+                <b:column col-xs="5" col-sm="5" col-md="3">
+
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true" />
+                        <h:panelGrid style="width: 100%;">
+                            <p:calendar id="inline" mode="inline" />
+                        </h:panelGrid>
+                    </h:form>
+
+
+                </b:column>
+
+            </b:row>
         </b:container>
-
+        <br/>
         <foot>
             <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 
@@ -124,8 +120,6 @@
 
             </div>
         </foot>
-
-
 
     </h:body>
 </html>
