@@ -51,8 +51,8 @@ public class BOMManagedBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        //userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
-        userId = "email";
+        userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        
         getAllitems();
     }
 

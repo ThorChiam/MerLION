@@ -60,8 +60,8 @@ public class OrderManagedBean implements Serializable {
     }
     @PostConstruct
     public void getlogin(){
-       // userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
-        userId="email";
+       userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        
         getAllitems();
     }
     public List<Item> getAllitems() {
@@ -90,7 +90,7 @@ public class OrderManagedBean implements Serializable {
     }
     
     public String getUserId() {
-        //userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
         return userId;
     }
 

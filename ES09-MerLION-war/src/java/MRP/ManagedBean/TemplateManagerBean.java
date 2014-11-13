@@ -22,6 +22,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 
@@ -55,8 +56,8 @@ public class TemplateManagerBean {
 
     @PostConstruct
     public void getlogin(){
-        //userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
-        userId="email";
+        userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        
         getAllitems();
                
     }
