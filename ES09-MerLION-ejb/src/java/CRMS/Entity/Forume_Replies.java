@@ -5,6 +5,7 @@
  */
 package CRMS.Entity;
 
+import CI.Entity.Account;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,61 +14,42 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import CI.Entity.Account;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author sunny
  */
 @Entity
-public class Post implements Serializable {
+public class Forume_Replies implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String title;
-    private String content;
-    private String post_date;
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "post")
-    private List<Forume_Replies> replies=new ArrayList();
+    @OneToOne
+    Account account;
 
+    
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
-    private Account Account;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    private Post post;
     
-    public String getContent() {
-        return content;
+    private String comment;
+
+    public String getComment() {
+        return comment;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public String getPost_date() {
-        return post_date;
+    public Post getPost() {
+        return post;
     }
 
-    public void setPost_date(String post_date) {
-        this.post_date = post_date;
-    }
-    
-    public Account getAccount() {
-        return Account;
-    }
-
-    public void setAccount(Account Account) {
-        this.Account = Account;
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public Long getId() {
@@ -78,14 +60,14 @@ public class Post implements Serializable {
         this.id = id;
     }
     
-    public List<Forume_Replies> getReplies() {
-        return replies;
+    
+    public Account getAccount() {
+        return account;
     }
 
-    public void setReplies(List<Forume_Replies> replies) {
-        this.replies = replies;
+    public void setAccount(Account account) {
+        this.account = account;
     }
-    
 
     @Override
     public int hashCode() {
@@ -97,10 +79,10 @@ public class Post implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Post)) {
+        if (!(object instanceof Forume_Replies)) {
             return false;
         }
-        Post other = (Post) object;
+        Forume_Replies other = (Forume_Replies) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -109,7 +91,7 @@ public class Post implements Serializable {
 
     @Override
     public String toString() {
-        return "merlion_new_enetity.Post[ id=" + id + " ]";
+        return "CRMS.Entity.Forume_Replies[ id=" + id + " ]";
     }
     
 }

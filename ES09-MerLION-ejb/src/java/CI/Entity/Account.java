@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import CRMS.Entity.Company;
 import CRMS.Entity.Contract;
+import CRMS.Entity.Forume_Replies;
 import MRP.Entity.Item;
 import CRMS.Entity.Post;
 import OES.Entity.Enquiry;
@@ -47,6 +48,10 @@ public class Account implements Serializable {
 
     @OneToOne
     private MerlionAdmin admin;
+    
+    @OneToOne(mappedBy="account")
+    private Forume_Replies reply;
+
 
     //@ManyToMany(cascade={CascadeType.PERSIST})
     //@JoinTable(name="ACCOUNT_ANNOUNCEMENT")
@@ -70,6 +75,14 @@ public class Account implements Serializable {
     private List<Enquiry> seller_enquiry = new ArrayList<>();
 
     //Added by QT  
+    
+    public Forume_Replies getReply() {
+        return reply;
+    }
+
+    public void setReply(Forume_Replies reply) {
+        this.reply = reply;
+    }
     public List<Enquiry> getBuyer_enquiry() {
         return buyer_enquiry;
     }

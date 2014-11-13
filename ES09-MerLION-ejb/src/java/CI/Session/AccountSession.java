@@ -57,12 +57,21 @@ public class AccountSession implements AccountSessionLocal {
 
     @Override
     public String validate(String email, String password) {
-        Account systemUser = getAccount(email);
+        boolean check=false;
+        Query q = em.createQuery("SELECT a FROM Account a");
+        List<Account> tmp= (List<Account>)q.getResultList();
+        for(int i=0;i<tmp.size();i++){
+            if(tmp.get(i).getEmail().equals(email)){
+                check=true;
+                break;
+            }
+        }
 
-        System.out.println("*****test accountSession: email" + systemUser.getEmail());     
-        if (systemUser == null) {
+      //  System.out.println("*****test accountSession: email" + systemUser.getEmail());     
+        if (!check) {
             return null;
         } else {
+            Account systemUser=getAccount(email);
             if (systemUser.getPassword().equals(doMD5Hashing(password))) {
                 if (systemUser.getStatus().equals("activated")) {
                     return systemUser.getCompany().getCompanyName();
@@ -71,7 +80,7 @@ public class AccountSession implements AccountSessionLocal {
                     return "frozen";
                 }
             } else {
-                return null;
+                return "wrong password";
             }
         }
 

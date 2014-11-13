@@ -56,7 +56,7 @@
                             </f:metadata>
                             <p:panel header="Forum">
                                 <h3>View Post Detail</h3>
-                                <p:dataTable var="p" value="#{fomb.viewPostDetail(fomb.id)}">
+                                <p:dataTable var="p" value="#{fomb.viewPostDetail()}">
                                     <p:column headerText="Title" style="width: 300px">
                                         <h:outputText value="#{p.title}" />
                                     </p:column>
@@ -66,8 +66,29 @@
 
                                     <p:column headerText="Posted By" style="width: 300px">
                                         <h:outputText value="#{p.account.company.companyName}" />
-                                    </p:column>
+                                    </p:column>                                   
+
                                 </p:dataTable>
+
+                                <p:dataTable var="q" value="#{fomb.replylist}">                                     
+                                    <p:column headerText="Replies" style="width: 300px">
+                                        <h:form>
+                                            <p:growl id="msgs" showDetail="true" />
+
+                                            <p:fieldset legend="#{q.account.email}" style="margin-bottom:20px">
+                                                           
+                                                    <h:outputText value="#{q.comment}" />
+                                                
+                                            </p:fieldset>
+                                        </h:form>
+                                        
+                                    </p:column>                                   
+
+                                </p:dataTable>
+
+
+
+
 
                                 <br/>
                                 <p:button outcome="forumHome" value="Back to forum" icon="ui-icon-star"/>

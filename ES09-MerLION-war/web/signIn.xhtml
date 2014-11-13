@@ -94,7 +94,7 @@
                                                 <p:column>
                                                     <h:inputSecret required="true" label="password" requiredMessage="Password is required." id="password" value="#{accountManagedBean.password}">
                                                         <f:validateLength minimum="1" maximum="16" />
-                                                    </h:inputSecret>          
+                                                    </h:inputSecret>                                                   
                                                     <p:message for="password" />
                                                 </p:column>
                                             </p:row>
@@ -102,7 +102,6 @@
                                     </p:panelGrid>
                                     <p:captcha id="captcha" label="Captcha" secure="true"/>
                                     <p:message for="captcha" />
-
                                     <p:commandButton id="btn" value="Login" update="panel" actionListener="#{accountManagedBean.loginin}" ajax="false" rendered="#{facesContext.externalContext.sessionMap['userId'] == null}" action="#{accountManagedBean.checkAdmin()}"/>
                                 </p:growl>
                             </h:form>

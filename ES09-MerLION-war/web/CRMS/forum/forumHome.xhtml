@@ -52,22 +52,45 @@
                         <p:panel header="Forum">
                             <h3>Welcome to MerLION Forum</h3>
                             <h:form> 
-                                <p:dataTable var="t" value="#{fomb.allTitles}">
-                                    <p:column headerText="Post Title" style="width: 650px">
+                                <p:dataTable id="msgs" var="t" value="#{fomb.allTitles}">
+                                    <p:column headerText="Post Title" style="width: 550px">
                                         <h:outputText value="#{t.title}" />
                                     </p:column>
 
                                     <p:column headerText="View Detail">
-                                        <p:button outcome="postDetail" value="View" icon="ui-icon-star">
-                                            <f:param name="enId" value="#{t.id}" />
-                                        </p:button>
+                                        <p:commandButton action="postDetail"  actionListener="#{fomb.initId(t.id)}" value="View" icon="ui-icon-star">
+
+                                        </p:commandButton>
+
+                                    </p:column>
+
+                                    <p:column headerText="Reply" >                                        
+                                        <p:commandButton value="Reply" actionListener="#{fomb.setCheckreply(true,t.id)}" icon="ui-icon-star" styleClass="ui-priority-primary" ajax="false" />
                                     </p:column>
 
                                 </p:dataTable>
                                 <br/>
+                                <p:growl id="reply" rendered="#{fomb.checkreply}">
+                                    <h:panelGrid>                                                                                                        
+                                        <h:form styleClass="navbar-form navbar-left">                                                   
+                                            <h:outputLabel for="content" value="Reply Content : " />
+                                            <br/>
+                                            <p:inputTextarea id="content" value="#{fomb.replycontent}" rows="6" cols="33" />                                                                     
+                                            <br/>
+                                            <p:commandButton value="Save" update="reply" actionListener="#{fomb.addreply()}" styleClass="ui-priority-primary" ajax="false"/>                                           
+                                            <p:commandButton value="Back" update="reply" actionListener="#{fomb.setCheckreply(false,0)}" styleClass="ui-priority-primary" ajax="false"/>                                    
+                                        </h:form>
+                                    </h:panelGrid>
+                                </p:growl>
+                                <br/>
                                 <p:button outcome="createPost" value="Create New Post" icon="ui-icon-star"/>
 
                             </h:form> 
+
+
+
+
+                        
                         </p:panel>
                     </font>
                 </b:column>
