@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        left
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <p:messages autoUpdate="true" />
+            <p:panelGrid>
+                <p:row>
+            <p:column>
+            <p:outputLabel for="ori" style="font-weight: bold" value="Origination: " />
+            <p:selectOneMenu id="ori" value="#{TMB.s1}">
+                <f:selectItems value="#{TMB.locations}" var="l" itemLabel="#{l.name}" itemValue="#{l.name}" />
+                </p:selectOneMenu>
+                </p:column>
+           <p:column>  
+       <p:outputLabel for="des" style="font-weight: bold" value="Destination: " />
+            
+            <p:selectOneMenu id="des" value="#{TMB.s2}">
+                <f:selectItems value="#{TMB.locations}" var="l" itemLabel="#{l.name}" itemValue="#{l.name}" />
+
+            </p:selectOneMenu>
+            </p:column>
+                </p:row>
+                </p:panelGrid>
+            <p:commandButton value="Submit"  update="panel" action="#{TMB.optimize()}" ajax="false"/>
+            <p:panel id="panel" header="My Carrrier Management">
+            <p:dataTable var="a" id="path" value="#{TMB.services}">
+                
+                <p:column headerText="path" sortBy="#{a.pts}">
+                    <h:outputText value="#{a.pts}"  />
+           </p:column>
+                <p:column headerText="Cost" sortBy="#{a.cost}">
+                <h:outputText value="#{a.cost}" />
+           </p:column>
+                <p:column headerText="Estimated time/hr" sortBy="#{a.time}">
+                    <h:outputText value="#{a.time}" />
+             </p:column>
+        </p:dataTable>
+            </p:panel>
+            </h:form>
+    </ui:define>
+
+</ui:composition>

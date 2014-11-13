@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        left
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <p:panel header="Select Transportation Order">
+                 <p:messages autoUpdate="true"/>
+             <p:outputLabel for="name" style="font-weight: bold" value="Item name: " />
+             <p:inputText  label="name"  id="name" value="#{CMB.itemname}"></p:inputText>
+             <p:outputLabel for="amount" style="font-weight: bold" value="Amount: " />
+             <p:inputText  label="amount"  id="amount" value="#{CMB.amount}"></p:inputText>            
+                           
+            <p:dataTable value="#{CMB.allcatalogs}"  widgetVar="carsTable" emptyMessage="No cars found with given criteria" var="o" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10">
+                
+                <p:column >
+                    <f:facet name="header">Catalog ID</f:facet>
+                    <h:outputText value="#{o.id}" />
+                </p:column>
+                <p:column filterBy="#{o.account.company.companyName}"  filterMatchMode="contains">
+                    <f:facet name="header">Company</f:facet>
+                    <h:outputText value="#{o.account.company.companyName}" />
+                </p:column>
+                <p:column headerText="Carrier Type" filterBy="#{o.carrierType}" filterMatchMode="exact">
+                    <f:facet name="filter">
+                        <p:selectOneMenu  onchange="PF('carsTable').filter()">
+                                <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Sea" itemValue="Sea" />
+                                <f:selectItem itemLabel="Air" itemValue="Air" />
+                                <f:selectItem itemLabel="Truck" itemValue="Truck" />
+                                <f:selectItem itemLabel="Train" itemValue="Train" />
+                       </p:selectOneMenu>
+                    </f:facet>
+                    
+                    <h:outputText value="#{o.carrierType}" />
+                </p:column >
+                <p:column headerText="Price" sortBy="#{o.price}" filterBy="#{o.price}" filterMatchMode="lte">
+                    <f:facet name="filter">
+                        <p:inputText onchange="PF('carsTable').filter()" size="10">
+                            <f:converter converterId="javax.faces.Integer" />
+                        </p:inputText>
+                        
+                    </f:facet>
+                    <h:outputText value="#{o.price}" />
+                    
+                </p:column>
+                <p:column headerText="Origination" filterBy="#{o.ori}" filterMatchMode="exact">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('carsTable').filter()" >
+                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{CMB.locations}" var="l" itemLabel="#{l.name}" itemValue="#{l.name}"/>
+                </p:selectOneMenu>
+                    </f:facet>
+                    <h:outputText value="#{o.ori}" />
+                </p:column>
+                <p:column headerText="Destination" filterBy="#{o.des}" filterMatchMode="exact">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('carsTable').filter()" >
+                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{CMB.locations}" var="l" itemLabel="#{l.name}" itemValue="#{l.name}"/>
+                </p:selectOneMenu>
+                    </f:facet>
+                    <h:outputText value="#{o.des}" />
+                </p:column>
+
+                <p:column headerText="Estimated Time" sortBy="#{o.timetaken}" filterBy="#{o.timetaken}" filterMatchMode="lte" >
+                    <f:facet name="filter" >
+                         <p:inputText onchange="PF('carsTable').filter()" size="10">
+                            <f:converter converterId="javax.faces.Integer" />
+                        </p:inputText>
+                    </f:facet>
+                    <h:outputText value="#{o.timetaken}" />
+                </p:column>
+                
+                <p:column headerText="Max weight" sortBy="#{o.capacity}" filterBy="#{o.capacity}" filterFunction="#{CMB.filterByMin}" >
+                    <f:facet name="filter" >
+                         <p:inputText onchange="PF('carsTable').filter()" size="10">
+                            <f:converter converterId="javax.faces.Integer" />
+                        </p:inputText>
+                    </f:facet>
+                    <h:outputText value="#{o.capacity}" />
+                </p:column>
+
+                <p:column >
+                    <f:facet name="header">Action</f:facet>
+                    <p:commandButton value="create order" 
+                                     action="#{CMB.createOrder(o)}" ajax="false"/>
+                </p:column> 
+            </p:dataTable>     
+        </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

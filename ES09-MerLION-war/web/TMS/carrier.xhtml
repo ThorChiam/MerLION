@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+    </ui:define>
+
+    <ui:define name="content">
+         <h:form>
+            <p:panel id="panel" header="My Carrrier Management">
+                 <p:messages autoUpdate="true"/>
+                <p:dataTable value="#{CarrierMB.carriers}" var="o" >
+                <p:column sortBy="#{o.id}">
+                    <f:facet name="header">Carrier ID</f:facet>
+                    <h:outputText value="#{o.id}" />
+                </p:column>
+                <p:column sortBy="#{o.type}">
+                    <f:facet name="header">Carrier Type</f:facet>
+                    <p:selectOneMenu id="CarrierType"  value="#{o.type}">
+                                <f:selectItem itemLabel="#{o.type}" itemValue="#{o.type}" />
+                                <f:selectItem itemLabel="Sea" itemValue="Sea" />
+                                <f:selectItem itemLabel="Air" itemValue="Air" />
+                                <f:selectItem itemLabel="Truck" itemValue="Truck" />
+                                <f:selectItem itemLabel="Train" itemValue="Train" />
+                       </p:selectOneMenu>
+                </p:column>
+                <p:column sortBy="#{o.capacity}">
+                    <f:facet name="header">Capacity</f:facet>
+                    <h:inputText value="#{o.capacity}" />
+                </p:column>
+                    
+                    <p:column sortBy="#{o.itemtype}">
+                    <f:facet name="header">Availability</f:facet>
+                    <h:outputText value="#{o.itemtype}" />
+                </p:column>
+                                           
+                <p:column>
+                    <f:facet name="header">Action</f:facet>
+                    <p:commandButton value="Delete" 
+                                     action="#{CarrierMB.deleteCarrier(o)}"  ajax="false"/>
+                </p:column> 
+            </p:dataTable> 
+                <p:commandButton value="update" 
+                                 action="#{CarrierMB.updateCarriers()}" update="panel"/>
+         </p:panel>
+            </h:form>
+        <h:form>
+            
+            <p:panel  id ="add" header="Add New Carrier">        
+                
+                <p:panelGrid>
+                                       
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="capacity" style="font-weight: bold" value="capacity: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="true" label="capacity"  id="capacity" value="#{CarrierMB.carrier.capacity}">
+                                <f:validateDoubleRange minimum="1" maximum="9999999" />
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="capacity" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="CarrierType" style="font-weight: bold" value="CarrierType: " />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="CarrierType" required="true" requiredMessage="Please select a type !" value="#{CarrierMB.carrier.type}">
+                                <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Sea" itemValue="Sea" />
+                                <f:selectItem itemLabel="Air" itemValue="Air" />
+                                <f:selectItem itemLabel="Truck" itemValue="Truck" />
+                                <f:selectItem itemLabel="Train" itemValue="Train" />
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:message for="CarrierType" />
+                        </p:column>
+                    </p:row>                                                  
+                </p:panelGrid>
+                <p:commandButton id="btn" value="Add New Carrier"  action="#{CarrierMB.addNewCarrier()}" ajax="false"/>  
+              
+            </p:panel>
+             
+    </h:form>
+    </ui:define>
+
+</ui:composition>

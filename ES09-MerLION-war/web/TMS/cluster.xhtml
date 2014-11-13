@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="mainform">
+             <p:messages autoUpdate="true"/>
+            <p:panel id="panel" header="My Clustering Rule">
+                <p:dataTable value="#{ClusterMB.rules}" var="o" >
+                <p:column>
+                    <f:facet name="header">Cluster name</f:facet>
+                    <h:outputText value="#{o.name}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Item Type</f:facet>
+                    <h:outputText value="#{o.type}" />
+                </p:column>
+                   <p:column>
+                    <f:facet name="header">Action</f:facet>
+                    <p:commandButton value="Delete" 
+                                     action="#{ClusterMB.deleteRule(o)}" update=":mainform:panel" />
+                </p:column>   
+                     
+                
+            </p:dataTable>  
+                
+         </p:panel>
+            </h:form>
+            <h:form>    
+             <p:panel  header="Add New Rule">        
+                <p:messages autoUpdate="true"/>
+                <p:panelGrid>       
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="name" style="font-weight: bold" value="name: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="true" label="name" requiredMessage="name is required." id="name" value="#{ClusterMB.rule.name}">
+                                
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="name" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="type" style="font-weight: bold" value="Item type: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="true" label="type"  requiredMessage="type is required." id="type" value="#{ClusterMB.rule.type}">
+                                
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="type" />
+                        </p:column>
+                    </p:row>                
+                </p:panelGrid>
+
+            </p:panel>
+        
+            <p:commandButton id="btn" value="Add New Rule"  actionListener="#{ClusterMB.addNewRule}" ajax="false"/>  
+            </h:form>
+    </ui:define>
+
+</ui:composition>

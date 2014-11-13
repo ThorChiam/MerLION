@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        left
+    </ui:define>
+
+    <ui:define name="content">
+         <h:form>
+            <p:panel id="panel" header="My Dispatch Orders and Transportation Status">
+            <p:dataTable value="#{DMB.orders}" var="o" >
+                <p:column>
+                    <f:facet name="header">order ID</f:facet>
+                    <h:outputText value="#{o.id}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">origination</f:facet>
+                    <h:outputText value="#{o.origination}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">destination</f:facet>
+                    <h:outputText value="#{o.destination}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Carrier Id</f:facet>
+                    <h:outputText value="#{o.carrierId}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Operator Id</f:facet>
+                    <h:outputText value="#{o.driverId}" />
+                </p:column>
+                
+                
+                <p:column>
+                    <f:facet name="header">Amount</f:facet>
+                    <h:outputText value="#{o.weight}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">start date</f:facet>
+                    <h:outputText value="#{o.startdate}" />
+                </p:column>  
+                <p:column>
+                    <f:facet name="header">Path</f:facet>
+                    <h:outputText value="#{o.route}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Status</f:facet>
+                    <p:selectOneMenu id="CarrierType" required="true" requiredMessage="Please select a type !" value="#{CMB.cat.carrierType}">
+                                <f:selectItem itemLabel="#{o.status}" itemValue="#{o.status}" />
+                                <f:selectItem itemLabel="Dispatched" itemValue="Dispatched" />
+                                <f:selectItem itemLabel="Finished" itemValue="Finished" />                              
+                      </p:selectOneMenu>
+                </p:column>
+                
+                
+                <p:column>
+                    <f:facet name="header">Action</f:facet>
+                    <p:commandButton value="Delete" 
+                                     action="#{DMB.deleteDispatch(o)}" ajax="false"/>
+                </p:column> 
+            </p:dataTable>     
+                <p:commandButton value="update" 
+                                 action="#{DMB.updateDispatch()}" update="panel"/>
+         </p:panel>
+            </h:form>
+        
+        <h:form>
+            <p:messages autoUpdate="true"/>
+            <p:panel  header="Add New Dispatch Order">        
+                
+                <p:panelGrid>                   
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="ori" style="font-weight: bold" value="origination: " />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="ori" value="#{DMB.order.origination}">
+                        <f:selectItems value="#{DMB.locations}" var="l" itemLabel="#{l.name}" itemValue="#{l.name}" />
+                      </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:message for="ori" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="des" style="font-weight: bold" value="destination: " />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="des" value="#{DMB.order.destination}">
+                        <f:selectItems value="#{DMB.locations}" var="l" itemLabel="#{l.name}" itemValue="#{l.name}" />
+                      </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:message for="des" />
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="CarrierType" style="font-weight: bold" value="CarrierType: " />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="CarrierType" required="true" requiredMessage="Please select a type !" value="#{DMB.type}">
+                                <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Sea" itemValue="Sea" />
+                                <f:selectItem itemLabel="Air" itemValue="Air" />
+                                <f:selectItem itemLabel="Truck" itemValue="Truck" />
+                                <f:selectItem itemLabel="Train" itemValue="Train" />
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:message for="CarrierType" />
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                        <p:commandButton  value="generate path"  action="#{DMB.generateAllPath()}" ajax="false"/>  
+                         </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="path" style="font-weight: bold" value="path: " />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="path"  value="#{DMB.order.route}">
+                                <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{DMB.path}" var="l" itemLabel="#{l}" itemValue="#{l}" />
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:message for="path" />
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="CarrierId" style="font-weight: bold" value="CarrierID: " />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="CarrierId"   value="#{DMB.order.carrierId}">
+                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{DMB.carriers}" var="l" itemLabel="#{l.id}" itemValue="#{l.id}" />
+                            </p:selectOneMenu>                           
+                        </p:column>
+                        <p:column>
+                            <p:message for="CarrierId" />
+                        </p:column>
+                        
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="driver" style="font-weight: bold" value="Operator: " />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="driver"   value="#{DMB.order.driverId}">
+                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{DMB.drivers}" var="h" itemLabel="#{h.id}" itemValue="#{h.id}" />
+                            </p:selectOneMenu>                           
+                        </p:column>
+                        <p:column>
+                            <p:message for="driver" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="item" style="font-weight: bold" value="select Order(s): " />
+                        </p:column>
+                        <p:column>
+                            <p:selectCheckboxMenu id="item" value="#{DMB.dispatchIdlist}" label="order"
+                               panelStyle="width:250px">
+                                <f:selectItems value="#{DMB.orderIdlist}" />
+                     </p:selectCheckboxMenu>
+                        </p:column>
+                        <p:column>
+                            <p:message for="item" />
+                        </p:column>
+                    </p:row>
+                    
+                    
+                    
+                </p:panelGrid>
+                <p:commandButton id="btn" value="Add New Dispatch"  actionListener="#{DMB.addNewDispatch}" ajax="false"/>  
+              
+            </p:panel>
+             
+    </h:form>
+           
+    </ui:define>
+
+</ui:composition>

@@ -6,7 +6,6 @@
 package CRMS.Entity;
 
 import CI.Entity.Notification;
-import TMS.Entity.TMSFacility;
 import WMS.Entity.Warehouse;
 import GRNS.Entity.Auction;
 import CI.Entity.Account;
@@ -22,7 +21,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import GRNS.Entity.DemandRequest;
 import OES.Entity.Product;
-import TMS.Entity.TMSHumanResource;
 import WMS.Entity.WMSServiceCatalog;
 
 /**
@@ -46,9 +44,6 @@ public class Company implements Serializable {
     private String vision;
     private String membertype;
     private String companyvalue;
-
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
-    private List<TMSFacility> tmsfacility = new ArrayList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<Auction> auction = new ArrayList<>();
@@ -79,12 +74,6 @@ public class Company implements Serializable {
 
 //    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
 //    private List<ServiceCatalog_tobedeleted> servicecatalog = new ArrayList<>();
-
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
-    private List<TMSFacility> TMSFacility = new ArrayList<>();
-
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
-    private List<TMSHumanResource> TMSHumanResource = new ArrayList<>();
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "Company")
     private List<DemandRequest> DemandRequest = new ArrayList<>();
@@ -147,22 +136,6 @@ public class Company implements Serializable {
 
     public void setWarehouse(List<Warehouse> warehouse) {
         this.warehouse = warehouse;
-    }
-
-    public List<TMSFacility> getTMSFacility() {
-        return TMSFacility;
-    }
-
-    public void setTMSFacility(List<TMSFacility> TMSFacility) {
-        this.TMSFacility = TMSFacility;
-    }
-
-    public List<TMSHumanResource> getTMSHumanResource() {
-        return TMSHumanResource;
-    }
-
-    public void setTMSHumanResource(List<TMSHumanResource> TMSHumanResource) {
-        this.TMSHumanResource = TMSHumanResource;
     }
 
 //    public List<ServiceCatalog_tobedeleted> getServicecatalog() {
@@ -283,14 +256,6 @@ public class Company implements Serializable {
 
     public void setAuction(List<Auction> auction) {
         this.auction = auction;
-    }
-
-    public List<TMSFacility> getTmsfacility() {
-        return tmsfacility;
-    }
-
-    public void setTmsfacility(List<TMSFacility> tmsfacility) {
-        this.tmsfacility = tmsfacility;
     }
 
     public List<WMSServiceCatalog> getWMSservices() {

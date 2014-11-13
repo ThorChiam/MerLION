@@ -5,17 +5,19 @@
  */
 package TMS.Entity;
 
+import CI.Entity.Account;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import TMS.Entity.TMSOrders;
 
 /**
  *
@@ -23,27 +25,115 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class DispatchOrder implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    
-    @ManyToOne
-    TMSOrder TMSOrder;
-    
-    @OneToOne
-    Cost TMSCost;
-    
-    @OneToMany(cascade={CascadeType.PERSIST})
-    public List<TMSFacility> TMSFacility=new ArrayList<>(); 
-    
-    @OneToMany(cascade={CascadeType.PERSIST})
-    public List<TMSHumanResource> TMSHumanResource=new ArrayList<>();
-    
-    
-
    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private double weight;
+    private Timestamp startdate;
+    
+    private String origination;
+    private String destination;
+    private String status;
+         
+    private Long carrierId; 
+    private  Long driverId;       
+    
+    
+    private String route;
+    
+    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER,optional=false)
+    private Account account;
+    @OneToMany
+    private List<TMSOrders> TMSOrders;
 
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public Long getCarrierId() {
+        return carrierId;
+    }
+
+    public void setCarrierId(Long carrierId) {
+        this.carrierId = carrierId;
+    }
+
+    public Long getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(Long driverId) {
+        this.driverId = driverId;
+    }
+
+    public List<TMSOrders> getTMSOrders() {
+        return TMSOrders;
+    }
+
+    public void setTMSOrders(List<TMSOrders> TMSOrders) {
+        this.TMSOrders = TMSOrders;
+    }
+
+    
+
+    public Timestamp getStartdate() {
+        return startdate;
+    }
+
+    public void setStartdate(Timestamp startdate) {
+        this.startdate = startdate;
+    }
+
+    
+
+    public String getRoute() {
+        return route;
+    }
+
+    public void setRoute(String route) {
+        this.route = route;
+    }
+
+    
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public String getOrigination() {
+        return origination;
+    }
+
+    public void setOrigination(String origination) {
+        this.origination = origination;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    
     public Long getId() {
         return id;
     }
@@ -52,38 +142,6 @@ public class DispatchOrder implements Serializable {
         this.id = id;
     }
 
-    public TMSOrder getTMSOrder() {
-        return TMSOrder;
-    }
-
-    public void setTMSOrder(TMSOrder TMSOrder) {
-        this.TMSOrder = TMSOrder;
-    }
-
-    public Cost getTMSCost() {
-        return TMSCost;
-    }
-
-    public void setTMSCost(Cost TMSCost) {
-        this.TMSCost = TMSCost;
-    }
-
-    public List<TMSFacility> getTMSFacility() {
-        return TMSFacility;
-    }
-
-    public void setTMSFacility(List<TMSFacility> TMSFacility) {
-        this.TMSFacility = TMSFacility;
-    }
-
-    public List<TMSHumanResource> getTMSHumanResource() {
-        return TMSHumanResource;
-    }
-
-    public void setTMSHumanResource(List<TMSHumanResource> TMSHumanResource) {
-        this.TMSHumanResource = TMSHumanResource;
-    }
-    
     @Override
     public int hashCode() {
         int hash = 0;

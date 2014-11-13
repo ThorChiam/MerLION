@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/DefaultTemplate.xhtml">
+
+    <ui:define name="left">
+        left
+    </ui:define>
+
+    <ui:define name="content">
+        
+        <h:form>
+            <p:panel id="panel" header="My Transportation Catalogs">
+            <p:dataTable value="#{CMB.catalog}" var="o" >
+                <p:column>
+                    <f:facet name="header">Catalog ID</f:facet>
+                    <h:outputText value="#{o.id}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Price</f:facet>
+                    <h:inputText value="#{o.price}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">origination</f:facet>
+                    
+                    <p:selectOneMenu id="ori" value="#{o.ori}">
+                        <f:selectItem itemLabel="#{o.ori}" itemValue="#{o.ori}" />
+                <f:selectItems value="#{TMB.locations}" var="l" itemLabel="#{l.name}" itemValue="#{l.name}" />
+                </p:selectOneMenu>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">destination</f:facet>
+                  
+                    <p:selectOneMenu id="des" value="#{o.des}">
+                        <f:selectItem itemLabel="#{o.des}" itemValue="#{o.des}" />
+                <f:selectItems value="#{TMB.locations}" var="l" itemLabel="#{l.name}" itemValue="#{l.name}" />
+                </p:selectOneMenu>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">Estimated Time</f:facet>
+                    <h:inputText value="#{o.timetaken}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Maximum weight</f:facet>
+                    <h:inputText value="#{o.capacity}" />
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">Action</f:facet>
+                    <p:commandButton value="Delete" 
+                                   action="#{CMB.deleteCatalog(o)}" ajax="false"/>
+                </p:column> 
+            </p:dataTable>  
+                 <p:commandButton value="Update"  action="#{CMB.updateCatalog}" update="panel"/>  
+         </p:panel>
+            </h:form>
+        <p:messages autoUpdate="true"/>
+        <h:form>
+            
+            <p:panel  header="Add New Catalog">        
+                
+                <p:panelGrid>
+                    
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="price" style="font-weight: bold" value="price: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="true" label="price" requiredMessage="price is required." id="price" value="#{CMB.cat.price}">
+                                <f:validateDoubleRange minimum="0" maximum="9999999" />
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="price" />
+                        </p:column>
+                    </p:row>
+                   
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="CarrierType" style="font-weight: bold" value="CarrierType: " />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="CarrierType" required="true" requiredMessage="Please select a type !" value="#{CMB.cat.carrierType}">
+                                <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Sea" itemValue="Sea" />
+                                <f:selectItem itemLabel="Air" itemValue="Air" />
+                                <f:selectItem itemLabel="Truck" itemValue="Truck" />
+                                <f:selectItem itemLabel="Train" itemValue="Train" />
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:message for="CarrierType" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="distance" style="font-weight: bold" value="Estimated time in hours: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="true" label="distance" id="distance" value="#{CMB.cat.timetaken}">
+                                <f:validateDoubleRange minimum="1" maximum="9999999" />
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="distance" />
+                        </p:column>
+                        
+                    </p:row>
+                     <p:row>
+                        <p:column>
+                            <p:outputLabel for="capacity" style="font-weight: bold" value="Maximum weight/kg: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText required="true" label="capacity" id="capacity" value="#{CMB.cat.capacity}">
+                                <f:validateDoubleRange minimum="1" maximum="9999999" />
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:message for="capacity" />
+                        </p:column>
+                        
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="origination" style="font-weight: bold" value="origination: " />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="origination" required="true" requiredMessage="Please select a location !"  value="#{CMB.cat.ori}">
+                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{CMB.locations}" var="l" itemLabel="#{l.name}" itemValue="#{l.name}" />
+                            </p:selectOneMenu>                           
+                        </p:column>
+                        <p:column>
+                            <p:message for="origination" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="destination" style="font-weight: bold" value="destination: " />
+                        </p:column>
+                         
+                        <p:column>
+                             <p:selectOneMenu id="destination" required="true" requiredMessage="Please select a location !"  value="#{CMB.cat.des}">
+                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{CMB.locations}" var="i" itemLabel="#{i.name}" itemValue="#{i.name}" />
+                            </p:selectOneMenu> 
+                        </p:column>
+                        <p:column>
+                            <p:message for="destination" />
+                        </p:column>
+                    </p:row>
+                    
+                    
+                </p:panelGrid>
+                <p:commandButton id="btn" value="Add New Catalog"  action="#{CMB.addNewCatalog}" ajax="false"/>  
+              
+            </p:panel>
+             
+    </h:form>
+           
+    </ui:define>
+
+</ui:composition>
