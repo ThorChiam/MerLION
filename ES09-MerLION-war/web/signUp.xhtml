@@ -5,7 +5,7 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <h:head>
 
         <title>MerLION Logistics</title>
@@ -33,6 +33,13 @@
                 }
             };
         </script>
+        <script name="jquery/jquery.js" library="primefaces"></script>
+        <style>
+            .ui-growl {
+                right:100px;
+                top:50px;
+            }
+        </style>
     </h:head>
     <!-- Add 50px padding top to the body for the navbar -->
     <h:body style="padding-top: 40px; padding-bottom: 20px;">
@@ -49,7 +56,7 @@
 
             <h:form styleClass="navbar-form navbar-right">
                 <p:button value="Log In" outcome="signIn"/>
-             
+
                 <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
             </h:form> 
         </b:navBar>
@@ -85,24 +92,7 @@
                                                            requiredMessage="Please enter password" class="form-control"/>
                                             <h:message for="password" style="color: red;" />
                                         </div>
-                                        <div class="form-group">
-                                            <h:outputLabel for="comp_name" value="Company name : " />
-                                            <h:inputText id="comp_name" value="#{accountManagedBean.comp_name}" required="true"
-                                                         requiredMessage="Company name is required" class="form-control"/>
-                                            <h:message for="comp_name" style="color: red;" />
-                                        </div>
-                                        <div class="form-group">
-                                            <h:outputLabel for="comp_address" value="Company address : " />
-                                            <h:inputText id="comp_address" value="#{accountManagedBean.comp_address}" required="true"
-                                                         requiredMessage="Please enter your company address" class="form-control"/>
-                                            <h:message for="comp_address" style="color: red;" />
-                                        </div>
-                                        <div class="form-group">
-                                            <h:outputLabel for="contact" value="Contact No : " />
-                                            <h:inputText id="contact" value="#{accountManagedBean.comp_contact_no}" required="true"
-                                                         requiredMessage="Please enter your contact number" class="form-control"/>
-                                            <h:message for="contact" style="color: red;" />
-                                        </div>
+
                                         <div class="form-group">
                                             <h:outputLabel for="security_question" value="security question : " />
                                             <h:inputText id="security_question" value="#{accountManagedBean.security_question}" required="true"

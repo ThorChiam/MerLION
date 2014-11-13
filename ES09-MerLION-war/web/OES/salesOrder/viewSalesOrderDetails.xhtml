@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Welcome to Order Entry System</title>
+    </h:head>
+
+    <h:body>
+        <b:container>
+
+         <p:breadCrumb>
+                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="MerLION Home" url="/main.xhtml" />
+                 <p:menuitem value="OES Home" url="/OES/main.xhtml" />
+                <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
+                <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
+                <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
+                <p:menuitem value="Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml" />
+                <p:menuitem value="Sales Order" url="/OES/salesOrder/createSalesOrder.xhtml" />
+                <p:menuitem value="Payment" url="/OES/Payment/paymentALL.xhtml" />
+
+            </p:breadCrumb>
+            <b:well>
+                <h2>Order Entry System</h2>   
+            </b:well>
+        </b:container>
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="12" col-sm="6" col-md="2">
+                    <h:form>
+                        <p:panel header="Enquiry Management">
+
+                           <b:listLinks>
+
+                                <b:navLink href="viewEnquire.xhtml" value="View Upcoming Enquire"
+                                           />
+                                <b:navLink href="createQuotation.xhtml" value="Create NEW Quotation"
+                                           />
+                                
+                                <b:navLink href="viewQuotation.xhtml" value="View Quotation History"
+                                           />
+                            </b:listLinks>
+                        </p:panel>
+                    </h:form>
+
+                </b:column>
+
+
+                <b:column col-xs="6" col-sm="6" col-md="10">
+
+                    <p:panel style="border: none">
+
+                        <f:metadata>
+                            <f:viewParam name="sobId" value="#{sob.passID}" />
+                        </f:metadata>
+                        
+                        <h:outputLabel for="qid" value="Sales Order ID:" style="font-weight:bold" />
+                        <h:outputText value="#{sob.passID}" />
+                        <p>
+                            
+                        </p>
+                        <p:dataTable  var="sp" value="#{sob.viewSingleSalesOrder(sob.passID)}" >
+                            <f:facet name="header">
+                                Sales Order Details
+                            </f:facet>
+                            
+                            <p:column headerText="Order ID">
+                                <h:outputText value="" />
+                            </p:column>
+                            
+                           
+                            <p:column headerText="Request Quantities">
+                                <h:outputText value="#{sp.order.quantity}" />
+                            </p:column>
+                            
+                            <p:column headerText="Unit Price">
+                                <h:outputText value="#{sp.unitprice}" />
+                            </p:column>
+                            
+                             <p:column headerText="Sub Total">
+                                 <h:outputText value="#{sp.subtotal}" />
+                            </p:column>
+                            
+                              <f:facet name="footer">
+                                  Total Amount 
+                            </f:facet>
+
+                    </p:dataTable>
+                        <p>
+                            
+                        </p>
+                      
+                    </p:panel>
+                    
+                </b:column>
+                
+              
+            </b:row>
+
+        </b:container>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+    </h:body>
+</html>
+
+
+
+
+
+
+
+
+
+

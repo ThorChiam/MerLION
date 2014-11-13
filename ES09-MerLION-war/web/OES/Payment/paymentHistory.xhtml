@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Welcome to Order Entry System</title>
+    </h:head>
+    
+    <h:body>
+        <b:container>
+
+          <p:breadCrumb>
+                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="MerLION Home" url="/main.xhtml" />
+                 <p:menuitem value="OES Home" url="/OES/main.xhtml" />
+                <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
+                <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
+                <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
+                <p:menuitem value="Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml" />
+                <p:menuitem value="Sales Order" url="/OES/salesOrder/createSalesOrder.xhtml" />
+                <p:menuitem value="Payment" url="/OES/Payment/paymentALL.xhtml" />
+
+            </p:breadCrumb>
+
+            <b:well>
+                <h2>Order Entry System</h2>   
+            </b:well>
+        </b:container>
+
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="12" col-sm="6" col-md="2">
+                    <h:form>
+                        <p:panel header="Payment Management">
+
+                          
+                               <b:listLinks>
+
+                                <b:navLink href="paymentALL.xhtml" value="Outstanding Payment"
+                                           />
+                                <b:navLink href="paymentHistory.xhtml" value="Completed Payment"
+                                           />
+
+                                
+                            </b:listLinks>
+                            
+                        </p:panel>
+                    </h:form>
+
+                </b:column>
+
+
+                <b:column col-xs="6" col-sm="6" col-md="10">
+
+                    <h:form id="form">
+                        <p:dataTable var="en" value="#{sob.viewPaidPayment()}">
+                                         
+                             <f:facet name="header">
+                               Completed(PAID) Payment
+                            </f:facet>
+
+                            <p:column headerText="Payement ID">
+                                <h:outputText value="#{en.id}" />
+                            </p:column>
+
+                            <p:column headerText="Payment Type">
+                                <h:outputText value="#{en.paymentType}" />
+                            </p:column>
+
+                             <p:column headerText="Payment Date">
+                                 <h:outputText value="#{en.paymentDate}" />
+                            </p:column>
+                            
+                             <p:column headerText="Buyer">
+                                 <h:outputText value="#{en.salesorder.purchaseorder.sender.company.companyName}" />
+                            </p:column>
+                            
+                             <p:column headerText="Status">
+                                <h:outputText value="#{en.status}" />
+                            </p:column>
+                            
+                            
+                            <f:facet name="footer">
+                                Total: #{sob.sizepaymentpaid}  Completed Payments.
+                            </f:facet>
+
+                        </p:dataTable>
+                    </h:form>
+
+                </b:column>
+
+            </b:row>
+
+        </b:container>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+
+
+                </div>
+
+            </div>
+        </foot>
+    </h:body>
+</html>

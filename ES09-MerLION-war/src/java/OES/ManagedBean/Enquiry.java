@@ -22,6 +22,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.text.SimpleDateFormat;
+import org.primefaces.context.RequestContext;
 
 
 /**
@@ -72,6 +73,8 @@ public class Enquiry implements Serializable {
 
     private List<Product> allProducts;
     
+    private List<Product> selectedsellerProducts;
+    
     
 //**************Enquiry History Attributes********************************8
     private int enSize;
@@ -113,6 +116,9 @@ public class Enquiry implements Serializable {
         products = osbl.getSellerProducts(id);
         
         
+        
+        
+        /*
         while(j>=0 && j<products.size()){
             
           desc.add(products.get(j).getDescription());
@@ -120,6 +126,8 @@ public class Enquiry implements Serializable {
           j++;
         }
         j++;
+        */
+        selectedsellerProducts=osbl.getSellerSelectedProductsName(selectedNames);
         productsN = osbl.getSellerProductsName(id);
         System.out.println("Selected Products:*****************************************************" + selectedNames);
         
@@ -134,7 +142,7 @@ public class Enquiry implements Serializable {
     
   }
 
-    public String createEnquiry(String email) {
+    public void createEnquiry(String email) {
         
         Timestamp tmp = new Timestamp(edate.getTime());
         
@@ -157,11 +165,12 @@ public class Enquiry implements Serializable {
         seller = osbl.getSellerAccount(sellerSelected);
         
         osbl.createEnquiry(seller, buyer, orders, createdate);
-        statusMessage = "A new enquiry is successfully created.";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "Status: " + statusMessage, ""));
         
-        return statusMessage;
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Successful!", "A new enquiry is created.");
+         
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
+        
+      
 
     }
     
@@ -265,6 +274,17 @@ public class Enquiry implements Serializable {
     public Account getSeller() {
         return seller;
     }
+
+    public List<Product> getSelectedsellerProducts() {
+        return selectedsellerProducts;
+    }
+
+    public void setSelectedsellerProducts(List<Product> selectedsellerProducts) {
+        this.selectedsellerProducts = selectedsellerProducts;
+    }
+    
+    
+    
 
     public void setSeller(Account seller) {
         this.seller = seller;

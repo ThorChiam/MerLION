@@ -5,6 +5,7 @@
  */
 package CRMS.Session;
 
+import CRMS.Entity.Forume_Replies;
 import CRMS.Entity.Post;
 import java.util.List;
 import javax.ejb.Local;
@@ -16,9 +17,13 @@ import javax.ejb.Local;
 @Local
 public interface ForumSessionLocal {
 
-    public void createEnquiry(String email, String title, String content, String time);
+   public void createEnquiry(String email, String title, String content, String time);
 
    public List<Post> getAllPostTitles();
    
    public Post getPostDetail(long aId);
+   
+   public void addreply(String reply,long id,String email);
+   
+   public List<Forume_Replies> getreplylist(long id);
 }

@@ -16,28 +16,22 @@
     </h:head>
 
     <h:body>
-        <b:container>
-            <b:row>
-                <p:column colspan="3">
-                    <h:form>  
-                        <p:menubar styleClass="show-grid">
-                            <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                            <p:menuitem value="WMS Home" url="/WMS/index.xhtml" />
-                            <p:menuitem value="Delivery Order" url="/WMS/deliveryOrder/deliveryOrderList.xhtml"/>
-                            <p:menuitem value="Human Resource Management" url="/WMS/HR/humanResource.xhtml"/>
-                            <p:menuitem value="Search Service" url="/WMS/selectWMSServices.xhtml"/>
-                            <p:menuitem value="Admin" url="/WMS/Admin/WMSAdmin.xhtml"/>
-                            <p:submenu label="Storage Management">
-                                <p:menuitem value="Reserve Storage" url="/WMS/storage/reserveStorage.xhtml"/>
-                                <p:menuitem value="Update Storage" url="/WMS/storge/updateStorage.xhtml" />
-                            </p:submenu>
-                            <p:menuitem value="Log Out" action="signIn.xhtml"  actionListener="#{accountManagedBean.logout}"/>
-
-                        </p:menubar>
-                    </h:form>
-                </p:column>
-            </b:row>
-
+       <b:container> 
+            <h:form>
+                <p:breadCrumb>
+                    <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                    <p:menuitem value="WMS Home" url="/WMS/index.xhtml" />
+                    <p:menuitem value="Order Management" url="/WMS/deliveryOrder/deliveryOrderList.xhtml"/>
+                    <p:menuitem value="Storage Management" url="/WMS/storage/reserveStorage.xhtml"/>
+                    <p:menuitem value="Admin Mgmt" url="/WMS/Admin/WMSAdmin.xhtml"/>    
+                    <p:menuitem value="Human Resource Management" url="/WMS/HR/humanResource.xhtml"/>
+                    <p:menuitem value="Search Service" url="/WMS/selectWMSServices.xhtml"/>                
+                  
+                </p:breadCrumb>   
+            </h:form>
+            <b:well>
+                <h3>Warehouse Management System</h3> 
+            </b:well>
         </b:container>
         <br/>
         <b:container>

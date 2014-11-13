@@ -78,8 +78,7 @@
                                     </div>                                      
                                 </h:panelGrid>
                                 <br/>                                
-                                <p:commandButton id="send" update="panel" value="Send" action="#{cem.createEnquiry}" ajax="false" />
-                                <p:message for="send" />
+                                <p:commandButton value="Send" icon="ui-icon-script" actionListener="#{cem.createEnquiry}"/>                              
                             </p:panel>
                         </h:form>
                     </div>

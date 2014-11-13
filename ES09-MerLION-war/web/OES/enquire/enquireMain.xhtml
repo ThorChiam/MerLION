@@ -12,16 +12,21 @@
     <h:body>
         <b:container>
 
-            <p:breadCrumb>
+         
+              <p:breadCrumb>
                 <p:menuitem value="Home" url="/main.xhtml" />
-                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="MerLION Home" url="/main.xhtml" />
+                 <p:menuitem value="OES Home" url="/OES/main.xhtml" />
                 <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
-                <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
-                <p:menuitem value="Sales Order" url="/OES/salesOrder/createOrder.xhtml" />
                 <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
-                <p:menuitem value="Payment" url="#" />
+                <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
+                <p:menuitem value="Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml" />
+                <p:menuitem value="Sales Order" url="/OES/salesOrder/createSalesOrder.xhtml" />
+                <p:menuitem value="Payment" url="/OES/Payment/paymentALL.xhtml" />
 
             </p:breadCrumb>
+            
+            
             <b:well>
                 <h2>Order Entry System</h2>   
             </b:well>
@@ -37,7 +42,7 @@
 
                                 <b:navLink href="enquireMain.xhtml" value="Create New Enquire"
                                            />
-                                <b:navLink href="enquireALL.xhtml" value="View Enquire"
+                                <b:navLink href="enquireALL.xhtml" value="View ALL Enquire"
                                            />
                             </b:listLinks>
                         </p:panel>
@@ -93,19 +98,19 @@
 
                                     <p>
 
-                                        <p:dataTable var="sp" value="#{eb.selectedNames}">
+                                        <p:dataTable var="sp" value="#{eb.selectedsellerProducts}">
                                             <f:facet name="header">
                                                 List of Selected Products
                                             </f:facet>
 
                                             <p:column headerText="Product Name">
-                                                <h:outputText value="#{sp}" />
+                                                <h:outputText value="#{sp.name}" />
                                             </p:column>
-                                            
+
                                             <p:column headerText="Description">
-                                                <h:outputText value="#{eb.desc}" />
+                                                <h:outputText value="#{sp.description}" />
                                             </p:column>
-                                            
+
                                             <f:facet name="footer">
                                                 You have selected #{eb.psize} Products.
                                             </f:facet>
@@ -127,10 +132,13 @@
                                     <p>
                                     </p> 
 
-                                    <h:outputLabel value="Quantities/Split by(,):" style="font-weight:bold" />
-                                    <p:inputText id="dd" value="#{eb.quantitiesEntered}" label="Quantity">
+                                    <h:outputLabel for="dd" value="Quantities/Split by(,):" style="font-weight:bold" />
+                                    <p:inputText id="dd" value="#{eb.quantitiesEntered}" label="Quantity" >
+             
+                                       
                                     </p:inputText>
-
+                                   
+                                    
 
                                     <p>
                                     </p>

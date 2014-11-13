@@ -7,6 +7,7 @@ package CRMS.Session;
 
 
 import CI.Entity.Account;
+import CRMS.Entity.Forume_Replies;
 import CRMS.Entity.Post;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -52,5 +53,26 @@ public class ForumSession implements ForumSessionLocal {
         Query q=em.createQuery("SELECT p FROM Post p WHERE p.id=:aId");
         q.setParameter("aId", aId);
         return (Post)q.getSingleResult();
+    }
+    
+    @Override
+    public void addreply(String reply,long id,String email){
+        Query q=em.createQuery("SELECT p FROM Account p WHERE p.email=:email");
+        q.setParameter("email", email);
+        Account account=(Account)q.getSingleResult();
+        Post tmp=getPostDetail(id);
+        Forume_Replies a=new Forume_Replies();
+        a.setComment(reply);
+        a.setAccount(account);
+        a.setPost(tmp);
+        em.persist(a);
+    }
+    
+    @Override
+    public List<Forume_Replies> getreplylist(long id){
+        Query q=em.createQuery("SELECT p FROM Post p WHERE p.id=:aId");
+        q.setParameter("aId", id);
+        Post post=(Post)q.getSingleResult();
+        return post.getReplies();
     }
 }

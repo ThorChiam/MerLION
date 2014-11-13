@@ -96,15 +96,15 @@
                                     <f:facet name="input"><p:inputText value="#{c.website}" style="width:96%" label="Company Email"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-
+<!--
                             <p:column headerText="Company History">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{c.companyHistory}" /></f:facet>
                                     <f:facet name="input"><p:inputText value="#{c.companyHistory}" style="width:96%" label="Company History"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-
-                            <p:column headerText="Company Service">
+-->
+       <!--                     <p:column headerText="Company Service">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{c.service}" /></f:facet>
                                     <f:facet name="input"><p:inputText value="#{c.service}" style="width:96%" label="Company Service"/></f:facet>
@@ -118,7 +118,7 @@
                                 </p:cellEditor>
                             </p:column>
 
-
+-->
                             <p:column headerText="Delete">                               
                                 <p:commandButton value="Delete"  actionListener="#{AdminManagedBean.deleteCompany(c.id)}" styleClass="ui-priority-primary" ajax="false"/>                             
                             </p:column>

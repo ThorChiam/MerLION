@@ -26,14 +26,8 @@
                 <b:navLink value="My MerLION" href="CI/myMerlion.xhtml" rendered="#{facesContext.externalContext.sessionMap['userId'] != null}"></b:navLink>
                 <b:navLink value="About us" href="aboutUs.xhtml"></b:navLink>
                 <b:navLink value="Contact us" href="contactUs.xhtml"></b:navLink>               
-               <!-- <b:dropMenu value="Services">
-                    <b:navLink value="OES" href="/OES/main.xhtml"></b:navLink>
-                    <b:navLink value="MRP" href="#"></b:navLink>
-                    <b:navLink value="TMS" href="/TMS/sub-home.xhtml"></b:navLink>
-                    <b:navLink value="Separated link" href="#"></b:navLink>
-                    <b:navLink value="One more separated link" href="#"></b:navLink>
-                </b:dropMenu> -->
-                <b:navLink value="Help Desk" href="CRMS/customerEnquire/makeEnquire.xhtml"></b:navLink>
+             
+                <b:navLink value="Help Desk" href="makeEnquire.xhtml"></b:navLink>
 
             </b:navbarLinks>
 
@@ -43,7 +37,7 @@
                 <b:commandButton action="signIn.xhtml" value="Log Out" look="success" iconAlign="right" actionListener="#{accountManagedBean.logout}"/>
             </h:form> 
         </b:navBar>
-
+        <br/>
         <b:container>
             <div id="myCarousel" class="carousel slide"  data-ride="carousel" data-interval="2000">
                 <ol class="carousel-indicators">
@@ -115,62 +109,30 @@
 
         <b:container>
             <b:row>
-                <b:column col-md="4">
-                    <h4><b>Need a Delivery?</b></h4>
 
-                    <h:form id="form">
-                        <p:growl id="msgs" showDetail="true" />
-                        <h:panelGrid columns="2" cellpadding="5">
-
-                            <p:outputLabel for="departure" value="Departure: " />
-                            <p:inputText id="departure" value="#{CalendarView.text1}" />
-
-                            <p:outputLabel for="destination" value="Destination:" />
-                            <p:inputText id="destination" value="#{CalendarView.text2}" />
-
-
-                            <p:outputLabel for="button" value="From:" />
-                            <p:calendar id="button" value="#{CalendarView.date3}" showOn="button" />
-                            <p:outputLabel for="button2" value="To" />
-                            <p:calendar id="button2" value="#{CalendarView.date4}" showOn="button" />
-
-
-
-                        </h:panelGrid>
-                        <p:commandButton value="Submit" update="msgs" actionListener="#{CalendarView.click}" icon="ui-icon-check" />
-                        <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
-                            <p:panelGrid id="display" columns="2" columnClasses="label,value">
-
-                                <h:outputText value="From:" />
-                                <h:outputText value="#{CalendarView.date3}">
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
-
-                                <h:outputText value="To:" />
-                                <h:outputText value="#{CalendarView.date4}">
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
-
-                            </p:panelGrid>
-                        </p:dialog>
-                    </h:form>
-                </b:column>
-
-                <b:column col-md="8">
+                <b:column col-md="6">
                     <h4>Recommended Transportation Service Provider</h4>
                     <p>
-                        <img src="image/logo/dhlLogo.jpg" width="100" height="100"></img>
+                        <a href="http://www.dhl.com.sg/en/express/tracking.html" target="_blank"> <img src="image/logo/dhlLogo.jpg" width="100" height="100"></img></a>
                         &nbsp;
-                        <img src="image/logo/fedexLogo.jpg" width="100" height="100"></img>
+                        <a href="http://www.fedex.com/us/" target="_blank"><img src="image/logo/fedexLogo.jpg" width="100" height="100"></img></a>
                         &nbsp;
-                        <img src="image/logo/nipponLogo.jpg" width="100" height="100"></img>
+                        <a href="http://www.nipponpaint.com.sg/" target="_blank"><img src="image/logo/nipponLogo.jpg" width="100" height="100"></img></a>                        
                         &nbsp;
-                        <img src="image/logo/dachserLogo.png" width="100" height="100"></img>
+                        <a href="http://www.damco.com/" target="_blank"><img src="image/logo/damcoLogo.jpg" width="100" height="80"></img></a>
+                    </p>         
+                </b:column>
+                <b:column col-md="6">
+                    <h4>Recommended Warehouse Service Provider</h4>
+                    <p>
+                        <a href="http://www.astran-cargo.com/" target="_blank"><img src="image/logo/astransLogo.png" width="80" height="70"></img></a>
                         &nbsp;
-                        <img src="image/logo/damcoLogo.jpg" width="100" height="80"></img>
-
-                    </p>
-                    <p><b:button outcome="" value="View More »"/></p>
+                        <a href="http://citylogistics.org/" target="_blank"><img src="image/logo/cityLogo.jpg" width="100" height="70"></img></a>                      
+                        &nbsp;
+                        <a href="http://www.efn.org/" target="_blank"><img src="image/logo/efnLogo.jpg" width="100" height="100"></img></a>
+                        &nbsp;
+                        <a href="http://www.aeologistics.com/" target="_blank"><img src="image/logo/aeoLogo.jpg" width="100" height="100"></img></a>
+                    </p>              
                 </b:column>
             </b:row>
         </b:container>
@@ -179,92 +141,22 @@
 
         <b:container>
             <b:row>
-                <b:column col-md="4">
-                    <h4><b>Need a Warehouse?</b></h4>
-                    <h:form id="form1">
-                        <p:growl id="msg" showDetail="true" />
-                        <h:panelGrid columns="2" cellpadding="5">
+                <b:column col-md="5">
+                    <h4>Services</h4> 
+                    <table>
+                        <tr>
+                            <td><img src="image/service.jpg" width="150" height="120"></img></td>
+                            <td>
+                                <ul style="list-style-type:circle">
+                                    <li> <p><a href="">Need Warehouse Service?</a></p></li>
+                                    <li> <p><a href="">Need Transportation Service?</a></p></li>
+                                </ul>
 
-
-                            <p:outputLabel for="location" value="Location:" />
-                            <p:inputText id="location" value="#" />
-
-
-                            <p:outputLabel for="button" value="From:" />
-                            <p:calendar id="button" value="#{CalendarView.date3}" showOn="button" />
-                            <p:outputLabel for="button2" value="To" />
-                            <p:calendar id="button2" value="#{CalendarView.date4}" showOn="button" />
-
-
-
-                        </h:panelGrid>
-                        <p:commandButton value="Submit" update="msg" actionListener="#{CalendarView.click}" icon="ui-icon-check" />
-                        <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
-                            <p:panelGrid id="view" columns="2" columnClasses="label,value">
-
-                                <h:outputText value="From:" />
-                                <h:outputText value="#{CalendarView.date3}">
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
-
-                                <h:outputText value="To:" />
-                                <h:outputText value="#{CalendarView.date4}">
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
-
-                            </p:panelGrid>
-                        </p:dialog>
-                    </h:form>
-
-
-
+                            </td>
+                        </tr>
+                    </table>
                 </b:column>
-
-                <b:column col-md="8">
-                    <h4>Recommended Warehouse Service Provider</h4>
-                    <p>
-                        <img src="image/logo/astransLogo.png" width="80" height="70"></img>
-                        &nbsp;
-                        <img src="image/logo/cityLogo.jpg" width="100" height="70"></img>
-                        &nbsp;
-                        <img src="image/logo/welchLogo.gif" width="100" height="70"></img>
-                        &nbsp;
-                        <img src="image/logo/efnLogo.jpg" width="100" height="100"></img>
-                        &nbsp;
-                        <img src="image/logo/aeoLogo.jpg" width="100" height="100"></img>
-
-                    </p>
-                    <p><b:button outcome="" value="View More »"/></p>
-                </b:column>
-            </b:row>
-
-
-        </b:container>
-        <hr/>
-        <b:container>
-            <b:row>
-                <b:column col-md="4">
-                    <h4><b>Track Your Cargo</b></h4>
-                    <h:form>
-                        <p:growl id="msg" showDetail="true" />
-                        <h:panelGrid columns="1" cellpadding="2">
-                            <p:outputLabel for="date" value="Track No.: " />
-                            <p:inputTextarea id="date"/>
-
-                        </h:panelGrid>
-                        <p:commandButton value="Submit" update="msg" actionListener="#{CalendarView.click}" icon="ui-icon-check" />
-                        <p:dialog widgetVar="dlg" modal="true" resizable="false" header="Values" showEffect="fade">
-                            <p:panelGrid id="display" columns="1" columnClasses="label,value">
-                                <h:outputText value="Track No.: " />
-                                <h:outputText id="dateValue"/>
-
-
-                            </p:panelGrid>
-                        </p:dialog>
-                    </h:form>
-
-                </b:column>
-                <b:column col-md="8">
+                <b:column col-md="7">
                     <h4>Latest News</h4> 
 
                     <table>
@@ -272,10 +164,10 @@
                             <td><img src="image/news.jpg" width="150" height="120"></img></td>
                             <td>
                                 <ul style="list-style-type:circle">
-                                    <li><a href=""><font color="grey">Merlion Logistics development a logistic platform for 1-4 PL</font></a></li>
-                                    <li><a href=""><font color="grey">MerLION Global Forwarding moves to secure freight capacity</font></a></li>
-                                    <li><a href=""><font color="grey">Optimizing 3PL relationships: How to avoid commoditization</font></a></li>
-                                    <li><a href=""><font color="grey">Diesel prices drop to $3.698 per gallon</font></a></li>
+                                    <li><a href="news1.xhtml"><font color="grey">Merlion Logistics development a logistic platform for 1-4 PL</font></a></li>
+                                    <li><a href="news2.xhtml"><font color="grey">MerLION Global Forwarding moves to secure freight capacity</font></a></li>
+                                    <li><a href="news3.xhtml"><font color="grey">Optimizing 3PL relationships: How to avoid commoditization</font></a></li>
+                                    <li><a href="news4.xhtml"><font color="grey">Diesel prices drop to $3.698 per gallon</font></a></li>
                                 </ul>  
                             </td>
                         </tr>
@@ -287,6 +179,7 @@
         </b:container>
         <hr/>
         <p:stack icon="/image/OES.png" expanded="true" rendered="#{facesContext.externalContext.sessionMap['userId'] != null}">
+            <p:menuitem value="Tools" icon="/image/tool-icon.png" url="logisticTool.xhtml"/>
             <p:menuitem value="OES" icon="/image/OES.png" url="OES/main.xhtml"/>
             <p:menuitem value="MRP" icon="/image/MRP.png" url="#"/>
             <p:menuitem value="TMS" icon="/image/TMS.png" url="TMS/sub-home.xhtml"/>
@@ -303,10 +196,9 @@
                 </div>
 
                 <div class="navbar-text pull-right">
-                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
-                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
-                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
-                    <a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+                    <a href="https://www.facebook.com/MerlionLogistics?hc_location=timeline"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="logisticTool.xhtml"><i class="fa fa-wrench fa-2x"></i></a>
+
 
                 </div>
 

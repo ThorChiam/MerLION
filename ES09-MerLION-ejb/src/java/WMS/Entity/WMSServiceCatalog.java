@@ -124,14 +124,6 @@ public class WMSServiceCatalog implements Serializable {
         this.location = location;
     }
 
-    public List<Contract> getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(List<Contract> contacts) {
-        this.contacts = contacts;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;

@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        
+
         <title>MerLION Logistics</title>
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
@@ -30,28 +30,71 @@
         </b:container>
 
         <b:container>
-            <font color="#585858">                    
-                <p:panel header="Forum">
-                    <h3>Welcome to MerLION Forum</h3>
-                    <h:form> 
-                        <p:dataTable var="t" value="#{fomb.allTitles}">
-                            <p:column headerText="Post Title" style="width: 900px">
-                                <h:outputText value="#{t.title}" />
-                            </p:column>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="5" col-sm="5" col-md="3">
 
-                            <p:column headerText="View Detail">
-                                <p:button outcome="postDetail" value="View" icon="ui-icon-star">
-                                    <f:param name="enId" value="#{t.id}" />
-                                </p:button>
-                            </p:column>
+                    <h:form>
+                        <p:growl autoUpdate="true"/>
+                        <p:menu style="width:250px">
+                            <p:submenu label="Internal Communication">
 
-                        </p:dataTable>
-                        <br/>
-                        <p:button outcome="createPost" value="Create New Post" icon="ui-icon-star"/>
+                                <p:menuitem value="Forum" url="/CRMS/forum/forumHome.xhtml" />
+                                <p:menuitem value="View Announcement" url="/CI/account/viewAnn.xhtml" />
+                                <p:menuitem value="View Notification" url="#" />
+                                <p:menuitem value="View Feedback" url="/CRMS/feedback/viewFeedbackList.xhtml" />
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
 
-                    </h:form> 
-                </p:panel>
-            </font>
+                </b:column>                 
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                    <font color="#585858">                    
+                        <p:panel header="Forum">
+                            <h3>Welcome to MerLION Forum</h3>
+                            <h:form> 
+                                <p:dataTable id="msgs" var="t" value="#{fomb.allTitles}">
+                                    <p:column headerText="Post Title" style="width: 550px">
+                                        <h:outputText value="#{t.title}" />
+                                    </p:column>
+
+                                    <p:column headerText="View Detail">
+                                        <p:commandButton action="postDetail"  actionListener="#{fomb.initId(t.id)}" value="View" icon="ui-icon-star">
+
+                                        </p:commandButton>
+
+                                    </p:column>
+
+                                    <p:column headerText="Reply" >                                        
+                                        <p:commandButton value="Reply" actionListener="#{fomb.setCheckreply(true,t.id)}" icon="ui-icon-star" styleClass="ui-priority-primary" ajax="false" />
+                                    </p:column>
+
+                                </p:dataTable>
+                                <br/>
+                                <p:growl id="reply" rendered="#{fomb.checkreply}">
+                                    <h:panelGrid>                                                                                                        
+                                        <h:form styleClass="navbar-form navbar-left">                                                   
+                                            <h:outputLabel for="content" value="Reply Content : " />
+                                            <br/>
+                                            <p:inputTextarea id="content" value="#{fomb.replycontent}" rows="6" cols="33" />                                                                     
+                                            <br/>
+                                            <p:commandButton value="Save" update="reply" actionListener="#{fomb.addreply()}" styleClass="ui-priority-primary" ajax="false"/>                                           
+                                            <p:commandButton value="Back" update="reply" actionListener="#{fomb.setCheckreply(false,0)}" styleClass="ui-priority-primary" ajax="false"/>                                    
+                                        </h:form>
+                                    </h:panelGrid>
+                                </p:growl>
+                                <br/>
+                                <p:button outcome="createPost" value="Create New Post" icon="ui-icon-star"/>
+
+                            </h:form> 
+
+
+
+
+                        
+                        </p:panel>
+                    </font>
+                </b:column>
+            </b:row>
         </b:container>
 
         <br/>

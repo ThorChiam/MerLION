@@ -120,7 +120,7 @@ public class WMSOrderSession implements WMSOrderSessionLocal {
         List<Inventory> invens = this.getAllInventories(tEmail);
         for (Inventory i : invens) {
             for (OrderList item : orderItems) {
-                if (Objects.equals(i.getId(), item.getId())) {
+                if (Objects.equals(i.getId(), item.getProduct().getId())) {
                     int checkResult = this.updateSingelInventory(i).getQuantity() - Integer.parseInt(item.getQuantity());
                     item.setCheckResult(checkResult);
                     em.merge(item);

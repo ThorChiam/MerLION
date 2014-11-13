@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        
+
         <title>MerLION Logistics</title>
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
@@ -31,22 +31,44 @@
         </b:container>
 
         <b:container>
-            <font color="#585858">                    
+            <b:row styleClass="show-grid">
+                <b:column col-xs="5" col-sm="5" col-md="3">
 
-                <h:form> 
-                    <p:panel header="Create Post">
-                        <h:outputLabel for="title" value="Title : "/>
-                        <h:inputText id="title" value="#{fomb.title}" required="true"
-                                     requiredMessage="Please enter Title" class="form-control"/>
-                        <p:editor id="editor" widgetVar="editorWidget" value="#{fomb.content}" width="600"/> 
+                    <h:form>
+                        <p:growl autoUpdate="true"/>
+                        <p:menu style="width:250px">
+                            <p:submenu label="Internal Communication">
 
-                        <!--action does not work -->
-                        <p:commandButton value="Submit"  action="#{fomb.createPost}"/>
+                                <p:menuitem value="Forum" url="/CRMS/forum/forumHome.xhtml" />
+                                <p:menuitem value="View Announcement" url="/CI/account/viewAnn.xhtml" />
+                                <p:menuitem value="View Notification" url="#" />
+                                <p:menuitem value="View Feedback" url="/CRMS/feedback/viewFeedbackList.xhtml" />
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
 
-                    </p:panel>
-                </h:form> 
+                </b:column>                 
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                    <font color="#585858">                    
 
-            </font>
+                        <h:form> 
+                            <p:panel header="Create Post">
+                                <h:outputLabel for="title" value="Title : "/>
+                                <h:inputText id="title" value="#{fomb.title}" required="true"
+                                             requiredMessage="Please enter Title" class="form-control"/>
+                                <br/>
+                                <p:editor id="editor" widgetVar="editorWidget" value="#{fomb.content}" width="600"/> 
+
+                                <!--action does not work -->
+                                <br/>
+                                <p:commandButton value="Submit"  action="#{fomb.createPost}"/>
+
+                            </p:panel>
+                        </h:form> 
+
+                    </font>
+                </b:column>
+            </b:row>
         </b:container>
 
         <br/>

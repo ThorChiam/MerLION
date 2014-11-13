@@ -53,11 +53,13 @@ public class CompanyProfileManagedBean implements Serializable {
     }
 
     public String addCompanyProfile(String aemail) {
+        
         statusMessage = "create company profile successfully";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Status: " + statusMessage, ""));
         cpsbl.addCompanyProfile(companyName, companyAddress, tel, aemail, website, companyHistory, service, vision);
-        return "main";
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "signIn";
     }
 
     //view individual company

@@ -14,21 +14,20 @@
 
     <h:body>
         <b:container>
-                  
-                <p:breadCrumb>
-                    <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
-                    <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
-                    <p:menuitem value="Account Management" url="/CI/account/viewAccountInfo.xhtml" />
-                    <p:menuitem value="Company Profile Management" url="/CI/account/viewCompanyProfile.xhtml" />
-                    <p:menuitem value="Contract Management" url="#" />
-                    <p:menuitem value="Internal Communication" url="#" />
-                   
-                </p:breadCrumb> 
+
+            <p:breadCrumb>
+                <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
+                <p:menuitem value="Account Management" url="/CI/account/viewAccountInfo.xhtml" />
+                <p:menuitem value="Company Profile Management" url="/CI/account/viewCompanyProfile.xhtml" />
+                <p:menuitem value="Contract Management" url="#" />
+                <p:menuitem value="Internal Communication" url="#" />
+
+            </p:breadCrumb> 
             <b:well>
-                <h3>My MerLION</h3> 
+                <h3>My MerLION(Member)</h3> 
             </b:well>
         </b:container>
-        
         <b:container>
             <b:row styleClass="show-grid">
                 <b:column col-xs="5" col-sm="5" col-md="3">
@@ -46,7 +45,7 @@
 
                                 <p:menuitem value="View Company Profile" url="/CI/account/viewCompanyProfile.xhtml"/>
                                 <p:menuitem value="Edit Company Profile" url="/CI/account/editCompanyProfile.xhtml" />
-                 
+
                             </p:submenu>
                             <p:submenu label="Contract Management">
                                 <p:menuitem value="Add New Plan"  url="/MRP/plan/addNewPlan.xhtml"/>
@@ -61,7 +60,8 @@
                             </p:submenu>
                             <p:submenu label="Internal Communication" >
                                 <p:menuitem value="Forum" url="/CRMS/forum/forumHome.xhtml" />
-
+                                <p:menuitem value="View Announcement" url="/CI/account/viewAnn.xhtml" />
+                                <p:menuitem value="View Feedback" url="/CRMS/feedback/viewFeedbackList.xhtml" />
                             </p:submenu>
                         </p:menu>
                     </h:form>

@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -24,7 +25,7 @@ import javax.faces.context.FacesContext;
  * @author sunny
  */
 
-@ManagedBean(name = "fmb")
+@ManagedBean(name = "femb")
 @SessionScoped
 @ViewScoped
 
@@ -32,15 +33,23 @@ public class FeedbackManagedBean implements Serializable{
     @EJB
     private FeedbackSessionLocal fsbl;
     
+    private long fId;
     private double rating;
     private String feedback_content;
     private Company sender;
     private Company receiver;
     private String statusMessage;
+    private String email;
 
     
     public FeedbackManagedBean() {    
     }  
+    
+    @PostConstruct
+    public void init() {
+        email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");   
+
+    }
     
     public void createFeedback(String email){
         Date date = new java.util.Date();
@@ -56,20 +65,20 @@ public class FeedbackManagedBean implements Serializable{
         return fsbl.getFeedback(feedback_id);
     }
     
-    public List<Feedback> getAllFeedback(String email){
+    public List<Feedback> getAllFeedback(){
         return fsbl.getAllFeedback(email);
     }
     
     
     
     //****************Getter and Setter********************
-    
-    public FeedbackSessionLocal getFsbl() {
-        return fsbl;
+
+    public long getfId() {
+        return fId;
     }
 
-    public void setFsbl(FeedbackSessionLocal fsbl) {
-        this.fsbl = fsbl;
+    public void setfId(long fId) {
+        this.fId = fId;
     }
 
     public double getRating() {
@@ -111,4 +120,13 @@ public class FeedbackManagedBean implements Serializable{
     public void setStatusMessage(String statusMessage) {
         this.statusMessage = statusMessage;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
 }

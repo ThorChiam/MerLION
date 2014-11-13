@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+
+        <title>MerLION Logistics</title>
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+
+    </h:head>
+    <!-- Add 50px padding top to the body for the navbar -->
+    <h:body style="padding-top: 40px; padding-bottom: 20px;">
+        <b:container>
+
+            <p:breadCrumb>
+                <p:menuitem value="Merlion Home" url="/main.xhtml" icon="ui-icon-home"/>
+                <p:menuitem value="Home" url="/CI/myMerlion.xhtml" />
+                <p:menuitem value="Account Management" url="/CI/account/viewAccountInfo.xhtml" />
+                <p:menuitem value="Company Profile Management" url="/CI/account/viewCompanyProfile.xhtml" />
+                <p:menuitem value="Contract Management" url="#" />
+                <p:menuitem value="Internal Communication" url="#" />
+
+            </p:breadCrumb> 
+            <b:well>
+                <h3>My MerLION</h3> 
+            </b:well>
+        </b:container>
+
+        <b:container>
+            <b:row styleClass="show-grid">
+                <b:column col-xs="5" col-sm="5" col-md="3">
+
+                    <h:form>
+                        <p:growl autoUpdate="true"/>
+                        <p:menu style="width:250px">
+                            <p:submenu label="Internal Communication">
+
+                                <p:menuitem value="Forum" url="/CRMS/forum/forumHome.xhtml" />
+                                <p:menuitem value="View Announcement" url="/CI/account/viewAnn.xhtml" />
+                                <p:menuitem value="View Notification" url="#" />
+                                <p:menuitem value="View Feedback" url="/CRMS/feedback/viewFeedbackList.xhtml" />
+
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+
+                </b:column>                 
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                    <font color="#585858">                    
+                        <h:form >            
+                            <p:dataTable var="all" value="#{AdminManagedBean.allAnnouncements}" id="msgs">
+                                <p:column headerText="Announcement Id">
+                                    <h:outputText value="#{all.annId}"/>
+                                </p:column>
+
+                                <p:column headerText="Announcement Content">
+                                    <h:outputText value="#{all.content.split(':')[0]}:"/>
+                                    <br/>
+                                    <h:outputText value="#{all.content.split(':')[1]}"/>
+                                </p:column>    
+
+                                <p:column headerText="Announcement Poster Id">
+                                    <h:outputText value="#{all.merlionAdmin.id}"/>
+                                </p:column>
+
+                                <p:column headerText="Post Date">
+                                    <h:outputText value="#{all.releasedate}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+
+                    </font>
+                </b:column>
+            </b:row>
+        </b:container>
+
+        <br/>
+        <br/>
+        <br/>
+        <foot>
+            <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+
+                <div class="navbar-text pull-left">
+                    <p>2014 MerLION Logistics.</p>
+                </div>
+
+                <div class="navbar-text pull-right">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-google-plus fa-2x"></i></a>
+
+                </div>
+
+            </div>
+        </foot>
+        <script
+            src="/ES09-MerLION-war/js/bootstrap.min.js"
+        type="text/javascript"></script> <script
+            src="/ES09-MerLION-war/js/docs.min.js"
+        type="text/javascript"></script>
+        <!--  IE10 viewport hack for Surface/desktop Windows 8 bug --> <script
+            src="/ES09-MerLION-war/js/ie10-viewport-bug-workaround.js"
+        type="text/javascript"></script>
+
+    </h:body>
+</html>

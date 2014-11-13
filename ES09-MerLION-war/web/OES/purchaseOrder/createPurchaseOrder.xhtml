@@ -12,17 +12,19 @@
     <h:body>
         <b:container>
 
-            <p:breadCrumb>
+             <p:breadCrumb>
                 <p:menuitem value="Home" url="/main.xhtml" />
-                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="MerLION Home" url="/main.xhtml" />
+                 <p:menuitem value="OES Home" url="/OES/main.xhtml" />
                 <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
+                <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
                 <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
                 <p:menuitem value="Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml" />
-                <p:menuitem value="Sales Order" url="/OES/salesOrder/createOrder.xhtml" />
-                <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
-                <p:menuitem value="Payment" url="#" />
+                <p:menuitem value="Sales Order" url="/OES/salesOrder/createSalesOrder.xhtml" />
+                <p:menuitem value="Payment" url="/OES/Payment/paymentALL.xhtml" />
 
             </p:breadCrumb>
+            
             <b:well>
                 <h2>Order Entry System</h2>   
             </b:well>
@@ -30,18 +32,25 @@
 
         <b:container>
             <b:row styleClass="show-grid">
+                
                 <b:column col-xs="12" col-sm="6" col-md="2">
                     <h:form>
-                        <p:panel header="Purchase Order Management">
+                       <p:panel header="Purchase Order/Invoice Management">
 
-                            <b:listLinks>
+                           
+                             <b:listLinks>
 
                                 <b:navLink href="createPurchaseOrder.xhtml" value="Create New Purchase Order"
                                            />
                                  <b:navLink href="viewPurchaseOrder.xhtml" value="Purchase Order History(Outgoing)"
                                            />
-                              
+                                 <b:navLink href="incomingInvoice.xhtml" value="Invoice(Incoming)"
+                                           />
+                                 
                             </b:listLinks>
+                            
+                           
+                           
                         </p:panel>
                     </h:form>
 
@@ -92,17 +101,17 @@
 
                                     <p>
 
-                                        <p:dataTable var="sp" value="#{pur.selectedNames}">
+                                        <p:dataTable var="sp" value="#{pur.productSelected}">
                                             <f:facet name="header">
                                                 List of Selected Products
                                             </f:facet>
 
                                             <p:column headerText="Product Name">
-                                                <h:outputText value="#{sp}" />
+                                                <h:outputText value="#{sp.name}" />
                                             </p:column>
                                             
                                             <p:column headerText="Description">
-                                                <h:outputText value="#{pur.desc}" />
+                                                <h:outputText value="#{sp.description}" />
                                             </p:column>
                                             
                                             <f:facet name="footer">

@@ -5,6 +5,7 @@ import javax.ejb.EJB;
 import OES.Session.OESSessionLocal;
 import CI.Entity.Account;
 import OES.Entity.*;
+import WMS.Session.WMSOrderSessionLocal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
-
 
 /**
  *
@@ -26,8 +26,10 @@ public class PurchaseOrderManagedBean implements Serializable {
 
     @EJB
     private OESSessionLocal osbl;
-    
-   //purchase Order
+    @EJB
+    private WMSOrderSessionLocal wosl;
+
+    //purchase Order
     private String email;
     private String senderName;
     private String receiverName;
@@ -35,38 +37,37 @@ public class PurchaseOrderManagedBean implements Serializable {
     private Account receiver;
     private List<String> receiverNames;
     private Date edate;
-    
+
     //products
     private List<Product> products;
     private int j;
-    private List<String> desc=new ArrayList();
-    private List<String> productsN=new ArrayList();
-    private List<String> selectedNames=new ArrayList();
+    private List<String> desc = new ArrayList();
+    private List<String> productsN = new ArrayList();
+    private List<String> selectedNames = new ArrayList();
+    private List<Product> productSelected=new ArrayList();
     private int psize;
-     private String quantitiesEntered;
-     private List<String> quantities= new ArrayList();
-     private String[] strarray;
+    private String quantitiesEntered;
+    private List<String> quantities = new ArrayList();
+    private String[] strarray;
     private String arrayToString;
-    
+
     //Create New Purchase Order
-     private  List<OrderList> orders=new ArrayList();
-     private String statusMessage;
-     private int enSize;
-     private long purId;
-     
-     //Purchase Order Details
-     private String singleSeller;
-     private String singleBuyer;
-     private List<OrderList> orderl=new ArrayList();
-     private String purDate;
-     private List<String> detailsquantities=new ArrayList();
-     private List<String> detailsproNames=new ArrayList();
-     private List<OrderList> detailOrders=new ArrayList();
-     private int detailSize;
-         
-            
-            
-    
+    private List<OrderList> orders = new ArrayList();
+    private String statusMessage;
+    private int enSize;
+    private long purId;
+
+    //Purchase Order Details
+    private String singleSeller;
+    private String singleBuyer;
+    private List<OrderList> orderl = new ArrayList();
+    private String purDate;
+    private List<String> detailsquantities = new ArrayList();
+    private List<String> detailsproNames = new ArrayList();
+    private List<OrderList> detailOrders = new ArrayList();
+    private int detailSize;
+    private int orderconfirmationsize;
+
     public PurchaseOrderManagedBean() {
     }
 
@@ -74,145 +75,113 @@ public class PurchaseOrderManagedBean implements Serializable {
     public void init() {
         // enquires=osbl.getAllEnquiry(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId").toString());   
         email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
-       /* if (email != null) {
-            this.viewUpcomingEnquire();
-        }
-        */
+        /* if (email != null) {
+         this.viewUpcomingEnquire();
+         }
+         */
         java.util.Date date = new java.util.Date();
         edate = new Timestamp(date.getTime());
     }
-    
+
     //************************************************Purchase Order************************************************
-    public String displaySenderName(){
+    public String displaySenderName() {
         receiverNames = osbl.getALLcompany(email);
-        
-        return osbl.getSenderName(email); 
+
+        return osbl.getSenderName(email);
     }
-    
-    
-     public void displaySellerProducts() {
+
+    public void displaySellerProducts() {
         sender = osbl.getSellerAccount(receiverName);
         System.out.println("sellerName:*****************************************************" + receiverName);
 
         Long id = sender.getCompany().getId();
         products = osbl.getSellerProducts(id);
         
-        
-        while(j>=0 && j<products.size()){
-            
-          desc.add(products.get(j).getDescription());
-          
-          j++;
+        productSelected=osbl.getSellerSelectedProductsName(selectedNames);
+
+        while (j >= 0 && j < products.size()) {
+
+            desc.add(products.get(j).getDescription());
+
+            j++;
         }
         j++;
         productsN = osbl.getSellerProductsName(id);
         System.out.println("Dispaly Products:*****************************************************" + productsN);
-        
-        psize=selectedNames.size();
-        
+
+        psize = selectedNames.size();
+
         String[] strarray = selectedNames.toArray(new String[0]);
-        
-        arrayToString= Arrays.toString(strarray);
+
+        arrayToString = Arrays.toString(strarray);
         System.out.println("Quantities Entered*****************************************************" + arrayToString);
-        quantities= Arrays.asList(quantitiesEntered.split(","));
+        quantities = Arrays.asList(quantitiesEntered.split(","));
         System.out.println("Quantities Entered*****************************************************" + quantities);
-    
-  }
-     
+
+    }
+
     public void createPurchaseOrder(String email) {
-        
+
         Timestamp tmp = new Timestamp(edate.getTime());
-        
+
         String createdate = tmp.toString();
-        
-        quantities= Arrays.asList(quantitiesEntered.split(","));
+
+        quantities = Arrays.asList(quantitiesEntered.split(","));
         System.out.println("Quantities Entered*****************************************************" + quantities);
-       
-        for(int i=0;i<psize;i++){
-            orders.add(osbl.createNewOrder(quantities.get(i),selectedNames.get(i)));    
-            
+
+        for (int i = 0; i < psize; i++) {
+            orders.add(osbl.createNewOrder(quantities.get(i), selectedNames.get(i)));
+
         }
         System.out.println("OrderList:*****************************************************" + orders);
-       /*
-        buyerName = osbl.getBuyName(email);
-        sellerName = osbl.getALLcompany(email);
-        System.out.println("sellerName:*****************************************************" + sellerName);
-        */
+        /*
+         buyerName = osbl.getBuyName(email);
+         sellerName = osbl.getALLcompany(email);
+         System.out.println("sellerName:*****************************************************" + sellerName);
+         */
         sender = osbl.getBuyerAccount(email);
         receiver = osbl.getSellerAccount(receiverName);
-        
+
         osbl.createPurchaseOrder(sender, receiver, orders, createdate);
-        
-       
+
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Successful!", "A New Purchase Order is Created!.");
-         
+
         RequestContext.getCurrentInstance().showMessageInDialog(message);
 
     }
-    
-    public List<PurchaseOrder> getAllPurchaseOrder(String email){
-        enSize=osbl.getAllPurchaseOrder(email).size();
-        return  osbl.getAllPurchaseOrder(email);
+
+    public List<PurchaseOrder> getAllPurchaseOrder(String email) {
+        enSize = osbl.getAllPurchaseOrder(email).size();
+        return osbl.getAllPurchaseOrder(email);
     }
-    
-    public void deletePurchaseOrder(long id){
+
+    public void deletePurchaseOrder(long id) {
         osbl.deletePurchaseOrder(id);
     }
-            
-    public List<OrderList>  getSinglePurchaseOrder(long id){
-        singleSeller=osbl.getSinglePurchaseOrder(id).getReceiver().getCompany().getCompanyName();
-        singleBuyer=osbl.getSinglePurchaseOrder(id).getSender().getCompany().getCompanyName();
-        
-        purDate=osbl.getSinglePurchaseOrder(id).getCreatedate();
-        detailOrders=osbl.getSinglePurchaseOrder(id).getOrder();
-        detailSize=osbl.getSinglePurchaseOrder(id).getOrder().size();
-        
-        return osbl.getSinglePurchaseOrder(id).getOrder();
+
+    public List<OrderList> getSinglePurchaseOrder(long id) {
+
+        singleSeller = osbl.getSinglePurchaseOrder(id).getReceiver().getCompany().getCompanyName();
+        singleBuyer = osbl.getSinglePurchaseOrder(id).getSender().getCompany().getCompanyName();
+
+        purDate = osbl.getSinglePurchaseOrder(id).getCreatedate();
+        detailOrders = osbl.getSinglePurchaseOrder(id).getOrder();
+        detailSize = osbl.getSinglePurchaseOrder(id).getOrder().size();
+        List<OrderList> tmp = osbl.getSinglePurchaseOrder(id).getOrder();
+        return wosl.ATPcheck(tmp);
     }
     
     
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-           
-            
-
- 
-            
-           
-            
-
+    //***************************************Order Confirmation********************************************
+    public List<SalesOrder> viewOrderConfirmation(){
+        orderconfirmationsize=osbl.viewOrderConfirmation(email).size();
+        return osbl.viewOrderConfirmation(email);
+    }
     
+    public void deleteOrderConfirmation(long id){
+        osbl.deleteOrderConfirmation(id);
+    }
     
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
 
 //******************GETTER AND SETTER***********************************************************************
     public OESSessionLocal getOsbl() {
@@ -259,8 +228,34 @@ public class PurchaseOrderManagedBean implements Serializable {
         return sender;
     }
 
+    public int getOrderconfirmationsize() {
+        return orderconfirmationsize;
+    }
+
+    public void setOrderconfirmationsize(int orderconfirmationsize) {
+        this.orderconfirmationsize = orderconfirmationsize;
+    }
+
+    
+    
     public void setSender(Account sender) {
         this.sender = sender;
+    }
+
+    public WMSOrderSessionLocal getWosl() {
+        return wosl;
+    }
+
+    public void setWosl(WMSOrderSessionLocal wosl) {
+        this.wosl = wosl;
+    }
+
+    public List<Product> getProductSelected() {
+        return productSelected;
+    }
+
+    public void setProductSelected(List<Product> productSelected) {
+        this.productSelected = productSelected;
     }
 
     public Account getReceiver() {
@@ -455,7 +450,4 @@ public class PurchaseOrderManagedBean implements Serializable {
         this.detailSize = detailSize;
     }
 
-    
-    
 }
-       

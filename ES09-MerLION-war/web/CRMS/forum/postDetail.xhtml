@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        
+
         <title>MerLION Logistics</title>
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
@@ -31,33 +31,73 @@
         </b:container>
 
         <b:container>
-            <font color="#585858">                    
+            <b:row styleClass="show-grid">
+                <b:column col-xs="5" col-sm="5" col-md="3">
 
-                <h:form> 
-                    <f:metadata>
-                        <f:viewParam name="enId" value="#{fomb.id}" />
-                    </f:metadata>
-                    <p:panel header="Forum">
-                        <h3>View Post Detail</h3>
-                        <p:dataTable var="p" value="#{fomb.viewPostDetail(fomb.id)}">
-                            <p:column headerText="Title" style="width: 300px">
-                                <h:outputText value="#{p.title}" />
-                            </p:column>
-                            <p:column headerText="Content">
-                                <h:outputText value="#{p.content}" />
-                            </p:column>
+                    <h:form>
+                        <p:growl autoUpdate="true"/>
+                        <p:menu style="width:250px">
+                            <p:submenu label="Internal Communication">
 
-                            <p:column headerText="Posted By" style="width: 300px">
-                                <h:outputText value="#{p.account.company.companyName}" />
-                            </p:column>
-                        </p:dataTable>
+                                <p:menuitem value="Forum" url="/CRMS/forum/forumHome.xhtml" />
+                                <p:menuitem value="View Announcement" url="/CI/account/viewAnn.xhtml" />
+                                <p:menuitem value="View Notification" url="#" />
+                                <p:menuitem value="View Feedback" url="/CRMS/feedback/viewFeedbackList.xhtml" />
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
 
-                        <br/>
-                        <p:button outcome="forumHome" value="Back to forum" icon="ui-icon-star"/>
-                    </p:panel>
-                </h:form> 
+                </b:column>                 
+                <b:column col-xs="5" col-sm="5" col-md="9">
+                    <font color="#585858">                    
+                        <h:form> 
+                            <f:metadata>
+                                <f:viewParam name="enId" value="#{fomb.id}" />
+                            </f:metadata>
+                            <p:panel header="Forum">
+                                <h3>View Post Detail</h3>
+                                <p:dataTable var="p" value="#{fomb.viewPostDetail()}">
+                                    <p:column headerText="Title" style="width: 300px">
+                                        <h:outputText value="#{p.title}" />
+                                    </p:column>
+                                    <p:column headerText="Content">
+                                        <h:outputText value="#{p.content}" />
+                                    </p:column>
 
-            </font>
+                                    <p:column headerText="Posted By" style="width: 300px">
+                                        <h:outputText value="#{p.account.company.companyName}" />
+                                    </p:column>                                   
+
+                                </p:dataTable>
+
+                                <p:dataTable var="q" value="#{fomb.replylist}">                                     
+                                    <p:column headerText="Replies" style="width: 300px">
+                                        <h:form>
+                                            <p:growl id="msgs" showDetail="true" />
+
+                                            <p:fieldset legend="#{q.account.email}" style="margin-bottom:20px">
+                                                           
+                                                    <h:outputText value="#{q.comment}" />
+                                                
+                                            </p:fieldset>
+                                        </h:form>
+                                        
+                                    </p:column>                                   
+
+                                </p:dataTable>
+
+
+
+
+
+                                <br/>
+                                <p:button outcome="forumHome" value="Back to forum" icon="ui-icon-star"/>
+                            </p:panel>
+                        </h:form> 
+
+                    </font>
+                </b:column>
+            </b:row>
         </b:container>
 
         <br/>

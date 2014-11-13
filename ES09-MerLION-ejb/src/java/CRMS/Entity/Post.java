@@ -14,6 +14,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import CI.Entity.Account;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -29,7 +32,9 @@ public class Post implements Serializable {
     private String content;
     private String post_date;
     
-    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "post")
+    private List<Forume_Replies> replies=new ArrayList();
+
     @ManyToOne(cascade={CascadeType.ALL},fetch=FetchType.EAGER,optional=false)
     private Account Account;
 
@@ -72,6 +77,15 @@ public class Post implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public List<Forume_Replies> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(List<Forume_Replies> replies) {
+        this.replies = replies;
+    }
+    
 
     @Override
     public int hashCode() {

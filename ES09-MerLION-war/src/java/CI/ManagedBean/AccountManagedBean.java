@@ -16,10 +16,7 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import CI.Session.AccountSessionLocal;
 import CI.Entity.Account;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.event.CellEditEvent;
@@ -55,6 +52,9 @@ public class AccountManagedBean implements Serializable {
     private String response;
     private HttpServletRequest req;
     private List<Account> accountInfo;
+    
+    private boolean invalidaccount;
+    private boolean wrongpassword;
 
     @ManagedProperty("#{accountList}")
     private List<Account> accountList;
@@ -65,7 +65,10 @@ public class AccountManagedBean implements Serializable {
 
     //Admin 
     public String checkAdmin() {
-        if (asbl.getAccount(email).getAccessRight().equals("Admin")) {
+        if(!invalidaccount||!wrongpassword){
+            return "sinIn";
+        }
+        else if (asbl.getAccount(email).getAccessRight().equals("Admin")) {
             return "AdminMain";
         } else {
             return "main";
@@ -180,14 +183,19 @@ public class AccountManagedBean implements Serializable {
     }
 
     public void loginin(ActionEvent event) {
-
+        this.setInvalidaccount(true);
+        this.setWrongpassword(true);
         response = asbl.validate(email, password);
         if (response == null) {
-
-            statusMessage = "Invalid Login";
+            statusMessage = "No such User";
+            this.setInvalidaccount(false);
         } else if (response.equals("frozen")) {
             statusMessage = "Account frozen!";
-        } else {
+        } else if (response.equals("wrong password")){
+            statusMessage = "Wrong password";
+            this.setWrongpassword(false);
+        } 
+        else {
             statusMessage = "login successful! welcome " + response;
             login = true;
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userId", email);
@@ -319,5 +327,21 @@ public class AccountManagedBean implements Serializable {
 
     public void setStatusMessage(String statusMessage) {
         this.statusMessage = statusMessage;
+    }
+    
+    public boolean isInvalidaccount() {
+        return invalidaccount;
+    }
+
+    public void setInvalidaccount(boolean invalidaccount) {
+        this.invalidaccount = invalidaccount;
+    }
+
+    public boolean isWrongpassword() {
+        return wrongpassword;
+    }
+
+    public void setWrongpassword(boolean wrongpassword) {
+        this.wrongpassword = wrongpassword;
     }
 }
