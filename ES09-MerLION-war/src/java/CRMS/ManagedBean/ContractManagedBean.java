@@ -5,16 +5,20 @@
  */
 package CRMS.ManagedBean;
 
+import CI.Session.InternalCommunicationSessionLocal;
 import CRMS.Entity.Contract;
 import CRMS.Session.ContractSessionLocal;
+import CRMS.Session.PaymentSessionLocal;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -25,41 +29,118 @@ import javax.faces.bean.ViewScoped;
 public class ContractManagedBean implements Serializable {
 
     @EJB
-    private ContractSessionLocal csbl;
-    private String sign_date;
-    private String contract_status;
-    private String total_price;
+    private ContractSessionLocal csl;
+    @EJB
+    private InternalCommunicationSessionLocal icsl;
+    @EJB
+    private PaymentSessionLocal psl;
+    private String email;
+    private List<Contract> allContracts;
+    private List<Contract> contractDetail;
+    private Contract contract;
+    private Long contractId;
+    private String paymentNotes;
 
     public ContractManagedBean() {
     }
 
-    public void createCrontract(String content) {
-//        "ServiceID: " + rService.getId() + " Required: " + requiredCapacity + " From: " + email
-        Date date = new java.util.Date();
-        Timestamp tmp = new Timestamp(date.getTime());
-        String sign_date = tmp.toString();
-//        csbl.createCrontract(sign_date, total_price, contract_status, serviceorder);
-
+    @PostConstruct
+    public void init() {
+        email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        if (email != null) {
+            allContracts = csl.getAllContracts(email);
+        }
+        contractId = (Long) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("contractId");
+        if (contractId != null) {
+            this.setContract(csl.getContract(contractId));
+        }
     }
 
-    public Contract getContract(long contract_id) {
-        return csbl.getContract(contract_id);
+    public void createCrontract(Long notiId, String content) {
+        String[] contentInfo = content.split(" ");
+        Long contractId = Long.valueOf(contentInfo[1]);
+        int requiredCapacity = Integer.valueOf(contentInfo[3]);
+        String requestorId = contentInfo[5];
+        csl.createCrontract(requiredCapacity, contractId, email, requestorId);
+        icsl.contractCreate(notiId);
     }
 
-    public List<Contract> getAllContract(String email) {
-        return csbl.getAllContract(email);
+    public List<Contract> getAllContracts() {
+        return allContracts;
     }
 
-    public void deleteContract(long contract_id) {
-        csbl.deleteContract(contract_id);
+    public void setAllContracts(List<Contract> allContracts) {
+        this.allContracts = allContracts;
     }
 
-    public void terminateContract(long contract_id) {
-        csbl.terminateContract(contract_id);
+    public Long getContractId() {
+        return contractId;
     }
 
-//    public ServiceOrder getServiceOrder(long id) {
-//        return csbl.getServiceOrder(id);
-//    }
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
+    }
 
+    public void terminate(Long contractId) {
+        csl.terminate(email, contractId);
+    }
+
+    public void signed(Long contractId) {
+        csl.signed(email, contractId);
+    }
+
+    public void initContract(ActionEvent event) {
+        contractId = (Long) event.getComponent().getAttributes().get("cId");
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("contractId", contractId);
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
+
+    public void initContractId(Long cId) {
+        contractId = cId;
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("contractId", contractId);
+    }
+
+    public List<Contract> getContractDetail() {
+        contractDetail = new ArrayList<>();
+        List<Contract> tmp = csl.getAllContracts(email);
+        for (Contract s : tmp) {
+//            System.out.println("s.getId:" + s.getId() + ";contractId:" + contractId);
+            if (contractId != null) {
+                if (s.getId().compareTo(contractId) == 0) {
+                    contractDetail.add(s);
+                }
+            }
+        }
+        return contractDetail;
+    }
+
+    public String getPaymentNotes() {
+        return paymentNotes;
+    }
+
+    public void setPaymentNotes(String paymentNotes) {
+        this.paymentNotes = paymentNotes;
+    }
+
+    public void setContractDetail(List<Contract> contractDetail) {
+        this.contractDetail = contractDetail;
+    }
+
+    public void createPayment(ActionEvent event) {
+        contractId = contractDetail.get(0).getId();
+        psl.createPayment(paymentNotes, contractId);
+        this.addMessage("Payment Created:", "Successfully!");
+    }
+
+    public void addMessage(String title, String content) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(title, content));
+    }
 }

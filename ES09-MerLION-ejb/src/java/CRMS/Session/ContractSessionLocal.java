@@ -7,20 +7,23 @@ package CRMS.Session;
 
 import CRMS.Entity.Contract;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
  *
  * @author sunny
  */
+@Local
 public interface ContractSessionLocal {
 
-    public void createCrontract(String sign_date, int total_price, Long serviceId, Long email, Long requestorId);
+    public void createCrontract(int requiredCapacity, Long serviceId, String email, String requestorId);
 
-    public Contract getContract(long contract_id);
+    public void terminate(String email, Long contractId);
 
-    public List<Contract> getAllContract(String email);
+    public void signed(String email, Long contractId);
 
-    public void deleteContract(long contract_id);
+    public Contract getContract(Long contract_id);
 
-    public void terminateContract(long contract_id);
+    public List<Contract> getAllContracts(String email);
+
 }

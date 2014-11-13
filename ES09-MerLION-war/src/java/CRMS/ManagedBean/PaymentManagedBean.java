@@ -5,111 +5,162 @@
  */
 package CRMS.ManagedBean;
 
-import CRMS.Entity.Contract;
+import CRMS.Entity.Invoice;
 import CRMS.Entity.Payment;
 import CRMS.Session.PaymentSessionLocal;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 /**
  *
  * @author sunny
  */
-@ManagedBean(name = "omb")
-@SessionScoped
+@ManagedBean(name = "paymentmb")
+@ViewScoped
 public class PaymentManagedBean implements Serializable {
+
     @EJB
-    private PaymentSessionLocal psbl;
-    
-    private String amount;
-    private String transactionDate;
-    private String paymentStatus;
-    private String notes;
-    private Contract Contract;
-    
-    private String statusMessage;
-   
+    private PaymentSessionLocal psl;
+
+    private String email;
+    private List<Payment> allPayments;
+    private List<Invoice> allInvoices;
+    private List<Payment> paymentDetail;
+    private Payment payment;
+    private Invoice invoice;
+    private Long paymentId;
+    private Long invoiceId;
+
     public PaymentManagedBean() {
     }
-    
-    public void createPayment(){
-        Date date = new java.util.Date();
-        Timestamp tmp = new Timestamp(date.getTime());
-        String create_date = tmp.toString();
-        psbl.createPayment(amount, create_date, paymentStatus, notes, Contract);
-        
-        statusMessage = "A new Payment is successfully created.";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "Status: " + statusMessage, ""));
+
+    @PostConstruct
+    public void init() {
+        email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        if (email != null) {
+            allPayments = psl.getAllPayments(email);
+            allInvoices = psl.getAllInvoices(email);
+        }
+        paymentId = (Long) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("paymentId");
+        if (paymentId != null) {
+            this.setPayment(psl.getPayment(paymentId));
+        }
+        invoiceId = (Long) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("invoiceId");
+        if (invoiceId != null) {
+            this.setInvoice(psl.getInvoice(invoiceId));
+        }
     }
-    
-    public Payment viewPayment(long id){
-        return psbl.getPayment(id);
+
+    public Payment viewPayment(long id) {
+        return psl.getPayment(id);
     }
-    
-    public List<Payment> viewAllPayment(String email){
-        return psbl.getAllPayment(email);
-    }   
-    
-    public void deletePayment(long id){
-        psbl.deletePayment(id);
-    }
-    
-    public Contract getTheContract(long id){
-        return psbl.getTheContract(id);
-    }
-   
-    
-    
-    
-    
-    
+
     //******************Getter and Setter***************
-    public PaymentSessionLocal getPsbl() {
-        return psbl;
+    public List<Payment> getAllPayments() {
+        return allPayments;
     }
 
-    public void setPsbl(PaymentSessionLocal psbl) {
-        this.psbl = psbl;
+    public void setAllPayments(List<Payment> allPayments) {
+        this.allPayments = allPayments;
     }
 
-    public String getAmount() {
-        return amount;
+    public List<Invoice> getAllInvoices() {
+        return allInvoices;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setAllInvoices(List<Invoice> allInvoices) {
+        this.allInvoices = allInvoices;
     }
 
-    public String getTransactionDate() {
-        return transactionDate;
+    public List<Payment> getPaymentDetail() {
+        paymentDetail = new ArrayList<>();
+        List<Payment> tmp = psl.getAllPayments(email);
+        for (Payment s : tmp) {
+//            System.out.println("s.getId:" + s.getId() + ";paymentId:" + paymentId);
+            if (paymentId != null) {
+                if (s.getId().compareTo(paymentId) == 0) {
+                    paymentDetail.add(s);
+                }
+            }
+        }
+        return paymentDetail;
     }
 
-    public void setTransactionDate(String transactionDate) {
-        this.transactionDate = transactionDate;
+    public void setPaymentDetail(List<Payment> paymentDetail) {
+        this.paymentDetail = paymentDetail;
     }
 
-    public String getPaymentStatus() {
-        return paymentStatus;
+    public Payment getPayment() {
+        return payment;
     }
 
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
+    public Invoice getInvoice() {
+        return invoice;
     }
 
-    public String getNotes() {
-        return notes;
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
-    
+
+    public Long getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(Long paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public Long getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(Long invoiceId) {
+        this.invoiceId = invoiceId;
+    }
+
+    public void initPaymentId(Long pId) {
+        paymentId = pId;
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("paymentId", pId);
+    }
+
+    public void initInvoiceId(Long iId) {
+        invoiceId = iId;
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("invoiceId", iId);
+        this.init();
+    }
+
+    public void abort(Long paymentId) {
+        psl.abort(email, paymentId);
+    }
+
+    public void delete(Long paymentId) {
+        psl.delete(email, paymentId);
+    }
+
+    public void complete(Long paymentId) {
+        psl.complete(email, paymentId);
+    }
+
+    public void createInvoice(ActionEvent event) {
+        paymentId = paymentDetail.get(0).getId();
+        psl.createInvoice(paymentId);
+        this.addMessage("Invoice Created & Sent:", "Successfully!");
+    }
+
+    public void addMessage(String title, String content) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(title, content));
+    }
 }
