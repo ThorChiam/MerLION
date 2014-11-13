@@ -35,7 +35,7 @@ public class DriverManagedBean implements Serializable {
     @EJB
     private DriverSession CSession;   
     private List<Driver> drivers=new ArrayList();
-    private String userId="email";
+    private String userId;
     private String statusMessage="no message";
     private Driver driver=new Driver();
              
@@ -45,6 +45,7 @@ public class DriverManagedBean implements Serializable {
     
     @PostConstruct
     public void init(){      
+        userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
         drivers=CSession.getMyDrivers(userId);
     }  
    

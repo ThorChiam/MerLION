@@ -45,7 +45,7 @@ public class TransportationManagedBean implements Serializable {
     private List<Temp> services=new ArrayList();
     private List<List<Route>> last= new ArrayList();
     
-    private String userId="email";
+    private String userId;
     
 
     private String statusMessage;
@@ -58,6 +58,7 @@ public class TransportationManagedBean implements Serializable {
     }
     @PostConstruct
     public void init(){
+        userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
         locations=Tsession.getMyLocations(userId);
         routes=Tsession.getMyRoutes(userId);
     }

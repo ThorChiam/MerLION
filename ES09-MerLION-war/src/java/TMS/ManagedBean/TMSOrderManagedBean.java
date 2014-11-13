@@ -45,7 +45,7 @@ public class TMSOrderManagedBean implements Serializable {
     private String ori;
     private String des;
     private List<TMSOrders> orders;
-    private String provider="email";
+    private String provider;
    private List<TMSOrders> track;
  
     
@@ -54,10 +54,12 @@ public class TMSOrderManagedBean implements Serializable {
     }
     @PostConstruct
     public void init(){
+        provider=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
         getOrders();   
         getTracking();
     }
     public void getTracking(){
+        
         track=ordersession.track(provider);
     }
     public void SaveNewOrder(){

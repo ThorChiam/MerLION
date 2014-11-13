@@ -34,7 +34,7 @@ public class CarrierManagedBean implements Serializable {
     @EJB
     private CarrierSession CSession;   
     private List<Carrier> carriers=new ArrayList();
-    private String userId="email";
+    private String userId;
     private String statusMessage="no message";
     private Carrier carrier=new Carrier();
              
@@ -43,8 +43,10 @@ public class CarrierManagedBean implements Serializable {
     }
     
     @PostConstruct
-    public void init(){      
+    public void init(){     
+        userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
         carriers=CSession.getMyCarrier(userId);
+        
     }  
    
     

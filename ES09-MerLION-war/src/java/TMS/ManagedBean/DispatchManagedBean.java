@@ -54,7 +54,7 @@ public class DispatchManagedBean implements Serializable {
     private List<DispatchOrder> orders;
     private DispatchOrder order = new DispatchOrder();
     
-    private String userId = "email";
+    private String userId;
     private String statusMessage = "no message";
 
     private Long itemId;
@@ -89,7 +89,7 @@ public class DispatchManagedBean implements Serializable {
 
     @PostConstruct
     public void init() {
-       
+       userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
         getLocations();
         getRoutes();
                     

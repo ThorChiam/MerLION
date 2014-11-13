@@ -35,7 +35,7 @@ public class ClusterManagedBean implements Serializable {
     @EJB
     private ClusterSession CSession;   
     private List<ClusterRule> rules=new ArrayList();
-    private String userId="email";
+    private String userId;
     private String statusMessage="no message";
     private ClusterRule rule=new ClusterRule();
              
@@ -45,6 +45,7 @@ public class ClusterManagedBean implements Serializable {
     
     @PostConstruct
     public void init(){      
+        userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
         rules=CSession.getAllRule(userId);
     }  
    

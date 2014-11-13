@@ -46,7 +46,7 @@ public class CatalogManagedBean implements Serializable {
 
     private List<TMSCatalog> catalog = new ArrayList();
     private List<Location> locations;
-    private String userId = "email";
+    private String userId;
     private String statusMessage = "no message";
     private String itemname;
     
@@ -66,6 +66,7 @@ public class CatalogManagedBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
         locations = TSession.getAllLocations();
         getCatalog();        
         allcatalogs = CSession.getAllCatalog();
