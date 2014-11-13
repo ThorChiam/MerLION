@@ -101,6 +101,14 @@ public class InternalCommunicationSession implements InternalCommunicationSessio
         List<Notification> notis = q.getResultList();
         return notis;
     }
+    @Override
+    public void contractCreate(Long notiId) {
+        Query q = em.createQuery("SELECT n FROM Notification n WHERE n.notiId=:notiId");
+        q.setParameter("notiId", notiId);
+        Notification noti = (Notification) q.getSingleResult();
+        noti.setN_title("Contract Created");
+        em.merge(noti);
+    }
 
     @Override
     public void remove() {

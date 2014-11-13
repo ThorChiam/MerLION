@@ -27,16 +27,21 @@ public class Contract implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String sign_date;
+    //pending(original status when created);
+    //provider terminated
+    //requestor terminated
+    //destroyed
+    //signed
     private String contract_status;
     private int total_price;
     @ManyToOne
-    private WMSServiceCatalog wService;
+    private WMSServiceCatalog wservice;
     @OneToOne
     private Account provider;
     @ManyToOne
     private Account requestor;
     @ManyToOne
-    private Payment Payment;
+    private Payment payment;
 
     public Contract() {
         setId(System.nanoTime());
@@ -74,20 +79,20 @@ public class Contract implements Serializable {
         this.sign_date = sign_date;
     }
 
-    public WMSServiceCatalog getwService() {
-        return wService;
+    public WMSServiceCatalog getWservice() {
+        return wservice;
     }
 
-    public void setwService(WMSServiceCatalog wService) {
-        this.wService = wService;
+    public void setWservice(WMSServiceCatalog wservice) {
+        this.wservice = wservice;
     }
 
     public Payment getPayment() {
-        return Payment;
+        return payment;
     }
 
-    public void setPayment(Payment Payment) {
-        this.Payment = Payment;
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public Account getProvider() {

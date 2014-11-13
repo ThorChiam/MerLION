@@ -36,5 +36,7 @@ public interface InternalCommunicationSessionLocal {
 
     public List<Notification> getServiceRequest(String email);
 
+    public void contractCreate(Long notiId);
+
     public void remove();
 }

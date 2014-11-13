@@ -28,8 +28,8 @@
             <p:breadCrumb>
                 <p:menuitem value="MerLION Home" url="/main.xhtml" />
                 <p:menuitem value="Home" url="/CRMS/main.xhtml" />
-                <p:menuitem value="Contract Management" url="/CRMS/contract/viewContractList.xhtml" />
-                <p:menuitem value="Feedback" url="/CRMS/contract/viewFeedbackList.xhtml" />
+                <p:menuitem value="Payment Management" url="/CRMS/payment/viewPaymentList.xhtml" />
+                <p:menuitem value="Feedback" url="/CRMS/payment/viewFeedbackList.xhtml" />
 
 
 
@@ -48,8 +48,8 @@
                     <h:form>
                         <p:growl autoUpdate="true"/>
                         <p:menu style="width:250px">
-                            <p:submenu label="Contract Management">
-                                <p:menuitem value="Contract List" url="/CRMS/contract/viewContractList.xhtml"/>                      
+                            <p:submenu label="Payment Management">
+                                <p:menuitem value="Payment List" url="/CRMS/payment/viewPaymentList.xhtml"/>                      
 
                             </p:submenu>
 
@@ -58,67 +58,51 @@
                     </h:form>
                 </b:column>
                 <b:column col-xs="5" col-sm="5" col-md="9">
-                    <p:panel header="Contract List">
+                    <p:panel header="Payment List">
                         <h:form>
 
 
-                            <p:dataTable var="contract" value="#{contractmb.allContracts}">
+                            <p:dataTable var="payment" value="#{paymentmb.allPayments}">
                                 <p:columnGroup type="header">
                                     <p:row>
                                         <p:column rowspan="1" headerText="View" style="width:80px"/>
                                         <p:column colspan="1" headerText="Status" style="width:80px"/>
-                                        <p:column colspan="3" headerText="Select Template" style="width:150px"/>
-                                        <p:column colspan="2" headerText="Action" style="width:180px"/>
+                                        <p:column colspan="3" headerText="Action" style="width:220px"/>
                                     </p:row>
                                 </p:columnGroup>
                                 <p:column >
-                                    <p:commandButton value="Details" update=":form:Details" actionListener="#{contractmb.initContractId(contract.id)}"/>
+                                    <p:commandButton value="Details" update=":form:Details" actionListener="#{paymentmb.initPaymentId(payment.id)}"/>
                                 </p:column>
                                 <p:column >
-                                    <h:outputText value="#{contract.contract_status}"/>
+                                    <h:outputText value="#{payment.paymentStatus}"/>
                                 </p:column>
                                 <p:column >
-                                    <h:commandButton value="T1" action="contractTemplate1" actionListener="#{contractmb.initContract}">
-                                        <f:attribute name="cId" value="#{contract.id}" />
-                                    </h:commandButton>
+                                    <h:commandButton value="Abort" actionListener="#{paymentmb.abort(payment.id)}" rendered="#{payment.paymentStatus=='pending'}"/>                                      
                                 </p:column>
                                 <p:column >
-                                    <h:commandButton value="T2" action="contractTemplate2" actionListener="#{contractmb.initContract}">
-                                        <f:attribute name="cId" value="#{contract.id}" />
-                                    </h:commandButton>                                    
+                                    <h:commandButton value="Complete" actionListener="#{paymentmb.complete(payment.id)}" rendered="#{(payment.contract.provider.email==facesContext.externalContext.sessionMap['userId'])and(payment.paymentStatus=='pending')}"/>                                      
                                 </p:column>
                                 <p:column >
-                                    <h:commandButton value="T3" action="contractTemplate3" actionListener="#{contractmb.initContract}">
-                                        <f:attribute name="cId" value="#{contract.id}" />
-                                    </h:commandButton>                                      
-                                </p:column>
-                                <p:column >
-                                    <h:commandButton value="Terminate" actionListener="#{contractmb.terminate(contract.id)}" rendered="#{contract.contract_status!='signed'}"/>                                      
-                                </p:column>
-                                <p:column >
-                                    <h:commandButton value="Signed" actionListener="#{contractmb.signed(contract.id)}" rendered="#{(contract.provider.email==facesContext.externalContext.sessionMap['userId'])and(contract.contract_status=='pending')}"/>                                      
+                                    <h:commandButton value="Delete" actionListener="#{paymentmb.delete(payment.id)}" />                                      
                                 </p:column>
                             </p:dataTable>
 
                         </h:form>
                         <h:form id="form">
                             <p:growl id="growl" showDetail="true"/>
-                            <p:dataTable id="Details" var="c" value="#{contractmb.contractDetail}">
+                            <p:dataTable id="Details" var="c" value="#{paymentmb.paymentDetail}">
                                 <p:column headerText="Provider" style="width: 60px">
-                                    <h:outputText value="#{c.wservice.company.companyName}" />
+                                    <h:outputText value="#{c.contract.wservice.company.companyName}" />
                                 </p:column>
 
                                 <p:column headerText="Requestor" style="width: 60px">
-                                    <h:outputText value="#{c.requestor.company.companyName}" />
+                                    <h:outputText value="#{c.contract.requestor.company.companyName}" />
                                 </p:column>
                                 <p:column headerText="Amount" style="width: 50px">
-                                    <h:outputText value="#{c.total_price}" />
+                                    <h:outputText value="#{c.contract.total_price}" />
                                 </p:column>
-                                <p:column headerText="" style="width: 100px">
-                                    <h:inputText value="#{contractmb.paymentNotes}"/>
-                                </p:column>
-                                <p:column headerText="" style="width: 50px">
-                                    <p:commandButton value="Create" update=":form:growl" actionListener="#{contractmb.createPayment}" rendered="#{(c.requestor.email==facesContext.externalContext.sessionMap['userId'])and(c.contract_status=='signed')}"/>
+                                <p:column headerText="Invoice" style="width: 50px">
+                                    <p:commandButton value="Create" update=":form:growl" actionListener="#{paymentmb.createInvoice}" rendered="#{(c.contract.provider.email==facesContext.externalContext.sessionMap['userId'])and(c.paymentStatus=='completed')}"/>
                                 </p:column>
 
 

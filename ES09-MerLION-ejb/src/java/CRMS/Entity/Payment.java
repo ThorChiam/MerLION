@@ -18,23 +18,28 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Payment implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String currency;
-    private String amount;
-    private String transactionDate;
+    private String transactionDate;//the date payment is finished
+    //pending(original status when created);
+    //aborted
+    //completed
     private String paymentStatus;
     private String notes;
+    //neither  ,no one delete
+    //provider,privider delete
+    //requestor,requestor delete
+    //both,both delete
     private String deletestatus;
 
-  
     @OneToOne
     private Invoice invoice;
-   
-    @OneToOne(mappedBy="Payment")
-    private Contract Contract;
+
+    @OneToOne(mappedBy = "payment")
+    private Contract contract;
 
     public Long getId() {
         return id;
@@ -42,30 +47,22 @@ public class Payment implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }  
-  
+    }
+
     public Contract getContract() {
-        return Contract;
+        return contract;
     }
 
-    public void setContract(Contract Contract) {
-        this.Contract = Contract;
-    }
-    
-    public String getCurrency() {
-        return currency;
+    public void setContract(Contract contract) {
+        this.contract = contract;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public String getDeletestatus() {
+        return deletestatus;
     }
 
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setDeletestatus(String deletestatus) {
+        this.deletestatus = deletestatus;
     }
 
     public String getTransactionDate() {
@@ -91,7 +88,7 @@ public class Payment implements Serializable {
     public void setNotes(String notes) {
         this.notes = notes;
     }
-  
+
     public Invoice getInvoice() {
         return invoice;
     }
@@ -99,16 +96,6 @@ public class Payment implements Serializable {
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
     }
-      
-    public String getDeletestatus() {
-        return deletestatus;
-    }
-
-    public void setDeletestatus(String deletestatus) {
-        this.deletestatus = deletestatus;
-    }
-   
- 
 
     @Override
     public int hashCode() {
@@ -134,5 +121,5 @@ public class Payment implements Serializable {
     public String toString() {
         return "merlion_new_enetity.Payment[ id=" + id + " ]";
     }
-    
+
 }

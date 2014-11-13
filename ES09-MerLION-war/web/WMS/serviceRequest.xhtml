@@ -62,7 +62,7 @@ and open the template in the editor.
             <b:row styleClass="show-grid">
 
                 <b:column col-xs="5" col-sm="5" col-md="9">
-                    <p:panel header="Warehouse List">
+                    <p:panel header="Service Request List">
                         <h:form>
                             <!-- value should be a LIST of delivery order -->
                             <p:dataTable var="sRequest" value="#{internalCommunicationManagedBean.serviceRequest}">
@@ -77,11 +77,13 @@ and open the template in the editor.
                                 <p:column headerText="Request Time">
                                     <h:outputText value="#{sRequest.release_time}" />
                                 </p:column>
-                                
+
                                 <p:column headerText="Contract">
-                                    <p:commandButton value="Create" action="#{contractmb.createCrontract(sRequest.content)}"/>
+                                    <p:commandButton value="Create" actionListener="#{contractmb.createCrontract(sRequest.notiId,sRequest.content)}"/>
                                 </p:column>
                             </p:dataTable>
+                            <h:link outcome="/CRMS/contract/viewContractList.xhtml" value="View Contracts"/>
+                            <h:link outcome="serviceRequest" value="Refresh"/>
                         </h:form>
                     </p:panel>
                 </b:column>

@@ -41,7 +41,7 @@ public class WMSServiceCatalog implements Serializable {
     private Company company;
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "service")
     private List<StorageArea> storageAreas = new ArrayList<>();
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "wService")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "wservice")
     private List<Contract> contacts = new ArrayList<>();
 
     public Long getId() {

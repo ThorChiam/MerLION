@@ -7,9 +7,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    
     <h:head>
-        <title>Welcome to CRMS</title>
+        <title>MerLION</title>
 
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
@@ -20,16 +19,6 @@
         type="text/javascript"></script>
 
         <link href="/MFront-war/css/carousel.css" rel="stylesheet" />
-
-        <script type="text/javascript">
-            function start() {
-                PF('statusDialog').show();
-            }
-
-            function stop() {
-                PF('statusDialog').hide();
-            }
-        </script>
     </h:head>
 
     <h:body>
@@ -39,8 +28,8 @@
             <p:breadCrumb>
                 <p:menuitem value="MerLION Home" url="/main.xhtml" />
                 <p:menuitem value="Home" url="/CRMS/main.xhtml" />
-                <p:menuitem value="Contract Management" url="/CRMS/contract/viewContractList.xhtml" />
-                <p:menuitem value="Feedback" url="/CRMS/contract/viewFeedbackList.xhtml" />
+                <p:menuitem value="Invoice Management" url="/CRMS/invoice/viewInvoiceList.xhtml" />
+                <p:menuitem value="Feedback" url="/CRMS/invoice/viewFeedbackList.xhtml" />
 
 
 
@@ -59,8 +48,8 @@
                     <h:form>
                         <p:growl autoUpdate="true"/>
                         <p:menu style="width:250px">
-                            <p:submenu label="Contract Management">
-                                <p:menuitem value="View Contract List" url="/CRMS/contract/viewContractList.xhtml"/>                      
+                            <p:submenu label="Invoice Management">
+                                <p:menuitem value="Invoice List" url="/CRMS/invoice/viewInvoiceList.xhtml"/>                      
 
                             </p:submenu>
 
@@ -69,32 +58,47 @@
                     </h:form>
                 </b:column>
                 <b:column col-xs="5" col-sm="5" col-md="9">
-                    <p:panel header="Contract Detail" >
-                        
-                        <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
-                            <p:graphicImage name="/demo/images/ajaxloadingbar.gif" />
-                        </p:dialog>
+                    <p:panel header="Invoice List">
                         <h:form>
 
 
+                            <p:dataTable var="invoice" value="#{paymentmb.allInvoices}">
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column colspan="1" headerText="Date" style="width:180px"/>
+                                        <p:column rowspan="1" headerText="View" style="width:80px"/>
+                                    </p:row>
+                                </p:columnGroup>
+                                <p:column >
+                                    <h:outputText value="#{invoice.generate_date}"/>
+                                </p:column>
+                                <p:column >
+                                    <p:commandButton value="Details" update=":form:Details" actionListener="#{paymentmb.initInvoiceId(invoice.id)}"/>
+                                </p:column>
 
+                            </p:dataTable>
 
-                            <h:outputText value="Contract ID: 1"/><br/>
-                            <h:outputText value="Created Date: 31/10/2014"/><br/>
-                            <h:outputText value="Status: Pending"/><br/>
-                            <h:outputText value="Total Price: $250"/><br/>
-                            <h:outputText value="Service Provider: ABC"/><br/>
-                            <h:outputText value="Service Requestor: EFG"/><br/>
-
-                            <p:commandButton value="Terminate" onclick="PF('dlg1').show();" />   
-                            <p:dialog header="Basic Dialog" widgetVar="dlg1" minHeight="40">
-                                <h:outputText value="Ternimate Successfully!" />
-                            </p:dialog>
-
-                            <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
-                                <p:fileDownload value="#{fileDownloadView.file}" />
+                        </h:form>
+                        <h:form id="form">
+                            <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+                                <p:printer target="Details" />
                             </p:commandButton>
-
+                            <p:panel id="Details">
+                                Invoice ID:#{paymentmb.invoice.id}
+                                <br/>
+                                <br/>
+                                Invoice Created Date:#{paymentmb.invoice.generate_date}
+                                <br/>
+                                <br/>
+                                Transaction Amount:#{paymentmb.invoice.payment.contract.total_price}
+                                <br/>
+                                <br/>
+                                <br/>
+                                Service Provider:#{paymentmb.invoice.payment.contract.provider.company.companyName}
+                                <br/>
+                                <br/>
+                                Service Requestor:#{paymentmb.invoice.payment.contract.requestor.company.companyName}
+                            </p:panel>
                         </h:form>
 
                     </p:panel>

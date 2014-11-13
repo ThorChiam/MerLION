@@ -85,6 +85,7 @@
                 <b:column col-xs="5" col-sm="5" col-md="9">
 
                     <h:form>
+
                         <p:dataTable var="service" value="#{scmb.services}" widgetVar="servicesTable"
                                      emptyMessage="No services found with given criteria" filteredValue="#{scmb.filteredServices}">
 
@@ -133,6 +134,7 @@
                         </p:dataTable>
                     </h:form>
                     <h:form id="form">
+                        <p:growl id="growl" showDetail="true"/>
                         <p:dataTable id="Details" var="s" value="#{scmb.serviceDetail}">        
                             <p:column headerText="ID">
                                 <h:outputText value="#{s.id}" />
@@ -163,7 +165,7 @@
                                 <h:inputText value="#{scmb.requiredCapacity}" />
                             </p:column>
                             <p:column>
-                                <p:commandButton value="Select" action="serviceRequest" actionListener="#{scmb.selectProvider}"/>
+                                <p:commandButton value="Select" update=":form:growl" actionListener="#{scmb.selectProvider}"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>

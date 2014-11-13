@@ -8,9 +8,9 @@ package CRMS.Session;
 import CI.Entity.Account;
 import CRMS.Entity.Contract;
 import WMS.Entity.WMSServiceCatalog;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -20,46 +20,72 @@ import javax.persistence.Query;
  * @author sunny
  */
 @Stateless
-@LocalBean
 public class ContractSession implements ContractSessionLocal {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public List<Contract> getAllContract(String email) {
-        Query q = em.createQuery("SELECT f FROM Contract f WHERE (f.serviceorder.service_provider.email=:email) OR (f.serviceorder.service_requester.email=:emails)");
+    public List<Contract> getAllContracts(String email) {
+        Query q = em.createQuery("SELECT c FROM Contract c WHERE (c.requestor.email=:email) OR (c.provider.email=:emails)");
         q.setParameter("email", email);
         q.setParameter("emails", email);
-        return q.getResultList();
+        List<Contract> results = q.getResultList();
+        List<Contract> contracts = new ArrayList<>();
+        for (Contract c : results) {
+            if (c.getContract_status().equals("pending") || c.getContract_status().equals("signed")) {
+                contracts.add(c);
+            } else {
+                if (c.getProvider().getEmail().equals(email)) {
+                    if (c.getContract_status().equals("requestor terminated")) {
+                        contracts.add(c);
+                    }
+                } else {
+                    if (c.getContract_status().equals("provider terminated")) {
+                        contracts.add(c);
+                    }
+                }
+            }
+        }
+        return contracts;
     }
 
     @Override
-    public void deleteContract(long contract_id) {
-        Query q = em.createQuery("DELETE FROM Contract f WHERE f.id=:id");
-        q.setParameter("id", contract_id);
-        q.executeUpdate();
+    public void terminate(String email, Long contractId) {
+        Query q = em.createQuery("SELECT c FROM Contract c WHERE c.id=:contractId");
+        q.setParameter("contractId", contractId);
+        Contract c = (Contract) q.getSingleResult();
+        String status = c.getContract_status();
+        if (status.equals("provider terminated") || status.equals("requestor terminated")) {
+            c.setContract_status("destroyed");
+        } else {
+            if (c.getProvider().getEmail().equals(email)) {
+                c.setContract_status("provider terminated");
+            } else {
+                c.setContract_status("requestor terminated");
+            }
+        }
+        em.merge(c);
     }
 
     @Override
-    public void terminateContract(long contract_id) {
-        Query q = em.createQuery("SELECT a FROM Contract a WHERE a.id=:id");
-        q.setParameter("id", contract_id);
-        Contract contract = (Contract) q.getSingleResult();
-        contract.setContract_status("terminated");
-        em.merge(contract);
+    public void signed(String email, Long contractId) {
+        Query q = em.createQuery("SELECT c FROM Contract c WHERE c.id=:contractId");
+        q.setParameter("contractId", contractId);
+        Contract c = (Contract) q.getSingleResult();
+        c.setContract_status("signed");
+        em.merge(c);
     }
 
     @Override
-    public void createCrontract(String sign_date, int total_price, Long serviceId, Long email, Long requestorId) {
+    public void createCrontract(int requiredCapacity, Long serviceId, String email, String requestorId) {
         Contract contract = new Contract();
-        contract.setSign_date(sign_date);
-        contract.setContract_status("pending");
-        contract.setTotal_price(total_price);
         Query q = em.createQuery("SELECT s FROM WMSServiceCatalog s WHERE s.id=:serviceId");
         q.setParameter("serviceId", serviceId);
         WMSServiceCatalog wService = (WMSServiceCatalog) q.getSingleResult();
-        contract.setwService(wService);
+        contract.setWservice(wService);
+        int total_price = wService.getServicePrice() * requiredCapacity;
+        contract.setTotal_price(total_price);
         q = em.createQuery("SELECT a FROM Account a WHERE a.email=:email");
         q.setParameter("email", email);
         Account provider = (Account) q.getSingleResult();
@@ -69,15 +95,13 @@ public class ContractSession implements ContractSessionLocal {
         Account requestor = (Account) q.getSingleResult();
         contract.setRequestor(requestor);
         contract.setContract_status("pending");
-        contract.setTotal_price(total_price);
-        contract.setSign_date(sign_date);
         em.persist(contract);
     }
 
     @Override
-    public Contract getContract(long contract_id) {
-        Query q = em.createQuery("SELECT f FROM Contract f WHERE f.id=:id");
-        q.setParameter("id", contract_id);
+    public Contract getContract(Long contractId) {
+        Query q = em.createQuery("SELECT c FROM Contract c WHERE c.id=:id");
+        q.setParameter("id", contractId);
         return (Contract) q.getSingleResult();
     }
 
