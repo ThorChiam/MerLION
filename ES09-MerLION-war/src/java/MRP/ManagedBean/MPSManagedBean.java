@@ -19,6 +19,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import merlion_exception.DemandException;
 /**
@@ -49,8 +50,7 @@ public class MPSManagedBean implements Serializable {
     private Date date;
     private String demandType;
     private String statusMessage;
-    private List<Demand> demand;
-     @ManagedProperty("#{userId}")
+    private List<Demand> demand; 
     private List<Item> itemList; 
     private String userId;
     private int[] past=new int[6];
@@ -69,8 +69,8 @@ public class MPSManagedBean implements Serializable {
     }
     @PostConstruct
     public void getlogin(){
-        //userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
-        userId="email";
+        userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        
         getAllitems();
     }
 
@@ -78,7 +78,7 @@ public class MPSManagedBean implements Serializable {
         this.first = first;
     }
     public String getUserId() {
-        //userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
+        userId=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");
         return userId;
     }
     public String getDemandType() {
