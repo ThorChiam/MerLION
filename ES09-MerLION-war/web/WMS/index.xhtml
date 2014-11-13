@@ -6,7 +6,7 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
+
 
     <h:head>
         <title>Welcome to WMS System</title>
@@ -27,7 +27,7 @@
                     <p:menuitem value="Admin Mgmt" url="/WMS/Admin/WMSAdmin.xhtml"/>    
                     <p:menuitem value="Human Resource Management" url="/WMS/HR/humanResource.xhtml"/>
                     <p:menuitem value="Search Service" url="/WMS/selectWMSServices.xhtml"/>                
-                    
+
                 </p:breadCrumb>   
             </h:form>
             <b:well>
@@ -51,14 +51,15 @@
                             </p:submenu>
                             <p:submenu label="Admin Management">
                                 <p:menuitem value="Define Facility/Define Service/Map Generation" url="/WMS/Admin/WMSAdmin.xhtml"/>
-                               
+                                <p:menuitem value="Define Cluster Rule" url="/TMS/cluster.xhtml"/>
+
                             </p:submenu>
                             <p:submenu label="Human Resource Management">
                                 <p:menuitem value="Generate Schedule/Record Operation" url="/WMS/HR/humanResource.xhtml"/>
-                               
+
                             </p:submenu>
                             <p:submenu label="Search Service">
-                                 <p:menuitem value="Select Service" url="/WMS/selectWMSServices.xhtml"/>
+                                <p:menuitem value="Select Service" url="/WMS/selectWMSServices.xhtml"/>
                             </p:submenu>
                         </p:menu>
                     </h:form>
