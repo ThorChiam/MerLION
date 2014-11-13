@@ -12,7 +12,8 @@
     <h:body>
         <b:container>
 
-          <p:breadCrumb>
+           
+           <p:breadCrumb>
                 <p:menuitem value="Home" url="/main.xhtml" />
                 <p:menuitem value="MerLION Home" url="/main.xhtml" />
                  <p:menuitem value="OES Home" url="/OES/main.xhtml" />
@@ -34,19 +35,17 @@
             <b:row styleClass="show-grid">
                 <b:column col-xs="12" col-sm="6" col-md="2">
                     <h:form>
-                        <p:panel header="Sales Order Management">
+                        <p:panel header="Payment Management">
 
                           
                                <b:listLinks>
 
-                                <b:navLink href="viewIncomingPurchaseOrder.xhtml" value="View Incoming Purchase Order"
+                                <b:navLink href="paymentALL.xhtml" value="Outstanding Payment"
                                            />
-                                <b:navLink href="createSalesOrder.xhtml" value="Create NEW Sales Ordder"
+                                <b:navLink href="paymentHistory.xhtml" value="Completed Payment"
                                            />
-
-                                <b:navLink href="viewSalesOrderALL.xhtml" value="View Sales Order History"
-                                           />
-
+                          
+                                
                             </b:listLinks>
                             
                         </p:panel>
@@ -58,53 +57,38 @@
                 <b:column col-xs="6" col-sm="6" col-md="10">
 
                     <h:form id="form">
-                        <p:dataTable var="en" value="#{sob.viewSalesOrderHistory()}">
-                                                      
-                        
-                            
+                        <p:dataTable var="en" value="#{sob.viewOutStandingPayment()}">
+                                         
                              <f:facet name="header">
-                               Sales Order History
+                               Outstanding Payment
                             </f:facet>
 
-                            <p:column headerText="Sales Order ID">
+                            <p:column headerText="Payement ID">
                                 <h:outputText value="#{en.id}" />
                             </p:column>
 
-                            <p:column headerText="Order Date">
-                                <h:outputText value="#{en.createdate}" />
+                            <p:column headerText="Payment Type">
+                                <h:outputText value="#{en.paymentType}" />
+                            </p:column>
+
+                            
+                             <p:column headerText="Buyer">
+                                 <h:outputText value="#{en.salesorder.purchaseorder.sender.company.companyName}" />
                             </p:column>
                             
-                            <p:column headerText="Shipping Date">
-                                <h:outputText value="#{en.shipdate}" />
+                             <p:column headerText="Status">
+                                <h:outputText value="#{en.status}" />
                             </p:column>
                             
-                             <p:column headerText="Shipping To ">
-                                 <h:outputText value="#{en.purchaseorder.sender.company.companyName}" />
-                            </p:column>
-                            
-                             <p:column headerText="Tax Rate ">
-                                 <h:outputText value="#{en.tax}" />
-                            </p:column>
-                            
-                             <p:column headerText="Discount ">
-                                 <h:outputText value="#{en.discount}" />
-                            </p:column>
                              
-                            
-                            <p:column headerText="Total Amount">
-                                <h:outputText value="#{en.total}" />
-                            </p:column>
-                         
-                            
-                            <p:column headerText="Delete">
-
-                                <p:commandButton value="Delete" actionListener="#{sob.deleteSalesHistory(en.id)}" styleClass="ui-priority-primary" ajax="false"/>
+                            <p:column headerText="Change Status ">
                                 
-                            </p:column>
-
-                           
+                                <p:commandButton value="PAID" icon="ui-icon-check" actionListener="#{sob.updatePaymentStatus(en.id)}" styleClass="ui-priority-primary"/>
+                              
+                              </p:column>
+                            
                             <f:facet name="footer">
-                                Total: #{sob.soSize} Sales Order.
+                                Total: #{sob.sizepayment} Outstanding Payments.
                             </f:facet>
 
                         </p:dataTable>

@@ -11,6 +11,8 @@ import javax.ejb.Local;
 import CI.Entity.Account;
 import CRMS.Entity.Company;
 import OES.Entity.Enquiry;
+import OES.Entity.Makepayment;
+import OES.Entity.OES_Invoice;
 //import OES.Entity.OES_Invoice;
 //import OES.Entity.OES_Payment;
 import OES.Entity.OrderList;
@@ -18,6 +20,7 @@ import OES.Entity.OrderListSub;
 import OES.Entity.Product;
 import OES.Entity.PurchaseOrder;
 import OES.Entity.Quotation;
+import OES.Entity.SalesOrder;
 //import OES.Entity.SalesOrder;
 
 /**
@@ -50,6 +53,12 @@ public interface OESSessionLocal {
     public Product getProductByName(String name);
     public OrderList createNewOrder(String qty,String name);
     public List<OrderList> getOrderList();
+    
+     public List<String> viewProductDesc(List<String> name);
+     public List<Product> getSellerSelectedProductsName(List<String> names);
+     
+     
+     
     //***************Enquiry History******************************************************88
     public List<Enquiry> getAllEnquiry(String email);//两边都能拿？？？？？
     public Enquiry getSingleEnquiry(Long id);
@@ -90,45 +99,41 @@ public interface OESSessionLocal {
      public List<PurchaseOrder> getAllPurchaseOrder(String email);
      public void deletePurchaseOrder(long id);
      public PurchaseOrder getSinglePurchaseOrder(long id);
+     
+     public List<SalesOrder> viewOrderConfirmation(String email);
+     public void deleteOrderConfirmation(long id);
     
    
     //****************************************Sales Order*************************************
      
      public List<PurchaseOrder> viewIncmoingPorder(String email);
      public List<OrderList> viewPurchaseOrderDetails(long id);
-    
-    
-    
-    /*
-    //********************Seller-Sales Order*********************
-    public void createSalesOrder(PurchaseOrder purchaseorder, String createdate);
-    public SalesOrder getSalesOrder(long sales_id);
-    public List<SalesOrder> getAllSalesOrder(String email);
-    public void deleteSalesOrder(long sales_id);//只能seller删，不传给buyer
+     public List<PurchaseOrder> displayIncomingPorder(String email);
+      public String displaySenderName(long id);
+       public String displayReciverName(Long id);
+       public Account displaySenderSalesOrder(Long id);
+        public Account displayRecieverSalesOrder(Long id);
+        public PurchaseOrder displayPurchaseOrder(long id);
+         public List<OrderListSub> createsubforSalesOrder(Long id);
+      public void createSalesOrder(String createdate, double tax, double discount, double total, String shipdate, PurchaseOrder porder);
+      public List<SalesOrder> viewSalesOrderHistory(String email);
+       public void deleteSalesHistory(long id);
+       public SalesOrder viewSingleSaleOrder(long id);
+     
+   
     
     
     
     //********************Buyer-Payment**************************
-    public void createPayment(String paymentdate, String paymenttype, String status,  PurchaseOrder purchaseorder, String total_price);
-    public void updatePaymentStatus(long payment_id, String status);
-    public OES_Payment getPayment(long payment_id);
-    public List<OES_Payment> getAllPayment(String email);
-    public void deletePayment(long payment_id, String email);
+    public void createPayment(String email);
     
+    public List<Makepayment> viewOutstandingPayment(String email);
+    public void updatePaymentStatus(long id);
+     public List<Makepayment> viewPaidPayment(String email);
+     
+     //************************Invoice*********************************8
+     
+     public List<OES_Invoice> viewInvoice(String email);
     
-    
-    //********************Seller-Invoice*************************
-    public void createInvoice(String release_date, String notes, OES_Payment payment);
-    public OES_Invoice getInvoice(long invoice_id);
-    public List<OES_Invoice> getAllInvoice(String email);
-    public void deleteInvoice(long invoice_id, String email);
-   
-    //********************Others********************************
-    public List<Integer> ATPcheck(List<Long> product_id);
-    public Account getTheAccount(String email);
-    public Company getTheCompany(long company_id);
-    public List<Company> getTheCompanies();
-    public List<Product> getTheProducts(long company_id);
-    
-    */
+  
 }

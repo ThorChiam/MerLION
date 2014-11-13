@@ -8,11 +8,11 @@
     <h:head>
         <title>Welcome to Order Entry System</title>
     </h:head>
-    
+
     <h:body>
         <b:container>
 
-          <p:breadCrumb>
+         <p:breadCrumb>
                 <p:menuitem value="Home" url="/main.xhtml" />
                 <p:menuitem value="MerLION Home" url="/main.xhtml" />
                  <p:menuitem value="OES Home" url="/OES/main.xhtml" />
@@ -24,31 +24,26 @@
                 <p:menuitem value="Payment" url="/OES/Payment/paymentALL.xhtml" />
 
             </p:breadCrumb>
-
             <b:well>
                 <h2>Order Entry System</h2>   
             </b:well>
         </b:container>
-
         <b:container>
             <b:row styleClass="show-grid">
                 <b:column col-xs="12" col-sm="6" col-md="2">
                     <h:form>
-                        <p:panel header="Sales Order Management">
+                        <p:panel header="Enquiry Management">
 
-                          
-                               <b:listLinks>
+                           <b:listLinks>
 
-                                <b:navLink href="viewIncomingPurchaseOrder.xhtml" value="View Incoming Purchase Order"
+                                <b:navLink href="viewEnquire.xhtml" value="View Upcoming Enquire"
                                            />
-                                <b:navLink href="createSalesOrder.xhtml" value="Create NEW Sales Ordder"
+                                <b:navLink href="createQuotation.xhtml" value="Create NEW Quotation"
                                            />
-
-                                <b:navLink href="viewSalesOrderALL.xhtml" value="View Sales Order History"
+                                
+                                <b:navLink href="viewQuotation.xhtml" value="View Quotation History"
                                            />
-
                             </b:listLinks>
-                            
                         </p:panel>
                     </h:form>
 
@@ -57,61 +52,53 @@
 
                 <b:column col-xs="6" col-sm="6" col-md="10">
 
-                    <h:form id="form">
-                        <p:dataTable var="en" value="#{sob.viewSalesOrderHistory()}">
-                                                      
+                    <p:panel style="border: none">
+
+                        <f:metadata>
+                            <f:viewParam name="sobId" value="#{sob.passID}" />
+                        </f:metadata>
                         
+                        <h:outputLabel for="qid" value="Sales Order ID:" style="font-weight:bold" />
+                        <h:outputText value="#{sob.passID}" />
+                        <p>
                             
-                             <f:facet name="header">
-                               Sales Order History
+                        </p>
+                        <p:dataTable  var="sp" value="#{sob.viewSingleSalesOrder(sob.passID)}" >
+                            <f:facet name="header">
+                                Sales Order Details
                             </f:facet>
-
-                            <p:column headerText="Sales Order ID">
-                                <h:outputText value="#{en.id}" />
-                            </p:column>
-
-                            <p:column headerText="Order Date">
-                                <h:outputText value="#{en.createdate}" />
+                            
+                            <p:column headerText="Order ID">
+                                <h:outputText value="" />
                             </p:column>
                             
-                            <p:column headerText="Shipping Date">
-                                <h:outputText value="#{en.shipdate}" />
-                            </p:column>
-                            
-                             <p:column headerText="Shipping To ">
-                                 <h:outputText value="#{en.purchaseorder.sender.company.companyName}" />
-                            </p:column>
-                            
-                             <p:column headerText="Tax Rate ">
-                                 <h:outputText value="#{en.tax}" />
-                            </p:column>
-                            
-                             <p:column headerText="Discount ">
-                                 <h:outputText value="#{en.discount}" />
-                            </p:column>
-                             
-                            
-                            <p:column headerText="Total Amount">
-                                <h:outputText value="#{en.total}" />
-                            </p:column>
-                         
-                            
-                            <p:column headerText="Delete">
-
-                                <p:commandButton value="Delete" actionListener="#{sob.deleteSalesHistory(en.id)}" styleClass="ui-priority-primary" ajax="false"/>
-                                
-                            </p:column>
-
                            
-                            <f:facet name="footer">
-                                Total: #{sob.soSize} Sales Order.
+                            <p:column headerText="Request Quantities">
+                                <h:outputText value="#{sp.order.quantity}" />
+                            </p:column>
+                            
+                            <p:column headerText="Unit Price">
+                                <h:outputText value="#{sp.unitprice}" />
+                            </p:column>
+                            
+                             <p:column headerText="Sub Total">
+                                 <h:outputText value="#{sp.subtotal}" />
+                            </p:column>
+                            
+                              <f:facet name="footer">
+                                  Total Amount 
                             </f:facet>
 
-                        </p:dataTable>
-                    </h:form>
-
+                    </p:dataTable>
+                        <p>
+                            
+                        </p>
+                      
+                    </p:panel>
+                    
                 </b:column>
-
+                
+              
             </b:row>
 
         </b:container>
@@ -136,3 +123,13 @@
         </foot>
     </h:body>
 </html>
+
+
+
+
+
+
+
+
+
+

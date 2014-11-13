@@ -31,9 +31,44 @@ public class SalesOrder implements Serializable {
     @OneToOne(mappedBy="salesorder")
     PurchaseOrder purchaseorder;
     
+    @OneToOne
+    Makepayment payment;
+    
 
     public SalesOrder(){
         setId(System.nanoTime());
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public String getShipdate() {
+        return shipdate;
+    }
+
+    public void setShipdate(String shipdate) {
+        this.shipdate = shipdate;
     }
     
      public String getCreatedate() {
@@ -46,6 +81,14 @@ public class SalesOrder implements Serializable {
 
     public PurchaseOrder getPurchaseorder() {
         return purchaseorder;
+    }
+
+    public Makepayment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Makepayment payment) {
+        this.payment = payment;
     }
 
     public void setPurchaseorder(PurchaseOrder purchaseorder) {

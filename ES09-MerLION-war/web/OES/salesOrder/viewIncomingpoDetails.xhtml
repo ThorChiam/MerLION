@@ -2,7 +2,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
@@ -13,40 +12,41 @@
     <h:body>
         <b:container>
 
-          <p:breadCrumb>
+             <p:breadCrumb>
                 <p:menuitem value="Home" url="/main.xhtml" />
-                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="MerLION Home" url="/main.xhtml" />
+                 <p:menuitem value="OES Home" url="/OES/main.xhtml" />
                 <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
+                <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
                 <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
                 <p:menuitem value="Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml" />
                 <p:menuitem value="Sales Order" url="/OES/salesOrder/createSalesOrder.xhtml" />
-                <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
-                <p:menuitem value="Payment" url="#" />
+                <p:menuitem value="Payment" url="/OES/Payment/paymentALL.xhtml" />
 
             </p:breadCrumb>
             <b:well>
                 <h2>Order Entry System</h2>   
             </b:well>
         </b:container>
-        
+
         <b:container>
             <b:row styleClass="show-grid">
                 <b:column col-xs="12" col-sm="6" col-md="2">
                     <h:form>
                         <p:panel header="Enquiry Management">
 
-                   
+
                             <b:listLinks>
 
                                 <b:navLink href="viewIncomingPurchaseOrder.xhtml" value="View Incoming Purchase Order"
                                            />
                                 <b:navLink href="createSalesOrder.xhtml" value="Create NEW Sales Ordder"
                                            />
-                                
+
                                 <b:navLink href="viewSalesOrderALL.xhtml" value="View Sales Order History"
                                            />
                             </b:listLinks>
-                          
+
                         </p:panel>
                     </h:form>
 
@@ -60,45 +60,47 @@
                         <f:metadata>
                             <f:viewParam name="sobId" value="#{sob.soId}" />
                         </f:metadata>
-                        
+
                         <h:outputLabel for="qid" value="Purchase Order ID:" style="font-weight:bold" />
                         <h:outputText value="#{sob.soId}" />
                         <p>
-                            
+
                         </p>
                         <p:dataTable  var="sp" value="#{sob.viewPurchaseOrderDetails(sob.soId)}" >
                             <f:facet name="header">
                                 Order List
                             </f:facet>
-                            
+
                             <p:column headerText="Order: Products">
                                 <h:outputText value="#{sp.product.name}" />
                             </p:column>
-                            
+
                             <p:column headerText="Order: Quantities">
                                 <h:outputText value="#{sp.quantity}" />
                             </p:column>
-                            
-                              <f:facet name="footer">
-                                  Total:  #{sob.orderDetailsSize} Products
+                            <p:column headerText="ATP Result">
+                                <h:outputText value="#{sp.checkResult}" />
+                            </p:column>
+                            <f:facet name="footer">
+                                Total:  #{sob.orderDetailsSize} Products
                             </f:facet>
 
-                    </p:dataTable>
+                        </p:dataTable>
                         <p>
-                            
+
                         </p>
-                      
-                     <p:button outcome="createSalesOrder" value="Reply Enquire" icon="ui-icon-star">
-                    </p:button>
-                     
-                    <p:button outcome="viewIncomingPurchaseOrder" value="Back" icon="ui-icon-star">
-                    </p:button>
-                      
+
+                        <p:button outcome="createSalesOrder" value="Reply Enquire" icon="ui-icon-star">
+                        </p:button>
+
+                        <p:button outcome="viewIncomingPurchaseOrder" value="Back" icon="ui-icon-star">
+                        </p:button>
+
                     </p:panel>
-                    
+
                 </b:column>
-                
-              
+
+
             </b:row>
 
         </b:container>

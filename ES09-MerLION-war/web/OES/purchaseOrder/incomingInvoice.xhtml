@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
@@ -12,7 +13,7 @@
     <h:body>
         <b:container>
 
-          <p:breadCrumb>
+              <p:breadCrumb>
                 <p:menuitem value="Home" url="/main.xhtml" />
                 <p:menuitem value="MerLION Home" url="/main.xhtml" />
                  <p:menuitem value="OES Home" url="/OES/main.xhtml" />
@@ -24,31 +25,31 @@
                 <p:menuitem value="Payment" url="/OES/Payment/paymentALL.xhtml" />
 
             </p:breadCrumb>
-
+            
             <b:well>
                 <h2>Order Entry System</h2>   
             </b:well>
         </b:container>
-
         <b:container>
             <b:row styleClass="show-grid">
                 <b:column col-xs="12" col-sm="6" col-md="2">
                     <h:form>
-                        <p:panel header="Sales Order Management">
+                       <p:panel header="Purchase Order/Invoice Management">
 
-                          
-                               <b:listLinks>
+                           
+                             <b:listLinks>
 
-                                <b:navLink href="viewIncomingPurchaseOrder.xhtml" value="View Incoming Purchase Order"
+                                <b:navLink href="createPurchaseOrder.xhtml" value="Create New Purchase Order"
                                            />
-                                <b:navLink href="createSalesOrder.xhtml" value="Create NEW Sales Ordder"
+                                 <b:navLink href="viewPurchaseOrder.xhtml" value="Purchase Order History(Outgoing)"
                                            />
-
-                                <b:navLink href="viewSalesOrderALL.xhtml" value="View Sales Order History"
+                                 <b:navLink href="incomingInvoice.xhtml" value="Invoice(Incoming)"
                                            />
-
+                              
                             </b:listLinks>
                             
+                           
+                           
                         </p:panel>
                     </h:form>
 
@@ -57,61 +58,49 @@
 
                 <b:column col-xs="6" col-sm="6" col-md="10">
 
-                    <h:form id="form">
-                        <p:dataTable var="en" value="#{sob.viewSalesOrderHistory()}">
-                                                      
+                    <p:panel style="border: none">
+
+                      
+                        <p:dataTable  var="p" value="#{sob.viewInvoice()}" >
+                            <f:facet name="header">
+                               Invoice Records
+                            </f:facet>
+
+                            <p:column headerText="Invoice ID">
+                                <h:outputText value="#{p.id}" />
+                            </p:column>
+                            
+                            <p:column headerText="Issue Date">
+                                <h:outputText value="#{p.release_date}" />
+                            </p:column>
+                            
+                             <p:column headerText="From Seller">
+                                 <h:outputText value="#{p.payment.salesorder.purchaseorder.receiver.company.companyName}" />
+                            </p:column>
+                            
+                             <p:column headerText="Total Amount">
+                                 <h:outputText value="#{p.payment.salesorder.total}" />
+                            </p:column>
+                            
+                              <p:column headerText="Shipping Date">
+                                  <h:outputText value="#{p.payment.salesorder.shipdate}" />
+                            </p:column>
+                            
+                             <f:facet name="footer">
+                                 Total: #{sob.invoicesize} Invoice.
+                            </f:facet>
+
+                    </p:dataTable>
+                        <p>
+                            
+                        </p>
                         
-                            
-                             <f:facet name="header">
-                               Sales Order History
-                            </f:facet>
-
-                            <p:column headerText="Sales Order ID">
-                                <h:outputText value="#{en.id}" />
-                            </p:column>
-
-                            <p:column headerText="Order Date">
-                                <h:outputText value="#{en.createdate}" />
-                            </p:column>
-                            
-                            <p:column headerText="Shipping Date">
-                                <h:outputText value="#{en.shipdate}" />
-                            </p:column>
-                            
-                             <p:column headerText="Shipping To ">
-                                 <h:outputText value="#{en.purchaseorder.sender.company.companyName}" />
-                            </p:column>
-                            
-                             <p:column headerText="Tax Rate ">
-                                 <h:outputText value="#{en.tax}" />
-                            </p:column>
-                            
-                             <p:column headerText="Discount ">
-                                 <h:outputText value="#{en.discount}" />
-                            </p:column>
-                             
-                            
-                            <p:column headerText="Total Amount">
-                                <h:outputText value="#{en.total}" />
-                            </p:column>
-                         
-                            
-                            <p:column headerText="Delete">
-
-                                <p:commandButton value="Delete" actionListener="#{sob.deleteSalesHistory(en.id)}" styleClass="ui-priority-primary" ajax="false"/>
-                                
-                            </p:column>
-
-                           
-                            <f:facet name="footer">
-                                Total: #{sob.soSize} Sales Order.
-                            </f:facet>
-
-                        </p:dataTable>
-                    </h:form>
-
+                    
+                    </p:panel>
+                    
                 </b:column>
-
+                
+              
             </b:row>
 
         </b:container>
@@ -136,3 +125,12 @@
         </foot>
     </h:body>
 </html>
+
+
+
+
+
+
+
+
+

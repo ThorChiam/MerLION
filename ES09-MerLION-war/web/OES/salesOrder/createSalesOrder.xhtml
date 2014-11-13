@@ -12,19 +12,20 @@
     <h:body>
         <b:container>
 
-            <p:breadCrumb>
+             <p:breadCrumb>
                 <p:menuitem value="Home" url="/main.xhtml" />
-                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="MerLION Home" url="/main.xhtml" />
+                 <p:menuitem value="OES Home" url="/OES/main.xhtml" />
                 <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
+                <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
                 <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
                 <p:menuitem value="Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml" />
                 <p:menuitem value="Sales Order" url="/OES/salesOrder/createSalesOrder.xhtml" />
-                <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
-                <p:menuitem value="Payment" url="#" />
+                <p:menuitem value="Payment" url="/OES/Payment/paymentALL.xhtml" />
 
             </p:breadCrumb>
-            
-            
+
+
             <b:well>
                 <h2>Order Entry System</h2>   
             </b:well>
@@ -34,18 +35,18 @@
             <b:row styleClass="show-grid">
                 <b:column col-xs="12" col-sm="6" col-md="2">
                     <h:form>
-                        <p:panel header="Quotation Management">
+                        <p:panel header="Sales Order Management">
 
                             <b:listLinks>
 
-                               <b:navLink href="viewIncomingPurchaseOrder.xhtml" value="View Incoming Purchase Order"
+                                <b:navLink href="viewIncomingPurchaseOrder.xhtml" value="View Incoming Purchase Order"
                                            />
                                 <b:navLink href="createSalesOrder.xhtml" value="Create NEW Sales Ordder"
                                            />
-                                
+
                                 <b:navLink href="viewSalesOrderALL.xhtml" value="View Sales Order History"
                                            />
-                                
+
                             </b:listLinks>
                         </p:panel>
                     </h:form>
@@ -54,38 +55,33 @@
 
                 <b:column col-xs="6" col-sm="6" col-md="10">
                     <h:form>
-                        <p:panel  header="Sales Order">
+                        <p:panel  header="Create NEW Sales Order">
 
-
-
-                            <p:outputLabel for="company" value="Sales Order ID: " />
+                            <p:outputLabel for="company" value="Purchase Order ID: " />
                             &nbsp;
-                            <p:selectOneMenu id="company" value="#{quo.selectedEID}" style="width:150px">
-                                <f:selectItem itemLabel="Select Enquire ID to Reply" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{quo.enquireID}" var="eId" itemValue="#{eId}" itemLabel="#{eId}"/>
+                            <p:selectOneMenu id="company" value="#{sob.selectedID}" style="width:150px">
+                                <f:selectItem itemLabel="Select ID to Reply" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{sob.porder}" var="eId" itemValue="#{eId}" itemLabel="#{eId}"/>
                             </p:selectOneMenu>
                             &nbsp;
 
                             <p>
                                 <h:outputLabel value="Date:" style="font-weight:bold" />
                                 &nbsp;
-                                <h:outputText value="#{quo.quodate}" />   
+                                <h:outputText value="#{sob.createDate}" />   
                             </p>
-
-
-                            <p:commandButton value="Submit" ajax="false" icon="ui-icon-check" actionListener="#{quo.displaySellerBuyerNameAddress}" validateClient="true" style="margin-right:10px"/>
+                            <p:commandButton value="Submit" ajax="false" icon="ui-icon-check" actionListener="#{sob.displaySenderRecieverNameAddress}" validateClient="true" style="margin-right:10px"/>
                             <P>
 
                             </P>
-
-                            <p:dataTable var="sp" value="#{quo.buyerN}">
+                            <p:dataTable var="sp" value="#{sob.recName}">
                                 <f:facet name="header">
-                                    Quotation: Party Information
+                                    Sales Order: Party Information
                                 </f:facet>
 
                                 <p:columnGroup type="header">
                                     <p:row>
-                                        <p:column rowspan="3" headerText="Enquire ID" />
+                                        <p:column rowspan="3" headerText="Purchase ID" />
                                         <p:column colspan="4" headerText="Seller Vs Buyer" />
                                     </p:row>
                                     <p:row>
@@ -102,33 +98,34 @@
                                 </p:columnGroup>
 
                                 <p:column>
-                                    <h:outputText value="#{quo.selectedEID}" />
+                                    <h:outputText value="#{sob.selectedID}" />
                                 </p:column>
 
                                 <p:column>
-                                    <h:outputText value="#{quo.sellerN}" />
+                                    <h:outputText value="#{sob.recName}" />
                                 </p:column>
 
                                 <p:column>
-                                    <h:outputText value="#{quo.sellerA}" />
+                                    <h:outputText value="#{sob.recA}" />
                                 </p:column>
 
                                 <p:column>
-                                    <h:outputText value="#{quo.buyerN}" />
+                                    <h:outputText value="#{sob.senderN}" />
                                 </p:column>
 
                                 <p:column>
-                                    <h:outputText value="#{quo.buyerA}" />
+                                    <h:outputText value="#{sob.senderA}" />
                                 </p:column>
+
 
                             </p:dataTable>
+
                             <p>
 
                             </p>
-
-                            <p:dataTable var="order" value="#{quo.displayOrderWithPrice(quo.selectedEID)}">
+                            <p:dataTable var="order" value="#{sob.listsub}">
                                 <f:facet name="header">
-                                    Quotation: Order List
+                                    Sales Order: Order List
                                 </f:facet>
 
                                 <p:column headerText="Product Name">
@@ -148,14 +145,46 @@
                                 </p:column>
 
                                 <f:facet name="footer">
-                                    Total Amount $: #{quo.total}
+                                    Total Amount $: #{sob.total}
                                 </f:facet>
 
                             </p:dataTable>
+
                             <p>
                             </p>
-                            <p:commandButton value="Create NEW Quotation" icon="ui-icon-check" actionListener="#{quo.createNewQuotation}"/>
+                            <p:outputLabel for="c" value="Tax Rate(%): " />
+                            &nbsp;
+                            <p:selectOneMenu id="c" value="#{sob.tax}" style="width:150px">
+                                <f:selectItem itemValue="0.07" itemLabel="7%" />
+                                <f:selectItem itemValue="0.10" itemLabel="10%" />
+                                <f:selectItem itemValue="0.15" itemLabel="15%" />
+                            </p:selectOneMenu>
+                            &nbsp;
                             
+                            <p>
+                            </p>
+                            
+                            <p:outputLabel for="b" value="Discount(%): " />
+                            &nbsp;
+                            <p:selectOneMenu id="b" value="#{sob.discount}" style="width:150px">
+                                <f:selectItem itemValue="0.05" itemLabel="5%" />
+                                <f:selectItem itemValue="0.10" itemLabel="10%" />
+                                <f:selectItem itemValue="0.15" itemLabel="15%" />
+                            </p:selectOneMenu>
+                            &nbsp;
+                             
+                            <p>
+                            </p>
+                            
+                                <h:outputLabel value="Shipping Date:" style="font-weight:bold" />
+                                &nbsp;
+                                <h:outputText value="#{sob.shipmentDate}" />
+                              <p>
+                            </p>
+                                <p:commandButton value="Create NEW Sales Order" icon="ui-icon-check" action="viewIncomingPurchaseOrder"  actionListener="#{sob.displaySenderRecieverNameAddress()}" styleClass="ui-priority-primary"/>
+
+
+
                         </p:panel>
                     </h:form>
 

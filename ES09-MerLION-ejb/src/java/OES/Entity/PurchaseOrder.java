@@ -102,6 +102,14 @@ public class PurchaseOrder implements Serializable {
     public void setReceiver(Account receiver) {
         this.receiver = receiver;
     }
+
+    public SalesOrder getSalesorder() {
+        return salesorder;
+    }
+
+    public void setSalesorder(SalesOrder salesorder) {
+        this.salesorder = salesorder;
+    }
     
 
     

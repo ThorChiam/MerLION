@@ -8,21 +8,23 @@
     <h:head>
         <title>Welcome to Order Entry System</title>
     </h:head>
-
+    
     <h:body>
         <b:container>
 
-            <p:breadCrumb>
+              <p:breadCrumb>
                 <p:menuitem value="Home" url="/main.xhtml" />
-                <p:menuitem value="Home" url="/main.xhtml" />
+                <p:menuitem value="MerLION Home" url="/main.xhtml" />
+                 <p:menuitem value="OES Home" url="/OES/main.xhtml" />
                 <p:menuitem value="Product" url="/OES/product/productMain.xhtml" />
+                <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
                 <p:menuitem value="Quotation" url="/OES/quotation/createQuotation.xhtml" />
                 <p:menuitem value="Purchase Order" url="/OES/purchaseOrder/createPurchaseOrder.xhtml" />
                 <p:menuitem value="Sales Order" url="/OES/salesOrder/createSalesOrder.xhtml" />
-                <p:menuitem value="Enquire" url="/OES/enquire/enquireMain.xhtml" />  
-                <p:menuitem value="Payment" url="#" />
+                <p:menuitem value="Payment" url="/OES/Payment/paymentALL.xhtml" />
 
             </p:breadCrumb>
+            
             <b:well>
                 <h2>Order Entry System</h2>   
             </b:well>
@@ -53,7 +55,7 @@
                 <b:column col-xs="6" col-sm="6" col-md="10">
 
                     <h:form id="form">
-                        <p:dataTable var="en" value="#{sob.viewIncmoingPorder((facesContext.externalContext.sessionMap['userId']))}">
+                        <p:dataTable var="en" value="#{sob.listpurchaseOrder()}">
                                                       
                         
                             
@@ -79,7 +81,7 @@
                             
                             <p:column headerText="Details">
                                 
-                                <p:button outcome="viewIncomingpoDetails" value="View" icon="ui-icon-star">
+                                <p:button outcome="viewIncomingpoDetails" value="ATP Check" icon="ui-icon-star">
                                     <f:param name="sobId" value="#{en.id}" />
                                 </p:button>
 

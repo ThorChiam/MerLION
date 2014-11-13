@@ -25,7 +25,7 @@ public class Inventory implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    // @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private int quantity;
@@ -62,6 +62,10 @@ public class Inventory implements Serializable {
 //    public void setWarehouses(Set<Warehouse> warehouses) {
 //        this.warehouses = warehouses;
 //    }
+    public Inventory() {
+        this.setId(System.nanoTime());
+    }
+
     public Long getId() {
         return id;
     }
